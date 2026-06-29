@@ -1,0 +1,5 @@
+option batch abort
+option confirm off
+open sftp://ubuntu@test.gallego.top:2276/ -privatekey="D:\Otros IA\otro_galleto_top\ssh- privada.ppk" -hostkey="ssh-ed25519 255 bSH+2gacG2o7kVw//yZ1KLDJIHosyKwOo778qDFncPk"
+call sudo docker exec moodle sh -lc "grep -R \"function quiz_.*question.*instance\\|function quiz_.*maxmark\\|update.*maxmark\\|maxmark\" -n /var/www/html/public/mod/quiz | head -80"
+exit

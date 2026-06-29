@@ -1,0 +1,37 @@
+{
+  "name": "moodlia",
+  "version": "0.1.0",
+  "description": "Command-line client for the MoodlIA Moodle REST API.",
+  "type": "module",
+  "license": "GPL-3.0-or-later",
+  "bin": {
+    "moodlia": "cli/moodlia.mjs"
+  },
+  "exports": {
+    ".": {
+      "types": "./client/moodle-rest-client.d.ts",
+      "import": "./client/moodle-rest-client.mjs"
+    },
+    "./contract": "./contract/operations.json"
+  },
+  "files": [
+    "cli/",
+    "client/",
+    "contract/",
+    "README.md"
+  ],
+  "keywords": [
+    "moodle",
+    "moodlia",
+    "cli",
+    "rest",
+    "automation"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  }
+}

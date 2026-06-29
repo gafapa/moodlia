@@ -1,0 +1,82 @@
+<?php
+// This file is part of Moodle - https://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+/**
+ * Get course quizzes external function.
+ *
+ * @package    local_moodlia
+ * @copyright  2026
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+namespace local_moodlia\external;
+
+defined('MOODLE_INTERNAL') || die();
+
+use core_external\external_api;
+use core_external\external_function_parameters;
+use core_external\external_multiple_structure;
+use core_external\external_single_structure;
+use core_external\external_value;
+use local_moodlia\operation\get_course_quizzes as get_course_quizzes_operation;
+use local_moodlia\operation\question_tools;
+
+/**
+ * External API adapter for get_course_quizzes.
+ */
+class get_course_quizzes extends external_api {
+    public static function execute_parameters(): external_function_parameters {
+        return new external_function_parameters([
+            'course_ids' => new external_value(PARAM_RAW, 'JSON array of Moodle course ids, or [] for visible quizzes', VALUE_DEFAULT, '[]'),
+        ]);
+    }
+
+    public static function execute(string $course_ids = '[]'): array {
+        ['course_ids' => $courseids] = self::validate_parameters(self::execute_parameters(), [
+            'course_ids' => $course_ids,
+        ]);
+
+        $systemcontext = \context_system::instance();
+        self::validate_context($systemcontext);
+        require_capability('local/moodlia:useapi', $systemcontext);
+
+        return get_course_quizzes_operation::execute(question_tools::decode_id_list((string) $courseids));
+    }
+
+    public static function execute_returns(): external_single_structure {
+        return new external_single_structure([
+            'course_ids' => new external_multiple_structure(new external_value(PARAM_INT, 'Requested course id')),
+            'count' => new external_value(PARAM_INT, 'Returned quiz count'),
+            'quizzes' => new external_multiple_structure(self::quiz_summary_structure()),
+            'warnings' => get_quiz_attempt_data::warnings_structure(),
+        ]);
+    }
+
+    public static function quiz_summary_structure(): external_single_structure {
+        return new external_single_structure([
+            'quiz_id' => new external_value(PARAM_INT, 'Quiz instance id'),
+            'course_id' => new external_value(PARAM_INT, 'Moodle course id'),
+            'quiz_module_id' => new external_value(PARAM_INT, 'Quiz course module id'),
+            'name' => new external_value(PARAM_TEXT, 'Quiz activity name'),
+            'intro' => new external_value(PARAM_RAW, 'Quiz intro HTML'),
+            'intro_format' => new external_value(PARAM_INT, 'Quiz intro format'),
+            'time_open' => new external_value(PARAM_INT, 'Opening timestamp'),
+            'time_close' => new external_value(PARAM_INT, 'Closing timestamp'),
+            'time_limit' => new external_value(PARAM_INT, 'Time limit in seconds'),
+            'attempts_allowed' => new external_value(PARAM_INT, 'Allowed attempts, or 0 for unlimited'),
+            'grade' => new external_value(PARAM_FLOAT, 'Maximum quiz grade'),
+            'sum_grades' => new external_value(PARAM_FLOAT, 'Raw sum of question grades'),
+            'preferred_behaviour' => new external_value(PARAM_ALPHANUMEXT, 'Question behaviour plugin name'),
+            'questions_per_page' => new external_value(PARAM_INT, 'Questions per page'),
+            'navigation_method' => new external_value(PARAM_ALPHANUMEXT, 'Quiz navigation method'),
+            'has_feedback' => new external_value(PARAM_BOOL, 'Whether the quiz has overall feedback configured'),
+            'visible' => new external_value(PARAM_BOOL, 'Whether the quiz module is visible'),
+            'url' => new external_value(PARAM_URL, 'Quiz view URL'),
+        ]);
+    }
+}

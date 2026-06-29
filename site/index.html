@@ -1,0 +1,290 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MoodlIA</title>
+    <meta
+      name="description"
+      content="Project website for the local_moodlia Moodle plugin, including installation guidance and technical architecture."
+    >
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="MoodlIA home">
+        <span class="brand-mark" aria-hidden="true">M</span>
+        <span>
+          <span class="brand-title">MoodlIA</span>
+          <span class="brand-subtitle">local_moodlia</span>
+        </span>
+      </a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="#install">Install</a>
+        <a href="#technical">Technical</a>
+        <a href="#security">Security</a>
+        <a href="#release">Release</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Moodle local plugin</p>
+          <h1 id="hero-title">One Moodle operation surface for REST, MCP, and a Node CLI.</h1>
+          <p class="hero-lede">
+            The project provides a secure Moodle plugin design where the CLI talks directly to Moodle REST,
+            MCP is a parallel interface, and all behavior is implemented through Moodle core APIs.
+          </p>
+          <div class="hero-actions" aria-label="Main page sections">
+            <a class="button primary" href="#install">Installation guide</a>
+            <a class="button secondary" href="#technical">Technical details</a>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-label="Project interface topology">
+          <div class="node node-cli">
+            <span>Node CLI</span>
+            <small>REST client</small>
+          </div>
+          <div class="node node-api">
+            <span>Moodle REST</span>
+            <small>External API</small>
+          </div>
+          <div class="node node-core">
+            <span>Operation layer</span>
+            <small>Moodle APIs only</small>
+          </div>
+          <div class="node node-mcp">
+            <span>MCP tools</span>
+            <small>Parallel interface</small>
+          </div>
+          <div class="node node-browser">
+            <span>Browser checks</span>
+            <small>Moodle-visible state</small>
+          </div>
+          <div class="flow-line line-cli" aria-hidden="true"></div>
+          <div class="flow-line line-api" aria-hidden="true"></div>
+          <div class="flow-line line-mcp" aria-hidden="true"></div>
+          <div class="flow-line line-browser" aria-hidden="true"></div>
+        </div>
+      </section>
+
+      <section class="section section-install" id="install" aria-labelledby="install-title">
+        <div class="section-header">
+          <p class="eyebrow">For installers</p>
+          <h2 id="install-title">Install the plugin in a Moodle Docker deployment.</h2>
+          <p>
+            The plugin is installed as a standard Moodle local plugin. The component is
+            <code>local_moodlia</code> and the folder name is <code>moodlia</code>.
+          </p>
+        </div>
+
+        <div class="install-grid">
+          <article class="info-panel">
+            <h3>Target paths</h3>
+            <dl class="path-list">
+              <div>
+                <dt>Upload path</dt>
+                <dd><code>/tmp/moodlia</code></dd>
+              </div>
+              <div>
+                <dt>Container path</dt>
+                <dd><code>/var/www/html/public/local/moodlia</code></dd>
+              </div>
+              <div>
+                <dt>Moodle root</dt>
+                <dd><code>/var/www/html/public</code></dd>
+              </div>
+            </dl>
+            <p class="note">The final Moodle path uses <code>public</code>.</p>
+          </article>
+
+          <article class="command-panel">
+            <div class="panel-heading">
+              <h3>Server commands</h3>
+              <button class="copy-button" type="button" data-copy-target="deploy-commands">Copy</button>
+            </div>
+            <pre id="deploy-commands"><code>sudo docker cp /tmp/moodlia moodle:/var/www/html/public/local/moodlia
+sudo docker exec -w /var/www/html/public moodle php admin/cli/upgrade.php --non-interactive
+sudo docker exec -w /var/www/html/public moodle php admin/cli/purge_caches.php</code></pre>
+          </article>
+        </div>
+
+        <div class="checklist" aria-label="Installation checks">
+          <div class="check-item">
+            <strong>No database schema</strong>
+            <span>The plugin does not create plugin-owned Moodle tables.</span>
+          </div>
+          <div class="check-item">
+            <strong>REST service</strong>
+            <span>Web service functions are declared through Moodle's External API.</span>
+          </div>
+          <div class="check-item">
+            <strong>Browser verification</strong>
+            <span>Playwright checks login, participants, groups, generated activities, files, question banks, quiz preview, and in-progress quiz attempts.</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-release" id="release" aria-labelledby="release-title">
+        <div class="section-header">
+          <p class="eyebrow">Release workflow</p>
+          <h2 id="release-title">Package, deploy, verify, and generate a demo course.</h2>
+          <p>
+            The repository includes a release preflight, scripted WinSCP deployment, focused smoke tests,
+            and a non-destructive demo course generator for validating Moodle-visible behavior.
+          </p>
+        </div>
+
+        <div class="install-grid">
+          <article class="command-panel">
+            <div class="panel-heading">
+              <h3>Local release preflight</h3>
+              <button class="copy-button" type="button" data-copy-target="release-commands">Copy</button>
+            </div>
+            <pre id="release-commands"><code>npm run release:check
+npm run deploy:winscp
+node --test tests/smoke/transport-parity.test.mjs
+npm run test:browser</code></pre>
+          </article>
+
+          <article class="command-panel">
+            <div class="panel-heading">
+              <h3>Demo course</h3>
+              <button class="copy-button" type="button" data-copy-target="demo-commands">Copy</button>
+            </div>
+            <pre id="demo-commands"><code>npm run moodle:create-demo-course
+
+# Disposable Moodle instances only:
+npm run moodle:reset-full-course</code></pre>
+          </article>
+        </div>
+      </section>
+
+      <section class="section section-technical" id="technical" aria-labelledby="technical-title">
+        <div class="section-header">
+          <p class="eyebrow">For maintainers</p>
+          <h2 id="technical-title">Technical model</h2>
+          <p>
+            REST, MCP, and the Node CLI expose one shared operation layer. Browser tests verify the
+            resulting Moodle-visible state without requiring a custom plugin UI.
+          </p>
+        </div>
+
+        <div class="transport-layout">
+          <article class="transport-card">
+            <span class="card-index">01</span>
+            <h3>Node CLI</h3>
+            <p>Runs outside Moodle and calls REST functions directly using the Moodle token.</p>
+          </article>
+          <article class="transport-card">
+            <span class="card-index">02</span>
+            <h3>REST API</h3>
+            <p>Uses Moodle External API classes with typed parameters and return definitions.</p>
+          </article>
+          <article class="transport-card">
+            <span class="card-index">03</span>
+            <h3>MCP</h3>
+            <p>Exposes the same canonical operation names through <code>/local/moodlia/mcp.php</code>, <code>tools/list</code>, and <code>tools/call</code>.</p>
+          </article>
+          <article class="transport-card">
+            <span class="card-index">04</span>
+            <h3>Operation layer</h3>
+            <p>Validates context, checks capabilities, and calls Moodle core APIs.</p>
+          </article>
+        </div>
+
+        <div class="diagram-band" aria-labelledby="flow-title">
+          <h3 id="flow-title">Request flow</h3>
+          <ol class="flow-steps">
+            <li><span>CLI or web client</span></li>
+            <li><span>REST/MCP adapter</span></li>
+            <li><span>Operation dispatcher</span></li>
+            <li><span>Moodle context and capability checks</span></li>
+            <li><span>Moodle core API</span></li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="section section-security" id="security" aria-labelledby="security-title">
+        <div class="section-header">
+          <p class="eyebrow">Security baseline</p>
+          <h2 id="security-title">Built for Moodle standards first.</h2>
+          <p>
+            The plugin is intentionally stateless in its first version. It manages Moodle data through
+            Moodle APIs and does not introduce private storage.
+          </p>
+        </div>
+
+        <div class="security-grid">
+          <article>
+            <h3>External functions</h3>
+            <ul>
+              <li>Declare functions in <code>db/services.php</code>.</li>
+              <li>Use <code>execute_parameters()</code> and <code>execute_returns()</code>.</li>
+              <li>Call <code>validate_parameters()</code> before using input.</li>
+              <li>Call <code>validate_context()</code> before capability checks.</li>
+            </ul>
+          </article>
+          <article>
+            <h3>Permissions</h3>
+            <ul>
+              <li>Use Moodle contexts for every operation.</li>
+              <li>Use <code>require_capability()</code> for protected reads and writes.</li>
+              <li>Use <code>require_login()</code> for Moodle pages.</li>
+              <li>Use <code>confirm_sesskey()</code> for future POST actions.</li>
+            </ul>
+          </article>
+          <article>
+            <h3>Data handling</h3>
+            <ul>
+              <li>No direct SQL for course, module, enrolment, file, question, or user behavior.</li>
+              <li>No plugin-owned Moodle tables in the first implementation.</li>
+              <li>No secrets in logs or browser output.</li>
+              <li>Privacy API uses <code>null_provider</code> while no personal data is stored.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section section-roadmap" aria-labelledby="roadmap-title">
+        <div class="section-header">
+          <p class="eyebrow">Implementation sequence</p>
+          <h2 id="roadmap-title">First release scope</h2>
+        </div>
+        <div class="timeline">
+          <div>
+            <strong>Plugin scaffold</strong>
+            <span>Installable local plugin with language strings, capabilities, privacy provider, and service endpoints.</span>
+          </div>
+          <div>
+            <strong>Read operations</strong>
+            <span><code>get_current_user</code>, <code>get_courses</code>, <code>get_course_contents</code>, and <code>get_enrolled_users</code> through REST and operation classes.</span>
+          </div>
+          <div>
+            <strong>Course management</strong>
+            <span>Course category CRUD, course CRUD, calendar events, manual enrolment, groups, sections, resources, assignment submissions and grades, gradebook items and user grades, forum discussions and replies, files, question banks, question types, quiz slots, and quiz attempts.</span>
+          </div>
+          <div>
+            <strong>Node CLI</strong>
+            <span>Direct REST client for every operation enabled in the canonical CLI contract.</span>
+          </div>
+          <div>
+            <strong>MCP interface</strong>
+            <span>Moodle-hosted <code>tools/list</code> and <code>tools/call</code> adapter over the same operations.</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>MoodlIA</span>
+      <a href="../docs/architecture.md">Architecture docs</a>
+      <a href="../docs/automation.md">Automation docs</a>
+    </footer>
+
+    <div class="copy-status" role="status" aria-live="polite" aria-atomic="true"></div>
+    <script src="./app.js"></script>
+  </body>
+</html>

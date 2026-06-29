@@ -1,0 +1,6 @@
+option batch abort
+option confirm off
+open sftp://ubuntu@test.gallego.top:2276/ -privatekey="D:\Otros IA\otro_galleto_top\ssh- privada.ppk" -hostkey="ssh-ed25519 255 bSH+2gacG2o7kVw//yZ1KLDJIHosyKwOo778qDFncPk"
+call sudo docker exec -w /var/www/html moodle php -r "define('CLI_SCRIPT', true); require 'config.php'; echo \$CFG->dirroot, PHP_EOL; echo \$CFG->wwwroot, PHP_EOL;"
+call sudo docker exec moodle ls -la /var/www/html/public/local
+exit

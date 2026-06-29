@@ -1,0 +1,14 @@
+.env
+.env.*
+!.env.example
+.agents/
+.claude/
+node_modules/
+coverage/
+test-results/
+playwright-report/
+playwright-report-site/
+screenshots/
+tmp/
+*.log
+*.local

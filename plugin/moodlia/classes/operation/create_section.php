@@ -1,0 +1,64 @@
+<?php
+// This file is part of Moodle - https://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+/**
+ * Create section operation.
+ *
+ * @package    local_moodlia
+ * @copyright  2026
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+namespace local_moodlia\operation;
+
+defined('MOODLE_INTERNAL') || die();
+
+/**
+ * Creates a Moodle course section through Moodle core APIs.
+ */
+class create_section {
+    /**
+     * Execute the operation.
+     *
+     * @param int $courseid Moodle course id.
+     * @param string $name Section name.
+     * @param string $summary Section summary.
+     * @param int $position Placement position, or 0 to append.
+     * @param bool $visible Whether the section is visible.
+     * @return array
+     */
+    public static function execute(
+        int $courseid,
+        string $name,
+        string $summary = '',
+        int $position = 0,
+        bool $visible = true
+    ): array {
+        $course = section_tools::get_course($courseid);
+
+        $name = trim($name);
+        if ($name === '') {
+            throw new \invalid_parameter_exception('name is required.');
+        }
+        if ($position < 0) {
+            throw new \invalid_parameter_exception('position must be zero or a positive integer.');
+        }
+
+        $section = course_create_section($course, $position);
+        course_update_section($course, $section, [
+            'name' => $name,
+            'summary' => $summary,
+            'summaryformat' => FORMAT_PLAIN,
+            'visible' => $visible ? 1 : 0,
+        ]);
+
+        $section = section_tools::reload_section($course, (int) $section->id);
+
+        return section_tools::to_response($course, $section);
+    }
+}

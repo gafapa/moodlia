@@ -1,0 +1,46 @@
+{
+  "name": "moodle-mcp-api-cli-automation",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Test automation foundation for the Moodle MCP/API/CLI shared interface.",
+  "bin": {
+    "moodle-mcp": "cli/moodle-mcp.mjs"
+  },
+  "scripts": {
+    "test": "node --test tests/static/*.test.mjs tests/smoke/*.test.mjs",
+    "test:static": "node --test tests/static/*.test.mjs",
+    "test:smoke": "node --test tests/smoke/*.test.mjs",
+    "test:browser": "playwright test",
+    "test:site": "playwright test --config=playwright.site.config.mjs",
+    "check:contract": "node tools/check-contract.mjs",
+    "types:generate": "node tools/generate-operation-types.mjs",
+    "types:check": "node tools/generate-operation-types.mjs --check",
+    "manifests:generate": "node tools/generate-manifests.mjs",
+    "manifests:check": "node tools/generate-manifests.mjs --check",
+    "plugin:package": "node tools/package-plugin.mjs",
+    "deploy:commands": "node tools/print-deploy-commands.mjs",
+    "deploy:winscp:test": "node tools/run-winscp-script.mjs tools/winscp-connection-test.txt",
+    "deploy:winscp": "node tools/run-winscp-script.mjs tools/winscp-deploy-template.txt D:\\tmp\\mcpapiclimoodle-winscp-deploy.log",
+    "deploy:winscp:upgrade": "node tools/run-winscp-script.mjs tools/winscp-upgrade-only.txt D:\\tmp\\mcpapiclimoodle-winscp-upgrade.log",
+    "npm:sync": "node tools/sync-npm-package.mjs",
+    "npm:sync:check": "node tools/sync-npm-package.mjs --check",
+    "npm:pack:dry-run": "node tools/pack-npm-package.mjs --dry-run",
+    "release:check": "node tools/release-check.mjs",
+    "moodle:create-demo-course": "node tools/reset-and-create-full-course.mjs",
+    "moodle:reset-full-course": "node tools/reset-and-create-full-course.mjs --reset-courses",
+    "moodle:reset-and-create-demo-course": "node tools/reset-and-create-full-course.mjs --reset-courses",
+    "moodle:add-question-bank-map": "node tools/add-question-bank-map-page.mjs",
+    "moodle:inspect-question-banks": "node tools/inspect-question-bank-ui.mjs",
+    "token:restricted": "node tools/create-restricted-moodlia-token-ui.mjs",
+    "token:rest": "node tools/request-rest-token.mjs",
+    "token:rest:refresh": "node tools/refresh-rest-token.mjs",
+    "print:config": "node tools/print-test-config.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.52.0"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
