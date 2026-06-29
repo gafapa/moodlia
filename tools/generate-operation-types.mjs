@@ -18,6 +18,10 @@ function quote(value) {
 }
 
 function scalarType(value) {
+  if (typeof value === 'string' && value.includes('|')) {
+    return value.split('|').map((part) => scalarType(part.trim())).join(' | ');
+  }
+
   switch (value) {
     case 'integer':
     case 'number':
@@ -30,6 +34,8 @@ function scalarType(value) {
       return 'unknown[]';
     case 'object':
       return 'JsonObject | string';
+    case 'null':
+      return 'null';
     default:
       return 'unknown';
   }

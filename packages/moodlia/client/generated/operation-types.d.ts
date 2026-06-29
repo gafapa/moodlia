@@ -5,7 +5,7 @@ export type JsonPrimitive = string | number | boolean | null;
 export type JsonValue = JsonPrimitive | JsonObject | JsonValue[];
 export interface JsonObject { [key: string]: JsonValue; }
 
-export type MoodleOperationName = "get_current_user" | "get_courses" | "get_course_categories" | "create_course_category" | "update_course_category" | "delete_course_category" | "get_course_contents" | "get_course_details" | "get_module_details" | "get_calendar_events" | "create_calendar_event" | "update_calendar_event" | "delete_calendar_event" | "get_enrolled_users" | "get_grade_items" | "get_user_grades" | "get_course_completion_status" | "get_activity_completion_statuses" | "get_course_progress_report" | "set_activity_completion_status" | "enrol_user" | "unenrol_user" | "get_groups" | "create_group" | "update_group" | "delete_group" | "get_groupings" | "create_grouping" | "update_grouping" | "delete_grouping" | "add_group_to_grouping" | "remove_group_from_grouping" | "get_group_members" | "add_group_member" | "remove_group_member" | "create_course" | "update_course" | "delete_course" | "create_section" | "update_section" | "delete_section" | "create_module" | "update_module" | "duplicate_module" | "move_module" | "get_course_books" | "get_book_chapters" | "view_book" | "get_lesson_access_information" | "get_lesson_details" | "get_course_lessons" | "get_lesson_pages" | "view_lesson" | "get_lesson_user_grade" | "get_lesson_user_timers" | "get_lesson_possible_jumps" | "get_lesson_attempts_overview" | "get_data_fields" | "create_data_field" | "update_data_field" | "delete_data_field" | "get_data_entries" | "create_data_entry" | "update_data_entry" | "delete_data_entry" | "set_workshop_phase" | "get_workshop_submissions" | "get_workshop_user_plan" | "get_workshop_grades" | "get_workshop_grades_report" | "get_workshop_reviewer_assessments" | "get_workshop_submission_assessments" | "allocate_workshop_submission" | "get_workshop_assessment_form_definition" | "update_workshop_assessment" | "evaluate_workshop_assessment" | "create_workshop_submission" | "update_workshop_submission" | "delete_workshop_submission" | "create_glossary_entry" | "get_course_glossaries" | "view_glossary" | "view_glossary_entry" | "get_glossary_entry" | "get_glossary_entries_by_letter" | "get_glossary_entries_by_category" | "get_glossary_entries_by_author" | "get_glossary_entries_by_author_id" | "get_glossary_entries_by_date" | "get_glossary_entries_by_term" | "get_glossary_categories" | "get_glossary_authors" | "search_glossary_entries" | "get_glossary_entries_to_approve" | "update_glossary_entry" | "delete_glossary_entry" | "create_wiki_page" | "get_wiki_pages" | "get_wiki_subwikis" | "get_wiki_files" | "view_wiki" | "view_wiki_page" | "update_wiki_page" | "delete_wiki_page" | "get_choice_options" | "get_course_choices" | "view_choice" | "submit_choice_response" | "delete_choice_responses" | "get_course_feedbacks" | "view_feedback" | "get_feedback_access_information" | "get_feedback_items" | "get_feedback_page_items" | "get_feedback_analysis" | "get_feedback_finished_responses" | "delete_feedback_item" | "get_choice_results" | "get_course_forums" | "view_forum" | "get_forum_discussions" | "create_forum_discussion" | "get_forum_discussion_posts" | "create_forum_discussion_post" | "update_forum_discussion_post" | "set_forum_discussion_pin" | "set_forum_discussion_favourite" | "set_forum_discussion_subscription" | "set_forum_discussion_lock" | "delete_forum_discussion_post" | "get_course_assignments" | "get_assignment_submission_status" | "save_assignment_submission" | "submit_assignment_for_grading" | "save_assignment_grade" | "get_assignment_submissions" | "get_assignment_grades" | "view_assignment" | "view_assignment_submission_status" | "view_assignment_grading_table" | "delete_module" | "upload_folder_file" | "get_folder_files" | "download_folder_file" | "get_resource_files" | "download_resource_file" | "delete_folder_file" | "get_question_banks" | "get_question_categories" | "create_question_category" | "update_question_category" | "delete_question_category" | "create_question" | "get_questions" | "update_question" | "move_question" | "delete_question" | "get_quiz_questions" | "get_course_quizzes" | "start_quiz_attempt" | "get_quiz_attempts" | "get_quiz_results_report" | "get_quiz_attempt_access_information" | "get_quiz_attempt_data" | "get_quiz_attempt_summary" | "save_quiz_attempt" | "process_quiz_attempt" | "get_quiz_attempt_review" | "get_quiz_access_information" | "get_quiz_combined_review_options" | "view_quiz" | "view_quiz_attempt" | "view_quiz_attempt_summary" | "view_quiz_attempt_review" | "get_quiz_user_best_grade" | "get_quiz_feedback_for_grade" | "get_quiz_required_question_types" | "add_question_to_quiz" | "add_random_questions_to_quiz" | "remove_question_from_quiz" | "update_quiz_question_slot";
+export type MoodleOperationName = "get_current_user" | "get_courses" | "get_course_categories" | "create_course_category" | "update_course_category" | "delete_course_category" | "get_course_contents" | "get_course_details" | "get_module_details" | "get_calendar_events" | "create_calendar_event" | "update_calendar_event" | "delete_calendar_event" | "get_enrolled_users" | "get_grade_items" | "get_user_grades" | "get_course_completion_status" | "get_activity_completion_statuses" | "get_course_progress_report" | "set_activity_completion_status" | "enrol_user" | "unenrol_user" | "get_groups" | "create_group" | "update_group" | "delete_group" | "get_groupings" | "create_grouping" | "update_grouping" | "delete_grouping" | "add_group_to_grouping" | "remove_group_from_grouping" | "get_group_members" | "add_group_member" | "remove_group_member" | "create_course" | "update_course" | "move_course" | "delete_course" | "create_section" | "update_section" | "delete_section" | "create_module" | "update_module" | "duplicate_module" | "move_module" | "get_course_books" | "get_book_chapters" | "view_book" | "create_book_chapter" | "update_book_chapter" | "move_book_chapter" | "delete_book_chapter" | "get_lesson_access_information" | "get_lesson_details" | "get_course_lessons" | "get_lesson_pages" | "view_lesson" | "get_lesson_user_grade" | "get_lesson_user_timers" | "get_lesson_possible_jumps" | "get_lesson_attempts_overview" | "get_data_fields" | "create_data_field" | "update_data_field" | "delete_data_field" | "get_data_entries" | "create_data_entry" | "update_data_entry" | "delete_data_entry" | "set_workshop_phase" | "get_workshop_submissions" | "get_workshop_user_plan" | "get_workshop_grades" | "get_workshop_grades_report" | "get_workshop_reviewer_assessments" | "get_workshop_submission_assessments" | "allocate_workshop_submission" | "get_workshop_assessment_form_definition" | "update_workshop_assessment" | "evaluate_workshop_assessment" | "create_workshop_submission" | "update_workshop_submission" | "delete_workshop_submission" | "create_glossary_entry" | "get_course_glossaries" | "view_glossary" | "view_glossary_entry" | "get_glossary_entry" | "get_glossary_entries_by_letter" | "get_glossary_entries_by_category" | "get_glossary_entries_by_author" | "get_glossary_entries_by_author_id" | "get_glossary_entries_by_date" | "get_glossary_entries_by_term" | "get_glossary_categories" | "get_glossary_authors" | "search_glossary_entries" | "get_glossary_entries_to_approve" | "update_glossary_entry" | "delete_glossary_entry" | "create_wiki_page" | "get_wiki_pages" | "get_wiki_subwikis" | "get_wiki_files" | "view_wiki" | "view_wiki_page" | "update_wiki_page" | "delete_wiki_page" | "get_choice_options" | "get_course_choices" | "view_choice" | "submit_choice_response" | "delete_choice_responses" | "get_course_feedbacks" | "view_feedback" | "get_feedback_access_information" | "get_feedback_items" | "get_feedback_page_items" | "get_feedback_analysis" | "get_feedback_finished_responses" | "delete_feedback_item" | "get_choice_results" | "get_course_forums" | "view_forum" | "get_forum_discussions" | "create_forum_discussion" | "get_forum_discussion_posts" | "create_forum_discussion_post" | "update_forum_discussion_post" | "set_forum_discussion_pin" | "set_forum_discussion_favourite" | "set_forum_discussion_subscription" | "set_forum_discussion_lock" | "delete_forum_discussion_post" | "get_course_assignments" | "get_assignment_submission_status" | "save_assignment_submission" | "submit_assignment_for_grading" | "save_assignment_grade" | "get_assignment_grading_form" | "set_assignment_rubric" | "set_assignment_checklist" | "set_assignment_marking_guide" | "grade_assignment_with_rubric" | "grade_assignment_with_checklist" | "grade_assignment_with_marking_guide" | "get_assignment_submissions" | "get_assignment_grades" | "view_assignment" | "view_assignment_submission_status" | "view_assignment_grading_table" | "delete_module" | "upload_folder_file" | "get_folder_files" | "download_folder_file" | "get_resource_files" | "download_resource_file" | "delete_folder_file" | "get_question_banks" | "get_question_categories" | "create_question_category" | "update_question_category" | "delete_question_category" | "create_question" | "get_questions" | "update_question" | "move_question" | "delete_question" | "get_quiz_questions" | "get_course_quizzes" | "start_quiz_attempt" | "get_quiz_attempts" | "get_quiz_results_report" | "get_quiz_attempt_access_information" | "get_quiz_attempt_data" | "get_quiz_attempt_summary" | "save_quiz_attempt" | "process_quiz_attempt" | "get_quiz_attempt_review" | "get_quiz_access_information" | "get_quiz_combined_review_options" | "view_quiz" | "view_quiz_attempt" | "view_quiz_attempt_summary" | "view_quiz_attempt_review" | "get_quiz_user_best_grade" | "get_quiz_feedback_for_grade" | "get_quiz_required_question_types" | "add_question_to_quiz" | "add_random_questions_to_quiz" | "remove_question_from_quiz" | "update_quiz_question_slot";
 
 export interface GetCurrentUserParameters {}
 
@@ -21,6 +21,7 @@ export interface CreateCourseCategoryParameters {
   name: string;
   parent_id?: number;
   visible?: boolean;
+  reuse_existing?: boolean;
 }
 
 export interface UpdateCourseCategoryParameters {
@@ -217,9 +218,15 @@ export interface UpdateCourseParameters {
   summary?: string;
   summary_format?: "html" | "plain";
   course_format?: string;
+  category_id?: number;
   start_date?: number;
   end_date?: number;
   enable_completion?: boolean;
+}
+
+export interface MoveCourseParameters {
+  course_id: number;
+  category_id: number;
 }
 
 export interface DeleteCourseParameters {
@@ -295,6 +302,41 @@ export interface ViewBookParameters {
   course_id: number;
   module_id: number;
   chapter_id?: number;
+}
+
+export interface CreateBookChapterParameters {
+  course_id: number;
+  module_id: number;
+  title: string;
+  content: string;
+  content_format?: number;
+  subchapter?: boolean;
+  after_chapter_id?: number;
+  hidden?: boolean;
+}
+
+export interface UpdateBookChapterParameters {
+  course_id: number;
+  module_id: number;
+  chapter_id: number;
+  title?: string;
+  content?: string;
+  content_format?: number;
+  subchapter?: boolean;
+  hidden?: boolean;
+}
+
+export interface MoveBookChapterParameters {
+  course_id: number;
+  module_id: number;
+  chapter_id: number;
+  after_chapter_id?: number;
+}
+
+export interface DeleteBookChapterParameters {
+  course_id: number;
+  module_id: number;
+  chapter_id: number;
 }
 
 export interface GetLessonAccessInformationParameters {
@@ -896,6 +938,65 @@ export interface SaveAssignmentGradeParameters {
   attempt_number?: number;
 }
 
+export interface GetAssignmentGradingFormParameters {
+  course_id: number;
+  module_id: number;
+}
+
+export interface SetAssignmentRubricParameters {
+  course_id: number;
+  module_id: number;
+  name: string;
+  description?: string;
+  criteria: JsonObject | string;
+  options?: JsonObject | string;
+}
+
+export interface SetAssignmentChecklistParameters {
+  course_id: number;
+  module_id: number;
+  name: string;
+  description?: string;
+  items: JsonObject | string;
+}
+
+export interface SetAssignmentMarkingGuideParameters {
+  course_id: number;
+  module_id: number;
+  name: string;
+  description?: string;
+  criteria: JsonObject | string;
+  comments?: JsonObject | string;
+  options?: JsonObject | string;
+}
+
+export interface GradeAssignmentWithRubricParameters {
+  course_id: number;
+  module_id: number;
+  user_id: number;
+  criteria: JsonObject | string;
+  feedback_comment?: string;
+  attempt_number?: number;
+}
+
+export interface GradeAssignmentWithChecklistParameters {
+  course_id: number;
+  module_id: number;
+  user_id: number;
+  items: JsonObject | string;
+  feedback_comment?: string;
+  attempt_number?: number;
+}
+
+export interface GradeAssignmentWithMarkingGuideParameters {
+  course_id: number;
+  module_id: number;
+  user_id: number;
+  criteria: JsonObject | string;
+  feedback_comment?: string;
+  attempt_number?: number;
+}
+
 export interface GetAssignmentSubmissionsParameters {
   course_id: number;
   module_id: number;
@@ -1209,6 +1310,7 @@ export interface CreateCourseCategoryResponse {
   visible: boolean;
   course_count: number;
   url: string;
+  created: boolean;
 }
 
 export interface UpdateCourseCategoryResponse {
@@ -1623,6 +1725,13 @@ export interface UpdateCourseResponse {
   url: string;
 }
 
+export interface MoveCourseResponse {
+  course_id: number;
+  category_id: number;
+  moved: boolean;
+  url: string;
+}
+
 export interface DeleteCourseResponse {
   deleted: boolean;
   id: number;
@@ -1787,6 +1896,63 @@ export interface ViewBookResponse {
     warning_code: string;
     message: string;
   }[];
+}
+
+export interface CreateBookChapterResponse {
+  chapter_id: number;
+  book_id: number;
+  module_id: number;
+  title: string;
+  content: string;
+  content_format: number;
+  page_number: number;
+  subchapter: boolean;
+  hidden: boolean;
+  parent_chapter_id: number;
+  previous_chapter_id: number;
+  next_chapter_id: number;
+  url: string;
+}
+
+export interface UpdateBookChapterResponse {
+  chapter_id: number;
+  book_id: number;
+  module_id: number;
+  title: string;
+  content: string;
+  content_format: number;
+  page_number: number;
+  subchapter: boolean;
+  hidden: boolean;
+  parent_chapter_id: number;
+  previous_chapter_id: number;
+  next_chapter_id: number;
+  url: string;
+}
+
+export interface MoveBookChapterResponse {
+  chapter_id: number;
+  book_id: number;
+  module_id: number;
+  title: string;
+  content: string;
+  content_format: number;
+  page_number: number;
+  subchapter: boolean;
+  hidden: boolean;
+  parent_chapter_id: number;
+  previous_chapter_id: number;
+  next_chapter_id: number;
+  url: string;
+}
+
+export interface DeleteBookChapterResponse {
+  course_id: number;
+  module_id: number;
+  book_id: number;
+  chapter_id: number;
+  deleted: boolean;
+  deleted_chapter_ids: number[];
 }
 
 export interface GetLessonAccessInformationResponse {
@@ -3395,6 +3561,184 @@ export interface SaveAssignmentGradeResponse {
   feedback_comment: string;
 }
 
+export interface GetAssignmentGradingFormResponse {
+  course_id: number;
+  module_id: number;
+  assignment_id: number;
+  active_method: string;
+  supported: boolean;
+  definition_id: number;
+  name: string;
+  description: string;
+  status: number;
+  criteria: {
+    criterion_id: number;
+    sort_order: number;
+    shortname: string;
+    description: string;
+    description_markers: string;
+    max_score: number;
+    levels: {
+      level_id: number;
+      score: number;
+      definition: string;
+    }[];
+  }[];
+  comments: {
+    comment_id: number;
+    sort_order: number;
+    description: string;
+  }[];
+  checklist_compatible: boolean;
+}
+
+export interface SetAssignmentRubricResponse {
+  course_id: number;
+  module_id: number;
+  assignment_id: number;
+  active_method: string;
+  supported: boolean;
+  definition_id: number;
+  name: string;
+  description: string;
+  status: number;
+  criteria: {
+    criterion_id: number;
+    sort_order: number;
+    shortname: string;
+    description: string;
+    description_markers: string;
+    max_score: number;
+    levels: {
+      level_id: number;
+      score: number;
+      definition: string;
+    }[];
+  }[];
+  comments: {
+    comment_id: number;
+    sort_order: number;
+    description: string;
+  }[];
+  checklist_compatible: boolean;
+}
+
+export interface SetAssignmentChecklistResponse {
+  course_id: number;
+  module_id: number;
+  assignment_id: number;
+  active_method: string;
+  supported: boolean;
+  definition_id: number;
+  name: string;
+  description: string;
+  status: number;
+  criteria: {
+    criterion_id: number;
+    sort_order: number;
+    shortname: string;
+    description: string;
+    description_markers: string;
+    max_score: number;
+    levels: {
+      level_id: number;
+      score: number;
+      definition: string;
+    }[];
+  }[];
+  comments: {
+    comment_id: number;
+    sort_order: number;
+    description: string;
+  }[];
+  checklist_compatible: boolean;
+}
+
+export interface SetAssignmentMarkingGuideResponse {
+  course_id: number;
+  module_id: number;
+  assignment_id: number;
+  active_method: string;
+  supported: boolean;
+  definition_id: number;
+  name: string;
+  description: string;
+  status: number;
+  criteria: {
+    criterion_id: number;
+    sort_order: number;
+    shortname: string;
+    description: string;
+    description_markers: string;
+    max_score: number;
+    levels: {
+      level_id: number;
+      score: number;
+      definition: string;
+    }[];
+  }[];
+  comments: {
+    comment_id: number;
+    sort_order: number;
+    description: string;
+  }[];
+  checklist_compatible: boolean;
+}
+
+export interface GradeAssignmentWithRubricResponse {
+  course_id: number;
+  module_id: number;
+  assignment_id: number;
+  user_id: number;
+  submission_id: number;
+  status: string;
+  attempt_number: number;
+  can_edit: boolean;
+  submitted: boolean;
+  online_text: string;
+  graded: boolean;
+  grade: number;
+  grader_id: number;
+  grading_status: string;
+  feedback_comment: string;
+}
+
+export interface GradeAssignmentWithChecklistResponse {
+  course_id: number;
+  module_id: number;
+  assignment_id: number;
+  user_id: number;
+  submission_id: number;
+  status: string;
+  attempt_number: number;
+  can_edit: boolean;
+  submitted: boolean;
+  online_text: string;
+  graded: boolean;
+  grade: number;
+  grader_id: number;
+  grading_status: string;
+  feedback_comment: string;
+}
+
+export interface GradeAssignmentWithMarkingGuideResponse {
+  course_id: number;
+  module_id: number;
+  assignment_id: number;
+  user_id: number;
+  submission_id: number;
+  status: string;
+  attempt_number: number;
+  can_edit: boolean;
+  submitted: boolean;
+  online_text: string;
+  graded: boolean;
+  grade: number;
+  grader_id: number;
+  grading_status: string;
+  feedback_comment: string;
+}
+
 export interface GetAssignmentSubmissionsResponse {
   course_id: number;
   module_id: number;
@@ -3515,8 +3859,8 @@ export interface GetQuestionBanksResponse {
   banks: {
     bank_scope: string;
     module_id: number;
-    question_bank_module_id: unknown;
-    quiz_module_id: unknown;
+    question_bank_module_id: number | null;
+    quiz_module_id: number | null;
     name: string;
     context_id: number;
     visible: boolean;
@@ -3533,8 +3877,8 @@ export interface GetQuestionCategoriesResponse {
     question_count: number;
     is_top: boolean;
     bank_scope: string;
-    question_bank_module_id: unknown;
-    quiz_module_id: unknown;
+    question_bank_module_id: number | null;
+    quiz_module_id: number | null;
     url: unknown;
   }[];
 }
@@ -3544,8 +3888,8 @@ export interface CreateQuestionCategoryResponse {
   name: string;
   context_id: number;
   bank_scope: string;
-  question_bank_module_id: unknown;
-  quiz_module_id: unknown;
+  question_bank_module_id: number | null;
+  quiz_module_id: number | null;
 }
 
 export interface UpdateQuestionCategoryResponse {
@@ -3587,8 +3931,8 @@ export interface MoveQuestionResponse {
   target_category_id: number;
   target_context_id: number;
   target_bank_scope: string;
-  target_question_bank_module_id: unknown;
-  target_quiz_module_id: unknown;
+  target_question_bank_module_id: number | null;
+  target_quiz_module_id: number | null;
   moved: boolean;
 }
 
@@ -4075,6 +4419,7 @@ export interface MoodleOperationParameters {
   remove_group_member: RemoveGroupMemberParameters;
   create_course: CreateCourseParameters;
   update_course: UpdateCourseParameters;
+  move_course: MoveCourseParameters;
   delete_course: DeleteCourseParameters;
   create_section: CreateSectionParameters;
   update_section: UpdateSectionParameters;
@@ -4086,6 +4431,10 @@ export interface MoodleOperationParameters {
   get_course_books: GetCourseBooksParameters;
   get_book_chapters: GetBookChaptersParameters;
   view_book: ViewBookParameters;
+  create_book_chapter: CreateBookChapterParameters;
+  update_book_chapter: UpdateBookChapterParameters;
+  move_book_chapter: MoveBookChapterParameters;
+  delete_book_chapter: DeleteBookChapterParameters;
   get_lesson_access_information: GetLessonAccessInformationParameters;
   get_lesson_details: GetLessonDetailsParameters;
   get_course_lessons: GetCourseLessonsParameters;
@@ -4173,6 +4522,13 @@ export interface MoodleOperationParameters {
   save_assignment_submission: SaveAssignmentSubmissionParameters;
   submit_assignment_for_grading: SubmitAssignmentForGradingParameters;
   save_assignment_grade: SaveAssignmentGradeParameters;
+  get_assignment_grading_form: GetAssignmentGradingFormParameters;
+  set_assignment_rubric: SetAssignmentRubricParameters;
+  set_assignment_checklist: SetAssignmentChecklistParameters;
+  set_assignment_marking_guide: SetAssignmentMarkingGuideParameters;
+  grade_assignment_with_rubric: GradeAssignmentWithRubricParameters;
+  grade_assignment_with_checklist: GradeAssignmentWithChecklistParameters;
+  grade_assignment_with_marking_guide: GradeAssignmentWithMarkingGuideParameters;
   get_assignment_submissions: GetAssignmentSubmissionsParameters;
   get_assignment_grades: GetAssignmentGradesParameters;
   view_assignment: ViewAssignmentParameters;
@@ -4259,6 +4615,7 @@ export interface MoodleOperationResponses {
   remove_group_member: RemoveGroupMemberResponse;
   create_course: CreateCourseResponse;
   update_course: UpdateCourseResponse;
+  move_course: MoveCourseResponse;
   delete_course: DeleteCourseResponse;
   create_section: CreateSectionResponse;
   update_section: UpdateSectionResponse;
@@ -4270,6 +4627,10 @@ export interface MoodleOperationResponses {
   get_course_books: GetCourseBooksResponse;
   get_book_chapters: GetBookChaptersResponse;
   view_book: ViewBookResponse;
+  create_book_chapter: CreateBookChapterResponse;
+  update_book_chapter: UpdateBookChapterResponse;
+  move_book_chapter: MoveBookChapterResponse;
+  delete_book_chapter: DeleteBookChapterResponse;
   get_lesson_access_information: GetLessonAccessInformationResponse;
   get_lesson_details: GetLessonDetailsResponse;
   get_course_lessons: GetCourseLessonsResponse;
@@ -4357,6 +4718,13 @@ export interface MoodleOperationResponses {
   save_assignment_submission: SaveAssignmentSubmissionResponse;
   submit_assignment_for_grading: SubmitAssignmentForGradingResponse;
   save_assignment_grade: SaveAssignmentGradeResponse;
+  get_assignment_grading_form: GetAssignmentGradingFormResponse;
+  set_assignment_rubric: SetAssignmentRubricResponse;
+  set_assignment_checklist: SetAssignmentChecklistResponse;
+  set_assignment_marking_guide: SetAssignmentMarkingGuideResponse;
+  grade_assignment_with_rubric: GradeAssignmentWithRubricResponse;
+  grade_assignment_with_checklist: GradeAssignmentWithChecklistResponse;
+  grade_assignment_with_marking_guide: GradeAssignmentWithMarkingGuideResponse;
   get_assignment_submissions: GetAssignmentSubmissionsResponse;
   get_assignment_grades: GetAssignmentGradesResponse;
   view_assignment: ViewAssignmentResponse;
@@ -4452,6 +4820,7 @@ export interface TypedMoodleClient {
   remove_group_member(parameters: RemoveGroupMemberParameters): Promise<RemoveGroupMemberResponse>;
   create_course(parameters: CreateCourseParameters): Promise<CreateCourseResponse>;
   update_course(parameters: UpdateCourseParameters): Promise<UpdateCourseResponse>;
+  move_course(parameters: MoveCourseParameters): Promise<MoveCourseResponse>;
   delete_course(parameters: DeleteCourseParameters): Promise<DeleteCourseResponse>;
   create_section(parameters: CreateSectionParameters): Promise<CreateSectionResponse>;
   update_section(parameters: UpdateSectionParameters): Promise<UpdateSectionResponse>;
@@ -4463,6 +4832,10 @@ export interface TypedMoodleClient {
   get_course_books(parameters: GetCourseBooksParameters): Promise<GetCourseBooksResponse>;
   get_book_chapters(parameters: GetBookChaptersParameters): Promise<GetBookChaptersResponse>;
   view_book(parameters: ViewBookParameters): Promise<ViewBookResponse>;
+  create_book_chapter(parameters: CreateBookChapterParameters): Promise<CreateBookChapterResponse>;
+  update_book_chapter(parameters: UpdateBookChapterParameters): Promise<UpdateBookChapterResponse>;
+  move_book_chapter(parameters: MoveBookChapterParameters): Promise<MoveBookChapterResponse>;
+  delete_book_chapter(parameters: DeleteBookChapterParameters): Promise<DeleteBookChapterResponse>;
   get_lesson_access_information(parameters: GetLessonAccessInformationParameters): Promise<GetLessonAccessInformationResponse>;
   get_lesson_details(parameters: GetLessonDetailsParameters): Promise<GetLessonDetailsResponse>;
   get_course_lessons(parameters: GetCourseLessonsParameters): Promise<GetCourseLessonsResponse>;
@@ -4550,6 +4923,13 @@ export interface TypedMoodleClient {
   save_assignment_submission(parameters: SaveAssignmentSubmissionParameters): Promise<SaveAssignmentSubmissionResponse>;
   submit_assignment_for_grading(parameters: SubmitAssignmentForGradingParameters): Promise<SubmitAssignmentForGradingResponse>;
   save_assignment_grade(parameters: SaveAssignmentGradeParameters): Promise<SaveAssignmentGradeResponse>;
+  get_assignment_grading_form(parameters: GetAssignmentGradingFormParameters): Promise<GetAssignmentGradingFormResponse>;
+  set_assignment_rubric(parameters: SetAssignmentRubricParameters): Promise<SetAssignmentRubricResponse>;
+  set_assignment_checklist(parameters: SetAssignmentChecklistParameters): Promise<SetAssignmentChecklistResponse>;
+  set_assignment_marking_guide(parameters: SetAssignmentMarkingGuideParameters): Promise<SetAssignmentMarkingGuideResponse>;
+  grade_assignment_with_rubric(parameters: GradeAssignmentWithRubricParameters): Promise<GradeAssignmentWithRubricResponse>;
+  grade_assignment_with_checklist(parameters: GradeAssignmentWithChecklistParameters): Promise<GradeAssignmentWithChecklistResponse>;
+  grade_assignment_with_marking_guide(parameters: GradeAssignmentWithMarkingGuideParameters): Promise<GradeAssignmentWithMarkingGuideResponse>;
   get_assignment_submissions(parameters: GetAssignmentSubmissionsParameters): Promise<GetAssignmentSubmissionsResponse>;
   get_assignment_grades(parameters: GetAssignmentGradesParameters): Promise<GetAssignmentGradesResponse>;
   view_assignment(parameters: ViewAssignmentParameters): Promise<ViewAssignmentResponse>;

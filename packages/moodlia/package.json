@@ -1,9 +1,22 @@
 {
   "name": "moodlia",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Command-line client for the MoodlIA Moodle REST API.",
   "type": "module",
   "license": "GPL-3.0-or-later",
+  "author": "Pablo Gallego",
+  "homepage": "https://github.com/gafapa/moodlia#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gafapa/moodlia.git",
+    "directory": "packages/moodlia"
+  },
+  "bugs": {
+    "url": "https://github.com/gafapa/moodlia/issues"
+  },
+  "main": "./client/moodle-rest-client.mjs",
+  "types": "./client/moodle-rest-client.d.ts",
+  "sideEffects": false,
   "bin": {
     "moodlia": "cli/moodlia.mjs"
   },
@@ -18,6 +31,7 @@
     "cli/",
     "client/",
     "contract/",
+    "LICENSE",
     "README.md"
   ],
   "keywords": [

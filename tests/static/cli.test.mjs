@@ -61,8 +61,27 @@ test('CLI operation help exposes enum, range, JSON object, and format metadata',
   const getCoursesHelp = await callCli(['get-courses', '--help']);
   assert.match(getCoursesHelp, /--limit <integer>\s+optional; min: 1/);
   assert.match(getCoursesHelp, /--format <string>\s+optional; one of: json/);
+  assert.match(getCoursesHelp, /--no-validate-response\s+optional; skip contract response validation/);
+  assert.match(getCoursesHelp, /--raw\s+optional; alias for --no-validate-response/);
 
   const createModuleHelp = await callCli(['create-module', '--help']);
   assert.match(createModuleHelp, /--module-type <string>\s+required; one of: assign, book, choice/);
   assert.match(createModuleHelp, /--options <object>\s+optional; JSON object/);
+
+  const moveCourseHelp = await callCli(['move-course', '--help']);
+  assert.match(moveCourseHelp, /--course-id <integer>\s+required/);
+  assert.match(moveCourseHelp, /--category-id <integer>\s+required/);
+});
+
+test('CLI accepts response validation bypass flags as global options', async () => {
+  const payload = await callCliFailure(['get-courses', '--raw']);
+
+  assert.equal(payload.error, true);
+  assert.equal(payload.code, 'invalid_parameters');
+  assert.match(payload.message, /MOODLE_BASE_URL and MOODLE_REST_TOKEN are required/);
+
+  const payloadWithLongFlag = await callCliFailure(['get-courses', '--no-validate-response']);
+  assert.equal(payloadWithLongFlag.error, true);
+  assert.equal(payloadWithLongFlag.code, 'invalid_parameters');
+  assert.match(payloadWithLongFlag.message, /MOODLE_BASE_URL and MOODLE_REST_TOKEN are required/);
 });

@@ -88,6 +88,44 @@ By default this copies `plugin/moodlia` to `LOCAL_PLUGIN_PACKAGE_PATH`.
 
 The package excludes development-only folders and local secrets.
 
+## Npm Package
+
+Prepare the public CLI/client package:
+
+```text
+npm run npm:sync
+npm run npm:sync:check
+npm run npm:pack:dry-run
+```
+
+The generated npm package lives in:
+
+```text
+packages/moodlia
+```
+
+It is named `moodlia` and publishes only the external consumer surface:
+
+- `cli/moodlia.mjs`.
+- `client/moodle-rest-client.mjs`.
+- `client/moodle-rest-client.d.ts`.
+- `client/generated/operation-types.d.ts`.
+- `contract/operations.json`.
+- `README.md`.
+- `LICENSE`.
+- `package.json`.
+
+It does not include the Moodle plugin PHP source, SFTP deployment scripts, browser automation, smoke tests, reports, local env files, or unpublished transport metadata.
+
+Publish from the generated package directory only:
+
+```text
+cd packages/moodlia
+npm publish --access public
+```
+
+Use an npm authentication method that satisfies the account's two-factor-authentication policy. Never store npm tokens in this repository.
+
 ## Deploy
 
 For the configured WinSCP target:
@@ -103,14 +141,14 @@ The final plugin path in the Moodle container must be:
 /var/www/html/public/local/moodlia
 ```
 
-The Moodle upgrade command must run from the Moodle CLI root:
+The Moodle upgrade command must run from the Moodle root that contains `admin/cli`. In the configured Docker target this is:
 
 ```text
-sudo docker exec -w /var/www/html/public moodle php admin/cli/upgrade.php --non-interactive
-sudo docker exec -w /var/www/html/public moodle php admin/cli/purge_caches.php
+sudo docker exec -w /var/www/html moodle php admin/cli/upgrade.php --non-interactive
+sudo docker exec -w /var/www/html moodle php admin/cli/purge_caches.php
 ```
 
-Some Docker images expose Moodle CLI paths from `/var/www/html`; use the path that actually contains `admin/cli` in the target deployment.
+The plugin path and CLI root are allowed to differ. The plugin is installed under `/var/www/html/public/local/moodlia`; the upgrade CLI is run from whichever directory exposes `admin/cli`, commonly `/var/www/html` in this container layout.
 
 ## Verify
 
@@ -186,6 +224,7 @@ Moodle does not support arbitrary plugin downgrades as a normal workflow. Plan r
 - Deployment target paths are confirmed.
 - Secrets are not committed.
 - Plugin is packaged from `plugin/moodlia`.
+- Public npm package is synced and dry-run packed when the release includes CLI/client changes.
 - Plugin is deployed to `/local/moodlia`.
 - Moodle upgrade and cache purge complete.
 - REST smoke passes.

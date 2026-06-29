@@ -15,6 +15,7 @@ update_course_category
 delete_course_category
 get_course_contents
 get_course_details
+move_course
 get_calendar_events
 create_calendar_event
 update_calendar_event
@@ -71,7 +72,8 @@ Transport mappings:
 | Moodle REST function | `local_moodlia_get_courses` |
 | MCP tool | `get_courses` |
 | TypeScript method | `get_courses()` |
-| CLI command | `moodle-mcp get-courses` |
+| Development CLI command | `moodle-mcp get-courses` |
+| Public npm CLI command | `moodlia get-courses` |
 
 Operation names must not drift between transports.
 
@@ -246,9 +248,9 @@ Do not expose secrets, local filesystem paths, stack traces, or raw token values
 
 - Type: write.
 - Context: system or parent course category.
-- Parameters: `name`, optional `parent_id`, optional `visible`.
+- Parameters: `name`, optional `parent_id`, optional `visible`, optional `reuse_existing`.
 - Capabilities: `moodle/category:manage`.
-- Returns: created category summary.
+- Returns: category summary plus `created`, where `created=false` means an existing sibling category with the same name was reused.
 - This operation must use Moodle's course category API and must not create plugin-owned records.
 
 `update_course_category`
@@ -281,10 +283,19 @@ Do not expose secrets, local filesystem paths, stack traces, or raw token values
 
 - Type: write.
 - Context: course.
-- Parameters: `course_id`, optional `fullname`, optional `shortname`, optional `visible`, optional `summary`, optional `summary_format`, optional `course_format`, optional `start_date`, optional `end_date`.
-- Capabilities: `moodle/course:update`.
+- Parameters: `course_id`, optional `fullname`, optional `shortname`, optional `visible`, optional `summary`, optional `summary_format`, optional `course_format`, optional `enable_completion`, optional `category_id`, optional `start_date`, optional `end_date`.
+- Capabilities: `moodle/course:update`; moving to another category also requires `moodle/course:create` in the target category context.
 - Returns the same canonical course shape as `create_course`.
 - Uses Moodle's `update_course` API and does not write directly to course tables.
+
+`move_course`
+
+- Type: write.
+- Context: source course and target course category.
+- Parameters: `course_id`, `category_id`.
+- Capabilities: `moodle/course:update` in the source course and `moodle/course:create` in the target category.
+- Returns: course id, target category id, moved status, and course URL.
+- This is a convenience operation over Moodle's course update API for automation that needs an explicit course-move command.
 
 `get_course_contents`
 
@@ -489,7 +500,7 @@ Do not expose secrets, local filesystem paths, stack traces, or raw token values
 - Parameters: `course_id`, `name`, optional `summary`, optional `position`, optional `visible`.
 - Context: course.
 - Returns: section id, course id, section number, name, rendered summary, and visibility.
-- Uses Moodle's `course_create_section` and `course_update_section` APIs. It must not write directly to course section tables.
+- Uses Moodle's `course_create_section` and `course_update_section` APIs. `position=0` appends by using Moodle's native append mode. It must not write directly to course section tables.
 
 `update_section`
 
@@ -515,7 +526,7 @@ Do not expose secrets, local filesystem paths, stack traces, or raw token values
 - Supported `module_type` values: `assign`, `book`, `choice`, `data`, `feedback`, `lesson`, `lti`, `page`, `folder`, `forum`, `glossary`, `label`, `qbank`, `quiz`, `resource`, `subsection`, `url`, `wiki`, `workshop`. `data` is Moodle's technical plugin name for the Database activity, `lti` is Moodle's technical plugin name for the External tool activity, `qbank` creates Moodle's question bank activity, and `subsection` creates Moodle's delegated subsection structure.
 - Common module options include `visible`, `visible_on_course_page`, and `download_content`. `visible_on_course_page` maps to Moodle's raw `visibleoncoursepage` setting. Use `visible=true` with `visible_on_course_page=false` to create Moodle's "available but not shown on course page" state without hiding the activity from direct access. `download_content` maps to Moodle's course module download-content flag where the site/course allows downloadable course content.
 - Assignment module options: `intro`, `online_text`, `file_submissions`, `submission_drafts`, date fields, and grade fields configure a standard Moodle assignment. By default, MoodlIA creates a visible assignment with online text submissions and submission drafts enabled, and file submissions disabled.
-- Book module options: `intro`, `numbering` (`none`, `numbers`, `bullets`, `indented`), and `custom_titles`. MoodlIA creates the book activity through Moodle's standard module creation API. Course Book listing, chapter listing, and view registration are exposed through Moodle's Book APIs; chapter mutation is not exposed until a public core API path can be used without direct table access.
+- Book module options: `intro`, `numbering` (`none`, `numbers`, `bullets`, `indented`), and `custom_titles`. MoodlIA creates the book activity through Moodle's standard module creation API. Course Book listing, chapter listing, and view registration are exposed through Moodle's Book APIs. Chapter creation, update, movement, and deletion are exposed as explicit subelement operations; Moodle Book does not provide a public writer API for chapters, so MoodlIA keeps the unavoidable Book DML inside one audited helper that mirrors Moodle Book's own edit/delete/move behavior, validates module ownership and `mod/book:edit`, updates Book revision/page order, deletes chapter files/tags on deletion, and triggers Book chapter events. This helper must not use raw SQL or plugin-owned tables.
 - Choice module options: `intro`, `choices`, `allow_update`, and `allow_multiple`. `choices` must contain at least two non-empty labels. By default, MoodlIA creates a visible Choice activity, allows the current user to update their choice, publishes anonymous aggregate results, and uses Moodle's `mod_choice` APIs for course listings, options, view events, submissions, response deletion, and results.
 - Database module options (`module_type=data`): `intro`, `comments`, `approval_required`, `manage_approved`, `required_entries`, `required_entries_to_view`, `max_entries`, `rss_articles`, `available_from`, `available_to`, `view_from`, `view_to`, `default_sort_field_id`, `default_sort_direction`, `edit_any`, `notification`, and `completion_entries`. MoodlIA creates the activity through Moodle's standard module creation API and exposes settings, including entry-count completion rules, through Moodle database APIs and course module metadata. Database fields and entries are managed as separate subelements through Moodle's `mod_data` field APIs and external entry APIs, without direct table access.
 - Database field operations: `get_data_fields` lists field metadata; `create_data_field` and `update_data_field` support the safe initial field types `text`, `textarea`, `number`, `menu`, `checkbox`, `radiobutton`, and `multimenu`; `delete_data_field` removes a field through Moodle's Database field API. Choice-like fields accept `options.choices`; `textarea` accepts `options.rows` and `options.columns`; advanced Moodle field types that require file or multi-subfield handling are intentionally not exposed yet. MoodlIA refuses to delete a field while Moodle uses it as the activity default sort field because Moodle's UI handles that setting with additional module-internal logic.
@@ -526,7 +537,7 @@ Do not expose secrets, local filesystem paths, stack traces, or raw token values
 - LTI module options (`module_type=lti`): `intro`, required `tool_url`, optional `secure_tool_url`, `type_id`, `launch_container`, privacy toggles (`send_name`, `send_email`, `allow_roster`, `allow_setting`), `accept_grades`, `grade`, `custom_parameters`, `resource_key`, `shared_secret`, `debug_launch`, `show_title_launch`, `show_description_launch`, `icon`, and `secure_icon`. MoodlIA creates the activity through Moodle's standard module creation API and exposes settings through `mod_lti_external::get_ltis_by_courses`; returned details intentionally omit shared secrets and passwords. Privacy-related options default to disabled.
 - Glossary module options: `intro`, `main_glossary`, `default_approval`, `edit_always`, `allow_duplicated_entries`, `allow_comments`, `use_dynamic_linking`, `display_format`, `approval_display_format`, `entries_per_page`, `show_alphabet`, `show_all`, `show_special`, `allow_print_view`, and `completion_entries`. MoodlIA creates the activity through Moodle's standard module creation API and exposes settings, browse modes, entries, and entry-count completion rules through Moodle glossary APIs.
 - Question bank module options (`module_type=qbank`): `intro` plus common module options. Moodle treats this as an explicit question bank module rather than a normal course-section activity, so it must be created with `section_number=0`. MoodlIA creates it through Moodle's standard module creation API and `get_module_details` exposes the module context, question bank URL, category count, question count, and category summaries through Moodle question APIs. Question category and question CRUD continue to use the canonical question bank operations.
-- Subsection module options (`module_type=subsection`): no module-specific options are currently exposed beyond common module options. MoodlIA creates the subsection through Moodle's standard module creation API, and `get_module_details` exposes the delegated section id, number, name, visibility, and availability returned by Moodle's course format APIs.
+- Subsection module options (`module_type=subsection`): no module-specific options are currently exposed beyond common module options. MoodlIA creates the subsection through Moodle's standard module creation API, and `get_module_details` exposes the delegated section id, number, name, visibility, and availability returned by Moodle's course format APIs. When a Moodle course format or site plugin rejects direct `create_section`, `subsection` is the documented Moodle-visible workaround: create a subsection activity, read its delegated section through `get_module_details`, then use that section number with `move_module`.
 - Wiki module options: `intro`, `first_page_title`, `wiki_mode`, `default_format`, and `force_format`. MoodlIA creates the activity through Moodle's standard module creation API and exposes settings, subwikis, pages, files, and page view events through Moodle wiki APIs.
 - Workshop module options: `intro`, `strategy`, `submission_grade`, `assessment_grade`, `grade_decimals`, `submission_instructions`, `assessment_instructions`, `text_submission`, `file_submission`, `max_submission_attachments`, `submission_file_types`, `max_file_size`, `late_submissions`, `self_assessment`, `example_submissions`, `examples_mode`, `submission_start`, `submission_end`, `assessment_start`, `assessment_end`, `switch_to_assessment_after_submission_deadline`, `conclusion`, and overall feedback settings. MoodlIA creates the activity through Moodle's standard module creation API and exposes settings through Moodle workshop APIs and course module metadata. Workshop phase switching, user-plan reads, grade reads, grade-report reads, reviewer/submission assessment reads, and submission CRUD are exposed through Moodle workshop APIs. Allocations, grading forms, and assessment mutation remain pending until they can be implemented through stable Moodle APIs without direct table access.
 - Forum module options: `forum_type` defaults to `general`; supported values are `general`, `eachuser`, `qanda`, `single`, and `blog`. `intro` stores the forum description. Forum creation also supports attachment limits, subscription/tracking settings, post blocking dates and thresholds, and completion rules for required discussions, replies, and total posts.
@@ -564,6 +575,42 @@ Do not expose secrets, local filesystem paths, stack traces, or raw token values
 - Capabilities: `mod/book:read`.
 - Registers a Moodle Book or chapter view through `mod_book_external::view_book`, allowing Moodle to trigger view events and completion handling.
 - Returns viewed status, resolved chapter id, and Moodle warnings. For an empty book, Moodle can return a successful view with warnings and `chapter_id` set to `0`.
+
+`create_book_chapter`
+
+- Type: write.
+- Parameters: `course_id`, `module_id`, `title`, `content`, optional `content_format`, optional `subchapter`, optional `after_chapter_id`, optional `hidden`.
+- Context: Book module.
+- Capabilities: `mod/book:edit`.
+- Creates a chapter in the selected Book activity. `after_chapter_id=0` inserts first, omitted or `null` appends, and a positive value inserts after that chapter. The first Book chapter cannot be a subchapter.
+- Returns the canonical chapter shape used by `get_book_chapters`.
+
+`update_book_chapter`
+
+- Type: write.
+- Parameters: `course_id`, `module_id`, `chapter_id`, and at least one mutable field: `title`, `content`, `content_format`, `subchapter`, or `hidden`.
+- Context: Book module.
+- Capabilities: `mod/book:edit`.
+- Updates a chapter after verifying it belongs to the selected Book activity. It bumps the Book revision and triggers Moodle's Book chapter update event.
+- Returns the canonical chapter shape used by `get_book_chapters`.
+
+`move_book_chapter`
+
+- Type: write.
+- Parameters: `course_id`, `module_id`, `chapter_id`, optional `after_chapter_id`.
+- Context: Book module.
+- Capabilities: `mod/book:edit`.
+- Moves a chapter in the Book page order. Moving a top-level chapter also moves its following subchapters as the same block, matching Moodle Book's UI behavior; moving a subchapter moves only that subchapter.
+- Returns the canonical chapter shape used by `get_book_chapters`.
+
+`delete_book_chapter`
+
+- Type: write.
+- Parameters: `course_id`, `module_id`, `chapter_id`.
+- Context: Book module.
+- Capabilities: `mod/book:edit`.
+- Deletes a chapter after verifying Book ownership. Deleting a top-level chapter also deletes its following subchapters, matching Moodle Book's UI behavior.
+- Returns deletion status and the deleted chapter ids.
 
 `get_course_books`
 
@@ -669,6 +716,55 @@ Do not expose secrets, local filesystem paths, stack traces, or raw token values
 - Context: assignment module.
 - Capabilities: `mod/assign:grade`.
 - Saves a Moodle assignment grade through `mod_assign_external::save_grade`, including optional `assignfeedback_comments` feedback. The returned status includes grade, grader id, grading status, and feedback comment.
+
+`get_assignment_grading_form`
+
+- Parameters: `course_id`, `module_id`.
+- Context: assignment module.
+- Capabilities: `mod/assign:grade`.
+- Reads the active Moodle advanced grading definition for the assignment submission area. Supported Moodle methods are `rubric` and `guide`; unsupported or absent methods return `supported=false`.
+
+`set_assignment_rubric`
+
+- Parameters: `course_id`, `module_id`, `name`, optional `description`, `criteria`, optional `options`.
+- Context: assignment module.
+- Capabilities: `mod/assign:grade`, `moodle/grade:managegradingforms`.
+- Creates or updates the Moodle rubric definition through Moodle's grading manager and rubric controller. Criteria and levels are supplied as a JSON object. The plugin does not create grading tables or bypass Moodle's grading APIs.
+
+`set_assignment_checklist`
+
+- Parameters: `course_id`, `module_id`, `name`, optional `description`, `items`.
+- Context: assignment module.
+- Capabilities: `mod/assign:grade`, `moodle/grade:managegradingforms`.
+- Creates a checklist as a binary Moodle rubric with `Not met` and `Met` levels. This keeps checklist workflows compatible with Moodle core when a native checklist advanced grading plugin is not installed.
+
+`set_assignment_marking_guide`
+
+- Parameters: `course_id`, `module_id`, `name`, optional `description`, `criteria`, optional `comments`, optional `options`.
+- Context: assignment module.
+- Capabilities: `mod/assign:grade`, `moodle/grade:managegradingforms`.
+- Creates or updates a Moodle marking guide definition through Moodle's guide controller, including reusable guide comments.
+
+`grade_assignment_with_rubric`
+
+- Parameters: `course_id`, `module_id`, `user_id`, `criteria`, optional `feedback_comment`, optional `attempt_number`.
+- Context: assignment module.
+- Capabilities: `mod/assign:grade`.
+- Grades a submitted assignment with the active Moodle rubric by passing `advancedgradingdata` to `mod_assign_external::save_grade`.
+
+`grade_assignment_with_checklist`
+
+- Parameters: `course_id`, `module_id`, `user_id`, `items`, optional `feedback_comment`, optional `attempt_number`.
+- Context: assignment module.
+- Capabilities: `mod/assign:grade`.
+- Grades a checklist generated by `set_assignment_checklist` by selecting the binary rubric level for each criterion and then using Moodle's normal assignment grading API.
+
+`grade_assignment_with_marking_guide`
+
+- Parameters: `course_id`, `module_id`, `user_id`, `criteria`, optional `feedback_comment`, optional `attempt_number`.
+- Context: assignment module.
+- Capabilities: `mod/assign:grade`.
+- Grades an assignment with the active Moodle marking guide through `advancedgradingdata`, including criterion scores and remarks.
 
 `get_assignment_submissions`
 
@@ -1611,6 +1707,8 @@ The CLI must also reuse the shared contract parameter builder. Required options,
 
 The shared client validates response shapes against the operation `returns` contract after successful REST calls. The validator checks declared fields and types while allowing extra Moodle fields that are outside the canonical contract.
 
+Advanced automation may disable only response-shape validation with `--no-validate-response` or `--raw`. Parameter validation and the REST call are unchanged. This exists for Moodle responses that are semantically usable but differ in nullable fields between Moodle versions or bank scopes.
+
 The same `MOODLE_REST_TOKEN` is used for REST, MCP, and CLI automation. There is no separate MCP token in the current design.
 
 Expected command pattern:
@@ -1619,12 +1717,19 @@ Expected command pattern:
 moodle-mcp <operation-name-in-kebab-case> [options]
 ```
 
+The public npm package exposes the same commands through the `moodlia` binary:
+
+```text
+moodlia <operation-name-in-kebab-case> [options]
+```
+
 Examples:
 
 ```text
 moodle-mcp get-courses --format json
 moodle-mcp create-module --course-id 42 --section-number 3 --module-type page --name "Reading"
 moodle-mcp update-question --question-id 99 --name "Updated title"
+moodlia get-courses --format json
 ```
 
 Object parameters are passed as JSON strings:

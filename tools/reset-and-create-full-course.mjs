@@ -331,9 +331,55 @@ const bookModule = await call('create_module', {
   })
 });
 
+const firstBookChapter = await call('create_book_chapter', {
+  course_id: courseId,
+  module_id: bookModule.course_module_id,
+  title: 'Getting started with MoodlIA',
+  content: '<p>This generated chapter verifies that MoodlIA can create Moodle Book content, not only the empty activity.</p>'
+});
+
+const secondBookChapter = await call('create_book_chapter', {
+  course_id: courseId,
+  module_id: bookModule.course_module_id,
+  title: 'Automation checklist',
+  content: '<p>This generated chapter is moved to the front to verify Book chapter reordering.</p>',
+  after_chapter_id: firstBookChapter.chapter_id
+});
+
+const bookSubchapter = await call('create_book_chapter', {
+  course_id: courseId,
+  module_id: bookModule.course_module_id,
+  title: 'Teacher notes',
+  content: '<p>This generated subchapter verifies nested Book chapter support.</p>',
+  after_chapter_id: firstBookChapter.chapter_id,
+  subchapter: true
+});
+
+const updatedBookChapter = await call('update_book_chapter', {
+  course_id: courseId,
+  module_id: bookModule.course_module_id,
+  chapter_id: firstBookChapter.chapter_id,
+  title: 'Getting started with MoodlIA automation',
+  content: '<p>This updated generated chapter verifies Book chapter updates and rendered content.</p>'
+});
+
+const movedBookChapter = await call('move_book_chapter', {
+  course_id: courseId,
+  module_id: bookModule.course_module_id,
+  chapter_id: secondBookChapter.chapter_id,
+  after_chapter_id: 0
+});
+
+const listedBookChapters = await call('get_book_chapters', {
+  course_id: courseId,
+  module_id: bookModule.course_module_id,
+  include_content: 1
+});
+
 const viewedBook = await call('view_book', {
   course_id: courseId,
-  module_id: bookModule.course_module_id
+  module_id: bookModule.course_module_id,
+  chapter_id: movedBookChapter.chapter_id
 });
 
 const gradeItems = await call('get_grade_items', {
@@ -1095,6 +1141,14 @@ console.log(JSON.stringify({
     grade_items: gradeItems,
     user_grades: userGrades,
     book: bookModule,
+    book_chapters: {
+      first_created: firstBookChapter,
+      second_created: secondBookChapter,
+      subchapter_created: bookSubchapter,
+      first_updated: updatedBookChapter,
+      second_moved: movedBookChapter,
+      listing: listedBookChapters
+    },
     book_view: viewedBook,
     label: labelModule,
     url: urlModule,

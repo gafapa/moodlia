@@ -32,6 +32,7 @@ test('npm CLI package contains only the publishable REST client surface', async 
     moodlia: 'cli/moodlia.mjs'
   });
   assert.deepEqual(files, [
+    'LICENSE',
     'README.md',
     'cli/moodlia.mjs',
     'client/generated/operation-types.d.ts',

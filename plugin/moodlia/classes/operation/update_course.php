@@ -33,6 +33,7 @@ class update_course {
      * @param string|null $summaryformat Public summary format.
      * @param string|null $format Course format plugin name.
      * @param bool|null $enablecompletion Whether course completion tracking is enabled.
+     * @param int|null $categoryid New course category id.
      * @param int|null $startdate Course start timestamp.
      * @param int|null $enddate Course end timestamp, or 0.
      * @return array
@@ -46,6 +47,7 @@ class update_course {
         ?string $summaryformat = null,
         ?string $format = null,
         ?bool $enablecompletion = null,
+        ?int $categoryid = null,
         ?int $startdate = null,
         ?int $enddate = null
     ): array {
@@ -92,6 +94,12 @@ class update_course {
 
         if ($enablecompletion !== null) {
             $data->enablecompletion = $enablecompletion ? 1 : 0;
+            $haschanges = true;
+        }
+
+        if ($categoryid !== null) {
+            $category = course_tools::get_category($categoryid);
+            $data->category = (int) $category->id;
             $haschanges = true;
         }
 

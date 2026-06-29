@@ -28,9 +28,10 @@ class create_course_category {
      * @param string $name Category name.
      * @param int $parentid Parent category id, or 0 for top level.
      * @param bool $visible Whether the category is visible.
+     * @param bool $reuseexisting Whether to return an existing sibling category with the same name.
      * @return array
      */
-    public static function execute(string $name, int $parentid = 0, bool $visible = true): array {
+    public static function execute(string $name, int $parentid = 0, bool $visible = true, bool $reuseexisting = false): array {
         course_tools::require_course_api();
 
         $name = trim($name);
@@ -38,8 +39,16 @@ class create_course_category {
             throw new \invalid_parameter_exception('name is required.');
         }
 
-        if ($parentid > 0) {
-            course_tools::get_category($parentid);
+        $parent = $parentid === 0 ? \core_course_category::top() : course_tools::get_category($parentid);
+
+        if ($reuseexisting) {
+            foreach ($parent->get_children() as $category) {
+                if ((string) $category->name === $name) {
+                    $response = course_tools::category_to_response($category);
+                    $response['created'] = false;
+                    return $response;
+                }
+            }
         }
 
         $category = \core_course_category::create([
@@ -48,6 +57,8 @@ class create_course_category {
             'visible' => $visible ? 1 : 0,
         ]);
 
-        return course_tools::category_to_response($category);
+        $response = course_tools::category_to_response($category);
+        $response['created'] = true;
+        return $response;
     }
 }

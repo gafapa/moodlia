@@ -20,6 +20,7 @@ const requiredFiles = [
   'classes/operation/get_course_details.php',
   'classes/operation/create_course.php',
   'classes/operation/update_course.php',
+  'classes/operation/move_course.php',
   'classes/operation/delete_course.php',
   'classes/operation/get_course_contents.php',
   'classes/operation/get_module_details.php',
@@ -66,11 +67,19 @@ const requiredFiles = [
   'classes/operation/set_forum_discussion_lock.php',
   'classes/operation/delete_forum_discussion_post.php',
   'classes/operation/assignment_tools.php',
+  'classes/operation/assignment_grading_tools.php',
   'classes/operation/get_course_assignments.php',
   'classes/operation/get_assignment_submission_status.php',
   'classes/operation/save_assignment_submission.php',
   'classes/operation/submit_assignment_for_grading.php',
   'classes/operation/save_assignment_grade.php',
+  'classes/operation/get_assignment_grading_form.php',
+  'classes/operation/set_assignment_rubric.php',
+  'classes/operation/set_assignment_checklist.php',
+  'classes/operation/set_assignment_marking_guide.php',
+  'classes/operation/grade_assignment_with_rubric.php',
+  'classes/operation/grade_assignment_with_checklist.php',
+  'classes/operation/grade_assignment_with_marking_guide.php',
   'classes/operation/get_assignment_submissions.php',
   'classes/operation/get_assignment_grades.php',
   'classes/operation/view_assignment.php',
@@ -97,9 +106,14 @@ const requiredFiles = [
   'classes/operation/get_feedback_finished_responses.php',
   'classes/operation/delete_feedback_item.php',
   'classes/operation/book_tools.php',
+  'classes/operation/book_chapter_tools.php',
   'classes/operation/get_course_books.php',
   'classes/operation/get_book_chapters.php',
   'classes/operation/view_book.php',
+  'classes/operation/create_book_chapter.php',
+  'classes/operation/update_book_chapter.php',
+  'classes/operation/move_book_chapter.php',
+  'classes/operation/delete_book_chapter.php',
   'classes/operation/lesson_tools.php',
   'classes/operation/get_lesson_access_information.php',
   'classes/operation/get_lesson_details.php',
@@ -219,6 +233,7 @@ const requiredFiles = [
   'classes/external/delete_course_category.php',
   'classes/external/get_course_details.php',
   'classes/external/update_course.php',
+  'classes/external/move_course.php',
   'classes/external/delete_course.php',
   'classes/external/get_course_contents.php',
   'classes/external/get_module_details.php',
@@ -264,6 +279,13 @@ const requiredFiles = [
   'classes/external/save_assignment_submission.php',
   'classes/external/submit_assignment_for_grading.php',
   'classes/external/save_assignment_grade.php',
+  'classes/external/get_assignment_grading_form.php',
+  'classes/external/set_assignment_rubric.php',
+  'classes/external/set_assignment_checklist.php',
+  'classes/external/set_assignment_marking_guide.php',
+  'classes/external/grade_assignment_with_rubric.php',
+  'classes/external/grade_assignment_with_checklist.php',
+  'classes/external/grade_assignment_with_marking_guide.php',
   'classes/external/get_assignment_submissions.php',
   'classes/external/get_assignment_grades.php',
   'classes/external/view_assignment.php',
@@ -289,6 +311,10 @@ const requiredFiles = [
   'classes/external/get_course_books.php',
   'classes/external/get_book_chapters.php',
   'classes/external/view_book.php',
+  'classes/external/create_book_chapter.php',
+  'classes/external/update_book_chapter.php',
+  'classes/external/move_book_chapter.php',
+  'classes/external/delete_book_chapter.php',
   'classes/external/get_lesson_access_information.php',
   'classes/external/get_lesson_details.php',
   'classes/external/get_course_lessons.php',
@@ -427,6 +453,7 @@ test('plugin does not declare plugin-owned database schema files', async () => {
 
 test('plugin code does not use direct database access or raw SQL', async () => {
   const files = await readPluginPhpFiles(pluginRoot.replaceAll('\\', '/'));
+  const auditedDmlBoundary = fromRoot('plugin/moodlia/classes/operation/book_chapter_tools.php').replaceAll('\\', '/');
   const forbiddenPatterns = [
     /\$DB\b/,
     /\bSELECT\b[\s\S]*\bFROM\b/i,
@@ -436,6 +463,16 @@ test('plugin code does not use direct database access or raw SQL', async () => {
   ];
 
   for (const file of files) {
+    if (file.replaceAll('\\', '/') === auditedDmlBoundary) {
+      const content = await fs.readFile(file, 'utf8');
+      assert.match(content, /Moodle Book does not expose a public external or component writer API/);
+      assert.doesNotMatch(content, /\bSELECT\b[\s\S]*\bFROM\b/i, `${file} must not contain raw SELECT SQL.`);
+      assert.doesNotMatch(content, /\bINSERT\s+INTO\b/i, `${file} must not contain raw INSERT SQL.`);
+      assert.doesNotMatch(content, /\bUPDATE\s+\S+\s+SET\b/i, `${file} must not contain raw UPDATE SQL.`);
+      assert.doesNotMatch(content, /\bDELETE\s+FROM\b/i, `${file} must not contain raw DELETE SQL.`);
+      continue;
+    }
+
     const content = await fs.readFile(file, 'utf8');
     for (const pattern of forbiddenPatterns) {
       assert.doesNotMatch(content, pattern, `${file} must not contain ${pattern}.`);
@@ -674,13 +711,24 @@ test('write external functions validate context and declared capabilities before
     ['view_quiz_attempt_review', ['mod/quiz:attempt', 'mod/quiz:preview', 'mod/quiz:viewreports']],
     ['update_question', ['moodle/question:editmine', 'moodle/question:editall']],
     ['delete_question', ['moodle/question:editmine', 'moodle/question:editall']],
-    ['move_question', ['moodle/question:movemine', 'moodle/question:moveall']]
+    ['move_question', ['moodle/question:movemine', 'moodle/question:moveall']],
+    ['update_book_chapter', ['mod/book:edit']],
+    ['move_book_chapter', ['mod/book:edit']],
+    ['delete_book_chapter', ['mod/book:edit']],
+    ['get_assignment_grading_form', ['mod/assign:grade']],
+    ['set_assignment_rubric', ['mod/assign:grade', 'moodle/grade:managegradingforms']],
+    ['set_assignment_checklist', ['mod/assign:grade', 'moodle/grade:managegradingforms']],
+    ['set_assignment_marking_guide', ['mod/assign:grade', 'moodle/grade:managegradingforms']],
+    ['grade_assignment_with_rubric', ['mod/assign:grade']],
+    ['grade_assignment_with_checklist', ['mod/assign:grade']],
+    ['grade_assignment_with_marking_guide', ['mod/assign:grade']]
   ]);
 
   const contextHelpers = [
     'require_assignment_context(',
     'validate_quiz_attempt_context(',
-    'validate_quiz_attempt_review_context('
+    'validate_quiz_attempt_review_context(',
+    'validate_write_context('
   ];
 
   for (const operation of contract.operations.filter((item) => item.type === 'write' && item.transports.includes('rest'))) {

@@ -260,6 +260,7 @@ Recommended write checks in generated test courses:
 create_course_category
 update_course_category
 delete_course_category
+move_course
 create_calendar_event
 update_calendar_event
 delete_calendar_event
@@ -346,18 +347,29 @@ node cli/moodle-mcp.mjs get-enrolled-users --course-id 42 --format json
 node cli/moodle-mcp.mjs get-groups --course-id 42 --format json
 ```
 
-When the package is linked or installed, the same commands can be run as:
+When the public package is linked or installed, the same commands can be run as:
 
 ```text
-moodle-mcp get-current-user --format json
-moodle-mcp get-courses --limit 5 --format json
+moodlia get-current-user --format json
+moodlia get-courses --limit 5 --format json
 ```
 
 Write commands use the same canonical operation names in kebab-case. Object parameters are JSON strings:
 
 ```text
 node cli/moodle-mcp.mjs create-module --course-id 42 --section-number 1 --module-type page --name "Reading" --options "{\"content\":\"<p>Hello</p>\"}" --format json
+node cli/moodle-mcp.mjs create-module --course-id 42 --section-number 0 --module-type qbank --name "MoodlIA Question Bank" --format json
+node cli/moodle-mcp.mjs move-course --course-id 42 --category-id 12 --format json
 ```
+
+On Windows PowerShell, prefer the PowerShell shim when passing complex JSON options:
+
+```powershell
+$options = '{ "content": "<p>Hello from PowerShell.</p>" }'
+.\node_modules\.bin\moodlia.ps1 create-module --course-id 42 --section-number 1 --module-type page --name "Reading" --options $options
+```
+
+Use `--raw` or `--no-validate-response` only to skip response-shape validation for a usable Moodle response. The CLI still validates command parameters before making the REST request.
 
 Required CLI assertions:
 
@@ -367,6 +379,26 @@ Required CLI assertions:
 - Non-zero exits are used for failed operations.
 - Errors use normalized error codes.
 - Shared advanced-question workflows return the same canonical shape as REST when called through the CLI.
+
+## Npm Package Verification
+
+The public npm package is generated from the development repository and must stay minimal:
+
+```text
+npm run npm:sync
+npm run npm:sync:check
+npm run npm:pack:dry-run
+```
+
+The generated package is `packages/moodlia` and the installed binary is `moodlia`.
+
+Required npm package assertions:
+
+- The generated package contains only the public CLI/client files documented in `docs/npm-package.md`.
+- The package README documents installation, configuration, command usage, programmatic client usage, published files, and security expectations.
+- The published contract excludes unpublished transport metadata.
+- No local credentials, env files, deployment scripts, browser reports, smoke tests, or development-only tools are included.
+- `npm pack --dry-run` reports the expected file list before publishing.
 
 ## Client Verification
 
@@ -459,7 +491,7 @@ The reset command deletes every manageable course returned by `get_courses`, the
 - The current token user enrolled as a student through Moodle manual enrolment.
 - A generated group containing the enrolled user.
 - A page activity.
-- A book activity.
+- A book activity with generated chapters and a generated subchapter.
 - An assignment activity with online text submissions enabled, a generated online-text submission, submitted-for-grading status, saved grade, feedback comment, gradebook item, and user grade row.
 - A label activity rendered inline on the course page.
 - A URL activity with a visible external link.
@@ -501,6 +533,7 @@ node cli/moodle-mcp.mjs get-groups --course-id=<course_id>
 node cli/moodle-mcp.mjs get-group-members --course-id=<course_id> --group-id=<group_id>
 node cli/moodle-mcp.mjs get-course-contents --course-id=<course_id>
 node cli/moodle-mcp.mjs get-folder-files --course-id=<course_id> --module-id=<folder_cmid>
+node cli/moodle-mcp.mjs get-book-chapters --course-id=<course_id> --module-id=<book_cmid> --include-content=true
 node cli/moodle-mcp.mjs search-glossary-entries --course-id=<course_id> --module-id=<glossary_cmid> --query="MoodlIA shared interface" --full-search=true --include-not-approved=true
 node cli/moodle-mcp.mjs get-wiki-pages --course-id=<course_id> --module-id=<wiki_cmid> --include-content=true
 node cli/moodle-mcp.mjs duplicate-module --course-id=<course_id> --module-id=<cmid> --section-number=<section_number> --name="Duplicated activity"
@@ -522,7 +555,7 @@ The expected result is:
 - The generated wiki page appears in the wiki activity with the updated content.
 - The generated assignment submission appears in Moodle's assignment grading view, with the submitted status, online text, saved grade, and feedback comment visible.
 - Moodle's user grade report shows the generated assignment grade item, saved grade, and grade range.
-- Subsection, Book, LTI, Database, Lesson, and Workshop pages expose their generated subelements or Moodle-visible empty-state controls.
+- Subsection, Book, LTI, Database, Lesson, and Workshop pages expose their generated subelements or Moodle-visible empty-state controls. The Book page must show generated chapter navigation and rendered chapter content.
 - Database fields and the updated generated entry appear in the Database activity page.
 - Workshop phase, submission table, assessment instructions, and generated submission detail page are visible in Moodle.
 - The quiz-private bank contains only the quiz-private question.

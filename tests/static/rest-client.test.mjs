@@ -199,6 +199,48 @@ test('shared response validator checks contract return shape', () => {
   );
 });
 
+test('shared response validator accepts nullable response fields', () => {
+  const operation = {
+    name: 'get_nullable_example',
+    returns: {
+      item_id: 'integer',
+      owner_id: 'integer|null',
+      children: [
+        {
+          child_id: 'integer',
+          parent_id: 'integer|null'
+        }
+      ]
+    }
+  };
+
+  const payload = {
+    item_id: 7,
+    owner_id: null,
+    children: [
+      {
+        child_id: 3,
+        parent_id: null
+      }
+    ]
+  };
+
+  assert.equal(validateContractResponse(operation, payload), payload);
+});
+
+test('MoodleClient can skip response validation for raw automation output', async () => {
+  const client = createMoodleClient({
+    baseUrl: 'https://moodle.example.test/',
+    token: 'test-token',
+    contract,
+    validateResponses: false,
+    timeoutMs: 0,
+    fetchImplementation: async () => new Response(JSON.stringify({ courses: null }), { status: 200 })
+  });
+
+  assert.deepEqual(await client.get_courses({}), { courses: null });
+});
+
 test('MoodleClient validates operation parameters against the contract', async () => {
   const client = createMoodleClient({
     baseUrl: 'https://moodle.example.test/',

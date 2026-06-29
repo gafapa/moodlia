@@ -34,18 +34,21 @@ class create_course_category extends external_api {
             'name' => new external_value(PARAM_TEXT, 'Category name'),
             'parent_id' => new external_value(PARAM_INT, 'Parent category id, or 0 for top level', VALUE_DEFAULT, 0),
             'visible' => new external_value(PARAM_BOOL, 'Whether the category is visible', VALUE_DEFAULT, true),
+            'reuse_existing' => new external_value(PARAM_BOOL, 'Return an existing sibling category with the same name instead of creating a duplicate', VALUE_DEFAULT, false),
         ]);
     }
 
-    public static function execute(string $name, int $parent_id = 0, bool $visible = true): array {
+    public static function execute(string $name, int $parent_id = 0, bool $visible = true, bool $reuse_existing = false): array {
         [
             'name' => $name,
             'parent_id' => $parentid,
             'visible' => $visible,
+            'reuse_existing' => $reuseexisting,
         ] = self::validate_parameters(self::execute_parameters(), [
             'name' => $name,
             'parent_id' => $parent_id,
             'visible' => $visible,
+            'reuse_existing' => $reuse_existing,
         ]);
 
         $systemcontext = \context_system::instance();
@@ -56,10 +59,18 @@ class create_course_category extends external_api {
         self::validate_context($context);
         require_capability('moodle/category:manage', $context);
 
-        return create_course_category_operation::execute($name, (int) $parentid, (bool) $visible);
+        return create_course_category_operation::execute($name, (int) $parentid, (bool) $visible, (bool) $reuseexisting);
     }
 
     public static function execute_returns(): external_single_structure {
-        return get_course_categories::category_structure();
+        return new external_single_structure([
+            'category_id' => new external_value(PARAM_INT, 'Moodle course category id'),
+            'name' => new external_value(PARAM_TEXT, 'Category name'),
+            'parent_id' => new external_value(PARAM_INT, 'Parent category id'),
+            'visible' => new external_value(PARAM_BOOL, 'Whether the category is visible'),
+            'course_count' => new external_value(PARAM_INT, 'Number of direct courses in the category'),
+            'url' => new external_value(PARAM_URL, 'Category URL'),
+            'created' => new external_value(PARAM_BOOL, 'Whether a new category was created'),
+        ]);
     }
 }

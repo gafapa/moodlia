@@ -73,7 +73,7 @@ function buildParameters(operation, rawOptions) {
   }
 
   for (const [name, value] of Object.entries(rawOptions)) {
-    if (['format', 'help'].includes(name) || value === undefined || value === null || value === '') {
+    if (['format', 'help', 'no_validate_response', 'raw'].includes(name) || value === undefined || value === null || value === '') {
       continue;
     }
     if (!Object.hasOwn(operation.parameters ?? {}, name)) {
@@ -117,6 +117,8 @@ function printHelp(contract, operation = null) {
     console.log('');
     console.log('Global options:');
     console.log('  --format json');
+    console.log('  --no-validate-response');
+    console.log('  --raw  Alias for --no-validate-response');
     console.log('  --help');
     return;
   }
@@ -130,6 +132,8 @@ function printHelp(contract, operation = null) {
     console.log(`  --${toKebabCase(name)} <${definition.type}>  ${describeOption(definition)}`);
   }
   console.log('  --format <string>  optional; one of: json');
+  console.log('  --no-validate-response  optional; skip contract response validation');
+  console.log('  --raw  optional; alias for --no-validate-response');
 }
 
 async function main() {
@@ -167,7 +171,8 @@ async function main() {
   const client = createMoodleRestClient({
     baseUrl: process.env.MOODLE_BASE_URL,
     token: process.env.MOODLE_REST_TOKEN,
-    contract
+    contract,
+    validateResponses: !(options.no_validate_response || options.raw)
   });
   const payload = await client.callOperation(operation.name, parameters);
   console.log(JSON.stringify(payload, null, 2));

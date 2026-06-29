@@ -136,6 +136,10 @@
         "visible": {
           "type": "boolean",
           "required": false
+        },
+        "reuse_existing": {
+          "type": "boolean",
+          "required": false
         }
       },
       "returns": {
@@ -144,7 +148,8 @@
         "parent_id": "integer",
         "visible": "boolean",
         "course_count": "integer",
-        "url": "string"
+        "url": "string",
+        "created": "boolean"
       },
       "errors": [
         "invalid_parameters",
@@ -1884,7 +1889,7 @@
     },
     {
       "name": "update_course",
-      "summary": "Update Moodle course identity, visibility, summary, format, and date fields.",
+      "summary": "Update Moodle course identity, category, visibility, summary, format, and date fields.",
       "type": "write",
       "context": "course",
       "capabilities": [
@@ -1928,6 +1933,10 @@
           "type": "string",
           "required": false
         },
+        "category_id": {
+          "type": "integer",
+          "required": false
+        },
         "start_date": {
           "type": "integer",
           "required": false
@@ -1953,6 +1962,51 @@
         "enable_completion": "boolean",
         "start_date": "integer",
         "end_date": "integer",
+        "url": "string"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli",
+        "browser"
+      ]
+    },
+    {
+      "name": "move_course",
+      "summary": "Move a Moodle course to another category.",
+      "type": "write",
+      "context": "course",
+      "capabilities": [
+        "moodle/course:update",
+        "moodle/course:create"
+      ],
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true
+        },
+        "category_id": {
+          "type": "integer",
+          "required": true
+        }
+      },
+      "returns": {
+        "course_id": "integer",
+        "category_id": "integer",
+        "moved": "boolean",
         "url": "string"
       },
       "errors": [
@@ -2925,6 +2979,273 @@
         "parity",
         "api",
         "cli"
+      ]
+    },
+    {
+      "name": "create_book_chapter",
+      "summary": "Create a chapter in a Moodle book activity.",
+      "type": "write",
+      "context": "module",
+      "capabilities": [
+        "mod/book:edit"
+      ],
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true
+        },
+        "module_id": {
+          "type": "integer",
+          "required": true
+        },
+        "title": {
+          "type": "string",
+          "required": true
+        },
+        "content": {
+          "type": "string",
+          "required": true
+        },
+        "content_format": {
+          "type": "integer",
+          "required": false
+        },
+        "subchapter": {
+          "type": "boolean",
+          "required": false
+        },
+        "after_chapter_id": {
+          "type": "integer",
+          "required": false
+        },
+        "hidden": {
+          "type": "boolean",
+          "required": false
+        }
+      },
+      "returns": {
+        "chapter_id": "integer",
+        "book_id": "integer",
+        "module_id": "integer",
+        "title": "string",
+        "content": "string",
+        "content_format": "integer",
+        "page_number": "integer",
+        "subchapter": "boolean",
+        "hidden": "boolean",
+        "parent_chapter_id": "integer",
+        "previous_chapter_id": "integer",
+        "next_chapter_id": "integer",
+        "url": "string"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli",
+        "browser"
+      ]
+    },
+    {
+      "name": "update_book_chapter",
+      "summary": "Update a chapter in a Moodle book activity.",
+      "type": "write",
+      "context": "module",
+      "capabilities": [
+        "mod/book:edit"
+      ],
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true
+        },
+        "module_id": {
+          "type": "integer",
+          "required": true
+        },
+        "chapter_id": {
+          "type": "integer",
+          "required": true
+        },
+        "title": {
+          "type": "string",
+          "required": false
+        },
+        "content": {
+          "type": "string",
+          "required": false
+        },
+        "content_format": {
+          "type": "integer",
+          "required": false
+        },
+        "subchapter": {
+          "type": "boolean",
+          "required": false
+        },
+        "hidden": {
+          "type": "boolean",
+          "required": false
+        }
+      },
+      "returns": {
+        "chapter_id": "integer",
+        "book_id": "integer",
+        "module_id": "integer",
+        "title": "string",
+        "content": "string",
+        "content_format": "integer",
+        "page_number": "integer",
+        "subchapter": "boolean",
+        "hidden": "boolean",
+        "parent_chapter_id": "integer",
+        "previous_chapter_id": "integer",
+        "next_chapter_id": "integer",
+        "url": "string"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli",
+        "browser"
+      ]
+    },
+    {
+      "name": "move_book_chapter",
+      "summary": "Move a chapter in a Moodle book activity.",
+      "type": "write",
+      "context": "module",
+      "capabilities": [
+        "mod/book:edit"
+      ],
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true
+        },
+        "module_id": {
+          "type": "integer",
+          "required": true
+        },
+        "chapter_id": {
+          "type": "integer",
+          "required": true
+        },
+        "after_chapter_id": {
+          "type": "integer",
+          "required": false
+        }
+      },
+      "returns": {
+        "chapter_id": "integer",
+        "book_id": "integer",
+        "module_id": "integer",
+        "title": "string",
+        "content": "string",
+        "content_format": "integer",
+        "page_number": "integer",
+        "subchapter": "boolean",
+        "hidden": "boolean",
+        "parent_chapter_id": "integer",
+        "previous_chapter_id": "integer",
+        "next_chapter_id": "integer",
+        "url": "string"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli",
+        "browser"
+      ]
+    },
+    {
+      "name": "delete_book_chapter",
+      "summary": "Delete a chapter from a Moodle book activity.",
+      "type": "write",
+      "context": "module",
+      "capabilities": [
+        "mod/book:edit"
+      ],
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true
+        },
+        "module_id": {
+          "type": "integer",
+          "required": true
+        },
+        "chapter_id": {
+          "type": "integer",
+          "required": true
+        }
+      },
+      "returns": {
+        "course_id": "integer",
+        "module_id": "integer",
+        "book_id": "integer",
+        "chapter_id": "integer",
+        "deleted": "boolean",
+        "deleted_chapter_ids": [
+          "integer"
+        ]
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli",
+        "browser"
       ]
     },
     {
@@ -8618,6 +8939,566 @@
         },
         "grade": {
           "type": "number",
+          "required": true
+        },
+        "feedback_comment": {
+          "type": "string",
+          "required": false
+        },
+        "attempt_number": {
+          "type": "integer",
+          "required": false
+        }
+      },
+      "returns": {
+        "course_id": "integer",
+        "module_id": "integer",
+        "assignment_id": "integer",
+        "user_id": "integer",
+        "submission_id": "integer",
+        "status": "string",
+        "attempt_number": "integer",
+        "can_edit": "boolean",
+        "submitted": "boolean",
+        "online_text": "string",
+        "graded": "boolean",
+        "grade": "number",
+        "grader_id": "integer",
+        "grading_status": "string",
+        "feedback_comment": "string"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli",
+        "browser"
+      ]
+    },
+    {
+      "name": "get_assignment_grading_form",
+      "summary": "Return the active advanced grading form for a Moodle assignment.",
+      "type": "read",
+      "context": "module",
+      "capabilities": [
+        "mod/assign:grade"
+      ],
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true
+        },
+        "module_id": {
+          "type": "integer",
+          "required": true
+        }
+      },
+      "returns": {
+        "course_id": "integer",
+        "module_id": "integer",
+        "assignment_id": "integer",
+        "active_method": "string",
+        "supported": "boolean",
+        "definition_id": "integer",
+        "name": "string",
+        "description": "string",
+        "status": "integer",
+        "criteria": [
+          {
+            "criterion_id": "integer",
+            "sort_order": "integer",
+            "shortname": "string",
+            "description": "string",
+            "description_markers": "string",
+            "max_score": "number",
+            "levels": [
+              {
+                "level_id": "integer",
+                "score": "number",
+                "definition": "string"
+              }
+            ]
+          }
+        ],
+        "comments": [
+          {
+            "comment_id": "integer",
+            "sort_order": "integer",
+            "description": "string"
+          }
+        ],
+        "checklist_compatible": "boolean"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli",
+        "browser"
+      ]
+    },
+    {
+      "name": "set_assignment_rubric",
+      "summary": "Create or update a Moodle assignment rubric.",
+      "type": "write",
+      "context": "module",
+      "capabilities": [
+        "mod/assign:grade",
+        "moodle/grade:managegradingforms"
+      ],
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true
+        },
+        "module_id": {
+          "type": "integer",
+          "required": true
+        },
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "description": {
+          "type": "string",
+          "required": false
+        },
+        "criteria": {
+          "type": "object",
+          "required": true
+        },
+        "options": {
+          "type": "object",
+          "required": false
+        }
+      },
+      "returns": {
+        "course_id": "integer",
+        "module_id": "integer",
+        "assignment_id": "integer",
+        "active_method": "string",
+        "supported": "boolean",
+        "definition_id": "integer",
+        "name": "string",
+        "description": "string",
+        "status": "integer",
+        "criteria": [
+          {
+            "criterion_id": "integer",
+            "sort_order": "integer",
+            "shortname": "string",
+            "description": "string",
+            "description_markers": "string",
+            "max_score": "number",
+            "levels": [
+              {
+                "level_id": "integer",
+                "score": "number",
+                "definition": "string"
+              }
+            ]
+          }
+        ],
+        "comments": [
+          {
+            "comment_id": "integer",
+            "sort_order": "integer",
+            "description": "string"
+          }
+        ],
+        "checklist_compatible": "boolean"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli",
+        "browser"
+      ]
+    },
+    {
+      "name": "set_assignment_checklist",
+      "summary": "Create a Moodle assignment checklist as a binary rubric.",
+      "type": "write",
+      "context": "module",
+      "capabilities": [
+        "mod/assign:grade",
+        "moodle/grade:managegradingforms"
+      ],
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true
+        },
+        "module_id": {
+          "type": "integer",
+          "required": true
+        },
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "description": {
+          "type": "string",
+          "required": false
+        },
+        "items": {
+          "type": "object",
+          "required": true
+        }
+      },
+      "returns": {
+        "course_id": "integer",
+        "module_id": "integer",
+        "assignment_id": "integer",
+        "active_method": "string",
+        "supported": "boolean",
+        "definition_id": "integer",
+        "name": "string",
+        "description": "string",
+        "status": "integer",
+        "criteria": [
+          {
+            "criterion_id": "integer",
+            "sort_order": "integer",
+            "shortname": "string",
+            "description": "string",
+            "description_markers": "string",
+            "max_score": "number",
+            "levels": [
+              {
+                "level_id": "integer",
+                "score": "number",
+                "definition": "string"
+              }
+            ]
+          }
+        ],
+        "comments": [
+          {
+            "comment_id": "integer",
+            "sort_order": "integer",
+            "description": "string"
+          }
+        ],
+        "checklist_compatible": "boolean"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli",
+        "browser"
+      ]
+    },
+    {
+      "name": "set_assignment_marking_guide",
+      "summary": "Create or update a Moodle assignment marking guide.",
+      "type": "write",
+      "context": "module",
+      "capabilities": [
+        "mod/assign:grade",
+        "moodle/grade:managegradingforms"
+      ],
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true
+        },
+        "module_id": {
+          "type": "integer",
+          "required": true
+        },
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "description": {
+          "type": "string",
+          "required": false
+        },
+        "criteria": {
+          "type": "object",
+          "required": true
+        },
+        "comments": {
+          "type": "object",
+          "required": false
+        },
+        "options": {
+          "type": "object",
+          "required": false
+        }
+      },
+      "returns": {
+        "course_id": "integer",
+        "module_id": "integer",
+        "assignment_id": "integer",
+        "active_method": "string",
+        "supported": "boolean",
+        "definition_id": "integer",
+        "name": "string",
+        "description": "string",
+        "status": "integer",
+        "criteria": [
+          {
+            "criterion_id": "integer",
+            "sort_order": "integer",
+            "shortname": "string",
+            "description": "string",
+            "description_markers": "string",
+            "max_score": "number",
+            "levels": [
+              {
+                "level_id": "integer",
+                "score": "number",
+                "definition": "string"
+              }
+            ]
+          }
+        ],
+        "comments": [
+          {
+            "comment_id": "integer",
+            "sort_order": "integer",
+            "description": "string"
+          }
+        ],
+        "checklist_compatible": "boolean"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli",
+        "browser"
+      ]
+    },
+    {
+      "name": "grade_assignment_with_rubric",
+      "summary": "Grade a Moodle assignment using its active rubric.",
+      "type": "write",
+      "context": "module",
+      "capabilities": [
+        "mod/assign:grade"
+      ],
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true
+        },
+        "module_id": {
+          "type": "integer",
+          "required": true
+        },
+        "user_id": {
+          "type": "integer",
+          "required": true
+        },
+        "criteria": {
+          "type": "object",
+          "required": true
+        },
+        "feedback_comment": {
+          "type": "string",
+          "required": false
+        },
+        "attempt_number": {
+          "type": "integer",
+          "required": false
+        }
+      },
+      "returns": {
+        "course_id": "integer",
+        "module_id": "integer",
+        "assignment_id": "integer",
+        "user_id": "integer",
+        "submission_id": "integer",
+        "status": "string",
+        "attempt_number": "integer",
+        "can_edit": "boolean",
+        "submitted": "boolean",
+        "online_text": "string",
+        "graded": "boolean",
+        "grade": "number",
+        "grader_id": "integer",
+        "grading_status": "string",
+        "feedback_comment": "string"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli",
+        "browser"
+      ]
+    },
+    {
+      "name": "grade_assignment_with_checklist",
+      "summary": "Grade a Moodle assignment using a binary rubric checklist.",
+      "type": "write",
+      "context": "module",
+      "capabilities": [
+        "mod/assign:grade"
+      ],
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true
+        },
+        "module_id": {
+          "type": "integer",
+          "required": true
+        },
+        "user_id": {
+          "type": "integer",
+          "required": true
+        },
+        "items": {
+          "type": "object",
+          "required": true
+        },
+        "feedback_comment": {
+          "type": "string",
+          "required": false
+        },
+        "attempt_number": {
+          "type": "integer",
+          "required": false
+        }
+      },
+      "returns": {
+        "course_id": "integer",
+        "module_id": "integer",
+        "assignment_id": "integer",
+        "user_id": "integer",
+        "submission_id": "integer",
+        "status": "string",
+        "attempt_number": "integer",
+        "can_edit": "boolean",
+        "submitted": "boolean",
+        "online_text": "string",
+        "graded": "boolean",
+        "grade": "number",
+        "grader_id": "integer",
+        "grading_status": "string",
+        "feedback_comment": "string"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli",
+        "browser"
+      ]
+    },
+    {
+      "name": "grade_assignment_with_marking_guide",
+      "summary": "Grade a Moodle assignment using its active marking guide.",
+      "type": "write",
+      "context": "module",
+      "capabilities": [
+        "mod/assign:grade"
+      ],
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true
+        },
+        "module_id": {
+          "type": "integer",
+          "required": true
+        },
+        "user_id": {
+          "type": "integer",
+          "required": true
+        },
+        "criteria": {
+          "type": "object",
           "required": true
         },
         "feedback_comment": {

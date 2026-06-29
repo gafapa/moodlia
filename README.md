@@ -19,7 +19,9 @@ The project keeps API, CLI, and MCP tools aligned through one canonical operatio
 - [Moodle plugin guidelines](docs/moodle-plugin-guidelines.md): Moodle API usage rules, plugin boundaries, security, privacy, files, upgrades, and anti-patterns.
 - [Architecture](docs/architecture.md): shared core model, data flow, interface adapters, contract ownership, and reuse rules.
 - [Interface contract](docs/interface-contract.md): canonical operations, parameter and return rules, naming conventions, error handling, and parity requirements.
+- [CLI usage](docs/cli-usage.md): installation, configuration, command discovery, JSON parameters, and practical recipes for Moodle workflows.
 - [Install and release guide](docs/install-release-guide.md): installation, packaging, deployment, verification, demo course generation, and rollback checklist.
+- [Npm package](docs/npm-package.md): public `moodlia` package contents, sync process, verification, and publish workflow.
 - [Activity subelement API boundaries](docs/subelement-api-boundaries.md): implemented subelement areas, intentionally unavailable writes, and the acceptance standard for adding new subelement mutations.
 - [Automation](docs/automation.md): environment configuration, SFTP deployment, verification commands, and safeguards.
 - [Development roadmap](docs/development-roadmap.md): phased path from documentation to scaffold, contract tooling, CLI, deployment, and verification.
@@ -43,6 +45,7 @@ Operation names stay stable across transports in `snake_case`, for example `get_
 - REST web service functions: `local_moodlia_get_courses`
 - MCP tools: `get_courses`
 - Node CLI commands: `moodle-mcp get-courses`
+- Public npm CLI commands: `moodlia get-courses`
 - TypeScript methods: `get_courses()` using the canonical operation name
 
 ## Current Implementation
@@ -61,16 +64,17 @@ The current implementation includes:
 - Generated per-operation TypeScript request/response declarations in `client/generated/operation-types.d.ts`, refreshed with `npm run types:generate` and checked with `npm run types:check`.
 - Static parity checks for the contract, Moodle service declarations, CLI commands, generated TypeScript operation types, and forbidden direct database access patterns.
 - Runtime transport parity checks compare REST, MCP, and CLI result shapes for stable read operations.
-- REST smoke and write tests that generate their own Moodle course categories and courses, manage course calendar events, enrol and unenrol the configured user, manage groups and group membership, create Choice, Database, Feedback, Lesson, LTI, Question bank, Subsection, and Workshop activities, verify common and module-specific completion rules, read Lesson access/page/grade/timer/attempt data and register Lesson views, manage Workshop phases, user plans, grades, grade reports, assessment reads, and submissions, create/list/update/delete Database fields and entries, list Feedback items, create forum discussions and replies, create/search/update/delete glossary entries, create/list/update wiki pages, list course assignments, save, submit, and grade assignment online-text submissions, verify gradebook items, user grades, course progress reports, and quiz results reports, and create all supported question types including embedded-choice, drag-and-drop, ordering, and calculated variants.
-- MCP smoke and write lifecycle tests for course categories, courses, calendar events, enrolment, groups, module creation/update/duplication/move/deletion, Choice, Database field and entry operations, Feedback, Feedback item listing, Lesson, LTI, Question bank, Subsection, Workshop phases, user plans, grades, grade reports, assessment reads, and submissions, forum discussions and replies, glossary entries, wiki pages, course assignment listing, assignment online-text submissions and grades, gradebook items and user grades, files, question categories, `truefalse`, `shortanswer`, `multichoice`, `numerical`, `essay`, and `matching` questions, quizzes, quiz attempts, and quiz results reports.
+- REST smoke and write tests that generate their own Moodle course categories and courses, manage course calendar events, enrol and unenrol the configured user, manage groups and group membership, create Choice, Database, Feedback, Lesson, LTI, Book, Question bank, Subsection, and Workshop activities, verify common and module-specific completion rules, create/list/update/move/delete Book chapters, read Lesson access/page/grade/timer/attempt data and register Lesson views, manage Workshop phases, user plans, grades, grade reports, assessment reads, and submissions, create/list/update/delete Database fields and entries, list Feedback items, create forum discussions and replies, create/search/update/delete glossary entries, create/list/update wiki pages, list course assignments, save, submit, numerically grade assignment online-text submissions, configure and grade assignment rubrics/checklists/marking guides, verify gradebook items, user grades, course progress reports, and quiz results reports, and create all supported question types including embedded-choice, drag-and-drop, ordering, and calculated variants.
+- MCP smoke and write lifecycle tests for course categories, courses, calendar events, enrolment, groups, module creation/update/duplication/move/deletion, Choice, Database field and entry operations, Feedback, Feedback item listing, Book chapter creation/listing/update/movement/deletion, Lesson, LTI, Question bank, Subsection, Workshop phases, user plans, grades, grade reports, assessment reads, and submissions, forum discussions and replies, glossary entries, wiki pages, course assignment listing, assignment online-text submissions and grades, assignment rubric/checklist/marking-guide grading, gradebook items and user grades, files, question categories, `truefalse`, `shortanswer`, `multichoice`, `numerical`, `essay`, and `matching` questions, quizzes, quiz attempts, and quiz results reports.
 - MCP negative validation tests for missing bearer tokens, invalid tokens, unknown methods, unknown tools, invalid tool arguments, malformed JSON, invalid JSON-RPC envelopes, and non-POST requests.
-- CLI smoke and write lifecycle tests for course categories, courses, calendar events, enrolment, groups, sections, assignment, course assignment listing, Book chapter listing and view registration, Choice, Database field and entry operations, Feedback, Feedback item listing, Lesson, LTI, Question bank, Subsection, Workshop phases, user plans, grades, grade reports, and submissions, page, label, URL, forum, glossary, wiki, file resource modules, duplicated modules, and moved modules, forum discussions and replies, glossary entries, wiki pages, assignment submissions and grades, gradebook items and user grades, folder files, resource files, question categories, `truefalse`, `shortanswer`, `multichoice`, `numerical`, `essay`, and `matching` questions, quizzes, quiz attempts, and quiz results reports.
+- CLI smoke and write lifecycle tests for course categories, courses, calendar events, enrolment, groups, sections, assignment, course assignment listing, Book chapter creation/listing/update/movement/deletion and view registration, Choice, Database field and entry operations, Feedback, Feedback item listing, Lesson, LTI, Question bank, Subsection, Workshop phases, user plans, grades, grade reports, and submissions, page, label, URL, forum, glossary, wiki, file resource modules, duplicated modules, and moved modules, forum discussions and replies, glossary entries, wiki pages, assignment submissions, numeric grades, rubric/checklist/marking-guide grading, gradebook items and user grades, folder files, resource files, question categories, `truefalse`, `shortanswer`, `multichoice`, `numerical`, `essay`, and `matching` questions, quizzes, quiz attempts, and quiz results reports.
 - CLI negative validation tests for unknown commands, unknown options, missing required options, invalid booleans, invalid numeric values, invalid ranges, and invalid JSON object parameters.
 - CLI enum validation before REST calls for unsupported module and question types.
 - Shared Node error normalization with `error`, `code`, `message`, and `details`, plus response-shape validation against operation `returns` contracts.
 - MCP JSON-RPC errors expose the automation error contract under `error.data.code`; JSON-RPC `error.code` is protocol metadata.
 - Playwright browser checks for Moodle login, course index visibility, generated course visibility, participants, groups, gradebook, activity subelements, files, question banks, quiz preview, and an in-progress quiz attempt.
 - Node CLI at `cli/moodle-mcp.mjs` that maps contract operations to kebab-case commands, validates arguments through the shared contract parameter builder, and calls Moodle REST through the shared client.
+- Generated public npm package at `packages/moodlia` with the `moodlia` binary, REST client, TypeScript declarations, filtered operation contract, README, and license.
 
 REST, MCP, and the CLI use the same `MOODLE_REST_TOKEN`. The CLI does not call MCP; it uses `MOODLE_BASE_URL` and `MOODLE_REST_TOKEN`, then invokes Moodle's `/webservice/rest/server.php` endpoint with the matching `local_moodlia_*` function.
 
@@ -80,13 +84,24 @@ Example CLI commands:
 node cli/moodle-mcp.mjs get-current-user --format json
 node cli/moodle-mcp.mjs get-courses --limit 5 --format json
 node cli/moodle-mcp.mjs create-course-category --name "Generated Courses" --visible true --format json
+node cli/moodle-mcp.mjs move-course --course-id 42 --category-id 12 --format json
 node cli/moodle-mcp.mjs create-calendar-event --course-id 42 --name "Live session" --timestart 1893456000 --description "<p>Meet online.</p>" --format json
 node cli/moodle-mcp.mjs enrol-user --course-id 42 --user-id 7 --role-archetype student --format json
 node cli/moodle-mcp.mjs create-group --course-id 42 --name "Team A" --format json
 node cli/moodle-mcp.mjs create-module --course-id 42 --section-number 1 --module-type page --name "Reading" --options "{\"content\":\"<p>Hello</p>\"}" --format json
+node cli/moodle-mcp.mjs create-module --course-id 42 --section-number 0 --module-type qbank --name "MoodlIA Question Bank" --format json
+```
+
+After installing the public npm package, use the `moodlia` binary:
+
+```text
+moodlia get-current-user --format json
+moodlia get-courses --limit 5 --format json
 ```
 
 Object parameters such as `options`, `answers`, or `patch` are passed as JSON strings.
+
+Use `--raw` or `--no-validate-response` only for advanced automation that needs to keep a usable Moodle response when a Moodle version returns nullable fields differently from the canonical response contract.
 
 CLI successes are printed as JSON matching the canonical operation return contract. CLI failures are printed on stderr as JSON with `error`, `code`, `message`, and `details`.
 
@@ -96,6 +111,14 @@ Run the local release preflight:
 
 ```text
 npm run release:check
+```
+
+Prepare and inspect the public npm package:
+
+```text
+npm run npm:sync
+npm run npm:sync:check
+npm run npm:pack:dry-run
 ```
 
 Create a rich generated Moodle course without deleting existing courses:

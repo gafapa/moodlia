@@ -49,7 +49,8 @@ class create_section {
             throw new \invalid_parameter_exception('position must be zero or a positive integer.');
         }
 
-        $section = course_create_section($course, $position);
+        $targetposition = $position === 0 ? false : $position;
+        $section = course_create_section($course, $targetposition);
         course_update_section($course, $section, [
             'name' => $name,
             'summary' => $summary,

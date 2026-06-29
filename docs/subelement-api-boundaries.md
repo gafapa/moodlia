@@ -1,11 +1,12 @@
 # Activity Subelement API Boundaries
 
-MoodlIA exposes activity subelements only when Moodle provides a public API path that can validate context, capabilities, ownership, and side effects without direct table writes.
+MoodlIA exposes activity subelements when Moodle provides a public API path that can validate context, capabilities, ownership, and side effects without raw SQL or plugin-owned tables.
 
 ## Implemented Subelement Areas
 
 - Assignment submissions and grades through Moodle Assignment APIs.
 - Book chapter listing and view registration through Moodle Book APIs.
+- Book chapter creation, update, movement, and deletion through one audited Moodle Book DML boundary because Moodle Book has no public chapter writer API in the supported target. The boundary mirrors Moodle Book's own `edit.php`, `delete.php`, and `move.php` behavior and is the only approved exception to the usual no-DML rule.
 - Choice options, responses, and results through Moodle Choice APIs.
 - Database fields and entries through Moodle Database APIs.
 - Feedback item reads, page item reads, analysis reads, finished response reads, and item deletion through Moodle Feedback APIs.
@@ -23,14 +24,13 @@ These areas remain blocked until a stable Moodle API path is identified and test
 
 - Feedback question/item creation and arbitrary item updates.
 - Lesson page creation, update, deletion, and answer/jump mutation.
-- Book chapter creation, update, deletion, and reordering.
 - Workshop allocations, grading form definition, assessment creation/update/evaluation, and reviewer assignment.
 
 ## Required Standard Before Adding One
 
 Every new subelement write must satisfy all of these conditions:
 
-- It uses Moodle component APIs or external APIs, not `$DB`, raw SQL, or plugin-owned tables.
+- It uses Moodle component APIs or external APIs, not raw SQL or plugin-owned tables. New `$DB` writes are blocked unless Moodle core has no public API for the target subelement and the implementation is isolated in a documented helper that mirrors the owning Moodle component's own behavior.
 - It validates system context for `local/moodlia:useapi`.
 - It validates course and module context before mutation.
 - It verifies that the target subelement belongs to the selected activity.
@@ -41,7 +41,6 @@ Every new subelement write must satisfy all of these conditions:
 
 ## Preferred Implementation Order
 
-1. Book chapter mutation, if Moodle's Book component exposes stable chapter APIs in the installed Moodle version.
-2. Lesson page mutation, if Moodle's Lesson component exposes stable page and answer APIs.
-3. Feedback item creation/update, only if Moodle exposes a stable non-table API for item creation.
-4. Workshop assessment mutation and allocator operations, only after identifying stable Workshop APIs and capability boundaries.
+1. Lesson page mutation, if Moodle's Lesson component exposes stable page and answer APIs.
+2. Feedback item creation/update, only if Moodle exposes a stable non-table API for item creation.
+3. Workshop assessment mutation and allocator operations, only after identifying stable Workshop APIs and capability boundaries.

@@ -207,8 +207,22 @@ function baseReturnType(definition) {
   return typeof definition === 'string' ? definition.split(';')[0].trim() : definition;
 }
 
+function returnTypeAlternatives(definition) {
+  const base = baseReturnType(definition);
+  if (typeof base !== 'string') {
+    return [base];
+  }
+
+  return base.split('|').map((part) => part.trim()).filter(Boolean);
+}
+
 function validateReturnValue(value, definition, path) {
-  const normalized = baseReturnType(definition);
+  const alternatives = returnTypeAlternatives(definition);
+  if ((value === null || value === undefined) && alternatives.includes('null')) {
+    return;
+  }
+
+  const normalized = alternatives.find((entry) => entry !== 'null') ?? alternatives[0];
   if (value === null || value === undefined) {
     throw new MoodleClientError('invalid_response', `${path} is missing from the response.`, { path });
   }
