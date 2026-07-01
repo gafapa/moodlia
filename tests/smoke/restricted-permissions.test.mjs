@@ -127,6 +127,11 @@ async function assertRestrictedCliDenied(args, label) {
 function assertPermissionDeniedPayload(payload, label) {
   const encoded = JSON.stringify(payload);
 
+  assert.doesNotMatch(
+    encoded,
+    /invalidrecordunknown|dml_missing_record_exception/i,
+    `${label} should fail because of permissions, not because Moodle cannot resolve a service record`
+  );
   assert.match(
     encoded,
     /capabilit|permission|nopermissions|access|acceso|permiso|denied|cannot|not allowed/i,
@@ -286,6 +291,16 @@ test('restricted token cannot write courses, modules, questions, or quiz structu
       user_id: currentUser.body.id,
       role_archetype: 'student'
     });
+
+    await assertRestrictedRestDenied(contract, 'export_course_blueprint', {
+      course_id: courseId,
+      include_contents: 1,
+      include_groups: 1
+    }, restrictedToken);
+
+    await assertRestrictedRestDenied(contract, 'audit_course', {
+      course_id: courseId
+    }, restrictedToken);
 
     const qbank = await callAdminRest(contract, 'create_module', {
       course_id: courseId,
@@ -829,6 +844,49 @@ test('restricted token cannot write courses, modules, questions, or quiz structu
       module_id: feedback.course_module_id,
       item_id: 999999999
     }, restrictedToken);
+    await assertRestrictedRestDenied(contract, 'create_course_from_blueprint', {
+      blueprint: JSON.stringify({
+        course: {
+          fullname: `MoodlIA Restricted Blueprint ${suffix}`,
+          shortname: `moodlia-restricted-blueprint-${suffix}`,
+          category_id: categoryId
+        },
+        sections: [
+          {
+            name: 'Restricted blueprint section'
+          }
+        ]
+      })
+    }, restrictedToken);
+    await assertRestrictedRestDenied(contract, 'apply_course_blueprint', {
+      course_id: courseId,
+      blueprint: JSON.stringify({
+        sections: [
+          {
+            name: 'Restricted apply section'
+          }
+        ]
+      })
+    }, restrictedToken);
+    await assertRestrictedRestDenied(contract, 'copy_course_structure', {
+      source_course_id: courseId,
+      target_course_id: courseId,
+      include_contents: 1,
+      include_groups: 0
+    }, restrictedToken);
+    await assertRestrictedRestDenied(contract, 'sync_course_enrolments', {
+      course_id: courseId,
+      enrolments: JSON.stringify([
+        {
+          user_id: currentUser.body.id,
+          role_archetype: 'student'
+        }
+      ])
+    }, restrictedToken);
+    await assertRestrictedRestDenied(contract, 'set_course_publish_state', {
+      course_id: courseId,
+      publish_state: 'published'
+    }, restrictedToken);
 
     await assertRestrictedMcpDenied('create_module', {
       course_id: courseId,
@@ -918,6 +976,20 @@ test('restricted token cannot write courses, modules, questions, or quiz structu
       course_id: courseId,
       module_id: folder.course_module_id,
       file_id: folderFile.file_id
+    }, restrictedToken);
+    await assertRestrictedMcpDenied('apply_course_blueprint', {
+      course_id: courseId,
+      blueprint: {
+        sections: [
+          {
+            name: 'Restricted MCP apply section'
+          }
+        ]
+      }
+    }, restrictedToken);
+    await assertRestrictedMcpDenied('set_course_publish_state', {
+      course_id: courseId,
+      publish_state: 'published'
     }, restrictedToken);
 
     await assertRestrictedCliDenied([
@@ -1029,6 +1101,22 @@ test('restricted token cannot write courses, modules, questions, or quiz structu
       '--module-id', String(folder.course_module_id),
       '--file-id', String(folderFile.file_id)
     ], 'delete_folder_file');
+    await assertRestrictedCliDenied([
+      'apply-course-blueprint',
+      '--course-id', String(courseId),
+      '--blueprint', JSON.stringify({
+        sections: [
+          {
+            name: 'Restricted CLI apply section'
+          }
+        ]
+      })
+    ], 'apply_course_blueprint');
+    await assertRestrictedCliDenied([
+      'set-course-publish-state',
+      '--course-id', String(courseId),
+      '--publish-state', 'published'
+    ], 'set_course_publish_state');
 
     cleanupAllowed = true;
   } finally {

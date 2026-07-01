@@ -73,42 +73,58 @@
       <section class="section section-install" id="install" aria-labelledby="install-title">
         <div class="section-header">
           <p class="eyebrow">For installers</p>
-          <h2 id="install-title">Install the plugin in a Moodle Docker deployment.</h2>
+          <h2 id="install-title">Install the plugin on a standard Moodle server.</h2>
           <p>
             The plugin is installed as a standard Moodle local plugin. The component is
-            <code>local_moodlia</code> and the folder name is <code>moodlia</code>.
+            <code>local_moodlia</code> and the folder name is <code>moodlia</code>. Docker is only
+            a development/staging deployment variant, not a runtime requirement.
           </p>
         </div>
 
         <div class="install-grid">
           <article class="info-panel">
-            <h3>Target paths</h3>
+            <h3>Standard target paths</h3>
             <dl class="path-list">
               <div>
-                <dt>Upload path</dt>
-                <dd><code>/tmp/moodlia</code></dd>
+                <dt>Packaged folder</dt>
+                <dd><code>moodlia</code></dd>
               </div>
               <div>
-                <dt>Container path</dt>
-                <dd><code>/var/www/html/public/local/moodlia</code></dd>
+                <dt>Moodle plugin path</dt>
+                <dd><code>/var/www/html/local/moodlia</code></dd>
               </div>
               <div>
-                <dt>Moodle root</dt>
-                <dd><code>/var/www/html/public</code></dd>
+                <dt>Upgrade root</dt>
+                <dd><code>/var/www/html</code></dd>
               </div>
             </dl>
-            <p class="note">The final Moodle path uses <code>public</code>.</p>
+            <p class="note">Replace <code>/var/www/html</code> with the real Moodle root that contains <code>admin/cli</code>.</p>
           </article>
 
           <article class="command-panel">
             <div class="panel-heading">
-              <h3>Server commands</h3>
+              <h3>Standard server commands</h3>
               <button class="copy-button" type="button" data-copy-target="deploy-commands">Copy</button>
             </div>
-            <pre id="deploy-commands"><code>sudo docker cp /tmp/moodlia moodle:/var/www/html/public/local/moodlia
-sudo docker exec -w /var/www/html/public moodle php admin/cli/upgrade.php --non-interactive
-sudo docker exec -w /var/www/html/public moodle php admin/cli/purge_caches.php</code></pre>
+            <pre id="deploy-commands"><code>cp -a moodlia /var/www/html/local/moodlia
+cd /var/www/html
+php admin/cli/upgrade.php --non-interactive
+php admin/cli/purge_caches.php</code></pre>
           </article>
+        </div>
+
+        <div class="deployment-variant" aria-labelledby="docker-variant-title">
+          <div>
+            <p class="eyebrow">Development variant</p>
+            <h3 id="docker-variant-title">Docker deployment for the configured staging target</h3>
+            <p>
+              The repository can also print or run Docker-oriented commands when <code>DEPLOY_MODE=docker</code>.
+              This is useful for the development server where Moodle lives inside a container.
+            </p>
+          </div>
+          <pre><code>sudo docker cp /tmp/moodlia moodle:/var/www/html/public/local/moodlia
+sudo docker exec -w /var/www/html moodle php admin/cli/upgrade.php --non-interactive
+sudo docker exec -w /var/www/html moodle php admin/cli/purge_caches.php</code></pre>
         </div>
 
         <div class="checklist" aria-label="Installation checks">
@@ -132,8 +148,8 @@ sudo docker exec -w /var/www/html/public moodle php admin/cli/purge_caches.php</
           <p class="eyebrow">Release workflow</p>
           <h2 id="release-title">Package, deploy, verify, and generate a demo course.</h2>
           <p>
-            The repository includes a release preflight, scripted WinSCP deployment, focused smoke tests,
-            and a non-destructive demo course generator for validating Moodle-visible behavior.
+            The repository includes a release preflight, generic deployment command generation, focused smoke tests,
+            Docker/WinSCP automation for the development target, and a non-destructive demo course generator for validating Moodle-visible behavior.
           </p>
         </div>
 
@@ -144,7 +160,7 @@ sudo docker exec -w /var/www/html/public moodle php admin/cli/purge_caches.php</
               <button class="copy-button" type="button" data-copy-target="release-commands">Copy</button>
             </div>
             <pre id="release-commands"><code>npm run release:check
-npm run deploy:winscp
+npm run deploy:commands
 node --test tests/smoke/transport-parity.test.mjs
 npm run test:browser</code></pre>
           </article>

@@ -1,6 +1,6 @@
 {
   "name": "moodle-mcp-api-cli-automation",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "type": "module",
   "description": "Test automation foundation for the Moodle MCP/API/CLI shared interface.",
@@ -30,6 +30,8 @@
     "moodle:create-demo-course": "node tools/reset-and-create-full-course.mjs",
     "moodle:reset-full-course": "node tools/reset-and-create-full-course.mjs --reset-courses",
     "moodle:reset-and-create-demo-course": "node tools/reset-and-create-full-course.mjs --reset-courses",
+    "moodle:cleanup-generated": "node tools/cleanup-generated-test-data.mjs",
+    "moodle:cleanup-generated:execute": "node tools/cleanup-generated-test-data.mjs --execute",
     "moodle:add-question-bank-map": "node tools/add-question-bank-map-page.mjs",
     "moodle:inspect-question-banks": "node tools/inspect-question-bank-ui.mjs",
     "token:restricted": "node tools/create-restricted-moodlia-token-ui.mjs",

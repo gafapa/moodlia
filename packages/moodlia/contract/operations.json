@@ -1888,6 +1888,339 @@
       ]
     },
     {
+      "name": "export_course_blueprint",
+      "summary": "Export a Moodle course as a portable MoodlIA course blueprint for lightweight backup, templates, and restore workflows.",
+      "type": "read",
+      "context": "course",
+      "capabilities": [
+        "moodle/course:view"
+      ],
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true
+        },
+        "include_contents": {
+          "type": "boolean",
+          "required": false
+        },
+        "include_groups": {
+          "type": "boolean",
+          "required": false
+        }
+      },
+      "returns": {
+        "course_id": "integer",
+        "blueprint_json": "string"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli"
+      ]
+    },
+    {
+      "name": "create_course_from_blueprint",
+      "summary": "Create a Moodle course from a portable MoodlIA course blueprint.",
+      "type": "write",
+      "context": "course_category",
+      "capabilities": [
+        "moodle/course:create",
+        "moodle/course:manageactivities",
+        "moodle/course:managegroups",
+        "enrol/manual:enrol"
+      ],
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "blueprint": {
+          "type": "object",
+          "required": true
+        }
+      },
+      "returns": {
+        "course_id": "integer",
+        "publish_state": "string",
+        "course_json": "string",
+        "sections_json": "string",
+        "modules_json": "string",
+        "groups_json": "string",
+        "enrolments_json": "string",
+        "warnings_json": "string"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli",
+        "browser"
+      ]
+    },
+    {
+      "name": "apply_course_blueprint",
+      "summary": "Apply sections, module shells, groups, and enrolments from a MoodlIA blueprint to an existing Moodle course.",
+      "type": "write",
+      "context": "course",
+      "capabilities": [
+        "moodle/course:manageactivities",
+        "moodle/course:managegroups",
+        "enrol/manual:enrol"
+      ],
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true
+        },
+        "blueprint": {
+          "type": "object",
+          "required": true
+        }
+      },
+      "returns": {
+        "course_id": "integer",
+        "sections_json": "string",
+        "modules_json": "string",
+        "groups_json": "string",
+        "enrolments_json": "string",
+        "warnings_json": "string"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli",
+        "browser"
+      ]
+    },
+    {
+      "name": "copy_course_structure",
+      "summary": "Copy section structure, module shells, and optionally groups from one Moodle course into another.",
+      "type": "write",
+      "context": "course",
+      "capabilities": [
+        "moodle/course:view",
+        "moodle/course:manageactivities",
+        "moodle/course:managegroups"
+      ],
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "source_course_id": {
+          "type": "integer",
+          "required": true
+        },
+        "target_course_id": {
+          "type": "integer",
+          "required": true
+        },
+        "include_contents": {
+          "type": "boolean",
+          "required": false
+        },
+        "include_groups": {
+          "type": "boolean",
+          "required": false
+        }
+      },
+      "returns": {
+        "source_course_id": "integer",
+        "target_course_id": "integer",
+        "sections_json": "string",
+        "modules_json": "string",
+        "groups_json": "string",
+        "warnings_json": "string"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli",
+        "browser"
+      ]
+    },
+    {
+      "name": "sync_course_enrolments",
+      "summary": "Synchronise manual course enrolments from a desired user and role list.",
+      "type": "write",
+      "context": "course",
+      "capabilities": [
+        "enrol/manual:enrol"
+      ],
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true
+        },
+        "enrolments": {
+          "type": "string",
+          "required": true
+        },
+        "unenrol_missing": {
+          "type": "boolean",
+          "required": false
+        }
+      },
+      "returns": {
+        "course_id": "integer",
+        "enrolled_json": "string",
+        "unenrolled_json": "string",
+        "warnings_json": "string"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli",
+        "browser"
+      ]
+    },
+    {
+      "name": "set_course_publish_state",
+      "summary": "Apply a course publishing workflow state mapped to Moodle course visibility and archive metadata.",
+      "type": "write",
+      "context": "course",
+      "capabilities": [
+        "moodle/course:update"
+      ],
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true
+        },
+        "publish_state": {
+          "type": "string",
+          "required": true,
+          "enum": [
+            "draft",
+            "ready",
+            "published",
+            "archived"
+          ]
+        }
+      },
+      "returns": {
+        "course_id": "integer",
+        "publish_state": "string",
+        "visible": "boolean",
+        "course_json": "string"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli",
+        "browser"
+      ]
+    },
+    {
+      "name": "audit_course",
+      "summary": "Audit a Moodle course for operational readiness issues.",
+      "type": "read",
+      "context": "course",
+      "capabilities": [
+        "moodle/course:view"
+      ],
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true
+        }
+      },
+      "returns": {
+        "course_id": "integer",
+        "ready": "boolean",
+        "issue_count": "integer",
+        "issues_json": "string"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli",
+        "browser"
+      ]
+    },
+    {
       "name": "update_course",
       "summary": "Update Moodle course identity, category, visibility, summary, format, and date fields.",
       "type": "write",
@@ -4912,6 +5245,11 @@
       "capabilities": [
         "mod/workshop:allocate"
       ],
+      "target_capabilities": {
+        "reviewer_id": [
+          "mod/workshop:peerassess"
+        ]
+      },
       "transports": [
         "rest",
         "cli"
@@ -5119,6 +5457,7 @@
         "mod/workshop:overridegrades",
         "mod/workshop:allocate"
       ],
+      "capability_mode": "any",
       "transports": [
         "rest",
         "cli"

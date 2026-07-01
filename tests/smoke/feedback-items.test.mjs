@@ -118,7 +118,7 @@ test('Feedback item listing works through REST, MCP, and CLI', { skip: !hasConfi
         module_id: feedback.course_module_id,
         item_id: 999999999
       }),
-      /Moodle REST error/
+      /Moodle REST error|feedback\/invaliditemid/
     );
 
     const deletedFeedback = await callRestFunction(toRestFunctionName(contract, 'delete_module'), {

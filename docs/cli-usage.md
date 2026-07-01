@@ -174,6 +174,54 @@ Delete a controlled generated course:
 moodlia delete-course --course-id <course_id>
 ```
 
+## Course Blueprints And Readiness
+
+Export a lightweight course blueprint. This is a portable JSON description for templates, structure copy, and restore-like workflows; it is not a Moodle `.mbz` backup:
+
+```text
+moodlia export-course-blueprint --course-id <course_id> --include-contents true --include-groups true
+```
+
+Create a new course from a blueprint:
+
+```text
+moodlia create-course-from-blueprint --blueprint '{"course":{"fullname":"MoodlIA Blueprint Course","shortname":"moodlia-blueprint-001","category_id":12,"summary":"<p>Created from blueprint.</p>","summary_format":"html","enable_completion":true},"publish_state":"draft","sections":[{"name":"Unit 1","summary":"Introduction","modules":[{"module_type":"page","name":"Welcome","options":{"content":"<p>Start here.</p>"}}]}],"groups":[{"name":"Team A"}],"enrolments":[{"user_id":7,"role_archetype":"student"}]}'
+```
+
+Apply a blueprint to an existing course:
+
+```text
+moodlia apply-course-blueprint --course-id <course_id> --blueprint '{"sections":[{"name":"Unit 2","modules":[{"module_type":"label","name":"Note","options":{"intro":"<p>Next steps.</p>"}}]}]}'
+```
+
+Copy section structure, module shells, and optionally groups between courses:
+
+```text
+moodlia copy-course-structure --source-course-id <source_course_id> --target-course-id <target_course_id> --include-contents true --include-groups false
+```
+
+Synchronise manual enrolments from a JSON list:
+
+```text
+moodlia sync-course-enrolments --course-id <course_id> --enrolments '[{"user_id":7,"role_archetype":"student"},{"user_id":8,"role_archetype":"teacher"}]' --unenrol-missing false
+```
+
+Move a course through the publishing workflow:
+
+```text
+moodlia set-course-publish-state --course-id <course_id> --publish-state draft
+moodlia set-course-publish-state --course-id <course_id> --publish-state published
+moodlia set-course-publish-state --course-id <course_id> --publish-state archived
+```
+
+Audit whether a course is ready for use:
+
+```text
+moodlia audit-course --course-id <course_id>
+```
+
+The audit returns `ready`, `issue_count`, and `issues_json`. Blueprint workflow responses use JSON string fields such as `sections_json`, `modules_json`, `groups_json`, and `warnings_json` so REST, MCP, CLI, and typed clients share one transport-safe response shape.
+
 ## Sections And Modules
 
 Create a section:

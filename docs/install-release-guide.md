@@ -51,6 +51,15 @@ SFTP_KEY_PATH=C:\path\to\key.ppk
 LOCAL_PLUGIN_SOURCE=plugin/moodlia
 LOCAL_PLUGIN_PACKAGE_PATH=D:\tmp\moodlia
 SFTP_REMOTE_UPLOAD_PATH=/tmp/moodlia
+DEPLOY_MODE=direct
+MOODLE_SERVER_ROOT=/var/www/html
+MOODLE_SERVER_PLUGIN_PATH=/var/www/html/local/moodlia
+MOODLE_SERVER_PHP=php
+```
+
+For the Docker-based development or staging target, set `DEPLOY_MODE=docker` and add:
+
+```text
 MOODLE_DOCKER_CONTAINER=moodle
 MOODLE_CONTAINER_CLI_ROOT=/var/www/html
 MOODLE_CONTAINER_ROOT=/var/www/html/public
@@ -68,7 +77,9 @@ npm install
 npm run release:check
 ```
 
-The release check validates generated manifests, generated TypeScript operation types, static parity, forbidden database-access patterns, key smoke-test syntax, browser-test syntax, and plugin packaging.
+The release check validates generated manifests, generated TypeScript operation types, static parity, forbidden database-access patterns, key smoke-test syntax, browser-test syntax, and plugin packaging into a temporary directory.
+
+The repository also includes a GitHub Actions workflow for checks that do not need a remote Moodle instance. It runs npm package mirror drift checks, the release preflight, plugin packaging, and project website tests on pushes and pull requests. Remote smoke and browser verification still run manually against a configured Moodle target.
 
 Use a faster preflight while iterating:
 
@@ -126,16 +137,55 @@ npm publish --access public
 
 Use an npm authentication method that satisfies the account's two-factor-authentication policy. Never store npm tokens in this repository.
 
-## Deploy
+## Deploy To A Standard Moodle Server
 
-For the configured WinSCP target:
+The generic deployment target is a normal Moodle codebase on a server, not a Docker container. The plugin folder must be copied to Moodle's `local` directory:
+
+```text
+<moodle-root>/local/moodlia
+```
+
+Typical examples:
+
+```text
+/var/www/html/local/moodlia
+/var/www/moodle/local/moodlia
+/home/example/public_html/moodle/local/moodlia
+```
+
+After packaging locally, upload the packaged `moodlia` folder with SFTP, rsync, SCP, your hosting file manager, or a CI artifact. Then run the Moodle upgrade from the Moodle root:
+
+```text
+cd /var/www/html
+php admin/cli/upgrade.php --non-interactive
+php admin/cli/purge_caches.php
+```
+
+If the web server user owns the Moodle files, run those commands as that user or with the hosting provider's recommended PHP binary. If CLI access is unavailable, open Moodle as an administrator and visit:
+
+```text
+https://moodle.example.edu/admin/index.php
+```
+
+The repository can print direct-server commands from your `.env` file:
+
+```text
+npm run plugin:package
+npm run deploy:commands
+```
+
+With `DEPLOY_MODE=direct`, `deploy:commands` uses `MOODLE_SERVER_ROOT`, `MOODLE_SERVER_PLUGIN_PATH`, and `MOODLE_SERVER_PHP`.
+
+## Docker Development Deployment
+
+The configured development/staging deployment uses WinSCP plus a Docker-hosted Moodle instance. Use this only when the target Moodle codebase is inside a container:
 
 ```text
 npm run deploy:winscp:test
 npm run deploy:winscp
 ```
 
-The final plugin path in the Moodle container must be:
+The final plugin path in that container is:
 
 ```text
 /var/www/html/public/local/moodlia
@@ -148,7 +198,7 @@ sudo docker exec -w /var/www/html moodle php admin/cli/upgrade.php --non-interac
 sudo docker exec -w /var/www/html moodle php admin/cli/purge_caches.php
 ```
 
-The plugin path and CLI root are allowed to differ. The plugin is installed under `/var/www/html/public/local/moodlia`; the upgrade CLI is run from whichever directory exposes `admin/cli`, commonly `/var/www/html` in this container layout.
+The plugin path and CLI root are allowed to differ in this container layout. The plugin is installed under `/var/www/html/public/local/moodlia`; the upgrade CLI is run from whichever directory exposes `admin/cli`, commonly `/var/www/html`.
 
 ## Verify
 
@@ -182,6 +232,20 @@ npm run test:browser
 ```
 
 Browser tests require `MOODLE_USERNAME`, `MOODLE_PASSWORD`, and either `PLAYWRIGHT_BASE_URL` or `MOODLE_BASE_URL`.
+
+Before or after broad remote verification, inspect generated Moodle data:
+
+```text
+npm run moodle:cleanup-generated
+```
+
+Delete matched generated courses and empty generated course categories only when the dry-run output is expected:
+
+```text
+npm run moodle:cleanup-generated:execute
+```
+
+The cleanup command only targets data with MoodlIA test markers: course full names starting with `MoodlIA`, course short names starting with `moodlia-`, and course category names starting with `MoodlIA`.
 
 ## Demo Course
 

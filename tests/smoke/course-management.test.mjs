@@ -65,6 +65,7 @@ test('course movement and section writes work through REST and CLI', { skip: !ha
       course_format: 'topics'
     });
     created.courseId = course.course_id;
+    const originalCategoryId = course.category_id;
 
     const restMove = await callRestFunction(restName('move_course'), {
       course_id: created.courseId,
@@ -75,9 +76,9 @@ test('course movement and section writes work through REST and CLI', { skip: !ha
 
     const movedBack = await callRestFunction(restName('update_course'), {
       course_id: created.courseId,
-      category_id: 1
+      category_id: originalCategoryId
     });
-    assert.equal(movedBack.category_id, 1);
+    assert.equal(movedBack.category_id, originalCategoryId);
 
     const cliMove = await callCli([
       'move-course',

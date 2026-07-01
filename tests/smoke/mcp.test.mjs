@@ -1467,6 +1467,7 @@ test('MCP generated course, file, question, and quiz lifecycle works', { skip: !
 
     const updatedCategory = await callMcpTool('update_question_category', {
       category_id: createdCategory.category_id,
+      context_id: createdCategory.context_id,
       name: updatedCategoryName,
       description: 'Updated by MoodlIA MCP automated tests.'
     });
@@ -1485,6 +1486,7 @@ test('MCP generated course, file, question, and quiz lifecycle works', { skip: !
 
     const deletedEmptyCategory = await callMcpTool('delete_question_category', {
       category_id: emptyCategory.category_id,
+      context_id: emptyCategory.context_id,
       delete_mode: 'delete'
     });
 

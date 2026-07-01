@@ -1,4 +1,6 @@
 import { spawn } from 'node:child_process';
+import os from 'node:os';
+import path from 'node:path';
 
 const includePackage = !process.argv.includes('--skip-package');
 const includeSmokeSyntax = !process.argv.includes('--skip-smoke-syntax');
@@ -14,12 +16,14 @@ if (includeSmokeSyntax) {
     ['node', ['--check', 'tests/smoke/module-completion-matrix.test.mjs']],
     ['node', ['--check', 'tests/smoke/module-custom-completion-rules.test.mjs']],
     ['node', ['--check', 'tests/smoke/generated-course-lifecycle.test.mjs']],
-    ['node', ['--check', 'tests/browser/moodle-generated-content.spec.mjs']]
+    ['node', ['--check', 'tests/smoke/course-workflows.test.mjs']],
+    ['node', ['--check', 'tests/browser/moodle-generated-content.spec.mjs']],
+    ['node', ['--check', 'tools/cleanup-generated-test-data.mjs']]
   );
 }
 
 if (includePackage) {
-  checks.push(['npm', ['run', 'plugin:package']]);
+  checks.push(['npm', ['run', 'plugin:package', '--', path.join(os.tmpdir(), `moodlia-release-check-${process.pid}`)]]);
 }
 
 for (const [command, args] of checks) {

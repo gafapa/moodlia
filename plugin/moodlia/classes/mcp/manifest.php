@@ -340,6 +340,64 @@ final class manifest {
                 ]),
             ],
             [
+                'name' => 'export_course_blueprint',
+                'description' => 'Export a Moodle course as a portable MoodlIA course blueprint for lightweight backup, templates, and restore workflows.',
+                'inputSchema' => self::schema([
+                    'course_id' => ['type' => 'integer', 'required' => true],
+                    'include_contents' => ['type' => 'boolean', 'required' => false],
+                    'include_groups' => ['type' => 'boolean', 'required' => false],
+                ]),
+            ],
+            [
+                'name' => 'create_course_from_blueprint',
+                'description' => 'Create a Moodle course from a portable MoodlIA course blueprint.',
+                'inputSchema' => self::schema([
+                    'blueprint' => ['type' => 'object', 'required' => true],
+                ]),
+            ],
+            [
+                'name' => 'apply_course_blueprint',
+                'description' => 'Apply sections, module shells, groups, and enrolments from a MoodlIA blueprint to an existing Moodle course.',
+                'inputSchema' => self::schema([
+                    'course_id' => ['type' => 'integer', 'required' => true],
+                    'blueprint' => ['type' => 'object', 'required' => true],
+                ]),
+            ],
+            [
+                'name' => 'copy_course_structure',
+                'description' => 'Copy section structure, module shells, and optionally groups from one Moodle course into another.',
+                'inputSchema' => self::schema([
+                    'source_course_id' => ['type' => 'integer', 'required' => true],
+                    'target_course_id' => ['type' => 'integer', 'required' => true],
+                    'include_contents' => ['type' => 'boolean', 'required' => false],
+                    'include_groups' => ['type' => 'boolean', 'required' => false],
+                ]),
+            ],
+            [
+                'name' => 'sync_course_enrolments',
+                'description' => 'Synchronise manual course enrolments from a desired user and role list.',
+                'inputSchema' => self::schema([
+                    'course_id' => ['type' => 'integer', 'required' => true],
+                    'enrolments' => ['type' => 'string', 'required' => true],
+                    'unenrol_missing' => ['type' => 'boolean', 'required' => false],
+                ]),
+            ],
+            [
+                'name' => 'set_course_publish_state',
+                'description' => 'Apply a course publishing workflow state mapped to Moodle course visibility and archive metadata.',
+                'inputSchema' => self::schema([
+                    'course_id' => ['type' => 'integer', 'required' => true],
+                    'publish_state' => ['type' => 'string', 'required' => true, 'enum' => ['draft', 'ready', 'published', 'archived']],
+                ]),
+            ],
+            [
+                'name' => 'audit_course',
+                'description' => 'Audit a Moodle course for operational readiness issues.',
+                'inputSchema' => self::schema([
+                    'course_id' => ['type' => 'integer', 'required' => true],
+                ]),
+            ],
+            [
                 'name' => 'update_course',
                 'description' => 'Update Moodle course identity, category, visibility, summary, format, and date fields.',
                 'inputSchema' => self::schema([

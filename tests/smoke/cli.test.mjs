@@ -1667,6 +1667,7 @@ test('CLI generated file, question, and quiz lifecycle works', { skip: !hasCliCo
     const deletedEmptyCategory = await callCli([
       'delete-question-category',
       '--category-id', String(emptyCategory.category_id),
+      '--context-id', String(emptyCategory.context_id),
       '--delete-mode', 'delete'
     ]);
 
@@ -1975,7 +1976,6 @@ test('CLI generated file, question, and quiz lifecycle works', { skip: !hasCliCo
       'get-questions',
       '--course-id', String(courseId),
       '--category-id', String(createdCategory.category_id),
-      '--context-id', String(createdCategory.context_id),
       '--question-bank-module-id', String(createdCategory.question_bank_module_id)
     ]);
     assert.ok(
@@ -2036,7 +2036,6 @@ test('CLI generated file, question, and quiz lifecycle works', { skip: !hasCliCo
       'get-questions',
       '--course-id', String(courseId),
       '--category-id', String(createdCategory.category_id),
-      '--context-id', String(createdCategory.context_id),
       '--question-bank-module-id', String(createdCategory.question_bank_module_id)
     ]);
     assert.equal(
@@ -2075,7 +2074,6 @@ test('CLI generated file, question, and quiz lifecycle works', { skip: !hasCliCo
       'get-questions',
       '--course-id', String(courseId),
       '--category-id', String(createdCategory.category_id),
-      '--context-id', String(createdCategory.context_id),
       '--question-bank-module-id', String(createdCategory.question_bank_module_id)
     ]);
     assert.ok(
@@ -2094,7 +2092,6 @@ test('CLI generated file, question, and quiz lifecycle works', { skip: !hasCliCo
       'get-questions',
       '--course-id', String(courseId),
       '--category-id', String(createdCategory.category_id),
-      '--context-id', String(createdCategory.context_id),
       '--question-bank-module-id', String(createdCategory.question_bank_module_id)
     ]);
     assert.equal(
@@ -2265,7 +2262,6 @@ test('CLI generated file, question, and quiz lifecycle works', { skip: !hasCliCo
       'add-random-questions-to-quiz',
       '--quiz-module-id', String(createdQuiz.course_module_id),
       '--category-id', String(createdCategory.category_id),
-      '--context-id', String(createdCategory.context_id),
       '--number', '1',
       '--question-bank-module-id', String(createdCategory.question_bank_module_id)
     ]);

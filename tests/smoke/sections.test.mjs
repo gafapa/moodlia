@@ -13,6 +13,6 @@ test('REST section functions are registered and validate required parameters', {
     callRestFunction(toRestFunctionName(contract, 'create_section'), {
       name: 'MoodlIA missing course test'
     }),
-    /invalidparameter|invalidrecordunknown|Missing required key|No se puede encontrar/i
+    /invalidparameter|invalidrecordunknown|Missing required key|No se puede encontrar|Detectado valor de parámetro no válido/i
   );
 });

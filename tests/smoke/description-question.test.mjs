@@ -205,7 +205,6 @@ test('Description questions work through REST, MCP, and CLI', { skip: !hasConfig
       'get-questions',
       '--course-id', String(course.course_id),
       '--category-id', String(questionCategory.category_id),
-      '--context-id', String(questionCategory.context_id),
       '--bank-scope', 'course_shared',
       '--question-bank-module-id', String(qbank.course_module_id)
     ]);

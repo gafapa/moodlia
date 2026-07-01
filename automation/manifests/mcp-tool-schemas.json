@@ -13,6 +13,14 @@
         "plain"
       ]
     },
+    "set_course_publish_state": {
+      "publish_state": [
+        "draft",
+        "ready",
+        "published",
+        "archived"
+      ]
+    },
     "update_course": {
       "summary_format": [
         "html",

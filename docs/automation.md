@@ -21,9 +21,10 @@ MOODLE_MCP_ENDPOINT=https://moodle.example.edu/local/moodlia/mcp.php
 MOODLE_TEST_SECTION_NUMBER=3
 ```
 
-Required SFTP variables:
+Required deployment variables for a standard Moodle server:
 
 ```text
+DEPLOY_MODE=direct
 SFTP_HOST=test.gallego.top
 SFTP_PORT=2276
 SFTP_USER=ubuntu
@@ -32,6 +33,15 @@ SFTP_KEY_PATH=D:\Otros IA\otro_galleto_top\ssh- privada.ppk
 LOCAL_PLUGIN_SOURCE=plugin/moodlia
 LOCAL_PLUGIN_PACKAGE_PATH=D:\tmp\moodlia
 SFTP_REMOTE_UPLOAD_PATH=/tmp/moodlia
+MOODLE_SERVER_ROOT=/var/www/html
+MOODLE_SERVER_PLUGIN_PATH=/var/www/html/local/moodlia
+MOODLE_SERVER_PHP=php
+```
+
+Optional Docker deployment variables for the development/staging target:
+
+```text
+DEPLOY_MODE=docker
 MOODLE_DOCKER_CONTAINER=moodle
 MOODLE_CONTAINER_CLI_ROOT=/var/www/html
 MOODLE_CONTAINER_ROOT=/var/www/html/public
@@ -123,14 +133,14 @@ npm install
 npm run test:browser
 ```
 
-Print the deployment commands for the configured SFTP and Docker target:
+Print deployment commands for the configured target. `DEPLOY_MODE=direct` prints commands for a normal Moodle server; `DEPLOY_MODE=docker` prints commands for the development/staging container target:
 
 ```text
 npm run plugin:package
 npm run deploy:commands
 ```
 
-On this Windows machine the configured private key is a PuTTY `.ppk` file, so scripted deployment uses WinSCP:
+When the target uses a PuTTY `.ppk` private key on Windows, scripted deployment can use WinSCP:
 
 ```text
 npm run deploy:winscp:test
@@ -143,6 +153,21 @@ If files are already copied and only Moodle upgrade/cache purge is needed:
 npm run deploy:winscp:upgrade
 ```
 
+## Continuous Integration
+
+The default GitHub Actions workflow is `.github/workflows/ci.yml`. It is intentionally limited to checks that can run without a Moodle target:
+
+```text
+npm ci
+npm run npm:sync:check
+npm run release:check
+npm run test:site
+```
+
+The CI job runs on Windows because the local release packaging defaults and development workflow are Windows-friendly. It overrides `LOCAL_PLUGIN_PACKAGE_PATH` to a runner temp directory, then validates generated manifests, generated TypeScript operation types, static tests, selected syntax checks, plugin packaging, and project website tests.
+
+Remote Moodle smoke tests and browser verification are not in the default CI workflow. They require environment-specific secrets, a reachable Moodle instance, and permission to create generated test data.
+
 ## Deployment Safeguards
 
 Before any SFTP upload:
@@ -150,8 +175,8 @@ Before any SFTP upload:
 - Print the deployment environment name.
 - Print the remote host.
 - Print the temporary server upload path.
-- Print the final Moodle container plugin path.
-- Confirm the Moodle container root is `/var/www/html/public`.
+- Print the final Moodle plugin path.
+- Confirm the Moodle root contains `admin/cli/upgrade.php`.
 - Confirm the final plugin path ends with `/local/moodlia`.
 - Exclude `.git`, `node_modules`, local test output, screenshots, coverage, temporary files, and `.env` files.
 - Build or validate generated contract artifacts.
@@ -167,9 +192,9 @@ For production, require a manual confirmation step before upload.
 3. Build or validate contract artifacts.
 4. Run static parity tests.
 5. Upload the plugin folder by SFTP to `SFTP_REMOTE_UPLOAD_PATH`.
-6. Copy the uploaded folder into the Moodle Docker container with `docker cp`.
-7. Run Moodle plugin upgrade inside the container.
-8. Purge Moodle caches inside the container.
+6. Copy the uploaded folder to `<moodle-root>/local/moodlia`, or into the Moodle Docker container when using the development/staging target.
+7. Run Moodle plugin upgrade from the Moodle root.
+8. Purge Moodle caches.
 9. Verify service declarations were discovered.
 10. Run API smoke tests.
 11. Run MCP smoke tests.
@@ -177,20 +202,26 @@ For production, require a manual confirmation step before upload.
 13. Run browser verification against the Moodle-visible state.
 14. Clean up generated test data.
 
-## SFTP And Docker Deployment
+## Standard Moodle Server Deployment
 
-The local plugin component is `local_moodlia`, so the Moodle plugin folder name is `moodlia`. For a Moodle local plugin, the final path inside the container is:
+The local plugin component is `local_moodlia`, so the Moodle plugin folder name is `moodlia`. For a Moodle local plugin, the final path on a standard server is:
 
 ```text
-/var/www/html/public/local/moodlia
+<moodle-root>/local/moodlia
 ```
 
-The path uses `public`, not `plubic`.
+Examples:
+
+```text
+/var/www/html/local/moodlia
+/var/www/moodle/local/moodlia
+/home/example/public_html/moodle/local/moodlia
+```
 
 Upload the plugin folder to the server temporary path:
 
 ```text
-sftp -P 2276 -i "D:\Otros IA\otro_galleto_top\ssh- privada.ppk" ubuntu@test.gallego.top
+sftp -P 22 -i "C:\path\to\key.ppk" ubuntu@moodle.example.edu
 put -r moodlia /tmp/moodlia
 ```
 
@@ -199,10 +230,35 @@ If the `.ppk` key is not accepted by Windows OpenSSH, use WinSCP. The repository
 Connect by SSH:
 
 ```text
-ssh -p 2276 -i "D:\Otros IA\otro_galleto_top\ssh- privada.ppk" ubuntu@test.gallego.top
+ssh -p 22 -i "C:\path\to\key.ppk" ubuntu@moodle.example.edu
 ```
 
-Then run these commands on the server:
+Then run these commands on a standard Moodle server:
+
+```text
+rm -rf /var/www/html/local/moodlia
+mkdir -p /var/www/html/local
+cp -a /tmp/moodlia /var/www/html/local/moodlia
+cd /var/www/html
+php admin/cli/upgrade.php --non-interactive
+php admin/cli/purge_caches.php
+```
+
+If CLI access is unavailable, use the Moodle admin upgrade page:
+
+```text
+<MOODLE_BASE_URL>/admin/index.php
+```
+
+## Docker Development Deployment
+
+The development/staging target used by this repository runs Moodle inside Docker and serves Moodle from `/var/www/html/public`. For that target, the final plugin path inside the container is:
+
+```text
+/var/www/html/public/local/moodlia
+```
+
+Use these commands on the server:
 
 ```text
 sudo docker cp /tmp/moodlia moodle:/var/www/html/public/local/moodlia
@@ -220,7 +276,15 @@ Replace `moodlia` only if the plugin folder name changes. Keep the container roo
 
 ## Moodle Upgrade Verification
 
-After changing plugin files, run the Moodle upgrade process. The exact command depends on server access:
+After changing plugin files, run the Moodle upgrade process. On a standard server:
+
+```text
+cd /var/www/html
+php admin/cli/upgrade.php --non-interactive
+php admin/cli/purge_caches.php
+```
+
+On the development/staging Docker target:
 
 ```text
 sudo docker exec -w /var/www/html moodle php admin/cli/upgrade.php --non-interactive
@@ -514,6 +578,30 @@ The reset command deletes every manageable course returned by `get_courses`, the
 
 The fixture command prints a JSON payload with the generated course, category, module, file, question, quiz, and attempt ids. Keep that output for follow-up browser checks or cleanup.
 
+### Generated Data Cleanup
+
+Use the selective cleanup command before using the destructive reset command:
+
+```text
+npm run moodle:cleanup-generated
+```
+
+The default mode is a dry run. It inspects generated courses and course categories visible to `MOODLE_REST_TOKEN`, then prints the cleanup plan as JSON. A course is eligible only when its full name starts with `MoodlIA` or its short name starts with `moodlia-`. A course category is eligible only when its name starts with `MoodlIA`.
+
+To delete matched generated data:
+
+```text
+npm run moodle:cleanup-generated:execute
+```
+
+To limit cleanup to known ids:
+
+```text
+node tools/cleanup-generated-test-data.mjs --course-id=42,43 --category-id=12 --execute
+```
+
+Explicit ids are still checked against the generated-data markers before deletion. Non-empty generated course categories are skipped, so the command can be run repeatedly after generated courses are removed.
+
 The quiz questions page shows questions used by the quiz and can include questions stored outside the quiz-private bank. To verify storage ownership, inspect the actual question bank category URLs.
 
 For a generated course, inspect both banks with:
@@ -595,6 +683,13 @@ Test data should include cleanup hooks for:
 - Quizzes or quiz slots created during tests.
 
 Cleanup should run even when assertions fail.
+
+For broad post-failure cleanup, run:
+
+```text
+npm run moodle:cleanup-generated
+npm run moodle:cleanup-generated:execute
+```
 
 ## Rollback Notes
 

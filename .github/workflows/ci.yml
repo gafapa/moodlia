@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  local-checks:
+    name: Local checks
+    runs-on: windows-latest
+
+    env:
+      LOCAL_PLUGIN_PACKAGE_PATH: ${{ runner.temp }}\moodlia
+      DEPLOY_MODE: direct
+      MOODLE_SERVER_ROOT: C:\moodle
+      MOODLE_SERVER_PLUGIN_PATH: C:\moodle\local\moodlia
+      MOODLE_SERVER_PHP: php
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check generated npm package mirror
+        run: npm run npm:sync:check
+
+      - name: Run release preflight
+        run: npm run release:check
+
+      - name: Install Playwright browser
+        run: npx playwright install chromium
+
+      - name: Run project website tests
+        run: npm run test:site
+
+      - name: Upload Playwright reports
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-reports
+          path: |
+            playwright-report/
+            playwright-report-site/
+            test-results/
+          if-no-files-found: ignore

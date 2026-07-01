@@ -75,6 +75,7 @@ The current implementation includes:
 - Playwright browser checks for Moodle login, course index visibility, generated course visibility, participants, groups, gradebook, activity subelements, files, question banks, quiz preview, and an in-progress quiz attempt.
 - Node CLI at `cli/moodle-mcp.mjs` that maps contract operations to kebab-case commands, validates arguments through the shared contract parameter builder, and calls Moodle REST through the shared client.
 - Generated public npm package at `packages/moodlia` with the `moodlia` binary, REST client, TypeScript declarations, filtered operation contract, README, and license.
+- High-level course workflow operations for portable course blueprints, blueprint restore/application, course-structure copy, manual enrolment synchronisation, publish-state transitions, and course readiness audit.
 
 REST, MCP, and the CLI use the same `MOODLE_REST_TOKEN`. The CLI does not call MCP; it uses `MOODLE_BASE_URL` and `MOODLE_REST_TOKEN`, then invokes Moodle's `/webservice/rest/server.php` endpoint with the matching `local_moodlia_*` function.
 
@@ -90,6 +91,8 @@ node cli/moodle-mcp.mjs enrol-user --course-id 42 --user-id 7 --role-archetype s
 node cli/moodle-mcp.mjs create-group --course-id 42 --name "Team A" --format json
 node cli/moodle-mcp.mjs create-module --course-id 42 --section-number 1 --module-type page --name "Reading" --options "{\"content\":\"<p>Hello</p>\"}" --format json
 node cli/moodle-mcp.mjs create-module --course-id 42 --section-number 0 --module-type qbank --name "MoodlIA Question Bank" --format json
+node cli/moodle-mcp.mjs audit-course --course-id 42 --format json
+node cli/moodle-mcp.mjs set-course-publish-state --course-id 42 --publish-state published --format json
 ```
 
 After installing the public npm package, use the `moodlia` binary:
@@ -105,6 +108,20 @@ Use `--raw` or `--no-validate-response` only for advanced automation that needs 
 
 CLI successes are printed as JSON matching the canonical operation return contract. CLI failures are printed on stderr as JSON with `error`, `code`, `message`, and `details`.
 
+## Generic Moodle Server Installation
+
+MoodlIA installs like any standard Moodle local plugin: copy the packaged `moodlia` folder to `<moodle-root>/local/moodlia`, then run Moodle upgrade and purge caches from the Moodle root:
+
+```text
+npm run plugin:package
+cp -a moodlia /var/www/html/local/moodlia
+cd /var/www/html
+php admin/cli/upgrade.php --non-interactive
+php admin/cli/purge_caches.php
+```
+
+The repository's Docker/WinSCP scripts are for the configured development/staging target. They are not required for normal Moodle servers. Use `DEPLOY_MODE=direct` with `npm run deploy:commands` to print generic server commands from your environment file.
+
 ## Release And Demo Commands
 
 Run the local release preflight:
@@ -112,6 +129,8 @@ Run the local release preflight:
 ```text
 npm run release:check
 ```
+
+GitHub Actions runs the local CI preflight on pushes and pull requests: npm package mirror drift, release checks, plugin packaging, and project website tests. Remote Moodle smoke/browser suites are intentionally not part of the default CI job because they need target-specific credentials and generate Moodle data.
 
 Prepare and inspect the public npm package:
 
@@ -125,6 +144,18 @@ Create a rich generated Moodle course without deleting existing courses:
 
 ```text
 npm run moodle:create-demo-course
+```
+
+Audit generated Moodle test data without deleting it:
+
+```text
+npm run moodle:cleanup-generated
+```
+
+Delete only generated courses and empty generated course categories whose names match the MoodlIA test markers:
+
+```text
+npm run moodle:cleanup-generated:execute
 ```
 
 Only on disposable Moodle instances, reset manageable courses before creating the demo course:

@@ -5,6 +5,7 @@ import { fromRoot } from './paths.mjs';
 const allowedTransportNames = new Set(['rest', 'mcp', 'cli']);
 const allowedOperationTypes = new Set(['read', 'write']);
 const allowedFileModes = new Set(['none', 'upload', 'download', 'metadata']);
+const allowedCapabilityModes = new Set(['all', 'any']);
 
 export function toKebabCase(value) {
   return value.replaceAll('_', '-');
@@ -46,6 +47,30 @@ export function assertValidContract(contract) {
     assert.ok(allowedOperationTypes.has(operation.type), `${operation.name} has an invalid type.`);
     assert.equal(typeof operation.context, 'string', `${operation.name} context is required.`);
     assert.ok(Array.isArray(operation.capabilities), `${operation.name} capabilities must be an array.`);
+    if (operation.capability_mode !== undefined) {
+      assert.ok(
+        allowedCapabilityModes.has(operation.capability_mode),
+        `${operation.name} has an invalid capability_mode.`
+      );
+      assert.ok(
+        operation.capabilities.length > 0,
+        `${operation.name} capability_mode requires at least one capability.`
+      );
+    }
+    if (operation.target_capabilities !== undefined) {
+      assert.equal(typeof operation.target_capabilities, 'object', `${operation.name} target_capabilities must be an object.`);
+      for (const [parameterName, capabilities] of Object.entries(operation.target_capabilities)) {
+        assert.ok(
+          Object.hasOwn(operation.parameters, parameterName),
+          `${operation.name} target_capabilities references unknown parameter ${parameterName}.`
+        );
+        assert.ok(Array.isArray(capabilities), `${operation.name}.${parameterName} target capabilities must be an array.`);
+        assert.ok(capabilities.length > 0, `${operation.name}.${parameterName} target capabilities must not be empty.`);
+        for (const capability of capabilities) {
+          assert.equal(typeof capability, 'string', `${operation.name}.${parameterName} target capability must be a string.`);
+        }
+      }
+    }
     assert.ok(Array.isArray(operation.transports), `${operation.name} transports must be an array.`);
     assert.ok(operation.transports.length > 0, `${operation.name} must expose at least one transport.`);
     assert.ok(allowedFileModes.has(operation.files), `${operation.name} has an invalid file mode.`);

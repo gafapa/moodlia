@@ -13,6 +13,13 @@ get_course_categories
 create_course_category
 update_course_category
 delete_course_category
+export_course_blueprint
+create_course_from_blueprint
+apply_course_blueprint
+copy_course_structure
+sync_course_enrolments
+set_course_publish_state
+audit_course
 get_course_contents
 get_course_details
 move_course
@@ -77,6 +84,20 @@ Transport mappings:
 
 Operation names must not drift between transports.
 
+## Course Workflow Operations
+
+The course workflow operations compose existing course, section, module, group, enrolment, and visibility primitives. They are exposed through REST, MCP, CLI, and the TypeScript client like every other canonical operation.
+
+- `export_course_blueprint`: returns a portable JSON blueprint for lightweight template, backup, and restore workflows. This is not a Moodle `.mbz` backup.
+- `create_course_from_blueprint`: creates a course, applies sections, module shells, groups, enrolments, and initial publish state from a blueprint.
+- `apply_course_blueprint`: applies blueprint sections, module shells, groups, and enrolments to an existing course.
+- `copy_course_structure`: exports a source course blueprint and applies its structure to a target course.
+- `sync_course_enrolments`: applies a desired manual-enrolment list, with optional removal of users missing from the desired list.
+- `set_course_publish_state`: maps `draft`, `ready`, `published`, and `archived` to Moodle visibility and archive date behavior.
+- `audit_course`: returns operational readiness issues such as hidden courses, empty summaries, no enrolled users, empty sections, and courses without activities.
+
+Complex workflow responses use JSON string fields for nested collections (`blueprint_json`, `sections_json`, `modules_json`, `groups_json`, `enrolments_json`, `warnings_json`, `issues_json`) to keep the wire shape stable across REST form parameters, MCP tool calls, CLI arguments, and generated TypeScript declarations.
+
 ## Contract Entry Shape
 
 Each operation should have a contract entry with these fields:
@@ -88,7 +109,9 @@ type: read or write
 parameters: typed input schema
 returns: typed output schema
 context: Moodle context resolution rule
-capabilities: required Moodle capabilities
+capabilities: Moodle capabilities enforced for the caller
+capability_mode: optional; all by default, or any when one listed caller capability is sufficient
+target_capabilities: optional capabilities enforced on parameter-selected users or targets
 transports: rest, mcp, cli
 files: none, upload, download, or metadata
 errors: supported normalized error codes
@@ -97,6 +120,8 @@ cleanup: cleanup operation or fixture strategy
 ```
 
 During implementation this can be represented as JSON, YAML, PHP metadata, or generated artifacts. The representation is less important than the rule that all adapters validate against it.
+
+Unless an operation declares `capability_mode: "any"`, every capability listed in `capabilities` is required for the calling user in the resolved Moodle context. Operations that act on another selected user can also declare `target_capabilities` so the contract records additional ownership or role checks that are not caller capabilities.
 
 The current transport manifests are generated from `contract/operations.json`:
 
@@ -539,7 +564,7 @@ Do not expose secrets, local filesystem paths, stack traces, or raw token values
 - Question bank module options (`module_type=qbank`): `intro` plus common module options. Moodle treats this as an explicit question bank module rather than a normal course-section activity, so it must be created with `section_number=0`. MoodlIA creates it through Moodle's standard module creation API and `get_module_details` exposes the module context, question bank URL, category count, question count, and category summaries through Moodle question APIs. Question category and question CRUD continue to use the canonical question bank operations.
 - Subsection module options (`module_type=subsection`): no module-specific options are currently exposed beyond common module options. MoodlIA creates the subsection through Moodle's standard module creation API, and `get_module_details` exposes the delegated section id, number, name, visibility, and availability returned by Moodle's course format APIs. When a Moodle course format or site plugin rejects direct `create_section`, `subsection` is the documented Moodle-visible workaround: create a subsection activity, read its delegated section through `get_module_details`, then use that section number with `move_module`.
 - Wiki module options: `intro`, `first_page_title`, `wiki_mode`, `default_format`, and `force_format`. MoodlIA creates the activity through Moodle's standard module creation API and exposes settings, subwikis, pages, files, and page view events through Moodle wiki APIs.
-- Workshop module options: `intro`, `strategy`, `submission_grade`, `assessment_grade`, `grade_decimals`, `submission_instructions`, `assessment_instructions`, `text_submission`, `file_submission`, `max_submission_attachments`, `submission_file_types`, `max_file_size`, `late_submissions`, `self_assessment`, `example_submissions`, `examples_mode`, `submission_start`, `submission_end`, `assessment_start`, `assessment_end`, `switch_to_assessment_after_submission_deadline`, `conclusion`, and overall feedback settings. MoodlIA creates the activity through Moodle's standard module creation API and exposes settings through Moodle workshop APIs and course module metadata. Workshop phase switching, user-plan reads, grade reads, grade-report reads, reviewer/submission assessment reads, and submission CRUD are exposed through Moodle workshop APIs. Allocations, grading forms, and assessment mutation remain pending until they can be implemented through stable Moodle APIs without direct table access.
+- Workshop module options: `intro`, `strategy`, `submission_grade`, `assessment_grade`, `grade_decimals`, `submission_instructions`, `assessment_instructions`, `text_submission`, `file_submission`, `max_submission_attachments`, `submission_file_types`, `max_file_size`, `late_submissions`, `self_assessment`, `example_submissions`, `examples_mode`, `submission_start`, `submission_end`, `assessment_start`, `assessment_end`, `switch_to_assessment_after_submission_deadline`, `conclusion`, and overall feedback settings. MoodlIA creates the activity through Moodle's standard module creation API and exposes settings through Moodle workshop APIs and course module metadata. Workshop phase switching, user-plan reads, grade reads, grade-report reads, reviewer/submission assessment reads, allocation, assessment form-definition reads, assessment updates, assessment evaluation, and submission CRUD are exposed through Moodle workshop APIs. Workshop grading form mutation remains pending until it can be implemented through stable Moodle APIs without direct table access.
 - Forum module options: `forum_type` defaults to `general`; supported values are `general`, `eachuser`, `qanda`, `single`, and `blog`. `intro` stores the forum description. Forum creation also supports attachment limits, subscription/tracking settings, post blocking dates and thresholds, and completion rules for required discussions, replies, and total posts.
 
 `get_module_details`

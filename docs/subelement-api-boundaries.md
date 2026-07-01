@@ -16,7 +16,7 @@ MoodlIA exposes activity subelements when Moodle provides a public API path that
 - Lesson page, jump, access, grade, timer, and attempt report reads through Moodle Lesson APIs.
 - Quiz question slots, attempts, attempt data, attempt review, review options, grades, and view events through Moodle Quiz APIs.
 - Wiki pages, subwikis, files, and view events through Moodle Wiki APIs.
-- Workshop phases, user plans, grades, grade reports, reviewer/submission assessment reads, and submissions through Moodle Workshop APIs.
+- Workshop phases, user plans, grades, grade reports, reviewer/submission assessment reads, allocations, assessment form-definition reads, assessment updates, assessment evaluation, and submissions through Moodle Workshop APIs.
 
 ## Intentionally Not Exposed Yet
 
@@ -24,7 +24,7 @@ These areas remain blocked until a stable Moodle API path is identified and test
 
 - Feedback question/item creation and arbitrary item updates.
 - Lesson page creation, update, deletion, and answer/jump mutation.
-- Workshop allocations, grading form definition, assessment creation/update/evaluation, and reviewer assignment.
+- Workshop grading form mutation and standalone assessment creation outside Moodle's allocation flow.
 
 ## Required Standard Before Adding One
 
@@ -43,4 +43,4 @@ Every new subelement write must satisfy all of these conditions:
 
 1. Lesson page mutation, if Moodle's Lesson component exposes stable page and answer APIs.
 2. Feedback item creation/update, only if Moodle exposes a stable non-table API for item creation.
-3. Workshop assessment mutation and allocator operations, only after identifying stable Workshop APIs and capability boundaries.
+3. Workshop grading form mutation, only after identifying stable Workshop APIs and capability boundaries.

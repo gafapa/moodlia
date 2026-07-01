@@ -25,13 +25,16 @@ Implemented:
 - Restricted-token permission smoke tests prove a non-admin token can authenticate through REST/MCP/CLI but cannot call administrative operations without the required Moodle capabilities.
 - Playwright browser checks for login, course index, and generated course visibility.
 - Playwright browser checks verify generated activity subelements for Subsection, Page, Assignment, Book, Label, URL, LTI, Choice, Database, Lesson, Workshop, Forum, Glossary, Wiki, Folder, Resource, Quiz, question bank views, gradebook, groups, participants, calendar, and category pages.
-- SFTP/WinSCP deployment automation for the configured Docker-based Moodle target.
+- Generic Moodle server deployment documentation plus SFTP/WinSCP automation for the configured Docker-based development target.
+- GitHub Actions CI for local checks that do not require a Moodle target.
+- Selective generated-data cleanup for courses and empty course categories marked with MoodlIA test prefixes.
+- High-level course workflow operations for portable blueprints, blueprint application, structure copy, manual enrolment sync, publishing states, and readiness audit.
 
 Still pending:
 
 - Broader restricted-user coverage across course, module, file, question, quiz, and activity subelement writes.
 - Additional subelement write operations where Moodle exposes stable APIs, or where the owning Moodle component has no public writer API and a narrow audited Moodle-DML boundary can mirror core behavior without raw SQL or plugin-owned tables.
-- CI integration and production hardening.
+- Production hardening for release gates that run against protected Moodle targets.
 
 ## Phase 0: Documentation And Decisions
 
@@ -162,6 +165,7 @@ Verification:
 - API, MCP, and CLI write tests create controlled test data.
 - Browser tests confirm created and updated entities appear in Moodle.
 - Cleanup removes test sections and modules.
+- Selective cleanup can remove generated courses and empty generated course categories left by failed lifecycle tests.
 - Negative tests cover missing capabilities and wrong course context.
 
 ## Phase 5: File Operations
@@ -224,7 +228,7 @@ Verification:
 
 ## Phase 6B: Activity Subelements
 
-Status: implemented where Moodle exposes stable public APIs, with one documented exception for Book chapter writes. Feedback page item reads, analysis reads, finished response reads, item listing, and item deletion use Moodle Feedback APIs. Database fields and entries, Choice options/responses/results, Book chapter reads and writes, Lesson page/report reads, Workshop submission/report/assessment reads, Forum discussions/posts, Glossary entry reads/browse filters/author filters/pending approval reads, Wiki pages/subwikis/files/view events, Assignment submissions/grades, and controlled Folder/Resource file operations are exposed through Moodle APIs or documented Moodle component boundaries. Book chapter mutation is isolated in `book_chapter_tools` because Moodle Book has no public writer API; it mirrors Moodle Book's own edit/delete/move scripts, uses Moodle DML without raw SQL, validates ownership/capabilities, and triggers Book events. Feedback item creation, Lesson page mutation, and advanced Workshop assessment/allocation mutation remain intentionally unavailable until they can be implemented through stable APIs or an equally narrow audited component boundary. See `docs/subelement-api-boundaries.md` for the acceptance standard and preferred implementation order.
+Status: implemented where Moodle exposes stable public APIs, with one documented exception for Book chapter writes. Feedback page item reads, analysis reads, finished response reads, item listing, and item deletion use Moodle Feedback APIs. Database fields and entries, Choice options/responses/results, Book chapter reads and writes, Lesson page/report reads, Workshop submission/report/assessment reads, allocation, assessment form-definition reads, assessment updates, assessment evaluation, Forum discussions/posts, Glossary entry reads/browse filters/author filters/pending approval reads, Wiki pages/subwikis/files/view events, Assignment submissions/grades, and controlled Folder/Resource file operations are exposed through Moodle APIs or documented Moodle component boundaries. Book chapter mutation is isolated in `book_chapter_tools` because Moodle Book has no public writer API; it mirrors Moodle Book's own edit/delete/move scripts, uses Moodle DML without raw SQL, validates ownership/capabilities, and triggers Book events. Feedback item creation, Lesson page mutation, and Workshop grading form mutation remain intentionally unavailable until they can be implemented through stable APIs or an equally narrow audited component boundary. See `docs/subelement-api-boundaries.md` for the acceptance standard and preferred implementation order.
 
 Verification:
 
@@ -266,7 +270,7 @@ Verification:
 
 ## Phase 8: Deployment Automation
 
-Status: implemented for the configured WinSCP plus Docker deployment flow.
+Status: implemented for generic Moodle server documentation and the configured WinSCP plus Docker development deployment flow.
 
 Deliverables:
 

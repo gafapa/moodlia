@@ -10,19 +10,20 @@ test.beforeEach(async ({ page }) => {
 
 test('project website exposes installer and technical sections', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'One Moodle operation surface for REST, MCP, and a Node CLI.' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Install the plugin in a Moodle Docker deployment.' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Install the plugin on a standard Moodle server.' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Docker deployment for the configured staging target' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Package, deploy, verify, and generate a demo course.' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Technical model' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Built for Moodle standards first.' })).toBeVisible();
 });
 
 test('copy command control reports status', async ({ page }) => {
-  await page.getByLabel('Install the plugin in a Moodle Docker deployment.').getByRole('button', { name: 'Copy' }).click();
+  await page.getByLabel('Install the plugin on a standard Moodle server.').getByRole('button', { name: 'Copy' }).click();
   await expect(page.getByRole('status')).toContainText(/Commands copied|Clipboard is not available/);
 });
 
 test('layout remains readable on mobile width', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(page.getByRole('navigation', { name: 'Primary navigation' })).toBeVisible();
-  await expect(page.getByText('/var/www/html/public/local/moodlia', { exact: true })).toBeVisible();
+  await expect(page.getByText('/var/www/html/local/moodlia', { exact: true })).toBeVisible();
 });

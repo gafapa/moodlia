@@ -1373,6 +1373,7 @@ test('REST generated course and section lifecycle works', { skip: !hasRestConfig
 
     const updatedCategory = await callRestFunction(toRestFunctionName(contract, 'update_question_category'), {
       category_id: createdCategory.category_id,
+      context_id: createdCategory.context_id,
       name: updatedCategoryName,
       description: 'Updated by MoodlIA automated tests.'
     });
@@ -1391,6 +1392,7 @@ test('REST generated course and section lifecycle works', { skip: !hasRestConfig
 
     const deletedEmptyCategory = await callRestFunction(toRestFunctionName(contract, 'delete_question_category'), {
       category_id: emptyCategory.category_id,
+      context_id: emptyCategory.context_id,
       delete_mode: 'delete'
     });
 
