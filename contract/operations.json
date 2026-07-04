@@ -307,7 +307,11 @@
                 "visible": "boolean",
                 "visible_on_course_page": "boolean",
                 "user_visible": "boolean",
-                "url": "string"
+                "url": "string",
+                "completion": "integer",
+                "completion_view": "integer",
+                "completion_grade_item_number": "integer",
+                "completion_expected": "integer"
               }
             ]
           }
@@ -2735,7 +2739,9 @@
             "completion_tracking": "none | manual | automatic",
             "completion_view_required": "boolean",
             "completion_grade_item_number": "integer",
-            "completion_expected": "integer"
+            "completion_expected": "integer",
+            "completion_use_grade": "boolean; Moodle-native alias for requiring any grade as completion criterion",
+            "completion_pass_grade": "boolean; Moodle-native alias for requiring a passing grade as completion criterion"
           },
           "module_properties": {
             "assign": {
@@ -3066,7 +3072,9 @@
             "completion_view_required": "boolean",
             "completion_grade_item_number": "integer",
             "completion_expected": "integer",
-            "reset_completion_states": "boolean; required when changing completion settings because Moodle may recalculate existing completion states"
+            "reset_completion_states": "boolean; required when changing completion settings because Moodle may recalculate existing completion states",
+            "completion_use_grade": "boolean; Moodle-native alias for requiring any grade as completion criterion",
+            "completion_pass_grade": "boolean; Moodle-native alias for requiring a passing grade as completion criterion"
           }
         }
       },
@@ -11501,7 +11509,7 @@
     },
     {
       "name": "get_course_quizzes",
-      "summary": "Return Moodle quizzes in selected courses.",
+      "summary": "Return Moodle quizzes in one course or selected courses.",
       "type": "read",
       "context": "course",
       "capabilities": [
@@ -11514,6 +11522,11 @@
       ],
       "files": "none",
       "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": false,
+          "minimum": 0
+        },
         "course_ids": {
           "type": "string",
           "required": false

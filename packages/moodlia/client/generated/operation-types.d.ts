@@ -1184,6 +1184,7 @@ export interface GetQuizQuestionsParameters {
 }
 
 export interface GetCourseQuizzesParameters {
+  course_id?: number;
   course_ids?: string;
 }
 
@@ -1383,6 +1384,10 @@ export interface GetCourseContentsResponse {
       visible_on_course_page: boolean;
       user_visible: boolean;
       url: string;
+      completion: number;
+      completion_view: number;
+      completion_grade_item_number: number;
+      completion_expected: number;
     }[];
   }[];
 }

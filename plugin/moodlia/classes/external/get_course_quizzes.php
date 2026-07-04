@@ -32,12 +32,17 @@ use local_moodlia\operation\question_tools;
 class get_course_quizzes extends external_api {
     public static function execute_parameters(): external_function_parameters {
         return new external_function_parameters([
-            'course_ids' => new external_value(PARAM_RAW, 'JSON array of Moodle course ids, or [] for visible quizzes', VALUE_DEFAULT, '[]'),
+            'course_id' => new external_value(PARAM_INT, 'Single Moodle course id', VALUE_DEFAULT, 0),
+            'course_ids' => new external_value(PARAM_RAW, 'JSON array, comma-separated list, or single Moodle course id; [] for visible quizzes', VALUE_DEFAULT, '[]'),
         ]);
     }
 
-    public static function execute(string $course_ids = '[]'): array {
-        ['course_ids' => $courseids] = self::validate_parameters(self::execute_parameters(), [
+    public static function execute(int $course_id = 0, string $course_ids = '[]'): array {
+        [
+            'course_id' => $courseid,
+            'course_ids' => $courseids,
+        ] = self::validate_parameters(self::execute_parameters(), [
+            'course_id' => $course_id,
             'course_ids' => $course_ids,
         ]);
 
@@ -45,7 +50,12 @@ class get_course_quizzes extends external_api {
         self::validate_context($systemcontext);
         require_capability('local/moodlia:useapi', $systemcontext);
 
-        return get_course_quizzes_operation::execute(question_tools::decode_id_list((string) $courseids));
+        $decodedcourseids = question_tools::decode_id_list((string) $courseids);
+        if ((int) $courseid > 0) {
+            array_unshift($decodedcourseids, (int) $courseid);
+        }
+
+        return get_course_quizzes_operation::execute(array_values(array_unique($decodedcourseids)));
     }
 
     public static function execute_returns(): external_single_structure {

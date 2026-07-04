@@ -123,6 +123,10 @@ class module_common_tools {
             'completionview',
             'completion_grade_item_number',
             'completiongradeitemnumber',
+            'completion_use_grade',
+            'completionusegrade',
+            'completion_pass_grade',
+            'completionpassgrade',
             'completion_expected',
             'completionexpected',
             'reset_completion_states',
@@ -130,7 +134,7 @@ class module_common_tools {
         $unknown = array_diff(array_keys($options), $allowed);
         if ($unknown) {
             throw new \invalid_parameter_exception(
-                'update_module options currently supports only: visible, visible_on_course_page, id_number, group_mode, tags, download_content, completion_tracking, completion_view_required, completion_grade_item_number, completion_expected, and reset_completion_states.'
+                'update_module options currently supports only: visible, visible_on_course_page, id_number, group_mode, tags, download_content, completion_tracking, completion_view_required, completion_grade_item_number, completion_use_grade, completion_pass_grade, completion_expected, and reset_completion_states.'
             );
         }
 
@@ -210,7 +214,11 @@ class module_common_tools {
             || array_key_exists('completion_view', $options)
             || array_key_exists('completionview', $options);
         $gradeprovided = array_key_exists('completion_grade_item_number', $options)
-            || array_key_exists('completiongradeitemnumber', $options);
+            || array_key_exists('completiongradeitemnumber', $options)
+            || array_key_exists('completion_use_grade', $options)
+            || array_key_exists('completionusegrade', $options)
+            || array_key_exists('completion_pass_grade', $options)
+            || array_key_exists('completionpassgrade', $options);
         $expectedprovided = array_key_exists('completion_expected', $options) || array_key_exists('completionexpected', $options);
 
         $tracking = $trackingprovided
@@ -229,8 +237,17 @@ class module_common_tools {
             ? (bool) ($options['completion_view_required'] ?? $options['completion_view'] ?? $options['completionview'])
             : (bool) ($moduleinfo->completionview ?? false);
         $gradeitemnumber = $gradeprovided
-            ? self::normalise_completion_grade_item_number($options['completion_grade_item_number'] ?? $options['completiongradeitemnumber'])
+            ? self::normalise_completion_grade_item_number($options, $moduleinfo)
             : (int) ($moduleinfo->completiongradeitemnumber ?? -1);
+
+        if ($tracking !== 2) {
+            if (($viewprovided && $viewrequired) || ($gradeprovided && $gradeitemnumber >= 0)) {
+                throw new \invalid_parameter_exception('completion_view_required and completion_grade_item_number require completion_tracking=automatic.');
+            }
+
+            $viewrequired = false;
+            $gradeitemnumber = -1;
+        }
 
         if ($tracking !== 2 && ($viewrequired || $gradeitemnumber >= 0)) {
             throw new \invalid_parameter_exception('completion_view_required and completion_grade_item_number require completion_tracking=automatic.');
@@ -239,6 +256,9 @@ class module_common_tools {
         $moduleinfo->completion = $tracking;
         $moduleinfo->completionview = $tracking === 2 && $viewrequired ? 1 : 0;
         $moduleinfo->completiongradeitemnumber = $tracking === 2 ? $gradeitemnumber : -1;
+        $moduleinfo->completionusegrade = $tracking === 2 && $gradeitemnumber >= 0 ? 1 : 0;
+        $moduleinfo->completionpassgrade = $tracking === 2 && $gradeitemnumber >= 0
+            && self::bool_option($options, ['completion_pass_grade', 'completionpassgrade'], false) ? 1 : 0;
 
         if ($expectedprovided) {
             $expected = (int) ($options['completion_expected'] ?? $options['completionexpected']);
@@ -266,6 +286,10 @@ class module_common_tools {
             'completionview',
             'completion_grade_item_number',
             'completiongradeitemnumber',
+            'completion_use_grade',
+            'completionusegrade',
+            'completion_pass_grade',
+            'completionpassgrade',
             'completion_expected',
             'completionexpected',
         ] as $key) {
@@ -413,16 +437,48 @@ class module_common_tools {
     /**
      * Validate the public completion grade item number.
      *
-     * @param mixed $value Public grade item number.
+     * @param array $options Module options.
+     * @param \stdClass $moduleinfo Module form data object.
      * @return int
      */
-    private static function normalise_completion_grade_item_number($value): int {
-        $gradeitemnumber = (int) $value;
+    private static function normalise_completion_grade_item_number(array $options, \stdClass $moduleinfo): int {
+        if (array_key_exists('completion_use_grade', $options) || array_key_exists('completionusegrade', $options)) {
+            $usegrade = self::bool_option($options, ['completion_use_grade', 'completionusegrade'], false);
+            if (!$usegrade) {
+                return -1;
+            }
+        }
+
+        if (array_key_exists('completion_grade_item_number', $options)
+                || array_key_exists('completiongradeitemnumber', $options)) {
+            $gradeitemnumber = (int) ($options['completion_grade_item_number'] ?? $options['completiongradeitemnumber']);
+        } else {
+            $gradeitemnumber = (int) ($moduleinfo->completiongradeitemnumber ?? 0);
+        }
+
         if ($gradeitemnumber < -1) {
             throw new \invalid_parameter_exception('options.completion_grade_item_number must be -1 or a non-negative integer.');
         }
 
         return $gradeitemnumber;
+    }
+
+    /**
+     * Return a boolean option from a list of aliases.
+     *
+     * @param array $options Module options.
+     * @param array $keys Candidate option names.
+     * @param bool $default Default value.
+     * @return bool
+     */
+    private static function bool_option(array $options, array $keys, bool $default): bool {
+        foreach ($keys as $key) {
+            if (array_key_exists($key, $options)) {
+                return (bool) $options[$key];
+            }
+        }
+
+        return $default;
     }
 
     /**

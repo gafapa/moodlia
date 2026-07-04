@@ -156,6 +156,8 @@ moodlia get-course-details --course-id <course_id>
 moodlia get-course-contents --course-id <course_id>
 ```
 
+`get-course-contents` includes course-module completion metadata (`completion`, `completion_view`, `completion_grade_item_number`, and `completion_expected`) so automation can audit whether an activity is configured for manual completion, view completion, or grade-based completion without calling each activity endpoint first.
+
 Update the course:
 
 ```text
@@ -262,6 +264,15 @@ moodlia move-module --course-id <course_id> --module-id <module_id> --section-nu
 moodlia update-module --course-id <course_id> --module-id <module_id> --name "Updated name" --visible true
 moodlia delete-module --course-id <course_id> --module-id <module_id>
 ```
+
+Completion options use MoodlIA's stable names and accept Moodle-native grade flags for repair workflows:
+
+```text
+moodlia update-module --course-id <course_id> --module-id <book_module_id> --options '{"completion_tracking":"automatic","completion_view_required":true,"completion_use_grade":false,"completion_pass_grade":false,"completion_grade_item_number":-1,"reset_completion_states":true}'
+moodlia update-module --course-id <course_id> --module-id <module_id> --options '{"completion_tracking":"none","reset_completion_states":true}'
+```
+
+Use `completion_use_grade:false` or `completionusegrade:false` when an existing Moodle activity, especially an older Book activity, still shows a grade-based completion rule after the visible grade item number appears cleared. `completion_pass_grade:false` or `completionpassgrade:false` clears the passing-grade rule. Setting `completion_tracking` to `none` or `manual` also clears inherited view and grade completion values unless explicitly incompatible completion criteria are provided in the same request.
 
 ## Files
 
@@ -406,6 +417,12 @@ Create a Book activity, then add chapters:
 moodlia create-module --course-id <course_id> --section-number 1 --module-type book --name "Course guide" --options '{"intro":"<p>Guide intro.</p>","numbering":"numbers"}'
 moodlia create-book-chapter --course-id <course_id> --module-id <book_module_id> --title "Chapter 1" --content "<p>Opening content.</p>"
 moodlia create-book-chapter --course-id <course_id> --module-id <book_module_id> --title "Chapter 1.1" --content "<p>Nested content.</p>" --after-chapter-id <chapter_id> --subchapter true
+```
+
+For Books that should not participate in Moodle completion, create them with completion disabled:
+
+```text
+moodlia create-module --course-id <course_id> --section-number 1 --module-type book --name "Reference book" --options '{"intro":"<p>Reference only.</p>","completion_tracking":"none"}'
 ```
 
 Update, reorder, list, and delete chapters:

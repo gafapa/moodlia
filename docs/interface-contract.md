@@ -549,7 +549,7 @@ Do not expose secrets, local filesystem paths, stack traces, or raw token values
 - Type: write.
 - Parameters: `course_id`, `section_number`, `module_type`, `name`, module-specific options.
 - Supported `module_type` values: `assign`, `book`, `choice`, `data`, `feedback`, `lesson`, `lti`, `page`, `folder`, `forum`, `glossary`, `label`, `qbank`, `quiz`, `resource`, `subsection`, `url`, `wiki`, `workshop`. `data` is Moodle's technical plugin name for the Database activity, `lti` is Moodle's technical plugin name for the External tool activity, `qbank` creates Moodle's question bank activity, and `subsection` creates Moodle's delegated subsection structure.
-- Common module options include `visible`, `visible_on_course_page`, and `download_content`. `visible_on_course_page` maps to Moodle's raw `visibleoncoursepage` setting. Use `visible=true` with `visible_on_course_page=false` to create Moodle's "available but not shown on course page" state without hiding the activity from direct access. `download_content` maps to Moodle's course module download-content flag where the site/course allows downloadable course content.
+- Common module options include `visible`, `visible_on_course_page`, `download_content`, `completion_tracking`, `completion_view_required`, `completion_grade_item_number`, `completion_use_grade`, `completion_pass_grade`, and `completion_expected`. `visible_on_course_page` maps to Moodle's raw `visibleoncoursepage` setting. Use `visible=true` with `visible_on_course_page=false` to create Moodle's "available but not shown on course page" state without hiding the activity from direct access. `download_content` maps to Moodle's course module download-content flag where the site/course allows downloadable course content. `completion_use_grade`/`completionusegrade` and `completion_pass_grade`/`completionpassgrade` map to Moodle's native grade completion flags and are accepted so automation can clear stale grade-based completion rules on existing activities.
 - Assignment module options: `intro`, `online_text`, `file_submissions`, `submission_drafts`, date fields, and grade fields configure a standard Moodle assignment. By default, MoodlIA creates a visible assignment with online text submissions and submission drafts enabled, and file submissions disabled.
 - Book module options: `intro`, `numbering` (`none`, `numbers`, `bullets`, `indented`), and `custom_titles`. MoodlIA creates the book activity through Moodle's standard module creation API. Course Book listing, chapter listing, and view registration are exposed through Moodle's Book APIs. Chapter creation, update, movement, and deletion are exposed as explicit subelement operations; Moodle Book does not provide a public writer API for chapters, so MoodlIA keeps the unavoidable Book DML inside one audited helper that mirrors Moodle Book's own edit/delete/move behavior, validates module ownership and `mod/book:edit`, updates Book revision/page order, deletes chapter files/tags on deletion, and triggers Book chapter events. This helper must not use raw SQL or plugin-owned tables.
 - Choice module options: `intro`, `choices`, `allow_update`, and `allow_multiple`. `choices` must contain at least two non-empty labels. By default, MoodlIA creates a visible Choice activity, allows the current user to update their choice, publishes anonymous aggregate results, and uses Moodle's `mod_choice` APIs for course listings, options, view events, submissions, response deletion, and results.
@@ -592,6 +592,14 @@ Do not expose secrets, local filesystem paths, stack traces, or raw token values
   - `wiki`: wiki settings, page count, page summaries, subwikis, attached files, and view-event operations where Moodle exposes them.
   - `workshop`: workshop grading, submission, assessment, timing, example-submission, conclusion, and overall-feedback settings.
 - MoodlIA does not use direct table reads for these details; it uses Moodle external APIs, course module metadata, File API, and existing module APIs.
+
+`update_module`
+
+- Type: write.
+- Parameters: `course_id`, `module_id`, optional `name`, optional `visible`, optional safe common module options.
+- Context: module.
+- Supports completion repair options: `completion_tracking`, `completion_view_required`, `completion_grade_item_number`, `completion_use_grade`, `completionusegrade`, `completion_pass_grade`, `completionpassgrade`, `completion_expected`, and `reset_completion_states`.
+- Use `completion_use_grade:false` or `completionusegrade:false` together with `completion_grade_item_number:-1` to clear Moodle's native grade-completion rule on activities whose UI still shows a "receive a grade" requirement. Setting `completion_tracking` to `none` or `manual` clears inherited view and grade criteria unless incompatible criteria are explicitly supplied in the same request.
 
 `view_book`
 
@@ -1498,7 +1506,7 @@ The Moodle quiz questions page is not a storage-ownership view. It shows questio
 `get_course_quizzes`
 
 - Type: read.
-- Parameters: optional `course_ids` JSON array of course ids. An empty list delegates to Moodle's visible-quiz lookup.
+- Parameters: optional `course_id` for one course and optional `course_ids` for batch reads. `course_ids` accepts a JSON array (`[2206,2207]`), comma-separated ids (`2206,2207`), or one scalar id (`2206`). An empty list delegates to Moodle's visible-quiz lookup.
 - Context: course.
 - Capabilities: Moodle validates course visibility and module access through `mod_quiz_external::get_quizzes_by_courses`; MoodlIA also requires `local/moodlia:useapi`.
 - Returns selected course ids, quiz count, normalized quiz setting rows, Moodle view URLs, and warnings.

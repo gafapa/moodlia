@@ -50,6 +50,10 @@ class get_course_contents {
                     'visible' => (bool) $cm->visible,
                     'visible_on_course_page' => module_tools::is_visible_on_course_page($cm),
                     'user_visible' => (bool) $cm->uservisible,
+                    'completion' => (int) ($cm->completion ?? 0),
+                    'completion_view' => (int) ($cm->completionview ?? 0),
+                    'completion_grade_item_number' => (int) ($cm->completiongradeitemnumber ?? -1),
+                    'completion_expected' => (int) ($cm->completionexpected ?? 0),
                     'url' => $cm->url ? $cm->url->out(false) : '',
                 ];
             }

@@ -784,6 +784,8 @@ test('create_module exposes audited common Moodle module options', async () => {
     'completion_tracking',
     'completion_view_required',
     'completion_grade_item_number',
+    'completion_use_grade',
+    'completion_pass_grade',
     'completion_expected'
   ];
 
@@ -842,7 +844,44 @@ test('create_module exposes audited common Moodle module options', async () => {
   assert.match(moduleTools, /function apply_common_update_options/, 'module_tools must apply safe common module update options.');
 
   const updateProperties = updateModule.parameters.options.update_properties;
-  for (const option of ['visible', 'visible_on_course_page', 'id_number', 'group_mode', 'tags', 'download_content', 'completion_tracking', 'completion_view_required', 'completion_grade_item_number', 'completion_expected', 'reset_completion_states']) {
+  for (const option of ['visible', 'visible_on_course_page', 'id_number', 'group_mode', 'tags', 'download_content', 'completion_tracking', 'completion_view_required', 'completion_grade_item_number', 'completion_use_grade', 'completion_pass_grade', 'completion_expected', 'reset_completion_states']) {
     assert.ok(updateProperties[option], `update_module options must document ${option}.`);
   }
+});
+
+test('course quiz and completion regressions stay covered in plugin externals', async () => {
+  const contract = JSON.parse(await fs.readFile(fromRoot('contract/operations.json'), 'utf8'));
+  const getCourseQuizzes = contract.operations.find((operation) => operation.name === 'get_course_quizzes');
+
+  assert.ok(getCourseQuizzes.parameters.course_id, 'get_course_quizzes must accept one course_id.');
+  assert.ok(getCourseQuizzes.parameters.course_ids, 'get_course_quizzes must keep course_ids for batches.');
+
+  const quizzesExternal = await fs.readFile(fromRoot('plugin/moodlia/classes/external/get_course_quizzes.php'), 'utf8');
+  assert.match(quizzesExternal, /'course_id'\s*=>\s*new external_value\(PARAM_INT/);
+  assert.match(quizzesExternal, /array_unshift\(\$decodedcourseids,\s*\(int\) \$courseid\)/);
+
+  const questionTools = await fs.readFile(fromRoot('plugin/moodlia/classes/operation/question_tools.php'), 'utf8');
+  assert.match(questionTools, /preg_match\('\/\^\[0-9\]\+\(\?:\\s\*,\\s\*\[0-9\]\+\)\*\$\/'/);
+  assert.match(questionTools, /JSON array, comma-separated list, or single positive integer/);
+
+  const courseContentsOperation = await fs.readFile(fromRoot('plugin/moodlia/classes/operation/get_course_contents.php'), 'utf8');
+  const courseContentsExternal = await fs.readFile(fromRoot('plugin/moodlia/classes/external/get_course_contents.php'), 'utf8');
+  for (const field of ['completion', 'completion_view', 'completion_grade_item_number', 'completion_expected']) {
+    assert.ok(courseContentsOperation.includes(`'${field}'`), `get_course_contents operation must expose ${field}.`);
+    assert.ok(courseContentsExternal.includes(`'${field}'`), `get_course_contents external return must declare ${field}.`);
+  }
+});
+
+test('module completion updates clear native Moodle grade completion flags', async () => {
+  const moduleCommonTools = await fs.readFile(fromRoot('plugin/moodlia/classes/operation/module_common_tools.php'), 'utf8');
+
+  for (const option of ['completion_use_grade', 'completionusegrade', 'completion_pass_grade', 'completionpassgrade']) {
+    assert.ok(moduleCommonTools.includes(`'${option}'`), `module completion updates must accept ${option}.`);
+  }
+
+  assert.match(moduleCommonTools, /\$moduleinfo->completionusegrade\s*=\s*\$tracking === 2 && \$gradeitemnumber >= 0 \? 1 : 0;/);
+  assert.match(moduleCommonTools, /\$moduleinfo->completionpassgrade\s*=\s*\$tracking === 2 && \$gradeitemnumber >= 0/);
+  assert.match(moduleCommonTools, /if \(\!\$usegrade\) \{\s*return -1;\s*\}/s);
+  assert.match(moduleCommonTools, /if \(\$tracking !== 2\) \{\s*if \(\(\$viewprovided && \$viewrequired\) \|\| \(\$gradeprovided && \$gradeitemnumber >= 0\)\)/s);
+  assert.match(moduleCommonTools, /\$viewrequired = false;\s*\$gradeitemnumber = -1;/s);
 });

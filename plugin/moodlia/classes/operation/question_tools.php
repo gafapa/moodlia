@@ -3368,24 +3368,28 @@ class question_tools {
     }
 
     /**
-     * Decode a JSON integer id list.
+     * Decode an integer id list from JSON, comma-separated text, or one scalar id.
      *
-     * @param string $json JSON array string.
+     * @param string $json JSON array string, comma-separated ids, or one id.
      * @return array
      */
     public static function decode_id_list(string $json): array {
         $json = trim($json);
-        if ($json === '') {
+        if ($json === '' || $json === '[]') {
             return [];
         }
 
         $decoded = json_decode($json, true);
-        if (!is_array($decoded)) {
-            throw new \invalid_parameter_exception('course_ids must be a JSON array of positive integers.');
+        if (is_array($decoded)) {
+            $rawids = $decoded;
+        } else if (preg_match('/^[0-9]+(?:\s*,\s*[0-9]+)*$/', $json)) {
+            $rawids = preg_split('/\s*,\s*/', $json);
+        } else {
+            throw new \invalid_parameter_exception('course_ids must be a JSON array, comma-separated list, or single positive integer.');
         }
 
         $ids = [];
-        foreach ($decoded as $id) {
+        foreach ($rawids as $id) {
             $id = (int) $id;
             if ($id <= 0) {
                 throw new \invalid_parameter_exception('course_ids must contain positive integers.');

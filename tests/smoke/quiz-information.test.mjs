@@ -261,6 +261,16 @@ test('Quiz information operations work through REST, MCP, and CLI', { skip: !has
     });
     assertCourseQuizzes(restCourseQuizzes, course, quiz);
 
+    const restSingleCourseQuizzes = await callRestFunction(toRestFunctionName(contract, 'get_course_quizzes'), {
+      course_id: courseId
+    });
+    assertCourseQuizzes(restSingleCourseQuizzes, course, quiz);
+
+    const restScalarCourseQuizzes = await callRestFunction(toRestFunctionName(contract, 'get_course_quizzes'), {
+      course_ids: String(courseId)
+    });
+    assertCourseQuizzes(restScalarCourseQuizzes, course, quiz);
+
     const mcpCourseQuizzes = await callMcpTool('get_course_quizzes', {
       course_ids: JSON.stringify([courseId])
     });
@@ -271,6 +281,18 @@ test('Quiz information operations work through REST, MCP, and CLI', { skip: !has
       '--course-ids', JSON.stringify([courseId])
     ]);
     assertCourseQuizzes(cliCourseQuizzes, course, quiz);
+
+    const cliSingleCourseQuizzes = await callCli([
+      'get-course-quizzes',
+      '--course-id', String(courseId)
+    ]);
+    assertCourseQuizzes(cliSingleCourseQuizzes, course, quiz);
+
+    const cliScalarCourseQuizzes = await callCli([
+      'get-course-quizzes',
+      '--course-ids', String(courseId)
+    ]);
+    assertCourseQuizzes(cliScalarCourseQuizzes, course, quiz);
 
     const restAccess = await callRestFunction(toRestFunctionName(contract, 'get_quiz_access_information'), {
       quiz_module_id: quiz.course_module_id

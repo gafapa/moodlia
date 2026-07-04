@@ -283,3 +283,133 @@ test('REST module completion matrix supports create, update, details, and status
     }
   }
 });
+
+test('REST module completion update clears stale Moodle grade criteria on Book activities', {
+  skip: !hasRestConfig,
+  timeout: 60000
+}, async () => {
+  const contract = await loadContract();
+  const suffix = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+  let courseCategoryId = null;
+  let courseId = null;
+  let success = false;
+
+  try {
+    const category = await call(contract, 'create_course_category', {
+      name: `MoodlIA Book Completion Repair Category ${suffix}`,
+      visible: 1
+    });
+    courseCategoryId = Number(category.category_id);
+
+    const course = await call(contract, 'create_course', {
+      fullname: `MoodlIA Book Completion Repair ${suffix}`,
+      shortname: `mia-book-completion-${suffix}`,
+      category_id: courseCategoryId,
+      visible: 1,
+      enable_completion: 1
+    });
+    courseId = Number(course.course_id);
+
+    const section = await call(contract, 'create_section', {
+      course_id: courseId,
+      name: `MoodlIA Book Repair Section ${suffix}`,
+      summary: 'Book completion repair smoke test section.'
+    });
+
+    const book = await call(contract, 'create_module', {
+      course_id: courseId,
+      section_number: section.section_number,
+      module_type: 'book',
+      name: `MoodlIA Book Grade Repair ${suffix}`,
+      options: JSON.stringify({
+        intro: '<p>Book completion repair smoke.</p>',
+        numbering: 'numbers',
+        completion_tracking: 'automatic',
+        completion_use_grade: true,
+        completion_pass_grade: true
+      })
+    });
+    assert.equal(book.module_type, 'book');
+    assert.equal(book.completion, 2);
+
+    const repaired = await call(contract, 'update_module', {
+      course_id: courseId,
+      module_id: book.course_module_id,
+      options: JSON.stringify({
+        completion_tracking: 'automatic',
+        completion_view_required: true,
+        completion_use_grade: false,
+        completion_pass_grade: false,
+        completion_grade_item_number: -1,
+        reset_completion_states: true
+      })
+    });
+
+    assert.equal(repaired.completion, 2);
+    assert.equal(repaired.completion_view, 1);
+    assert.equal(repaired.completion_grade_item_number, -1);
+
+    const details = await call(contract, 'get_module_details', {
+      course_id: courseId,
+      module_id: book.course_module_id
+    });
+    assert.equal(details.completion, 2);
+    assert.equal(details.completion_view, 1);
+    assert.equal(details.completion_grade_item_number, -1);
+
+    const contents = await call(contract, 'get_course_contents', {
+      course_id: courseId
+    });
+    const moduleRow = contents.sections
+      .flatMap((courseSection) => courseSection.modules)
+      .find((module) => module.module_id === book.course_module_id);
+    assert.ok(moduleRow, 'course contents must include the repaired Book activity.');
+    assert.equal(moduleRow.completion, 2);
+    assert.equal(moduleRow.completion_view, 1);
+    assert.equal(moduleRow.completion_grade_item_number, -1);
+
+    const statuses = await call(contract, 'get_activity_completion_statuses', {
+      course_id: courseId
+    });
+    const status = statuses.statuses.find((candidate) => candidate.module_id === book.course_module_id);
+    assert.ok(status, 'completion statuses must include the repaired Book activity.');
+    assert.equal(status.tracking, 2);
+    assert.equal(status.has_completion, true);
+    assert.doesNotMatch(status.details_json, /grade|calificaci|nota/i);
+
+    const disabled = await call(contract, 'update_module', {
+      course_id: courseId,
+      module_id: book.course_module_id,
+      options: JSON.stringify({
+        completion_tracking: 'none',
+        reset_completion_states: true
+      })
+    });
+    assert.equal(disabled.completion, 0);
+    assert.equal(disabled.completion_view, 0);
+    assert.equal(disabled.completion_grade_item_number, -1);
+
+    success = true;
+  } finally {
+    if (success && courseId) {
+      const deletedCourse = await call(contract, 'delete_course', {
+        course_id: courseId
+      });
+      assert.equal(deletedCourse.deleted, true);
+      courseId = null;
+    }
+    if (success && courseCategoryId) {
+      const deletedCategory = await call(contract, 'delete_course_category', {
+        category_id: courseCategoryId
+      });
+      assert.equal(deletedCategory.deleted, true);
+      courseCategoryId = null;
+    }
+    if (!success && courseId) {
+      console.error(`Book completion repair course left in Moodle for inspection: ${courseId}`);
+    }
+    if (!success && courseCategoryId) {
+      console.error(`Book completion repair category left in Moodle for inspection: ${courseCategoryId}`);
+    }
+  }
+});

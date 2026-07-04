@@ -85,3 +85,17 @@ test('CLI accepts response validation bypass flags as global options', async () 
   assert.equal(payloadWithLongFlag.code, 'invalid_parameters');
   assert.match(payloadWithLongFlag.message, /MOODLE_BASE_URL and MOODLE_REST_TOKEN are required/);
 });
+
+test('CLI accepts quiz course id aliases before transport creation', async () => {
+  const payloadWithCourseId = await callCliFailure(['get-course-quizzes', '--course-id', '2206']);
+
+  assert.equal(payloadWithCourseId.error, true);
+  assert.equal(payloadWithCourseId.code, 'invalid_parameters');
+  assert.match(payloadWithCourseId.message, /MOODLE_BASE_URL and MOODLE_REST_TOKEN are required/);
+
+  const payloadWithScalarCourseIds = await callCliFailure(['get-course-quizzes', '--course-ids', '2206']);
+
+  assert.equal(payloadWithScalarCourseIds.error, true);
+  assert.equal(payloadWithScalarCourseIds.code, 'invalid_parameters');
+  assert.match(payloadWithScalarCourseIds.message, /MOODLE_BASE_URL and MOODLE_REST_TOKEN are required/);
+});
