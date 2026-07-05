@@ -7,17 +7,28 @@
 // (at your option) any later version.
 
 /**
- * Plugin version metadata.
+ * Delete native Moodle course backup file operation.
  *
  * @package    local_moodlia
  * @copyright  2026
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace local_moodlia\operation;
+
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'local_moodlia';
-$plugin->version = 2026060668;
-$plugin->requires = 2022112800;
-$plugin->maturity = MATURITY_ALPHA;
-$plugin->release = '0.1.163';
+/**
+ * Deletes a stored .mbz backup file.
+ */
+class delete_course_backup_file {
+    /**
+     * Execute the operation.
+     *
+     * @param int $fileid Stored backup file id.
+     * @return array
+     */
+    public static function execute(int $fileid): array {
+        return course_backup_tools::delete_backup_file($fileid);
+    }
+}

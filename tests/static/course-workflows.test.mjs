@@ -15,6 +15,9 @@ const courseWorkflowOperations = [
   'audit_course',
   'backup_course',
   'restore_course_backup',
+  'upload_course_backup',
+  'get_course_backup_files',
+  'delete_course_backup_file',
   'audit_course_completion',
   'repair_course_completion'
 ];

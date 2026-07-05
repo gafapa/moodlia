@@ -23,6 +23,9 @@ set_course_publish_state
 audit_course
 backup_course
 restore_course_backup
+upload_course_backup
+get_course_backup_files
+delete_course_backup_file
 audit_course_completion
 repair_course_completion
 get_course_contents
@@ -102,6 +105,9 @@ The course workflow operations compose existing course, section, module, group, 
 - `audit_course`: returns operational readiness issues such as hidden courses, empty summaries, no enrolled users, empty sections, and courses without activities.
 - `backup_course`: creates a native Moodle `.mbz` course backup through Moodle's backup controller and returns stored-file metadata plus a Moodle pluginfile URL.
 - `restore_course_backup`: restores a native Moodle `.mbz` backup into a new course, adds it to an existing course, or deletes existing course content before restore through Moodle's restore controller.
+- `upload_course_backup`: stores an existing base64-encoded `.mbz` backup in the current user's Moodle private files so it can be restored later by file id.
+- `get_course_backup_files`: lists `.mbz` backups from the selected course backup area and, optionally, the current user's backup area and private files.
+- `delete_course_backup_file`: deletes a stored `.mbz` backup file when the caller owns the user-private file or can manage backups in the course context.
 - `audit_course_completion`: returns completion-configuration issues such as old Book activities that still require a grade, mixed view-and-grade rules, automatic tracking without an exposed completion rule, or activities tracking completion while course completion is disabled.
 - `repair_course_completion`: repairs completion settings with explicit dry-run support. `book_view_only` clears stale Book grade completion, `all_grade_to_view` clears all grade-completion rules by switching to view completion, and `disable_all` disables activity completion tracking for the course.
 

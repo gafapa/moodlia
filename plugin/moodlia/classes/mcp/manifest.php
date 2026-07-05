@@ -430,6 +430,29 @@ final class manifest {
                 ]),
             ],
             [
+                'name' => 'upload_course_backup',
+                'description' => 'Upload a native Moodle .mbz backup file for later restore.',
+                'inputSchema' => self::schema([
+                    'filename' => ['type' => 'string', 'required' => true],
+                    'upload_reference' => ['type' => 'string', 'required' => true],
+                ]),
+            ],
+            [
+                'name' => 'get_course_backup_files',
+                'description' => 'List native Moodle .mbz backup files available to the caller.',
+                'inputSchema' => self::schema([
+                    'course_id' => ['type' => 'integer', 'required' => false],
+                    'include_private' => ['type' => 'boolean', 'required' => false],
+                ]),
+            ],
+            [
+                'name' => 'delete_course_backup_file',
+                'description' => 'Delete a native Moodle .mbz backup file.',
+                'inputSchema' => self::schema([
+                    'file_id' => ['type' => 'integer', 'required' => true],
+                ]),
+            ],
+            [
                 'name' => 'audit_course_completion',
                 'description' => 'Audit activity completion settings in a Moodle course.',
                 'inputSchema' => self::schema([

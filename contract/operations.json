@@ -2506,6 +2506,141 @@
       ]
     },
     {
+      "name": "upload_course_backup",
+      "summary": "Upload a native Moodle .mbz backup file for later restore.",
+      "type": "write",
+      "context": "user",
+      "capabilities": [
+        "local/moodlia:useapi"
+      ],
+      "transports": [
+        "rest",
+        "mcp",
+        "cli"
+      ],
+      "files": "upload",
+      "parameters": {
+        "filename": {
+          "type": "string",
+          "required": true
+        },
+        "upload_reference": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "returns": {
+        "course_id": "integer",
+        "file_id": "integer",
+        "filename": "string",
+        "url": "string",
+        "filepath": "string",
+        "filesize": "integer",
+        "mimetype": "string",
+        "time_modified": "integer"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "transport_error",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "mcp",
+        "cli"
+      ]
+    },
+    {
+      "name": "get_course_backup_files",
+      "summary": "List native Moodle .mbz backup files available to the caller.",
+      "type": "read",
+      "context": "user_or_course",
+      "capabilities": [
+        "local/moodlia:useapi"
+      ],
+      "transports": [
+        "rest",
+        "mcp",
+        "cli"
+      ],
+      "files": "metadata",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": false,
+          "minimum": 1
+        },
+        "include_private": {
+          "type": "boolean",
+          "required": false
+        }
+      },
+      "returns": {
+        "course_id": "integer",
+        "count": "integer",
+        "files_json": "string"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "transport_error",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "mcp",
+        "cli"
+      ]
+    },
+    {
+      "name": "delete_course_backup_file",
+      "summary": "Delete a native Moodle .mbz backup file.",
+      "type": "write",
+      "context": "user_or_course",
+      "capabilities": [
+        "local/moodlia:useapi"
+      ],
+      "transports": [
+        "rest",
+        "mcp",
+        "cli"
+      ],
+      "files": "metadata",
+      "parameters": {
+        "file_id": {
+          "type": "integer",
+          "required": true,
+          "minimum": 1
+        }
+      },
+      "returns": {
+        "file_id": "integer",
+        "filename": "string",
+        "deleted": "boolean"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "transport_error",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "mcp",
+        "cli"
+      ]
+    },
+    {
       "name": "audit_course_completion",
       "summary": "Audit activity completion settings in a Moodle course.",
       "type": "read",

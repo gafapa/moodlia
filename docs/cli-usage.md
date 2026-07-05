@@ -201,6 +201,18 @@ moodlia backup-course --course-id <course_id> --filename "course-backup.mbz" --i
 
 The backup response returns `file_id`, `filename`, `url`, `filesize`, and `time_modified`. Keep the returned `file_id` when you want MoodlIA to restore the backup from Moodle's stored-file area.
 
+List Moodle backup files that are available to the token. With `--include-private true`, MoodlIA includes the current user's Moodle backup area and private files, because Moodle stores newly generated course backups in the user backup area:
+
+```text
+moodlia get-course-backup-files --course-id <course_id> --include-private true
+```
+
+Upload an existing `.mbz` backup into the current user's Moodle private files for later restore. `upload-reference` is base64-encoded `.mbz` content, so for large production backups prefer passing it from a script or CI secret store instead of typing it in a shell history:
+
+```text
+moodlia upload-course-backup --filename "course-backup.mbz" --upload-reference <base64_mbz_content>
+```
+
 Restore a native Moodle `.mbz` backup into a new course:
 
 ```text
@@ -212,6 +224,12 @@ Restore into an existing course by adding content or deleting the existing conte
 ```text
 moodlia restore-course-backup --backup-file-id <file_id> --target existing_add --target-course-id <course_id>
 moodlia restore-course-backup --backup-file-id <file_id> --target existing_delete --target-course-id <course_id>
+```
+
+Delete a stored backup file after it is no longer needed:
+
+```text
+moodlia delete-course-backup-file --file-id <file_id>
 ```
 
 Blueprints are best for controlled templates and automation-friendly JSON. Native `.mbz` backups use Moodle's backup/restore controllers and are the right tool when you need Moodle's full restore behavior.

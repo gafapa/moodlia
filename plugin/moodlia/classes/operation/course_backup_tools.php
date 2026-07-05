@@ -201,6 +201,126 @@ class course_backup_tools {
     }
 
     /**
+     * Store an uploaded .mbz file in the current user's private files.
+     *
+     * @param string $filename Backup filename.
+     * @param string $uploadreference Base64-encoded backup content.
+     * @return array
+     */
+    public static function upload_backup_file(string $filename, string $uploadreference): array {
+        global $USER;
+
+        self::require_backup_api();
+
+        $filename = clean_param(trim($filename), PARAM_FILE);
+        if ($filename === '') {
+            throw new \invalid_parameter_exception('filename is required.');
+        }
+        if (strtolower(substr($filename, -4)) !== '.mbz') {
+            throw new \invalid_parameter_exception('filename must end with .mbz.');
+        }
+
+        $content = base64_decode($uploadreference, true);
+        if ($content === false) {
+            throw new \invalid_parameter_exception('upload_reference must be base64-encoded backup content.');
+        }
+
+        $maxbytes = 20 * 1024 * 1024;
+        if (strlen($content) > $maxbytes) {
+            throw new \invalid_parameter_exception('Backup content exceeds the 20 MB API limit.');
+        }
+
+        $context = \context_user::instance((int) $USER->id);
+        $fs = get_file_storage();
+        $existing = $fs->get_file($context->id, 'user', 'private', 0, '/', $filename);
+        if ($existing && !$existing->is_directory()) {
+            $existing->delete();
+        }
+
+        $file = $fs->create_file_from_string([
+            'contextid' => $context->id,
+            'component' => 'user',
+            'filearea' => 'private',
+            'itemid' => 0,
+            'filepath' => '/',
+            'filename' => $filename,
+        ], $content);
+
+        return self::backup_file_to_response($file, 0);
+    }
+
+    /**
+     * List .mbz backup files available to the current user.
+     *
+     * @param int $courseid Optional course id for course backup area files.
+     * @param bool $includeprivate Include current user's private .mbz files.
+     * @return array
+     */
+    public static function list_backup_files(int $courseid = 0, bool $includeprivate = true): array {
+        global $USER;
+
+        self::require_backup_api();
+
+        $files = [];
+        $fs = get_file_storage();
+
+        if ($includeprivate) {
+            $usercontext = \context_user::instance((int) $USER->id);
+            foreach (['backup', 'private'] as $userfilearea) {
+                foreach ($fs->get_area_files($usercontext->id, 'user', $userfilearea, 0, 'timemodified DESC', false) as $file) {
+                    if (!$file->is_directory() && self::is_backup_filename($file->get_filename())) {
+                        $files[] = self::backup_file_to_response($file, 0);
+                    }
+                }
+            }
+        }
+
+        if ($courseid > 0) {
+            $course = course_tools::get_course($courseid);
+            $coursecontext = \context_course::instance((int) $course->id);
+            foreach ($fs->get_area_files($coursecontext->id, 'backup', 'course', false, 'timemodified DESC', false) as $file) {
+                if (!$file->is_directory() && self::is_backup_filename($file->get_filename())) {
+                    $files[] = self::backup_file_to_response($file, (int) $course->id);
+                }
+            }
+        }
+
+        return [
+            'course_id' => max(0, $courseid),
+            'count' => count($files),
+            'files' => $files,
+        ];
+    }
+
+    /**
+     * Delete a stored .mbz backup file when the caller owns or can manage its context.
+     *
+     * @param int $fileid Stored file id.
+     * @return array
+     */
+    public static function delete_backup_file(int $fileid): array {
+        $file = self::get_backup_file($fileid);
+        $filename = $file->get_filename();
+        $file->delete();
+
+        return [
+            'file_id' => $fileid,
+            'filename' => $filename,
+            'deleted' => true,
+        ];
+    }
+
+    /**
+     * Return whether a filename looks like a Moodle backup.
+     *
+     * @param string $filename Filename.
+     * @return bool
+     */
+    private static function is_backup_filename(string $filename): bool {
+        return strtolower(substr($filename, -4)) === '.mbz';
+    }
+
+    /**
      * Apply safe backup options when the current Moodle version exposes them.
      *
      * @param \backup_controller $controller Backup controller.
