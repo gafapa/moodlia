@@ -35,6 +35,11 @@ final class manifest {
                 'inputSchema' => self::schema([]),
             ],
             [
+                'name' => 'get_moodlia_status',
+                'description' => 'Return MoodlIA plugin, Moodle site, token, and declared service diagnostics.',
+                'inputSchema' => self::schema([]),
+            ],
+            [
                 'name' => 'get_courses',
                 'description' => 'Return Moodle courses visible to the authenticated user.',
                 'inputSchema' => self::schema([
@@ -395,6 +400,24 @@ final class manifest {
                 'description' => 'Audit a Moodle course for operational readiness issues.',
                 'inputSchema' => self::schema([
                     'course_id' => ['type' => 'integer', 'required' => true],
+                ]),
+            ],
+            [
+                'name' => 'audit_course_completion',
+                'description' => 'Audit activity completion settings in a Moodle course.',
+                'inputSchema' => self::schema([
+                    'course_id' => ['type' => 'integer', 'required' => true],
+                    'include_ok' => ['type' => 'boolean', 'required' => false],
+                ]),
+            ],
+            [
+                'name' => 'repair_course_completion',
+                'description' => 'Repair activity completion settings in a Moodle course.',
+                'inputSchema' => self::schema([
+                    'course_id' => ['type' => 'integer', 'required' => true],
+                    'mode' => ['type' => 'string', 'required' => false, 'enum' => ['book_view_only', 'all_grade_to_view', 'disable_all']],
+                    'dry_run' => ['type' => 'boolean', 'required' => false],
+                    'reset_completion_states' => ['type' => 'boolean', 'required' => false],
                 ]),
             ],
             [

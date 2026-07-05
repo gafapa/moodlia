@@ -35,6 +35,49 @@
       ]
     },
     {
+      "name": "get_moodlia_status",
+      "summary": "Return MoodlIA plugin, Moodle site, token, and declared service diagnostics.",
+      "type": "read",
+      "context": "system",
+      "capabilities": [
+        "local/moodlia:useapi"
+      ],
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {},
+      "returns": {
+        "component": "string",
+        "site_url": "string",
+        "site_name": "string",
+        "moodle_release": "string",
+        "moodle_version": "string",
+        "plugin_release": "string",
+        "plugin_version": "integer",
+        "user_id": "integer",
+        "username": "string",
+        "can_use_api": "boolean",
+        "rest_service": "string",
+        "function_count": "integer",
+        "functions_json": "string"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "transport_error",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli"
+      ]
+    },
+    {
       "name": "get_courses",
       "summary": "Return Moodle courses visible to the authenticated user.",
       "type": "read",
@@ -2222,6 +2265,111 @@
         "api",
         "cli",
         "browser"
+      ]
+    },
+    {
+      "name": "audit_course_completion",
+      "summary": "Audit activity completion settings in a Moodle course.",
+      "type": "read",
+      "context": "course",
+      "capabilities": [
+        "moodle/course:view"
+      ],
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true,
+          "minimum": 1
+        },
+        "include_ok": {
+          "type": "boolean",
+          "required": false
+        }
+      },
+      "returns": {
+        "course_id": "integer",
+        "issue_count": "integer",
+        "repairable_count": "integer",
+        "issues_json": "string",
+        "ok_json": "string"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "transport_error",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli"
+      ]
+    },
+    {
+      "name": "repair_course_completion",
+      "summary": "Repair activity completion settings in a Moodle course.",
+      "type": "write",
+      "context": "course",
+      "capabilities": [
+        "moodle/course:manageactivities"
+      ],
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true,
+          "minimum": 1
+        },
+        "mode": {
+          "type": "string",
+          "required": false,
+          "enum": [
+            "book_view_only",
+            "all_grade_to_view",
+            "disable_all"
+          ]
+        },
+        "dry_run": {
+          "type": "boolean",
+          "required": false
+        },
+        "reset_completion_states": {
+          "type": "boolean",
+          "required": false
+        }
+      },
+      "returns": {
+        "course_id": "integer",
+        "mode": "string",
+        "dry_run": "boolean",
+        "changed_count": "integer",
+        "warning_count": "integer",
+        "changes_json": "string",
+        "warnings_json": "string"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "transport_error",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli"
       ]
     },
     {

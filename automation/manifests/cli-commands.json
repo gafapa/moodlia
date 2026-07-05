@@ -1,6 +1,7 @@
 {
   "commands": [
     "get-current-user",
+    "get-moodlia-status",
     "get-courses",
     "get-course-categories",
     "create-course-category",
@@ -43,6 +44,8 @@
     "sync-course-enrolments",
     "set-course-publish-state",
     "audit-course",
+    "audit-course-completion",
+    "repair-course-completion",
     "update-course",
     "move-course",
     "delete-course",

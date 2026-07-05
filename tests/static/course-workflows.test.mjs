@@ -12,7 +12,9 @@ const courseWorkflowOperations = [
   'copy_course_structure',
   'sync_course_enrolments',
   'set_course_publish_state',
-  'audit_course'
+  'audit_course',
+  'audit_course_completion',
+  'repair_course_completion'
 ];
 
 function extractPhpStringConstantArray(source, constantName) {

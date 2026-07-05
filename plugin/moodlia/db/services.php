@@ -25,6 +25,14 @@ $functions = [
         'ajax' => true,
         'capabilities' => 'local/moodlia:useapi',
     ],
+    'local_moodlia_get_moodlia_status' => [
+        'classname' => 'local_moodlia\external\get_moodlia_status',
+        'methodname' => 'execute',
+        'description' => 'Return MoodlIA plugin and service diagnostics.',
+        'type' => 'read',
+        'ajax' => true,
+        'capabilities' => 'local/moodlia:useapi',
+    ],
     'local_moodlia_get_courses' => [
         'classname' => 'local_moodlia\external\get_courses',
         'methodname' => 'execute',
@@ -360,6 +368,22 @@ $functions = [
         'type' => 'read',
         'ajax' => true,
         'capabilities' => 'local/moodlia:useapi,moodle/course:view',
+    ],
+    'local_moodlia_audit_course_completion' => [
+        'classname' => 'local_moodlia\external\audit_course_completion',
+        'methodname' => 'execute',
+        'description' => 'Audit course activity completion settings.',
+        'type' => 'read',
+        'ajax' => true,
+        'capabilities' => 'local/moodlia:useapi,moodle/course:view',
+    ],
+    'local_moodlia_repair_course_completion' => [
+        'classname' => 'local_moodlia\external\repair_course_completion',
+        'methodname' => 'execute',
+        'description' => 'Repair course activity completion settings.',
+        'type' => 'write',
+        'ajax' => true,
+        'capabilities' => 'local/moodlia:useapi,moodle/course:manageactivities',
     ],
     'local_moodlia_update_course' => [
         'classname' => 'local_moodlia\external\update_course',
@@ -1623,6 +1647,7 @@ $services = [
     'MoodlIA service' => [
         'functions' => [
             'local_moodlia_get_current_user',
+            'local_moodlia_get_moodlia_status',
             'local_moodlia_get_courses',
             'local_moodlia_get_course_categories',
             'local_moodlia_create_course_category',
@@ -1665,6 +1690,8 @@ $services = [
             'local_moodlia_sync_course_enrolments',
             'local_moodlia_set_course_publish_state',
             'local_moodlia_audit_course',
+            'local_moodlia_audit_course_completion',
+            'local_moodlia_repair_course_completion',
             'local_moodlia_update_course',
             'local_moodlia_move_course',
             'local_moodlia_delete_course',

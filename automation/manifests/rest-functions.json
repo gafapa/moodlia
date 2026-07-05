@@ -1,6 +1,7 @@
 {
   "functions": [
     "local_moodlia_get_current_user",
+    "local_moodlia_get_moodlia_status",
     "local_moodlia_get_courses",
     "local_moodlia_get_course_categories",
     "local_moodlia_create_course_category",
@@ -43,6 +44,8 @@
     "local_moodlia_sync_course_enrolments",
     "local_moodlia_set_course_publish_state",
     "local_moodlia_audit_course",
+    "local_moodlia_audit_course_completion",
+    "local_moodlia_repair_course_completion",
     "local_moodlia_update_course",
     "local_moodlia_move_course",
     "local_moodlia_delete_course",

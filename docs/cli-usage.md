@@ -154,9 +154,12 @@ Read course metadata and contents:
 ```text
 moodlia get-course-details --course-id <course_id>
 moodlia get-course-contents --course-id <course_id>
+moodlia get-moodlia-status
 ```
 
 `get-course-contents` includes course-module completion metadata (`completion`, `completion_view`, `completion_grade_item_number`, and `completion_expected`) so automation can audit whether an activity is configured for manual completion, view completion, or grade-based completion without calling each activity endpoint first.
+
+`get-moodlia-status` is the MoodlIA-native diagnostic endpoint for tokens that cannot call Moodle's generic site-info web service. It returns the plugin version, Moodle version, current user, API capability state, REST service shortname, and the registered MoodlIA function list.
 
 Update the course:
 
@@ -220,9 +223,18 @@ Audit whether a course is ready for use:
 
 ```text
 moodlia audit-course --course-id <course_id>
+moodlia audit-course-completion --course-id <course_id> --include-ok true
+moodlia repair-course-completion --course-id <course_id> --mode book_view_only --dry-run true
+moodlia repair-course-completion --course-id <course_id> --mode book_view_only --dry-run false --reset-completion-states true
 ```
 
-The audit returns `ready`, `issue_count`, and `issues_json`. Blueprint workflow responses use JSON string fields such as `sections_json`, `modules_json`, `groups_json`, and `warnings_json` so REST, MCP, CLI, and typed clients share one transport-safe response shape.
+The readiness audit returns `ready`, `issue_count`, and `issues_json`. The completion audit returns `issue_count`, `repairable_count`, `issues_json`, and optional `ok_json`. Completion repair supports these modes:
+
+- `book_view_only`: repairs old Book activities that still require a grade by switching them to automatic view completion and clearing Moodle-native grade flags.
+- `all_grade_to_view`: applies the same grade-to-view repair to every grade-completion activity in the course.
+- `disable_all`: disables activity completion tracking for all tracked activities in the course.
+
+Use dry runs first in production. The repair response includes `changes_json` and `warnings_json` so REST, MCP, CLI, and typed clients share one transport-safe response shape.
 
 ## Sections And Modules
 

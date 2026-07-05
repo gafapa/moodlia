@@ -8,6 +8,7 @@ Canonical operation names use `snake_case`:
 
 ```text
 get_current_user
+get_moodlia_status
 get_courses
 get_course_categories
 create_course_category
@@ -20,6 +21,8 @@ copy_course_structure
 sync_course_enrolments
 set_course_publish_state
 audit_course
+audit_course_completion
+repair_course_completion
 get_course_contents
 get_course_details
 move_course
@@ -95,8 +98,14 @@ The course workflow operations compose existing course, section, module, group, 
 - `sync_course_enrolments`: applies a desired manual-enrolment list, with optional removal of users missing from the desired list.
 - `set_course_publish_state`: maps `draft`, `ready`, `published`, and `archived` to Moodle visibility and archive date behavior.
 - `audit_course`: returns operational readiness issues such as hidden courses, empty summaries, no enrolled users, empty sections, and courses without activities.
+- `audit_course_completion`: returns completion-configuration issues such as old Book activities that still require a grade, mixed view-and-grade rules, automatic tracking without an exposed completion rule, or activities tracking completion while course completion is disabled.
+- `repair_course_completion`: repairs completion settings with explicit dry-run support. `book_view_only` clears stale Book grade completion, `all_grade_to_view` clears all grade-completion rules by switching to view completion, and `disable_all` disables activity completion tracking for the course.
 
-Complex workflow responses use JSON string fields for nested collections (`blueprint_json`, `sections_json`, `modules_json`, `groups_json`, `enrolments_json`, `warnings_json`, `issues_json`) to keep the wire shape stable across REST form parameters, MCP tool calls, CLI arguments, and generated TypeScript declarations.
+Complex workflow responses use JSON string fields for nested collections (`blueprint_json`, `sections_json`, `modules_json`, `groups_json`, `enrolments_json`, `warnings_json`, `issues_json`, `ok_json`, `changes_json`) to keep the wire shape stable across REST form parameters, MCP tool calls, CLI arguments, and generated TypeScript declarations.
+
+## Diagnostics
+
+`get_moodlia_status` is the MoodlIA-native status operation. It exists for deployments where automation tokens are limited to MoodlIA functions and cannot call Moodle's generic `core_webservice_get_site_info`. It returns the plugin component, Moodle site URL/name, Moodle and plugin versions, authenticated user, `local/moodlia:useapi` status, REST service shortname, declared function count, and `functions_json`.
 
 ## Contract Entry Shape
 

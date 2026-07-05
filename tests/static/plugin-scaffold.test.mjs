@@ -47,6 +47,7 @@ const requiredFiles = [
   'classes/operation/add_group_member.php',
   'classes/operation/remove_group_member.php',
   'classes/operation/get_current_user.php',
+  'classes/operation/get_moodlia_status.php',
   'classes/operation/get_courses.php',
   'classes/operation/calendar_tools.php',
   'classes/operation/get_calendar_events.php',
@@ -85,6 +86,9 @@ const requiredFiles = [
   'classes/operation/view_assignment.php',
   'classes/operation/view_assignment_submission_status.php',
   'classes/operation/view_assignment_grading_table.php',
+  'classes/operation/completion_audit_tools.php',
+  'classes/operation/audit_course_completion.php',
+  'classes/operation/repair_course_completion.php',
   'classes/operation/section_tools.php',
   'classes/operation/create_section.php',
   'classes/operation/update_section.php',
@@ -257,6 +261,7 @@ const requiredFiles = [
   'classes/external/add_group_member.php',
   'classes/external/remove_group_member.php',
   'classes/external/get_current_user.php',
+  'classes/external/get_moodlia_status.php',
   'classes/external/get_courses.php',
   'classes/external/get_calendar_events.php',
   'classes/external/create_calendar_event.php',
@@ -291,6 +296,8 @@ const requiredFiles = [
   'classes/external/view_assignment.php',
   'classes/external/view_assignment_submission_status.php',
   'classes/external/view_assignment_grading_table.php',
+  'classes/external/audit_course_completion.php',
+  'classes/external/repair_course_completion.php',
   'classes/external/create_section.php',
   'classes/external/update_section.php',
   'classes/external/delete_section.php',
@@ -884,4 +891,38 @@ test('module completion updates clear native Moodle grade completion flags', asy
   assert.match(moduleCommonTools, /if \(\!\$usegrade\) \{\s*return -1;\s*\}/s);
   assert.match(moduleCommonTools, /if \(\$tracking !== 2\) \{\s*if \(\(\$viewprovided && \$viewrequired\) \|\| \(\$gradeprovided && \$gradeitemnumber >= 0\)\)/s);
   assert.match(moduleCommonTools, /\$viewrequired = false;\s*\$gradeitemnumber = -1;/s);
+});
+
+test('course completion audit and repair operations cover stale grade completion edge cases', async () => {
+  const contract = JSON.parse(await fs.readFile(fromRoot('contract/operations.json'), 'utf8'));
+  const byName = new Map(contract.operations.map((operation) => [operation.name, operation]));
+  const services = await fs.readFile(fromRoot('plugin/moodlia/db/services.php'), 'utf8');
+  const completionAuditTools = await fs.readFile(
+    fromRoot('plugin/moodlia/classes/operation/completion_audit_tools.php'),
+    'utf8'
+  );
+  const repairExternal = await fs.readFile(
+    fromRoot('plugin/moodlia/classes/external/repair_course_completion.php'),
+    'utf8'
+  );
+  const statusExternal = await fs.readFile(
+    fromRoot('plugin/moodlia/classes/external/get_moodlia_status.php'),
+    'utf8'
+  );
+
+  for (const operationName of ['get_moodlia_status', 'audit_course_completion', 'repair_course_completion']) {
+    assert.ok(byName.has(operationName), `${operationName} must exist in the operation contract.`);
+    assert.match(services, new RegExp(`local_moodlia_${operationName}\\b`), `${operationName} must be registered as REST.`);
+  }
+
+  assert.match(completionAuditTools, /completion_tools::require_completion_api\(\);/);
+  assert.match(completionAuditTools, /book_grade_completion/);
+  assert.match(completionAuditTools, /view_and_grade_completion/);
+  assert.match(completionAuditTools, /automatic_without_visible_rule/);
+  assert.match(completionAuditTools, /update_module::execute/);
+  assert.match(completionAuditTools, /'completion_use_grade'\s*=>\s*false/);
+  assert.match(completionAuditTools, /'completion_pass_grade'\s*=>\s*false/);
+  assert.match(completionAuditTools, /'completion_grade_item_number'\s*=>\s*-1/);
+  assert.match(repairExternal, /require_capability\('moodle\/course:manageactivities'/);
+  assert.match(statusExternal, /require_capability\('local\/moodlia:useapi'/);
 });

@@ -14,6 +14,12 @@ async function call(contract, operationName, parameters = {}) {
   return callRestFunction(restName(contract, operationName), parameters);
 }
 
+function parseJsonArray(value, label) {
+  const parsed = JSON.parse(value);
+  assert.ok(Array.isArray(parsed), `${label} must be a JSON array.`);
+  return parsed;
+}
+
 function moduleCases(suffix) {
   return [
     {
@@ -295,6 +301,13 @@ test('REST module completion update clears stale Moodle grade criteria on Book a
   let success = false;
 
   try {
+    const moodliaStatus = await call(contract, 'get_moodlia_status');
+    const functions = parseJsonArray(moodliaStatus.functions_json, 'functions_json');
+    assert.equal(moodliaStatus.component, 'local_moodlia');
+    assert.equal(moodliaStatus.can_use_api, true);
+    assert.ok(functions.includes('local_moodlia_audit_course_completion'));
+    assert.ok(functions.includes('local_moodlia_repair_course_completion'));
+
     const category = await call(contract, 'create_course_category', {
       name: `MoodlIA Book Completion Repair Category ${suffix}`,
       visible: 1
@@ -332,6 +345,40 @@ test('REST module completion update clears stale Moodle grade criteria on Book a
     assert.equal(book.module_type, 'book');
     assert.equal(book.completion, 2);
 
+    const initialAudit = await call(contract, 'audit_course_completion', {
+      course_id: courseId,
+      include_ok: 1
+    });
+    const initialIssues = parseJsonArray(initialAudit.issues_json, 'issues_json');
+    assert.ok(
+      initialIssues.some((issue) => issue.module_id === book.course_module_id && issue.code === 'book_grade_completion'),
+      'course completion audit must detect stale Book grade completion.'
+    );
+    assert.ok(Number(initialAudit.repairable_count) >= 1);
+
+    const dryRunRepair = await call(contract, 'repair_course_completion', {
+      course_id: courseId,
+      mode: 'book_view_only',
+      dry_run: 1,
+      reset_completion_states: 1
+    });
+    const dryRunChanges = parseJsonArray(dryRunRepair.changes_json, 'changes_json');
+    assert.equal(dryRunRepair.dry_run, true);
+    assert.ok(
+      dryRunChanges.some((change) => change.module_id === book.course_module_id && change.options.completion_use_grade === false),
+      'dry-run repair must include the Book activity and clear grade completion.'
+    );
+
+    const repairedByAudit = await call(contract, 'repair_course_completion', {
+      course_id: courseId,
+      mode: 'book_view_only',
+      dry_run: 0,
+      reset_completion_states: 1
+    });
+    const repairChanges = parseJsonArray(repairedByAudit.changes_json, 'changes_json');
+    assert.equal(repairedByAudit.dry_run, false);
+    assert.ok(repairChanges.some((change) => change.module_id === book.course_module_id && change.updated === true));
+
     const repaired = await call(contract, 'update_module', {
       course_id: courseId,
       module_id: book.course_module_id,
@@ -348,6 +395,15 @@ test('REST module completion update clears stale Moodle grade criteria on Book a
     assert.equal(repaired.completion, 2);
     assert.equal(repaired.completion_view, 1);
     assert.equal(repaired.completion_grade_item_number, -1);
+
+    const repairedAudit = await call(contract, 'audit_course_completion', {
+      course_id: courseId
+    });
+    const repairedIssues = parseJsonArray(repairedAudit.issues_json, 'issues_json');
+    assert.ok(
+      repairedIssues.every((issue) => issue.module_id !== book.course_module_id || issue.code !== 'book_grade_completion'),
+      'course completion audit must no longer report Book grade completion after repair.'
+    );
 
     const details = await call(contract, 'get_module_details', {
       course_id: courseId,

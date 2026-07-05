@@ -1,6 +1,6 @@
 {
   "name": "moodlia",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Command-line client for the MoodlIA Moodle REST API.",
   "type": "module",
   "license": "GPL-3.0-or-later",

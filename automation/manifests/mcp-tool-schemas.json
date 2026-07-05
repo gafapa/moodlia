@@ -21,6 +21,13 @@
         "archived"
       ]
     },
+    "repair_course_completion": {
+      "mode": [
+        "book_view_only",
+        "all_grade_to_view",
+        "disable_all"
+      ]
+    },
     "update_course": {
       "summary_format": [
         "html",

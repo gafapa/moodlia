@@ -7,6 +7,7 @@ MoodlIA exposes activity subelements when Moodle provides a public API path that
 - Assignment submissions and grades through Moodle Assignment APIs.
 - Book chapter listing and view registration through Moodle Book APIs.
 - Book chapter creation, update, movement, and deletion through one audited Moodle Book DML boundary because Moodle Book has no public chapter writer API in the supported target. The boundary mirrors Moodle Book's own `edit.php`, `delete.php`, and `move.php` behavior and is the only approved exception to the usual no-DML rule.
+- Course activity-completion audit and repair through Moodle course-module APIs and MoodlIA's audited `update_module` path. This covers stale Book grade-completion rules and supports dry-run repair before changing Moodle state.
 - Choice options, responses, and results through Moodle Choice APIs.
 - Database fields and entries through Moodle Database APIs.
 - Feedback item reads, page item reads, analysis reads, finished response reads, and item deletion through Moodle Feedback APIs.
@@ -41,6 +42,6 @@ Every new subelement write must satisfy all of these conditions:
 
 ## Preferred Implementation Order
 
-1. Lesson page mutation, if Moodle's Lesson component exposes stable page and answer APIs.
-2. Feedback item creation/update, only if Moodle exposes a stable non-table API for item creation.
-3. Workshop grading form mutation, only after identifying stable Workshop APIs and capability boundaries.
+1. Feedback item creation/update, only after validating `feedback_get_item_class()` and `feedback_update_item()` across the supported Moodle versions with a smoke test that confirms UI-visible item state.
+2. Lesson page mutation, only after validating the Lesson page and answer classes across the supported Moodle versions with ownership checks and a smoke test that confirms page order, jumps, and content.
+3. Workshop grading form mutation, only after identifying stable Workshop grading-form subplugin APIs and capability boundaries.
