@@ -44,6 +44,8 @@
     "sync-course-enrolments",
     "set-course-publish-state",
     "audit-course",
+    "backup-course",
+    "restore-course-backup",
     "audit-course-completion",
     "repair-course-completion",
     "update-course",

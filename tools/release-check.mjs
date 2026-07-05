@@ -14,6 +14,7 @@ const checks = [
 if (includeSmokeSyntax) {
   checks.push(
     ['node', ['--check', 'tests/smoke/module-completion-matrix.test.mjs']],
+    ['node', ['--check', 'tests/smoke/course-backup-restore.test.mjs']],
     ['node', ['--check', 'tests/smoke/module-custom-completion-rules.test.mjs']],
     ['node', ['--check', 'tests/smoke/generated-course-lifecycle.test.mjs']],
     ['node', ['--check', 'tests/smoke/course-workflows.test.mjs']],

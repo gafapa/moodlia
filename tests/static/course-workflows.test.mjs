@@ -13,6 +13,8 @@ const courseWorkflowOperations = [
   'sync_course_enrolments',
   'set_course_publish_state',
   'audit_course',
+  'backup_course',
+  'restore_course_backup',
   'audit_course_completion',
   'repair_course_completion'
 ];

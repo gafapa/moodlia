@@ -193,6 +193,29 @@ Create a new course from a blueprint:
 moodlia create-course-from-blueprint --blueprint '{"course":{"fullname":"MoodlIA Blueprint Course","shortname":"moodlia-blueprint-001","category_id":12,"summary":"<p>Created from blueprint.</p>","summary_format":"html","enable_completion":true},"publish_state":"draft","sections":[{"name":"Unit 1","summary":"Introduction","modules":[{"module_type":"page","name":"Welcome","options":{"content":"<p>Start here.</p>"}}]}],"groups":[{"name":"Team A"}],"enrolments":[{"user_id":7,"role_archetype":"student"}]}'
 ```
 
+Create a native Moodle `.mbz` backup for full Moodle restore workflows:
+
+```text
+moodlia backup-course --course-id <course_id> --filename "course-backup.mbz" --include-users false
+```
+
+The backup response returns `file_id`, `filename`, `url`, `filesize`, and `time_modified`. Keep the returned `file_id` when you want MoodlIA to restore the backup from Moodle's stored-file area.
+
+Restore a native Moodle `.mbz` backup into a new course:
+
+```text
+moodlia restore-course-backup --backup-file-id <file_id> --target new_course --category-id <category_id> --fullname "Restored Course" --shortname "restored-course-001"
+```
+
+Restore into an existing course by adding content or deleting the existing content first:
+
+```text
+moodlia restore-course-backup --backup-file-id <file_id> --target existing_add --target-course-id <course_id>
+moodlia restore-course-backup --backup-file-id <file_id> --target existing_delete --target-course-id <course_id>
+```
+
+Blueprints are best for controlled templates and automation-friendly JSON. Native `.mbz` backups use Moodle's backup/restore controllers and are the right tool when you need Moodle's full restore behavior.
+
 Apply a blueprint to an existing course:
 
 ```text

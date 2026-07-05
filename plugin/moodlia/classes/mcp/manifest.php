@@ -403,6 +403,33 @@ final class manifest {
                 ]),
             ],
             [
+                'name' => 'backup_course',
+                'description' => 'Create a native Moodle .mbz course backup.',
+                'inputSchema' => self::schema([
+                    'course_id' => ['type' => 'integer', 'required' => true],
+                    'filename' => ['type' => 'string', 'required' => false],
+                    'include_users' => ['type' => 'boolean', 'required' => false],
+                    'include_activities' => ['type' => 'boolean', 'required' => false],
+                    'include_blocks' => ['type' => 'boolean', 'required' => false],
+                    'include_filters' => ['type' => 'boolean', 'required' => false],
+                    'include_comments' => ['type' => 'boolean', 'required' => false],
+                    'include_logs' => ['type' => 'boolean', 'required' => false],
+                    'include_grade_histories' => ['type' => 'boolean', 'required' => false],
+                ]),
+            ],
+            [
+                'name' => 'restore_course_backup',
+                'description' => 'Restore a native Moodle .mbz course backup into a new or existing course.',
+                'inputSchema' => self::schema([
+                    'backup_file_id' => ['type' => 'integer', 'required' => true],
+                    'target' => ['type' => 'string', 'required' => false, 'enum' => ['new_course', 'existing_add', 'existing_delete']],
+                    'target_course_id' => ['type' => 'integer', 'required' => false],
+                    'category_id' => ['type' => 'integer', 'required' => false],
+                    'fullname' => ['type' => 'string', 'required' => false],
+                    'shortname' => ['type' => 'string', 'required' => false],
+                ]),
+            ],
+            [
                 'name' => 'audit_course_completion',
                 'description' => 'Audit activity completion settings in a Moodle course.',
                 'inputSchema' => self::schema([

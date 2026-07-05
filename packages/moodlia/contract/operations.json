@@ -2268,6 +2268,152 @@
       ]
     },
     {
+      "name": "backup_course",
+      "summary": "Create a native Moodle .mbz course backup.",
+      "type": "read",
+      "context": "course",
+      "capabilities": [
+        "moodle/backup:backupcourse"
+      ],
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "download",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true,
+          "minimum": 1
+        },
+        "filename": {
+          "type": "string",
+          "required": false
+        },
+        "include_users": {
+          "type": "boolean",
+          "required": false
+        },
+        "include_activities": {
+          "type": "boolean",
+          "required": false
+        },
+        "include_blocks": {
+          "type": "boolean",
+          "required": false
+        },
+        "include_filters": {
+          "type": "boolean",
+          "required": false
+        },
+        "include_comments": {
+          "type": "boolean",
+          "required": false
+        },
+        "include_logs": {
+          "type": "boolean",
+          "required": false
+        },
+        "include_grade_histories": {
+          "type": "boolean",
+          "required": false
+        }
+      },
+      "returns": {
+        "course_id": "integer",
+        "file_id": "integer",
+        "filename": "string",
+        "url": "string",
+        "filepath": "string",
+        "filesize": "integer",
+        "mimetype": "string",
+        "time_modified": "integer"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "transport_error",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli"
+      ]
+    },
+    {
+      "name": "restore_course_backup",
+      "summary": "Restore a native Moodle .mbz course backup into a new or existing course.",
+      "type": "write",
+      "context": "course_or_category",
+      "capabilities": [
+        "moodle/restore:restorecourse"
+      ],
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "metadata",
+      "parameters": {
+        "backup_file_id": {
+          "type": "integer",
+          "required": true,
+          "minimum": 1
+        },
+        "target": {
+          "type": "string",
+          "required": false,
+          "enum": [
+            "new_course",
+            "existing_add",
+            "existing_delete"
+          ]
+        },
+        "target_course_id": {
+          "type": "integer",
+          "required": false,
+          "minimum": 1
+        },
+        "category_id": {
+          "type": "integer",
+          "required": false,
+          "minimum": 1
+        },
+        "fullname": {
+          "type": "string",
+          "required": false
+        },
+        "shortname": {
+          "type": "string",
+          "required": false
+        }
+      },
+      "returns": {
+        "course_id": "integer",
+        "target": "string",
+        "restored": "boolean",
+        "fullname": "string",
+        "shortname": "string",
+        "category_id": "integer",
+        "warnings_json": "string"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "transport_error",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli"
+      ]
+    },
+    {
       "name": "audit_course_completion",
       "summary": "Audit activity completion settings in a Moodle course.",
       "type": "read",

@@ -1,0 +1,53 @@
+<?php
+// This file is part of Moodle - https://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+/**
+ * Native Moodle course restore operation.
+ *
+ * @package    local_moodlia
+ * @copyright  2026
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+namespace local_moodlia\operation;
+
+defined('MOODLE_INTERNAL') || die();
+
+/**
+ * Restores a native Moodle .mbz course backup.
+ */
+class restore_course_backup {
+    /**
+     * Execute the operation.
+     *
+     * @param int $backupfileid Stored backup file id.
+     * @param string $target Restore target.
+     * @param int $targetcourseid Existing target course id.
+     * @param int $categoryid Category id for new course restores.
+     * @param string $fullname New course fullname.
+     * @param string $shortname New course shortname.
+     * @return array
+     */
+    public static function execute(
+        int $backupfileid,
+        string $target = 'new_course',
+        int $targetcourseid = 0,
+        int $categoryid = 0,
+        string $fullname = '',
+        string $shortname = ''
+    ): array {
+        return course_backup_tools::restore_course_backup(
+            $backupfileid,
+            $target,
+            $targetcourseid,
+            $categoryid,
+            $fullname,
+            $shortname
+        );
+    }
+}

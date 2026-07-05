@@ -21,6 +21,13 @@
         "archived"
       ]
     },
+    "restore_course_backup": {
+      "target": [
+        "new_course",
+        "existing_add",
+        "existing_delete"
+      ]
+    },
     "repair_course_completion": {
       "mode": [
         "book_view_only",

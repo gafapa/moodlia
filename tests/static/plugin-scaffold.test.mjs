@@ -86,6 +86,9 @@ const requiredFiles = [
   'classes/operation/view_assignment.php',
   'classes/operation/view_assignment_submission_status.php',
   'classes/operation/view_assignment_grading_table.php',
+  'classes/operation/course_backup_tools.php',
+  'classes/operation/backup_course.php',
+  'classes/operation/restore_course_backup.php',
   'classes/operation/completion_audit_tools.php',
   'classes/operation/audit_course_completion.php',
   'classes/operation/repair_course_completion.php',
@@ -296,6 +299,8 @@ const requiredFiles = [
   'classes/external/view_assignment.php',
   'classes/external/view_assignment_submission_status.php',
   'classes/external/view_assignment_grading_table.php',
+  'classes/external/backup_course.php',
+  'classes/external/restore_course_backup.php',
   'classes/external/audit_course_completion.php',
   'classes/external/repair_course_completion.php',
   'classes/external/create_section.php',
@@ -925,4 +930,34 @@ test('course completion audit and repair operations cover stale grade completion
   assert.match(completionAuditTools, /'completion_grade_item_number'\s*=>\s*-1/);
   assert.match(repairExternal, /require_capability\('moodle\/course:manageactivities'/);
   assert.match(statusExternal, /require_capability\('local\/moodlia:useapi'/);
+});
+
+test('native Moodle backup and restore operations use backup controllers and strict capabilities', async () => {
+  const contract = JSON.parse(await fs.readFile(fromRoot('contract/operations.json'), 'utf8'));
+  const byName = new Map(contract.operations.map((operation) => [operation.name, operation]));
+  const services = await fs.readFile(fromRoot('plugin/moodlia/db/services.php'), 'utf8');
+  const backupTools = await fs.readFile(fromRoot('plugin/moodlia/classes/operation/course_backup_tools.php'), 'utf8');
+  const backupExternal = await fs.readFile(fromRoot('plugin/moodlia/classes/external/backup_course.php'), 'utf8');
+  const restoreExternal = await fs.readFile(fromRoot('plugin/moodlia/classes/external/restore_course_backup.php'), 'utf8');
+
+  assert.equal(byName.get('backup_course')?.files, 'download');
+  assert.equal(byName.get('restore_course_backup')?.type, 'write');
+  assert.deepEqual(byName.get('restore_course_backup')?.parameters.target.enum, [
+    'new_course',
+    'existing_add',
+    'existing_delete'
+  ]);
+
+  for (const operationName of ['backup_course', 'restore_course_backup']) {
+    assert.match(services, new RegExp(`local_moodlia_${operationName}\\b`), `${operationName} must be registered as REST.`);
+  }
+
+  assert.match(backupTools, /new \\backup_controller/);
+  assert.match(backupTools, /new \\restore_controller/);
+  assert.match(backupTools, /\\restore_dbops::create_new_course/);
+  assert.match(backupTools, /extract_to_pathname/);
+  assert.match(backupTools, /\.mbz/);
+  assert.match(backupExternal, /require_capability\('moodle\/backup:backupcourse'/);
+  assert.match(restoreExternal, /require_capability\('moodle\/restore:restorecourse'/);
+  assert.match(restoreExternal, /require_capability\('moodle\/course:create'/);
 });
