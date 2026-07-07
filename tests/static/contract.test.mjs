@@ -22,3 +22,41 @@ test('workshop capability metadata matches published advanced assessment operati
   assert.doesNotMatch(boundaries, /Workshop allocations, grading form definition, assessment creation\/update\/evaluation/);
   assert.match(boundaries, /assessment updates, assessment evaluation/);
 });
+
+test('remaining high-risk subelement writes stay documented and unexposed until validated', async () => {
+  const contract = await loadContract();
+  const operationNames = new Set(contract.operations.map((operation) => operation.name));
+  const boundaries = await fs.readFile(fromRoot('docs/subelement-api-boundaries.md'), 'utf8');
+  const validation = await fs.readFile(fromRoot('docs/remaining-api-validation.md'), 'utf8');
+
+  for (const operationName of [
+    'create_feedback_item',
+    'update_feedback_item',
+    'create_lesson_page',
+    'update_lesson_page',
+    'delete_lesson_page',
+    'set_workshop_grading_form',
+    'create_workshop_assessment'
+  ]) {
+    assert.equal(
+      operationNames.has(operationName),
+      false,
+      `${operationName} must not be exposed before an API boundary and smoke coverage are validated.`
+    );
+  }
+
+  assert.match(boundaries, /Feedback question\/item creation and arbitrary item updates/);
+  assert.match(boundaries, /Lesson page creation, update, deletion, and answer\/jump mutation/);
+  assert.match(boundaries, /Workshop grading form mutation/);
+  assert.match(boundaries, /\[remaining-api-validation\.md\]\(remaining-api-validation\.md\)/);
+
+  for (const marker of [
+    'feedback_create_item()',
+    'lesson_page::create',
+    'save_edit_strategy_form',
+    'Status: not implemented',
+    'Required evidence before implementation'
+  ]) {
+    assert.ok(validation.includes(marker), `remaining API validation docs must include ${marker}.`);
+  }
+});

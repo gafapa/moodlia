@@ -45,3 +45,5 @@ Every new subelement write must satisfy all of these conditions:
 1. Feedback item creation/update, only after validating `feedback_get_item_class()` and `feedback_update_item()` across the supported Moodle versions with a smoke test that confirms UI-visible item state.
 2. Lesson page mutation, only after validating the Lesson page and answer classes across the supported Moodle versions with ownership checks and a smoke test that confirms page order, jumps, and content.
 3. Workshop grading form mutation, only after identifying stable Workshop grading-form subplugin APIs and capability boundaries.
+
+See [remaining-api-validation.md](remaining-api-validation.md) for the current source-level validation notes and the evidence required before exposing these writes.
