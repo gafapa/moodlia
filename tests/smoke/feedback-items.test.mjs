@@ -230,15 +230,89 @@ test('Feedback item listing works through REST, MCP, and CLI', { skip: !hasConfi
       dependItemId: updatedTextfield.item_id
     });
 
+    const restNumeric = await callRestFunction(toRestFunctionName(contract, 'create_feedback_item'), {
+      course_id: courseId,
+      module_id: feedback.course_module_id,
+      type: 'numeric',
+      name: `MoodlIA Score ${suffix}`,
+      definition: JSON.stringify({ range_from: -5, range_to: 10 }),
+      required: 1
+    });
+    assertFeedbackItem(restNumeric, feedback, {
+      type: 'numeric',
+      name: `MoodlIA Score ${suffix}`,
+      required: true,
+      presentation: '-5|10'
+    });
+
+    const mcpRated = await callMcpTool('create_feedback_item', {
+      course_id: courseId,
+      module_id: feedback.course_module_id,
+      type: 'multichoicerated',
+      name: `MoodlIA Rated ${suffix}`,
+      definition: {
+        subtype: 'radio',
+        choices: [
+          { value: 1, text: 'Low' },
+          { value: 3, text: 'Medium' },
+          { value: 5, text: 'High' }
+        ],
+        horizontal: true
+      },
+      required: true
+    });
+    assertFeedbackItem(mcpRated, feedback, {
+      type: 'multichoicerated',
+      name: `MoodlIA Rated ${suffix}`,
+      required: true,
+      presentation: 'r>>>>>1####Low|3####Medium|5####High<<<<<1'
+    });
+
+    const cliInfo = await callCli([
+      'create-feedback-item',
+      '--course-id', String(courseId),
+      '--module-id', String(feedback.course_module_id),
+      '--type', 'info',
+      '--name', `MoodlIA Course Info ${suffix}`,
+      '--definition', JSON.stringify({ mode: 'course' })
+    ]);
+    assertFeedbackItem(cliInfo, feedback, {
+      type: 'info',
+      name: `MoodlIA Course Info ${suffix}`,
+      required: false,
+      presentation: '2'
+    });
+
+    const cliPagebreak = await callCli([
+      'create-feedback-item',
+      '--course-id', String(courseId),
+      '--module-id', String(feedback.course_module_id),
+      '--type', 'pagebreak',
+      '--definition', '{}'
+    ]);
+    assertFeedbackItem(cliPagebreak, feedback, {
+      type: 'pagebreak',
+      required: false,
+      presentation: ''
+    });
+
     const populatedItems = await callRestFunction(toRestFunctionName(contract, 'get_feedback_items'), {
       course_id: courseId,
       module_id: feedback.course_module_id
     });
     assert.equal(populatedItems.course_id, courseId);
-    assert.equal(populatedItems.count, 3);
+    assert.equal(populatedItems.count, 7);
     assert.deepEqual(
       populatedItems.items.map((item) => item.item_id).sort((a, b) => a - b),
-      [updatedTextfield.item_id, updatedMultichoice.item_id, updatedTextarea.item_id].sort((a, b) => a - b)
+      [
+        updatedTextfield.item_id,
+        updatedMultichoice.item_id,
+        updatedTextarea.item_id,
+        restNumeric.item_id,
+        mcpRated.item_id,
+        cliInfo.item_id,
+        cliPagebreak.item_id
+      ].sort((a, b) => a - b)
     );
 
     await assert.rejects(

@@ -4,9 +4,9 @@ MoodlIA intentionally avoids activity subelement writes unless Moodle exposes a 
 
 ## Feedback Item Creation And Update
 
-Status: partially implemented for textfield, textarea, multichoice, and label items.
+Status: partially implemented for textfield, textarea, numeric, multichoice, multichoicerated, label, info, and pagebreak creation.
 
-Moodle 4.5 exposes item-type classes through `feedback_get_item_class()`. MoodlIA now exposes `create_feedback_item` and `update_feedback_item` for `textfield`, `textarea`, `multichoice`, and `label` only. The operation builds a narrow type-specific payload and delegates persistence to Moodle's item class via `build_editform()`, `set_data()`, and `save_item()`. Position changes use Moodle's `feedback_move_item()` and `feedback_renumber_items()`. MoodlIA does not write `feedback_item` tables directly.
+Moodle 4.5 exposes item-type classes through `feedback_get_item_class()`. MoodlIA now exposes `create_feedback_item` and `update_feedback_item` for `textfield`, `textarea`, `numeric`, `multichoice`, `multichoicerated`, `label`, and `info`. Pagebreak creation uses Moodle's `feedback_create_pagebreak()` helper, matching the component edit UI. The operation builds a narrow type-specific payload and delegates persistence to Moodle's item class via `build_editform()`, `set_data()`, and `save_item()` where the item type has a writer class. Position changes use Moodle's `feedback_move_item()` and `feedback_renumber_items()`. MoodlIA does not write `feedback_item` tables directly.
 
 Primary sources:
 
@@ -15,12 +15,15 @@ Primary sources:
 - https://raw.githubusercontent.com/moodle/moodle/MOODLE_405_STABLE/mod/feedback/item/feedback_item_class.php
 - https://raw.githubusercontent.com/moodle/moodle/MOODLE_405_STABLE/mod/feedback/item/textfield/lib.php
 - https://raw.githubusercontent.com/moodle/moodle/MOODLE_405_STABLE/mod/feedback/item/textarea/lib.php
+- https://raw.githubusercontent.com/moodle/moodle/MOODLE_405_STABLE/mod/feedback/item/numeric/lib.php
 - https://raw.githubusercontent.com/moodle/moodle/MOODLE_405_STABLE/mod/feedback/item/multichoice/lib.php
+- https://raw.githubusercontent.com/moodle/moodle/MOODLE_405_STABLE/mod/feedback/item/multichoicerated/lib.php
 - https://raw.githubusercontent.com/moodle/moodle/MOODLE_405_STABLE/mod/feedback/item/label/lib.php
+- https://raw.githubusercontent.com/moodle/moodle/MOODLE_405_STABLE/mod/feedback/item/info/lib.php
 
 Implemented evidence:
 
-- Supported item types are limited to `textfield`, `textarea`, `multichoice`, and `label`.
+- Supported item types are limited to `textfield`, `textarea`, `numeric`, `multichoice`, `multichoicerated`, `label`, `info`, and pagebreak creation.
 - Mutation requires `mod/feedback:edititems`.
 - Ownership validation verifies that referenced item ids belong to the selected Feedback activity.
 - Persistence goes through Moodle item classes and type-specific `save_item()` methods.
@@ -28,7 +31,7 @@ Implemented evidence:
 
 Required evidence before broadening implementation:
 
-- Type-specific payload contracts for `multichoicerated`, `numeric`, `info`, `captcha`, and page breaks.
+- Type-specific payload contracts for any additional item type available in a target Moodle version, such as captcha when installed/enabled.
 - Smoke coverage for each additional supported type.
 - Evidence that updating items after responses exist preserves Moodle response-value semantics.
 

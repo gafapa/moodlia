@@ -229,8 +229,12 @@
       "type": [
         "textfield",
         "textarea",
+        "numeric",
         "multichoice",
-        "label"
+        "multichoicerated",
+        "label",
+        "info",
+        "pagebreak"
       ]
     },
     "get_assignment_submissions": {

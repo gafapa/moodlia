@@ -187,6 +187,32 @@ class feedback_tools {
         $existingposition = $isupdate ? (int) ($existing['position'] ?? 1) : count($currentitems) + 1;
         $targetposition = self::validate_target_position($position, count($currentitems), $isupdate);
 
+        if ($type === 'pagebreak') {
+            if ($isupdate) {
+                throw new \invalid_parameter_exception('pagebreak items cannot be updated; delete and recreate the page break.');
+            }
+            if (count($currentitems) === 0) {
+                throw new \invalid_parameter_exception('pagebreak items require at least one existing feedback item.');
+            }
+            $itemid = feedback_create_pagebreak((int) $cm->instance);
+            if (!$itemid) {
+                throw new \invalid_parameter_exception('pagebreak cannot be created after another pagebreak.');
+            }
+            $saved = (object) [
+                'id' => (int) $itemid,
+                'feedback' => (int) $cm->instance,
+                'position' => count($currentitems) + 1,
+            ];
+            if ($targetposition !== null && (int) $saved->position !== $targetposition) {
+                $saved->position = $targetposition;
+                feedback_move_item($saved, $targetposition);
+            }
+            feedback_renumber_items((int) $cm->instance);
+            rebuild_course_cache($course->id, true);
+
+            return self::get_item($cm, (int) $itemid);
+        }
+
         $item = new \stdClass();
         $item->id = $isupdate ? (int) $existing['item_id'] : 0;
         $item->feedback = (int) $cm->instance;
@@ -201,7 +227,7 @@ class feedback_tools {
         $item->dependvalue = self::resolve_optional_string($dependvalue, $existing['depend_value'] ?? '');
         $item->options = (string) ($existing['options'] ?? '');
 
-        self::apply_type_definition($item, $type, $definition, $existing);
+        self::apply_type_definition($item, $type, $definition, $existing, (int) $feedback->anonymous);
 
         $itemclass = feedback_get_item_class($type);
         if (!$itemclass) {
@@ -237,6 +263,16 @@ class feedback_tools {
         $feedback->course = (int) $course->id;
         $feedback->coursemodule = (int) $cm->id;
         $feedback->name = (string) $cm->name;
+        $feedback->anonymous = FEEDBACK_ANONYMOUS_YES;
+
+        try {
+            $details = simple_activity_tools::get_feedback_details($course, $cm);
+            if (isset($details['anonymous']) && $details['anonymous'] !== null) {
+                $feedback->anonymous = (int) $details['anonymous'];
+            }
+        } catch (\Throwable $exception) {
+            // Item APIs only need this for narrowing info-mode options.
+        }
 
         return $feedback;
     }
@@ -249,9 +285,9 @@ class feedback_tools {
      */
     private static function clean_item_type(string $type): string {
         $type = clean_param($type, PARAM_ALPHANUMEXT);
-        $supported = ['textfield', 'textarea', 'multichoice', 'label'];
+        $supported = ['textfield', 'textarea', 'numeric', 'multichoice', 'multichoicerated', 'label', 'info', 'pagebreak'];
         if (!in_array($type, $supported, true)) {
-            throw new \invalid_parameter_exception('type must be one of: textfield, textarea, multichoice, label.');
+            throw new \invalid_parameter_exception('type must be one of: textfield, textarea, numeric, multichoice, multichoicerated, label, info, pagebreak.');
         }
 
         return $type;
@@ -346,12 +382,19 @@ class feedback_tools {
      * @param string $type Feedback item type.
      * @param array $definition Definition payload.
      * @param array|null $existing Existing item response.
+     * @param int $feedbackanonymous Feedback anonymity setting.
      */
-    private static function apply_type_definition(\stdClass $item, string $type, array $definition, ?array $existing): void {
+    private static function apply_type_definition(
+        \stdClass $item,
+        string $type,
+        array $definition,
+        ?array $existing,
+        int $feedbackanonymous
+    ): void {
         if (empty($definition) && $existing !== null) {
             $item->presentation = (string) ($existing['presentation'] ?? '');
             $item->presentationformat = (int) ($existing['presentation_format'] ?? FORMAT_HTML);
-            if ($type === 'multichoice') {
+            if ($type === 'multichoice' || $type === 'multichoicerated') {
                 $item->ignoreempty = strpos($item->options, 'i') !== false;
                 $item->hidenoselect = strpos($item->options, 'h') !== false;
             }
@@ -380,6 +423,16 @@ class feedback_tools {
                 $item->presentationformat = FORMAT_HTML;
                 break;
 
+            case 'numeric':
+                $rangefrom = self::nullable_float_option($definition, 'range_from');
+                $rangeto = self::nullable_float_option($definition, 'range_to');
+                if ($rangefrom !== null && $rangeto !== null && $rangefrom > $rangeto) {
+                    throw new \invalid_parameter_exception('definition.range_from must not be greater than definition.range_to.');
+                }
+                $item->presentation = self::feedback_number($rangefrom) . '|' . self::feedback_number($rangeto);
+                $item->presentationformat = FORMAT_HTML;
+                break;
+
             case 'multichoice':
                 $subtype = self::string_option($definition, 'subtype', 'radio');
                 $subtypes = ['radio' => 'r', 'checkbox' => 'c', 'dropdown' => 'd', 'r' => 'r', 'c' => 'c', 'd' => 'd'];
@@ -387,6 +440,25 @@ class feedback_tools {
                     throw new \invalid_parameter_exception('definition.subtype must be radio, checkbox, or dropdown.');
                 }
                 $choices = self::choice_options($definition);
+                $horizontal = !empty($definition['horizontal']) ? '1' : '0';
+                $presentation = $subtypes[$subtype] . '>>>>>' . implode('|', $choices);
+                if ($subtypes[$subtype] !== 'd') {
+                    $presentation .= '<<<<<' . $horizontal;
+                }
+                $item->presentation = $presentation;
+                $item->presentationformat = FORMAT_HTML;
+                $item->ignoreempty = array_key_exists('ignore_empty', $definition) ? (bool) $definition['ignore_empty'] : true;
+                $item->hidenoselect = array_key_exists('hide_no_select', $definition) ? (bool) $definition['hide_no_select'] : false;
+                $item->options = '';
+                break;
+
+            case 'multichoicerated':
+                $subtype = self::string_option($definition, 'subtype', 'radio');
+                $subtypes = ['radio' => 'r', 'dropdown' => 'd', 'r' => 'r', 'd' => 'd'];
+                if (!array_key_exists($subtype, $subtypes)) {
+                    throw new \invalid_parameter_exception('definition.subtype must be radio or dropdown for multichoicerated items.');
+                }
+                $choices = self::rated_choice_options($definition);
                 $horizontal = !empty($definition['horizontal']) ? '1' : '0';
                 $presentation = $subtypes[$subtype] . '>>>>>' . implode('|', $choices);
                 if ($subtypes[$subtype] !== 'd') {
@@ -413,6 +485,29 @@ class feedback_tools {
                 ];
                 $item->required = 0;
                 break;
+
+            case 'info':
+                $mode = self::string_option($definition, 'mode', 'course');
+                $modes = [
+                    'response_time' => 1,
+                    'responsetime' => 1,
+                    '1' => 1,
+                    'course' => 2,
+                    '2' => 2,
+                    'category' => 3,
+                    'course_category' => 3,
+                    '3' => 3,
+                ];
+                if (!array_key_exists($mode, $modes)) {
+                    throw new \invalid_parameter_exception('definition.mode must be course, category, or response_time.');
+                }
+                if ($modes[$mode] === 1 && $feedbackanonymous !== FEEDBACK_ANONYMOUS_NO) {
+                    throw new \invalid_parameter_exception('response_time info items require non-anonymous Feedback settings.');
+                }
+                $item->presentation = (string) $modes[$mode];
+                $item->presentationformat = FORMAT_HTML;
+                $item->required = 0;
+                break;
         }
     }
 
@@ -433,6 +528,38 @@ class feedback_tools {
         }
 
         return $value;
+    }
+
+    /**
+     * Return a nullable float option.
+     *
+     * @param array $definition Definition payload.
+     * @param string $key Option key.
+     * @return float|null
+     */
+    private static function nullable_float_option(array $definition, string $key): ?float {
+        if (!array_key_exists($key, $definition) || $definition[$key] === null || $definition[$key] === '') {
+            return null;
+        }
+        if (!is_numeric($definition[$key])) {
+            throw new \invalid_parameter_exception('definition.' . $key . ' must be numeric.');
+        }
+
+        return (float) $definition[$key];
+    }
+
+    /**
+     * Format a Feedback numeric boundary.
+     *
+     * @param float|null $value Numeric value.
+     * @return string
+     */
+    private static function feedback_number(?float $value): string {
+        if ($value === null) {
+            return '-';
+        }
+
+        return rtrim(rtrim(sprintf('%.10F', $value), '0'), '.');
     }
 
     /**
@@ -475,6 +602,51 @@ class feedback_tools {
             }
             $seen[$key] = true;
             $items[] = $text;
+        }
+
+        return $items;
+    }
+
+    /**
+     * Validate multichoice rated options.
+     *
+     * @param array $definition Definition payload.
+     * @return array
+     */
+    private static function rated_choice_options(array $definition): array {
+        $choices = $definition['choices'] ?? null;
+        if (!is_array($choices) || count($choices) < 2) {
+            throw new \invalid_parameter_exception('definition.choices must contain at least two rated choices.');
+        }
+
+        $seen = [];
+        $items = [];
+        foreach ($choices as $choice) {
+            if (!is_array($choice)) {
+                throw new \invalid_parameter_exception('Each rated choice must be an object.');
+            }
+            $text = trim((string) ($choice['text'] ?? $choice['label'] ?? ''));
+            if ($text === '') {
+                throw new \invalid_parameter_exception('Each rated choice requires text.');
+            }
+            if (!array_key_exists('value', $choice) && !array_key_exists('weight', $choice)) {
+                throw new \invalid_parameter_exception('Each rated choice requires value or weight.');
+            }
+            $weight = $choice['value'] ?? $choice['weight'];
+            if (!is_numeric($weight)) {
+                throw new \invalid_parameter_exception('Each rated choice value must be numeric.');
+            }
+            $weight = (int) $weight;
+            if (strpos($text, '|') !== false || strpos($text, '####') !== false ||
+                    strpos($text, '>>>>>') !== false || strpos($text, '<<<<<') !== false) {
+                throw new \invalid_parameter_exception('Rated choice text contains unsupported separator characters.');
+            }
+            $key = \core_text::strtolower($text);
+            if (isset($seen[$key])) {
+                throw new \invalid_parameter_exception('Rated choice text values must be unique.');
+            }
+            $seen[$key] = true;
+            $items[] = $weight . '####' . $text;
         }
 
         return $items;

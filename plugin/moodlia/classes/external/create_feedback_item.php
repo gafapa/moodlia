@@ -39,7 +39,7 @@ class create_feedback_item extends external_api {
             'course_id' => new external_value(PARAM_INT, 'Moodle course id'),
             'module_id' => new external_value(PARAM_INT, 'Feedback course module id'),
             'type' => new external_value(PARAM_ALPHANUMEXT, 'Feedback item type'),
-            'name' => new external_value(PARAM_RAW, 'Feedback item name'),
+            'name' => new external_value(PARAM_RAW, 'Feedback item name', VALUE_DEFAULT, null, NULL_ALLOWED),
             'definition' => new external_value(PARAM_RAW, 'JSON item definition'),
             'position' => new external_value(PARAM_INT, 'One-based item position', VALUE_DEFAULT, null, NULL_ALLOWED),
             'label' => new external_value(PARAM_TEXT, 'Feedback item label', VALUE_DEFAULT, null, NULL_ALLOWED),
@@ -55,7 +55,7 @@ class create_feedback_item extends external_api {
      * @param int $course_id Moodle course id.
      * @param int $module_id Feedback course module id.
      * @param string $type Feedback item type.
-     * @param string $name Feedback item name.
+     * @param string|null $name Feedback item name.
      * @param string $definition JSON item definition.
      * @param int|null $position Optional one-based position.
      * @param string|null $label Optional item label.
@@ -68,7 +68,7 @@ class create_feedback_item extends external_api {
         int $course_id,
         int $module_id,
         string $type,
-        string $name,
+        ?string $name,
         string $definition,
         ?int $position = null,
         ?string $label = null,
@@ -106,7 +106,7 @@ class create_feedback_item extends external_api {
             (int) $courseid,
             (int) $moduleid,
             (string) $itemtype,
-            (string) $itemname,
+            $itemname,
             (string) $definitionjson,
             $itemposition === null ? null : (int) $itemposition,
             $itemlabel,

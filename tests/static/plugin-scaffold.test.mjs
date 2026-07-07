@@ -951,19 +951,26 @@ test('feedback item lifecycle uses Moodle item class APIs', async () => {
   assert.deepEqual(byName.get('create_feedback_item')?.parameters.type.enum, [
     'textfield',
     'textarea',
+    'numeric',
     'multichoice',
-    'label'
+    'multichoicerated',
+    'label',
+    'info',
+    'pagebreak'
   ]);
   assert.equal(byName.get('update_feedback_item')?.parameters.item_id.required, true);
   assert.equal(byName.get('update_feedback_item')?.parameters.name.required, false);
   assert.match(feedbackTools, /function decode_item_definition/);
   assert.match(feedbackTools, /function save_item/);
+  assert.match(feedbackTools, /feedback_create_pagebreak/);
   assert.match(feedbackTools, /feedback_get_item_class\(\$type\)/);
   assert.match(feedbackTools, /->build_editform\(/);
   assert.match(feedbackTools, /->set_data\(/);
   assert.match(feedbackTools, /->save_item\(/);
   assert.match(feedbackTools, /feedback_move_item/);
   assert.match(feedbackTools, /feedback_renumber_items/);
+  assert.match(feedbackTools, /function rated_choice_options/);
+  assert.match(feedbackTools, /function nullable_float_option/);
   assert.doesNotMatch(createOperation + updateOperation + feedbackTools, /\$DB\b/);
 });
 

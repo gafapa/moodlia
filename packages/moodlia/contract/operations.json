@@ -9776,13 +9776,17 @@
           "enum": [
             "textfield",
             "textarea",
+            "numeric",
             "multichoice",
-            "label"
+            "multichoicerated",
+            "label",
+            "info",
+            "pagebreak"
           ]
         },
         "name": {
           "type": "string",
-          "required": true
+          "required": false
         },
         "definition": {
           "type": "object",

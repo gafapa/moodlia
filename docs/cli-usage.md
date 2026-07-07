@@ -558,10 +558,14 @@ Create and update supported Feedback items:
 ```text
 moodlia create-feedback-item --course-id <course_id> --module-id <feedback_module_id> --type textfield --name "Student goal" --required true --definition '{"size":40,"max_length":120}'
 moodlia create-feedback-item --course-id <course_id> --module-id <feedback_module_id> --type multichoice --name "Difficulty" --definition '{"subtype":"radio","choices":["Easy","Appropriate","Hard"],"horizontal":false}'
+moodlia create-feedback-item --course-id <course_id> --module-id <feedback_module_id> --type numeric --name "Expected study hours" --definition '{"range_from":0,"range_to":40}'
+moodlia create-feedback-item --course-id <course_id> --module-id <feedback_module_id> --type multichoicerated --name "Satisfaction" --definition '{"subtype":"radio","choices":[{"value":1,"text":"Low"},{"value":3,"text":"Medium"},{"value":5,"text":"High"}]}'
+moodlia create-feedback-item --course-id <course_id> --module-id <feedback_module_id> --type info --name "Course metadata" --definition '{"mode":"course"}'
+moodlia create-feedback-item --course-id <course_id> --module-id <feedback_module_id> --type pagebreak --definition '{}'
 moodlia update-feedback-item --course-id <course_id> --module-id <feedback_module_id> --item-id <item_id> --name "Updated difficulty" --definition '{"subtype":"dropdown","choices":["Easy","Appropriate","Hard","Too hard"]}'
 ```
 
-Feedback item writes currently support `textfield`, `textarea`, `multichoice`, and `label`. Other Moodle Feedback item types remain separate until their type-specific payloads are validated.
+Feedback item writes currently support `textfield`, `textarea`, `numeric`, `multichoice`, `multichoicerated`, `label`, `info`, and pagebreak creation. Updating a pagebreak is intentionally not exposed; delete and recreate it instead.
 
 Read Lesson and Workshop state:
 

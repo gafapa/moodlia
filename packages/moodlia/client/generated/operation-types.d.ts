@@ -1047,8 +1047,8 @@ export interface GetFeedbackAccessInformationParameters {
 export interface CreateFeedbackItemParameters {
   course_id: number;
   module_id: number;
-  type: "textfield" | "textarea" | "multichoice" | "label";
-  name: string;
+  type: "textfield" | "textarea" | "numeric" | "multichoice" | "multichoicerated" | "label" | "info" | "pagebreak";
+  name?: string;
   definition: JsonObject | string;
   position?: number;
   label?: string;

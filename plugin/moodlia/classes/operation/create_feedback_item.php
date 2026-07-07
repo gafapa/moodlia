@@ -28,7 +28,7 @@ class create_feedback_item {
      * @param int $courseid Moodle course id.
      * @param int $moduleid Feedback course module id.
      * @param string $type Feedback item type.
-     * @param string $name Feedback item name.
+     * @param string|null $name Feedback item name.
      * @param string $definitionjson JSON item definition.
      * @param int|null $position Optional one-based position.
      * @param string|null $label Optional item label.
@@ -41,7 +41,7 @@ class create_feedback_item {
         int $courseid,
         int $moduleid,
         string $type,
-        string $name,
+        ?string $name,
         string $definitionjson,
         ?int $position = null,
         ?string $label = null,
