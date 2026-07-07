@@ -553,6 +553,16 @@ moodlia get-feedback-items --course-id <course_id> --module-id <feedback_module_
 moodlia get-feedback-analysis --course-id <course_id> --module-id <feedback_module_id>
 ```
 
+Create and update supported Feedback items:
+
+```text
+moodlia create-feedback-item --course-id <course_id> --module-id <feedback_module_id> --type textfield --name "Student goal" --required true --definition '{"size":40,"max_length":120}'
+moodlia create-feedback-item --course-id <course_id> --module-id <feedback_module_id> --type multichoice --name "Difficulty" --definition '{"subtype":"radio","choices":["Easy","Appropriate","Hard"],"horizontal":false}'
+moodlia update-feedback-item --course-id <course_id> --module-id <feedback_module_id> --item-id <item_id> --name "Updated difficulty" --definition '{"subtype":"dropdown","choices":["Easy","Appropriate","Hard","Too hard"]}'
+```
+
+Feedback item writes currently support `textfield`, `textarea`, `multichoice`, and `label`. Other Moodle Feedback item types remain separate until their type-specific payloads are validated.
+
 Read Lesson and Workshop state:
 
 ```text

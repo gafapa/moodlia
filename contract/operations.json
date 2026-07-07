@@ -10059,6 +10059,194 @@
       ]
     },
     {
+      "name": "create_feedback_item",
+      "summary": "Create an item in a Moodle Feedback activity.",
+      "type": "write",
+      "context": "module",
+      "capabilities": [
+        "mod/feedback:edititems"
+      ],
+      "transports": [
+        "rest",
+        "mcp",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true
+        },
+        "module_id": {
+          "type": "integer",
+          "required": true
+        },
+        "type": {
+          "type": "string",
+          "required": true,
+          "enum": [
+            "textfield",
+            "textarea",
+            "multichoice",
+            "label"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "definition": {
+          "type": "object",
+          "required": true
+        },
+        "position": {
+          "type": "integer",
+          "required": false
+        },
+        "label": {
+          "type": "string",
+          "required": false
+        },
+        "required": {
+          "type": "boolean",
+          "required": false
+        },
+        "depend_item_id": {
+          "type": "integer",
+          "required": false
+        },
+        "depend_value": {
+          "type": "string",
+          "required": false
+        }
+      },
+      "returns": {
+        "item_id": "integer",
+        "feedback_id": "integer",
+        "module_id": "integer",
+        "name": "string",
+        "name_format": "integer",
+        "label": "string",
+        "presentation": "string",
+        "presentation_format": "integer",
+        "type": "string",
+        "has_value": "boolean",
+        "position": "integer",
+        "item_number": "integer",
+        "required": "boolean",
+        "depend_item_id": "integer",
+        "depend_value": "string",
+        "options": "string",
+        "other_data": "string"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "mcp",
+        "cli",
+        "browser"
+      ]
+    },
+    {
+      "name": "update_feedback_item",
+      "summary": "Update an item in a Moodle Feedback activity.",
+      "type": "write",
+      "context": "module",
+      "capabilities": [
+        "mod/feedback:edititems"
+      ],
+      "transports": [
+        "rest",
+        "mcp",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true
+        },
+        "module_id": {
+          "type": "integer",
+          "required": true
+        },
+        "item_id": {
+          "type": "integer",
+          "required": true
+        },
+        "name": {
+          "type": "string",
+          "required": false
+        },
+        "definition": {
+          "type": "object",
+          "required": false
+        },
+        "position": {
+          "type": "integer",
+          "required": false
+        },
+        "label": {
+          "type": "string",
+          "required": false
+        },
+        "required": {
+          "type": "boolean",
+          "required": false
+        },
+        "depend_item_id": {
+          "type": "integer",
+          "required": false
+        },
+        "depend_value": {
+          "type": "string",
+          "required": false
+        }
+      },
+      "returns": {
+        "item_id": "integer",
+        "feedback_id": "integer",
+        "module_id": "integer",
+        "name": "string",
+        "name_format": "integer",
+        "label": "string",
+        "presentation": "string",
+        "presentation_format": "integer",
+        "type": "string",
+        "has_value": "boolean",
+        "position": "integer",
+        "item_number": "integer",
+        "required": "boolean",
+        "depend_item_id": "integer",
+        "depend_value": "string",
+        "options": "string",
+        "other_data": "string"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "mcp",
+        "cli",
+        "browser"
+      ]
+    },
+    {
       "name": "get_feedback_items",
       "summary": "List items in a Moodle Feedback activity.",
       "type": "read",

@@ -225,6 +225,14 @@
         "DESC"
       ]
     },
+    "create_feedback_item": {
+      "type": [
+        "textfield",
+        "textarea",
+        "multichoice",
+        "label"
+      ]
+    },
     "get_assignment_submissions": {
       "status": [
         "new",

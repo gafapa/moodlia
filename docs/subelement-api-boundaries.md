@@ -10,7 +10,7 @@ MoodlIA exposes activity subelements when Moodle provides a public API path that
 - Course activity-completion audit and repair through Moodle course-module APIs and MoodlIA's audited `update_module` path. This covers stale Book grade-completion rules and supports dry-run repair before changing Moodle state.
 - Choice options, responses, and results through Moodle Choice APIs.
 - Database fields and entries through Moodle Database APIs.
-- Feedback item reads, page item reads, analysis reads, finished response reads, and item deletion through Moodle Feedback APIs.
+- Feedback item reads, page item reads, analysis reads, finished response reads, item creation/update for `textfield`, `textarea`, `multichoice`, and `label`, and item deletion through Moodle Feedback APIs and item class APIs.
 - Folder and Resource file reads, downloads, and deletes through Moodle File API rules.
 - Forum discussions, posts, and discussion state through Moodle Forum APIs.
 - Glossary entries, categories, authors, browse filters, search, pending approval reads, and entry CRUD through Moodle Glossary APIs.
@@ -25,7 +25,7 @@ MoodlIA exposes activity subelements when Moodle provides a public API path that
 
 These areas remain blocked until a stable Moodle API path is identified and tested:
 
-- Feedback question/item creation and arbitrary item updates.
+- Feedback item types beyond textfield, textarea, multichoice, and label, and direct response-value mutation.
 - Lesson question page mutation and unsupported answer/jump payloads beyond content-page branches.
 - Workshop grading form strategies beyond accumulative and standalone assessment creation outside Moodle's allocation flow.
 
@@ -44,7 +44,7 @@ Every new subelement write must satisfy all of these conditions:
 
 ## Preferred Implementation Order
 
-1. Feedback item creation/update, only after validating `feedback_get_item_class()` and `feedback_update_item()` across the supported Moodle versions with a smoke test that confirms UI-visible item state.
+1. Additional Feedback item types, only after validating the type-specific item class payload and smoke testing UI-visible item state.
 2. Additional Lesson question page types, only after validating each page and answer class across the supported Moodle versions with ownership checks and smoke tests that confirm page order, jumps, scoring, and content.
 3. Additional Workshop grading form strategies, only after identifying stable subplugin APIs, payload schemas, and capability boundaries.
 

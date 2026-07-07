@@ -249,6 +249,8 @@ const requiredFiles = [
   'classes/operation/add_random_questions_to_quiz.php',
   'classes/operation/update_quiz_question_slot.php',
   'classes/operation/remove_question_from_quiz.php',
+  'classes/operation/create_feedback_item.php',
+  'classes/operation/update_feedback_item.php',
   'classes/operation/workshop_tools.php',
   'classes/operation/set_workshop_phase.php',
   'classes/operation/get_workshop_submissions.php',
@@ -473,6 +475,8 @@ const requiredFiles = [
   'classes/external/add_random_questions_to_quiz.php',
   'classes/external/update_quiz_question_slot.php',
   'classes/external/remove_question_from_quiz.php',
+  'classes/external/create_feedback_item.php',
+  'classes/external/update_feedback_item.php',
   'classes/external/set_workshop_phase.php',
   'classes/external/get_workshop_submissions.php',
   'classes/external/get_workshop_user_plan.php',
@@ -921,6 +925,46 @@ test('workshop accumulative grading form lifecycle uses Moodle strategy APIs', a
   assert.match(operation, /save_edit_strategy_form/);
   assert.match(operation, /PHASE_SETUP/);
   assert.doesNotMatch(operation, /\$DB\b/);
+});
+
+test('feedback item lifecycle uses Moodle item class APIs', async () => {
+  const contract = JSON.parse(await fs.readFile(fromRoot('contract/operations.json'), 'utf8'));
+  const byName = new Map(contract.operations.map((operation) => [operation.name, operation]));
+  const services = await fs.readFile(fromRoot('plugin/moodlia/db/services.php'), 'utf8');
+  const feedbackTools = await fs.readFile(fromRoot('plugin/moodlia/classes/operation/feedback_tools.php'), 'utf8');
+  const createOperation = await fs.readFile(fromRoot('plugin/moodlia/classes/operation/create_feedback_item.php'), 'utf8');
+  const updateOperation = await fs.readFile(fromRoot('plugin/moodlia/classes/operation/update_feedback_item.php'), 'utf8');
+
+  for (const operationName of ['create_feedback_item', 'update_feedback_item']) {
+    const operation = byName.get(operationName);
+    assert.ok(operation, `${operationName} must exist in the operation contract.`);
+    assert.equal(operation.capabilities[0], 'mod/feedback:edititems');
+    assert.equal(operation.parameters.definition.type, 'object');
+    assert.match(services, new RegExp(`local_moodlia_${operationName}\\b`));
+
+    const external = await fs.readFile(fromRoot(`plugin/moodlia/classes/external/${operationName}.php`), 'utf8');
+    assert.match(external, /require_capability\('local\/moodlia:useapi'/);
+    assert.match(external, /require_capability\('mod\/feedback:edititems'/);
+    assert.match(external, /get_feedback_items::item_structure\(\)/);
+  }
+
+  assert.deepEqual(byName.get('create_feedback_item')?.parameters.type.enum, [
+    'textfield',
+    'textarea',
+    'multichoice',
+    'label'
+  ]);
+  assert.equal(byName.get('update_feedback_item')?.parameters.item_id.required, true);
+  assert.equal(byName.get('update_feedback_item')?.parameters.name.required, false);
+  assert.match(feedbackTools, /function decode_item_definition/);
+  assert.match(feedbackTools, /function save_item/);
+  assert.match(feedbackTools, /feedback_get_item_class\(\$type\)/);
+  assert.match(feedbackTools, /->build_editform\(/);
+  assert.match(feedbackTools, /->set_data\(/);
+  assert.match(feedbackTools, /->save_item\(/);
+  assert.match(feedbackTools, /feedback_move_item/);
+  assert.match(feedbackTools, /feedback_renumber_items/);
+  assert.doesNotMatch(createOperation + updateOperation + feedbackTools, /\$DB\b/);
 });
 
 test('create_module exposes audited common Moodle module options', async () => {

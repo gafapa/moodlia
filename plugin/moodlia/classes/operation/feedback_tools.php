@@ -30,6 +30,7 @@ class feedback_tools {
 
         require_once($CFG->dirroot . '/mod/feedback/lib.php');
         require_once($CFG->dirroot . '/mod/feedback/classes/external.php');
+        require_once($CFG->dirroot . '/mod/feedback/item/feedback_item_class.php');
     }
 
     /**
@@ -131,6 +132,352 @@ class feedback_tools {
         }
 
         throw new \moodle_exception('invaliditemid', 'feedback');
+    }
+
+    /**
+     * Decode and validate a Feedback item definition payload.
+     *
+     * @param string $definitionjson JSON object.
+     * @return array
+     */
+    public static function decode_item_definition(string $definitionjson): array {
+        $decoded = json_decode($definitionjson, true);
+        if (!is_array($decoded)) {
+            throw new \invalid_parameter_exception('definition must be a JSON object.');
+        }
+
+        return $decoded;
+    }
+
+    /**
+     * Create or update a Feedback item through Moodle item classes.
+     *
+     * @param \stdClass $course Moodle course.
+     * @param \cm_info $cm Feedback course module.
+     * @param string $type Feedback item type.
+     * @param string|null $name Item name.
+     * @param array $definition Item definition.
+     * @param int|null $position Target one-based position.
+     * @param string|null $label Optional item label.
+     * @param bool|null $required Required flag.
+     * @param int|null $dependitemid Dependency item id.
+     * @param string|null $dependvalue Dependency value.
+     * @param array|null $existing Existing item response for updates.
+     * @return array
+     */
+    public static function save_item(
+        \stdClass $course,
+        \cm_info $cm,
+        string $type,
+        ?string $name,
+        array $definition,
+        ?int $position = null,
+        ?string $label = null,
+        ?bool $required = null,
+        ?int $dependitemid = null,
+        ?string $dependvalue = null,
+        ?array $existing = null
+    ): array {
+        self::require_feedback_api();
+
+        $type = self::clean_item_type($type);
+        $currentitems = self::get_items($cm);
+        $feedback = self::feedback_record($course, $cm);
+        $isupdate = $existing !== null;
+        $existingposition = $isupdate ? (int) ($existing['position'] ?? 1) : count($currentitems) + 1;
+        $targetposition = self::validate_target_position($position, count($currentitems), $isupdate);
+
+        $item = new \stdClass();
+        $item->id = $isupdate ? (int) $existing['item_id'] : 0;
+        $item->feedback = (int) $cm->instance;
+        $item->template = 0;
+        $item->typ = $type;
+        $item->name = self::resolve_item_name($name, $existing);
+        $item->nameformat = FORMAT_HTML;
+        $item->label = self::resolve_optional_string($label, $existing['label'] ?? '');
+        $item->position = $isupdate ? $existingposition : count($currentitems) + 1;
+        $item->required = self::resolve_optional_bool($required, (bool) ($existing['required'] ?? false)) ? 1 : 0;
+        $item->dependitem = self::resolve_dependency_item($cm, $dependitemid, (int) ($existing['depend_item_id'] ?? 0), $item->id);
+        $item->dependvalue = self::resolve_optional_string($dependvalue, $existing['depend_value'] ?? '');
+        $item->options = (string) ($existing['options'] ?? '');
+
+        self::apply_type_definition($item, $type, $definition, $existing);
+
+        $itemclass = feedback_get_item_class($type);
+        if (!$itemclass) {
+            throw new \invalid_parameter_exception('Unsupported feedback item type.');
+        }
+        $itemclass->build_editform($item, $feedback, $cm);
+        $itemclass->set_data($item);
+        $saved = $itemclass->save_item();
+        if (!$saved || empty($saved->id)) {
+            throw new \moodle_exception('Could not save feedback item.', 'local_moodlia');
+        }
+
+        if ($targetposition !== null && (int) $saved->position !== $targetposition) {
+            $saved->position = $targetposition;
+            feedback_move_item($saved, $targetposition);
+        }
+        feedback_renumber_items((int) $cm->instance);
+        rebuild_course_cache($course->id, true);
+
+        return self::get_item($cm, (int) $saved->id);
+    }
+
+    /**
+     * Build a minimal Moodle feedback record for item APIs.
+     *
+     * @param \stdClass $course Moodle course.
+     * @param \cm_info $cm Feedback course module.
+     * @return \stdClass
+     */
+    private static function feedback_record(\stdClass $course, \cm_info $cm): \stdClass {
+        $feedback = new \stdClass();
+        $feedback->id = (int) $cm->instance;
+        $feedback->course = (int) $course->id;
+        $feedback->coursemodule = (int) $cm->id;
+        $feedback->name = (string) $cm->name;
+
+        return $feedback;
+    }
+
+    /**
+     * Validate a supported Feedback item type.
+     *
+     * @param string $type Raw item type.
+     * @return string
+     */
+    private static function clean_item_type(string $type): string {
+        $type = clean_param($type, PARAM_ALPHANUMEXT);
+        $supported = ['textfield', 'textarea', 'multichoice', 'label'];
+        if (!in_array($type, $supported, true)) {
+            throw new \invalid_parameter_exception('type must be one of: textfield, textarea, multichoice, label.');
+        }
+
+        return $type;
+    }
+
+    /**
+     * Resolve and validate the item name.
+     *
+     * @param string|null $name Raw name.
+     * @param array|null $existing Existing item response.
+     * @return string
+     */
+    private static function resolve_item_name(?string $name, ?array $existing): string {
+        $value = $name === null ? (string) ($existing['name'] ?? '') : trim($name);
+        if ($value === '') {
+            throw new \invalid_parameter_exception('name must be non-empty.');
+        }
+
+        return $value;
+    }
+
+    /**
+     * Resolve an optional string preserving current values on update.
+     *
+     * @param string|null $value Raw value.
+     * @param string $fallback Existing value.
+     * @return string
+     */
+    private static function resolve_optional_string(?string $value, string $fallback): string {
+        return $value === null ? $fallback : trim($value);
+    }
+
+    /**
+     * Resolve an optional bool preserving current values on update.
+     *
+     * @param bool|null $value Raw value.
+     * @param bool $fallback Existing value.
+     * @return bool
+     */
+    private static function resolve_optional_bool(?bool $value, bool $fallback): bool {
+        return $value === null ? $fallback : $value;
+    }
+
+    /**
+     * Validate and resolve item dependency ownership.
+     *
+     * @param \cm_info $cm Feedback course module.
+     * @param int|null $requested Requested dependency id.
+     * @param int $fallback Existing dependency id.
+     * @param int $selfid Current item id.
+     * @return int
+     */
+    private static function resolve_dependency_item(\cm_info $cm, ?int $requested, int $fallback, int $selfid): int {
+        $dependitemid = $requested === null ? $fallback : $requested;
+        if ($dependitemid < 0) {
+            throw new \invalid_parameter_exception('depend_item_id must be zero or greater.');
+        }
+        if ($dependitemid > 0) {
+            if ($selfid > 0 && $dependitemid === $selfid) {
+                throw new \invalid_parameter_exception('depend_item_id cannot reference the item itself.');
+            }
+            self::get_item($cm, $dependitemid);
+        }
+
+        return $dependitemid;
+    }
+
+    /**
+     * Validate one-based target position.
+     *
+     * @param int|null $position Raw position.
+     * @param int $itemcount Current item count.
+     * @param bool $isupdate Whether this is an update.
+     * @return int|null
+     */
+    private static function validate_target_position(?int $position, int $itemcount, bool $isupdate): ?int {
+        if ($position === null) {
+            return null;
+        }
+        $max = $isupdate ? max(1, $itemcount) : $itemcount + 1;
+        if ($position < 1 || $position > $max) {
+            throw new \invalid_parameter_exception('position is outside the valid feedback item range.');
+        }
+
+        return $position;
+    }
+
+    /**
+     * Apply type-specific definition values.
+     *
+     * @param \stdClass $item Feedback item data.
+     * @param string $type Feedback item type.
+     * @param array $definition Definition payload.
+     * @param array|null $existing Existing item response.
+     */
+    private static function apply_type_definition(\stdClass $item, string $type, array $definition, ?array $existing): void {
+        if (empty($definition) && $existing !== null) {
+            $item->presentation = (string) ($existing['presentation'] ?? '');
+            $item->presentationformat = (int) ($existing['presentation_format'] ?? FORMAT_HTML);
+            if ($type === 'multichoice') {
+                $item->ignoreempty = strpos($item->options, 'i') !== false;
+                $item->hidenoselect = strpos($item->options, 'h') !== false;
+            }
+            if ($type === 'label') {
+                $item->presentation_editor = [
+                    'text' => $item->presentation,
+                    'format' => $item->presentationformat,
+                    'itemid' => 0,
+                ];
+            }
+            return;
+        }
+
+        switch ($type) {
+            case 'textfield':
+                $size = self::int_option($definition, 'size', 30, 5, 255);
+                $maxlength = self::int_option($definition, 'max_length', 255, 1, 2000);
+                $item->presentation = $size . '|' . $maxlength;
+                $item->presentationformat = FORMAT_HTML;
+                break;
+
+            case 'textarea':
+                $width = self::int_option($definition, 'width', 30, 5, 255);
+                $height = self::int_option($definition, 'height', 5, 1, 100);
+                $item->presentation = $width . '|' . $height;
+                $item->presentationformat = FORMAT_HTML;
+                break;
+
+            case 'multichoice':
+                $subtype = self::string_option($definition, 'subtype', 'radio');
+                $subtypes = ['radio' => 'r', 'checkbox' => 'c', 'dropdown' => 'd', 'r' => 'r', 'c' => 'c', 'd' => 'd'];
+                if (!array_key_exists($subtype, $subtypes)) {
+                    throw new \invalid_parameter_exception('definition.subtype must be radio, checkbox, or dropdown.');
+                }
+                $choices = self::choice_options($definition);
+                $horizontal = !empty($definition['horizontal']) ? '1' : '0';
+                $presentation = $subtypes[$subtype] . '>>>>>' . implode('|', $choices);
+                if ($subtypes[$subtype] !== 'd') {
+                    $presentation .= '<<<<<' . $horizontal;
+                }
+                $item->presentation = $presentation;
+                $item->presentationformat = FORMAT_HTML;
+                $item->ignoreempty = array_key_exists('ignore_empty', $definition) ? (bool) $definition['ignore_empty'] : true;
+                $item->hidenoselect = array_key_exists('hide_no_select', $definition) ? (bool) $definition['hide_no_select'] : false;
+                $item->options = '';
+                break;
+
+            case 'label':
+                $content = trim((string) ($definition['content'] ?? ''));
+                if ($content === '') {
+                    throw new \invalid_parameter_exception('definition.content must be non-empty for label items.');
+                }
+                $item->presentation = $content;
+                $item->presentationformat = FORMAT_HTML;
+                $item->presentation_editor = [
+                    'text' => $content,
+                    'format' => FORMAT_HTML,
+                    'itemid' => 0,
+                ];
+                $item->required = 0;
+                break;
+        }
+    }
+
+    /**
+     * Return an integer option within bounds.
+     *
+     * @param array $definition Definition payload.
+     * @param string $key Option key.
+     * @param int $default Default value.
+     * @param int $min Minimum value.
+     * @param int $max Maximum value.
+     * @return int
+     */
+    private static function int_option(array $definition, string $key, int $default, int $min, int $max): int {
+        $value = (int) ($definition[$key] ?? $default);
+        if ($value < $min || $value > $max) {
+            throw new \invalid_parameter_exception('definition.' . $key . ' is outside the valid range.');
+        }
+
+        return $value;
+    }
+
+    /**
+     * Return a trimmed string option.
+     *
+     * @param array $definition Definition payload.
+     * @param string $key Option key.
+     * @param string $default Default value.
+     * @return string
+     */
+    private static function string_option(array $definition, string $key, string $default): string {
+        return trim((string) ($definition[$key] ?? $default));
+    }
+
+    /**
+     * Validate multichoice options.
+     *
+     * @param array $definition Definition payload.
+     * @return array
+     */
+    private static function choice_options(array $definition): array {
+        $choices = $definition['choices'] ?? null;
+        if (!is_array($choices) || count($choices) < 2) {
+            throw new \invalid_parameter_exception('definition.choices must contain at least two choices.');
+        }
+
+        $seen = [];
+        $items = [];
+        foreach ($choices as $choice) {
+            $text = trim((string) $choice);
+            if ($text === '') {
+                throw new \invalid_parameter_exception('definition.choices cannot contain empty choices.');
+            }
+            if (strpos($text, '|') !== false || strpos($text, '>>>>>') !== false || strpos($text, '<<<<<') !== false) {
+                throw new \invalid_parameter_exception('definition.choices contain unsupported separator characters.');
+            }
+            $key = \core_text::strtolower($text);
+            if (isset($seen[$key])) {
+                throw new \invalid_parameter_exception('definition.choices must be unique.');
+            }
+            $seen[$key] = true;
+            $items[] = $text;
+        }
+
+        return $items;
     }
 
     /**

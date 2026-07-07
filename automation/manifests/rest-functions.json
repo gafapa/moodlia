@@ -155,6 +155,8 @@
     "local_moodlia_get_course_feedbacks",
     "local_moodlia_view_feedback",
     "local_moodlia_get_feedback_access_information",
+    "local_moodlia_create_feedback_item",
+    "local_moodlia_update_feedback_item",
     "local_moodlia_get_feedback_items",
     "local_moodlia_get_feedback_page_items",
     "local_moodlia_get_feedback_analysis",

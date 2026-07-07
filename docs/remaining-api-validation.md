@@ -4,19 +4,33 @@ MoodlIA intentionally avoids activity subelement writes unless Moodle exposes a 
 
 ## Feedback Item Creation And Update
 
-Status: not implemented.
+Status: partially implemented for textfield, textarea, multichoice, and label items.
 
-Moodle 4.5 still exposes `feedback_get_item_class($typ)`, but `feedback_create_item()` is deprecated and throws a coding exception. The available creation flows in `mod/feedback/lib.php` create items by copying templates and writing `feedback_item` records directly. MoodlIA already supports Feedback module creation, item reads, page item reads, analysis reads, finished response reads, and item deletion; arbitrary item creation/update remains blocked until a stable writer API is validated.
+Moodle 4.5 exposes item-type classes through `feedback_get_item_class()`. MoodlIA now exposes `create_feedback_item` and `update_feedback_item` for `textfield`, `textarea`, `multichoice`, and `label` only. The operation builds a narrow type-specific payload and delegates persistence to Moodle's item class via `build_editform()`, `set_data()`, and `save_item()`. Position changes use Moodle's `feedback_move_item()` and `feedback_renumber_items()`. MoodlIA does not write `feedback_item` tables directly.
 
-Primary source:
+Primary sources:
 
 - https://raw.githubusercontent.com/moodle/moodle/MOODLE_405_STABLE/mod/feedback/lib.php
+- https://raw.githubusercontent.com/moodle/moodle/MOODLE_405_STABLE/mod/feedback/edit_item.php
+- https://raw.githubusercontent.com/moodle/moodle/MOODLE_405_STABLE/mod/feedback/item/feedback_item_class.php
+- https://raw.githubusercontent.com/moodle/moodle/MOODLE_405_STABLE/mod/feedback/item/textfield/lib.php
+- https://raw.githubusercontent.com/moodle/moodle/MOODLE_405_STABLE/mod/feedback/item/textarea/lib.php
+- https://raw.githubusercontent.com/moodle/moodle/MOODLE_405_STABLE/mod/feedback/item/multichoice/lib.php
+- https://raw.githubusercontent.com/moodle/moodle/MOODLE_405_STABLE/mod/feedback/item/label/lib.php
 
-Required evidence before implementation:
+Implemented evidence:
 
-- A supported Moodle API or component helper that creates/updates item data without direct table writes from MoodlIA.
-- Ownership validation that the item belongs to the selected Feedback activity.
-- A smoke test that creates an item, verifies it through `get_feedback_items`, updates it, and verifies Moodle-visible state.
+- Supported item types are limited to `textfield`, `textarea`, `multichoice`, and `label`.
+- Mutation requires `mod/feedback:edititems`.
+- Ownership validation verifies that referenced item ids belong to the selected Feedback activity.
+- Persistence goes through Moodle item classes and type-specific `save_item()` methods.
+- Static coverage verifies contract, REST, MCP, CLI, services, capabilities, and no direct `$DB` usage in MoodlIA's operation boundary.
+
+Required evidence before broadening implementation:
+
+- Type-specific payload contracts for `multichoicerated`, `numeric`, `info`, `captcha`, and page breaks.
+- Smoke coverage for each additional supported type.
+- Evidence that updating items after responses exist preserves Moodle response-value semantics.
 
 ## Lesson Page Mutation
 

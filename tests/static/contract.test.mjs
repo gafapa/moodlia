@@ -30,8 +30,6 @@ test('remaining high-risk subelement writes stay documented and unexposed until 
   const validation = await fs.readFile(fromRoot('docs/remaining-api-validation.md'), 'utf8');
 
   for (const operationName of [
-    'create_feedback_item',
-    'update_feedback_item',
     'create_workshop_assessment'
   ]) {
     assert.equal(
@@ -41,16 +39,18 @@ test('remaining high-risk subelement writes stay documented and unexposed until 
     );
   }
 
-  assert.match(boundaries, /Feedback question\/item creation and arbitrary item updates/);
+  assert.match(boundaries, /Feedback item types beyond textfield, textarea, multichoice, and label/);
   assert.match(boundaries, /Lesson question page mutation and unsupported answer\/jump payloads/);
   assert.match(boundaries, /Workshop grading form strategies beyond accumulative/);
   assert.match(boundaries, /\[remaining-api-validation\.md\]\(remaining-api-validation\.md\)/);
 
   for (const marker of [
-    'feedback_create_item()',
+    'feedback_get_item_class()',
+    'Status: partially implemented for textfield, textarea, multichoice, and label items.',
+    'Status: partially implemented for content pages.',
+    'Status: partially implemented for the accumulative strategy.',
     'save_edit_strategy_form',
-    'Status: not implemented',
-    'Required evidence before implementation'
+    'Required evidence before broadening implementation'
   ]) {
     assert.ok(validation.includes(marker), `remaining API validation docs must include ${marker}.`);
   }

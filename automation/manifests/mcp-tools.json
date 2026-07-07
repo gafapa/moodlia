@@ -155,6 +155,8 @@
     "get_course_feedbacks",
     "view_feedback",
     "get_feedback_access_information",
+    "create_feedback_item",
+    "update_feedback_item",
     "get_feedback_items",
     "get_feedback_page_items",
     "get_feedback_analysis",

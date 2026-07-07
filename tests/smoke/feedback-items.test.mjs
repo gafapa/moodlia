@@ -44,6 +44,25 @@ function assertEmptyFeedbackItems(payload, courseId, feedbackModule) {
   assert.deepEqual(payload.items, []);
 }
 
+function assertFeedbackItem(payload, feedbackModule, expected) {
+  assert.equal(payload.feedback_id, feedbackModule.instance_id);
+  assert.equal(payload.module_id, feedbackModule.course_module_id);
+  assert.ok(payload.item_id > 0);
+  assert.equal(payload.type, expected.type);
+  if (expected.name) {
+    assert.equal(payload.name, expected.name);
+  }
+  if (typeof expected.required === 'boolean') {
+    assert.equal(payload.required, expected.required);
+  }
+  if (expected.presentation) {
+    assert.equal(payload.presentation, expected.presentation);
+  }
+  if (expected.dependItemId !== undefined) {
+    assert.equal(payload.depend_item_id, expected.dependItemId);
+  }
+}
+
 test('Feedback item listing works through REST, MCP, and CLI', { skip: !hasConfig }, async () => {
   const contract = await loadContract();
   const suffix = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
@@ -111,6 +130,116 @@ test('Feedback item listing works through REST, MCP, and CLI', { skip: !hasConfi
       '--module-id', String(feedback.course_module_id)
     ]);
     assertEmptyFeedbackItems(cliItems, courseId, feedback);
+
+    const restTextfield = await callRestFunction(toRestFunctionName(contract, 'create_feedback_item'), {
+      course_id: courseId,
+      module_id: feedback.course_module_id,
+      type: 'textfield',
+      name: `MoodlIA Goal ${suffix}`,
+      definition: JSON.stringify({ size: 40, max_length: 120 }),
+      required: 1,
+      label: 'goal'
+    });
+    assertFeedbackItem(restTextfield, feedback, {
+      type: 'textfield',
+      name: `MoodlIA Goal ${suffix}`,
+      required: true,
+      presentation: '40|120'
+    });
+
+    const updatedTextfield = await callRestFunction(toRestFunctionName(contract, 'update_feedback_item'), {
+      course_id: courseId,
+      module_id: feedback.course_module_id,
+      item_id: restTextfield.item_id,
+      name: `MoodlIA Updated Goal ${suffix}`,
+      definition: JSON.stringify({ size: 45, max_length: 160 })
+    });
+    assertFeedbackItem(updatedTextfield, feedback, {
+      type: 'textfield',
+      name: `MoodlIA Updated Goal ${suffix}`,
+      required: true,
+      presentation: '45|160'
+    });
+
+    const mcpMultichoice = await callMcpTool('create_feedback_item', {
+      course_id: courseId,
+      module_id: feedback.course_module_id,
+      type: 'multichoice',
+      name: `MoodlIA Difficulty ${suffix}`,
+      definition: {
+        subtype: 'radio',
+        choices: ['Easy', 'Appropriate', 'Hard'],
+        horizontal: false,
+        ignore_empty: true
+      },
+      required: true
+    });
+    assertFeedbackItem(mcpMultichoice, feedback, {
+      type: 'multichoice',
+      name: `MoodlIA Difficulty ${suffix}`,
+      required: true,
+      presentation: 'r>>>>>Easy|Appropriate|Hard<<<<<0'
+    });
+
+    const updatedMultichoice = await callMcpTool('update_feedback_item', {
+      course_id: courseId,
+      module_id: feedback.course_module_id,
+      item_id: mcpMultichoice.item_id,
+      definition: {
+        subtype: 'dropdown',
+        choices: ['Easy', 'Appropriate', 'Hard', 'Too hard'],
+        hide_no_select: true
+      },
+      required: false
+    });
+    assertFeedbackItem(updatedMultichoice, feedback, {
+      type: 'multichoice',
+      name: `MoodlIA Difficulty ${suffix}`,
+      required: false,
+      presentation: 'd>>>>>Easy|Appropriate|Hard|Too hard'
+    });
+
+    const cliTextarea = await callCli([
+      'create-feedback-item',
+      '--course-id', String(courseId),
+      '--module-id', String(feedback.course_module_id),
+      '--type', 'textarea',
+      '--name', `MoodlIA Reflection ${suffix}`,
+      '--definition', JSON.stringify({ width: 50, height: 8 })
+    ]);
+    assertFeedbackItem(cliTextarea, feedback, {
+      type: 'textarea',
+      name: `MoodlIA Reflection ${suffix}`,
+      required: false,
+      presentation: '50|8'
+    });
+
+    const updatedTextarea = await callCli([
+      'update-feedback-item',
+      '--course-id', String(courseId),
+      '--module-id', String(feedback.course_module_id),
+      '--item-id', String(cliTextarea.item_id),
+      '--position', '1',
+      '--depend-item-id', String(updatedTextfield.item_id),
+      '--depend-value', 'Ready'
+    ]);
+    assertFeedbackItem(updatedTextarea, feedback, {
+      type: 'textarea',
+      name: `MoodlIA Reflection ${suffix}`,
+      presentation: '50|8',
+      dependItemId: updatedTextfield.item_id
+    });
+
+    const populatedItems = await callRestFunction(toRestFunctionName(contract, 'get_feedback_items'), {
+      course_id: courseId,
+      module_id: feedback.course_module_id
+    });
+    assert.equal(populatedItems.course_id, courseId);
+    assert.equal(populatedItems.count, 3);
+    assert.deepEqual(
+      populatedItems.items.map((item) => item.item_id).sort((a, b) => a - b),
+      [updatedTextfield.item_id, updatedMultichoice.item_id, updatedTextarea.item_id].sort((a, b) => a - b)
+    );
 
     await assert.rejects(
       () => callRestFunction(toRestFunctionName(contract, 'delete_feedback_item'), {

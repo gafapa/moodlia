@@ -1546,6 +1546,38 @@ final class manifest {
                 ]),
             ],
             [
+                'name' => 'create_feedback_item',
+                'description' => 'Create an item in a Moodle Feedback activity.',
+                'inputSchema' => self::schema([
+                    'course_id' => ['type' => 'integer', 'required' => true],
+                    'module_id' => ['type' => 'integer', 'required' => true],
+                    'type' => ['type' => 'string', 'required' => true, 'enum' => ['textfield', 'textarea', 'multichoice', 'label']],
+                    'name' => ['type' => 'string', 'required' => true],
+                    'definition' => ['type' => 'object', 'required' => true],
+                    'position' => ['type' => 'integer', 'required' => false],
+                    'label' => ['type' => 'string', 'required' => false],
+                    'required' => ['type' => 'boolean', 'required' => false],
+                    'depend_item_id' => ['type' => 'integer', 'required' => false],
+                    'depend_value' => ['type' => 'string', 'required' => false],
+                ]),
+            ],
+            [
+                'name' => 'update_feedback_item',
+                'description' => 'Update an item in a Moodle Feedback activity.',
+                'inputSchema' => self::schema([
+                    'course_id' => ['type' => 'integer', 'required' => true],
+                    'module_id' => ['type' => 'integer', 'required' => true],
+                    'item_id' => ['type' => 'integer', 'required' => true],
+                    'name' => ['type' => 'string', 'required' => false],
+                    'definition' => ['type' => 'object', 'required' => false],
+                    'position' => ['type' => 'integer', 'required' => false],
+                    'label' => ['type' => 'string', 'required' => false],
+                    'required' => ['type' => 'boolean', 'required' => false],
+                    'depend_item_id' => ['type' => 'integer', 'required' => false],
+                    'depend_value' => ['type' => 'string', 'required' => false],
+                ]),
+            ],
+            [
                 'name' => 'get_feedback_page_items',
                 'description' => 'List items on one page in a Moodle Feedback activity.',
                 'inputSchema' => self::schema([
