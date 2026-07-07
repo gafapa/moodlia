@@ -19,6 +19,7 @@ MoodlIA exposes activity subelements when Moodle provides a public API path that
 - Quiz question slots, attempts, attempt data, attempt review, review options, grades, and view events through Moodle Quiz APIs.
 - Wiki pages, subwikis, files, and view events through Moodle Wiki APIs.
 - Workshop phases, user plans, grades, grade reports, reviewer/submission assessment reads, allocations, assessment form-definition reads, assessment updates, assessment evaluation, and submissions through Moodle Workshop APIs.
+- Workshop accumulative grading form creation/replacement through Moodle Workshop grading strategy APIs, limited to setup phase and the active `accumulative` strategy.
 
 ## Intentionally Not Exposed Yet
 
@@ -26,7 +27,7 @@ These areas remain blocked until a stable Moodle API path is identified and test
 
 - Feedback question/item creation and arbitrary item updates.
 - Lesson question page mutation and unsupported answer/jump payloads beyond content-page branches.
-- Workshop grading form mutation and standalone assessment creation outside Moodle's allocation flow.
+- Workshop grading form strategies beyond accumulative and standalone assessment creation outside Moodle's allocation flow.
 
 ## Required Standard Before Adding One
 
@@ -45,6 +46,6 @@ Every new subelement write must satisfy all of these conditions:
 
 1. Feedback item creation/update, only after validating `feedback_get_item_class()` and `feedback_update_item()` across the supported Moodle versions with a smoke test that confirms UI-visible item state.
 2. Additional Lesson question page types, only after validating each page and answer class across the supported Moodle versions with ownership checks and smoke tests that confirm page order, jumps, scoring, and content.
-3. Workshop grading form mutation, only after identifying stable Workshop grading-form subplugin APIs and capability boundaries.
+3. Additional Workshop grading form strategies, only after identifying stable subplugin APIs, payload schemas, and capability boundaries.
 
 See [remaining-api-validation.md](remaining-api-validation.md) for the current source-level validation notes and the evidence required before exposing these writes.

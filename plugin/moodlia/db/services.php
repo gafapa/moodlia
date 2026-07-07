@@ -945,6 +945,14 @@ $functions = [
         'ajax' => true,
         'capabilities' => 'local/moodlia:useapi,mod/workshop:view',
     ],
+    'local_moodlia_set_workshop_grading_form' => [
+        'classname' => 'local_moodlia\external\set_workshop_grading_form',
+        'methodname' => 'execute',
+        'description' => 'Create or replace an accumulative Moodle Workshop grading form.',
+        'type' => 'write',
+        'ajax' => true,
+        'capabilities' => 'local/moodlia:useapi,mod/workshop:editdimensions',
+    ],
     'local_moodlia_update_workshop_assessment' => [
         'classname' => 'local_moodlia\external\update_workshop_assessment',
         'methodname' => 'execute',
@@ -1994,6 +2002,7 @@ $services = [
             'local_moodlia_get_workshop_submission_assessments',
             'local_moodlia_allocate_workshop_submission',
             'local_moodlia_get_workshop_assessment_form_definition',
+            'local_moodlia_set_workshop_grading_form',
             'local_moodlia_update_workshop_assessment',
             'local_moodlia_evaluate_workshop_assessment',
             'local_moodlia_create_workshop_submission',

@@ -86,6 +86,35 @@ function assertWorkshopDetails(details, created, expected) {
   assert.equal(extra.activity.assessment_start > extra.activity.submission_end, true);
 }
 
+function workshopGradingFormDefinition(suffix) {
+  return {
+    dimensions: [
+      {
+        description: `<p>Content quality ${suffix}</p>`,
+        grade: 10,
+        weight: 1
+      },
+      {
+        description: `<p>Practical applicability ${suffix}</p>`,
+        grade: 10,
+        weight: 1
+      }
+    ]
+  };
+}
+
+function assertWorkshopGradingForm(form, expected) {
+  assert.equal(form.course_id, expected.courseId);
+  assert.equal(form.module_id, expected.moduleId);
+  assert.equal(form.workshop_id, expected.workshopId);
+  assert.equal(form.strategy, 'accumulative');
+  assert.equal(form.updated, true);
+  assert.equal(form.dimensions_count, expected.dimensionsCount);
+  const dimensions = JSON.parse(form.dimensions_json);
+  assert.equal(Array.isArray(dimensions), true);
+  assert.equal(dimensions.length, expected.dimensionsCount);
+}
+
 function assertSubmission(submission, expected) {
   assert.equal(submission.module_id, expected.moduleId);
   assert.equal(submission.title, expected.title);
@@ -286,6 +315,19 @@ test('Workshop module lifecycle works through REST, MCP, and CLI', { skip: !hasC
     });
     assertWorkshopDetails(restDetails, restWorkshop, restOptions);
 
+    const restGradingForm = await callRestFunction(toRestFunctionName(contract, 'set_workshop_grading_form'), {
+      course_id: courseId,
+      module_id: restWorkshop.course_module_id,
+      strategy: 'accumulative',
+      definition: JSON.stringify(workshopGradingFormDefinition(suffix))
+    });
+    assertWorkshopGradingForm(restGradingForm, {
+      courseId,
+      moduleId: restWorkshop.course_module_id,
+      workshopId: restWorkshop.instance_id,
+      dimensionsCount: 2
+    });
+
     const restPhase = await callRestFunction(toRestFunctionName(contract, 'set_workshop_phase'), {
       course_id: courseId,
       module_id: restWorkshop.course_module_id,
@@ -477,6 +519,19 @@ test('Workshop module lifecycle works through REST, MCP, and CLI', { skip: !hasC
       module_id: mcpWorkshop.course_module_id
     });
     assertWorkshopDetails(mcpDetails, mcpWorkshop, mcpOptions);
+
+    const mcpGradingForm = await callMcpTool('set_workshop_grading_form', {
+      course_id: courseId,
+      module_id: mcpWorkshop.course_module_id,
+      strategy: 'accumulative',
+      definition: workshopGradingFormDefinition(suffix)
+    });
+    assertWorkshopGradingForm(mcpGradingForm, {
+      courseId,
+      moduleId: mcpWorkshop.course_module_id,
+      workshopId: mcpWorkshop.instance_id,
+      dimensionsCount: 2
+    });
 
     const mcpPhase = await callMcpTool('set_workshop_phase', {
       course_id: courseId,
@@ -671,6 +726,20 @@ test('Workshop module lifecycle works through REST, MCP, and CLI', { skip: !hasC
       '--module-id', String(cliWorkshop.course_module_id)
     ]);
     assertWorkshopDetails(cliDetails, cliWorkshop, cliOptions);
+
+    const cliGradingForm = await callCli([
+      'set-workshop-grading-form',
+      '--course-id', String(courseId),
+      '--module-id', String(cliWorkshop.course_module_id),
+      '--strategy', 'accumulative',
+      '--definition', JSON.stringify(workshopGradingFormDefinition(suffix))
+    ]);
+    assertWorkshopGradingForm(cliGradingForm, {
+      courseId,
+      moduleId: cliWorkshop.course_module_id,
+      workshopId: cliWorkshop.instance_id,
+      dimensionsCount: 2
+    });
 
     const cliPhase = await callCli([
       'set-workshop-phase',

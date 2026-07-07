@@ -116,6 +116,7 @@
     "get_workshop_submission_assessments",
     "allocate_workshop_submission",
     "get_workshop_assessment_form_definition",
+    "set_workshop_grading_form",
     "update_workshop_assessment",
     "evaluate_workshop_assessment",
     "create_workshop_submission",

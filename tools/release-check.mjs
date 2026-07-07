@@ -19,6 +19,7 @@ if (includeSmokeSyntax) {
     ['node', ['--check', 'tests/smoke/generated-course-lifecycle.test.mjs']],
     ['node', ['--check', 'tests/smoke/course-workflows.test.mjs']],
     ['node', ['--check', 'tests/smoke/lesson-module.test.mjs']],
+    ['node', ['--check', 'tests/smoke/workshop-module.test.mjs']],
     ['node', ['--check', 'tests/smoke/user-cohort-role-management.test.mjs']],
     ['node', ['--check', 'tests/smoke/gradebook-management.test.mjs']],
     ['node', ['--check', 'tests/smoke/question-bank-blueprint.test.mjs']],

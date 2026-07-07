@@ -257,6 +257,7 @@ const requiredFiles = [
   'classes/operation/get_workshop_grades_report.php',
   'classes/operation/get_workshop_reviewer_assessments.php',
   'classes/operation/get_workshop_submission_assessments.php',
+  'classes/operation/set_workshop_grading_form.php',
   'classes/operation/create_workshop_submission.php',
   'classes/operation/update_workshop_submission.php',
   'classes/operation/delete_workshop_submission.php',
@@ -479,6 +480,7 @@ const requiredFiles = [
   'classes/external/get_workshop_grades_report.php',
   'classes/external/get_workshop_reviewer_assessments.php',
   'classes/external/get_workshop_submission_assessments.php',
+  'classes/external/set_workshop_grading_form.php',
   'classes/external/create_workshop_submission.php',
   'classes/external/update_workshop_submission.php',
   'classes/external/delete_workshop_submission.php'
@@ -896,6 +898,29 @@ test('lesson content page lifecycle uses Moodle Lesson component APIs', async ()
   assert.match(updateOperation, /->update\(/);
   assert.match(deleteOperation, /->delete\(/);
   assert.doesNotMatch(createOperation + updateOperation + deleteOperation, /\$DB\b/);
+});
+
+test('workshop accumulative grading form lifecycle uses Moodle strategy APIs', async () => {
+  const contract = JSON.parse(await fs.readFile(fromRoot('contract/operations.json'), 'utf8'));
+  const byName = new Map(contract.operations.map((operation) => [operation.name, operation]));
+  const services = await fs.readFile(fromRoot('plugin/moodlia/db/services.php'), 'utf8');
+  const workshopTools = await fs.readFile(fromRoot('plugin/moodlia/classes/operation/workshop_tools.php'), 'utf8');
+  const operation = await fs.readFile(fromRoot('plugin/moodlia/classes/operation/set_workshop_grading_form.php'), 'utf8');
+  const external = await fs.readFile(fromRoot('plugin/moodlia/classes/external/set_workshop_grading_form.php'), 'utf8');
+
+  assert.ok(byName.has('set_workshop_grading_form'), 'set_workshop_grading_form must exist in the operation contract.');
+  assert.deepEqual(byName.get('set_workshop_grading_form')?.parameters.strategy.enum, ['accumulative']);
+  assert.equal(byName.get('set_workshop_grading_form')?.parameters.definition.type, 'object');
+  assert.equal(byName.get('set_workshop_grading_form')?.capabilities[0], 'mod/workshop:editdimensions');
+  assert.match(services, /local_moodlia_set_workshop_grading_form\b/);
+  assert.match(external, /require_capability\('local\/moodlia:useapi'/);
+  assert.match(external, /require_capability\('mod\/workshop:editdimensions'/);
+  assert.match(workshopTools, /function decode_accumulative_definition/);
+  assert.match(workshopTools, /function accumulative_edit_form_data/);
+  assert.match(operation, /grading_strategy_instance\(\)/);
+  assert.match(operation, /save_edit_strategy_form/);
+  assert.match(operation, /PHASE_SETUP/);
+  assert.doesNotMatch(operation, /\$DB\b/);
 });
 
 test('create_module exposes audited common Moodle module options', async () => {

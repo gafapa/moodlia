@@ -7360,6 +7360,65 @@
       ]
     },
     {
+      "name": "set_workshop_grading_form",
+      "summary": "Create or replace an accumulative Moodle Workshop grading form.",
+      "type": "write",
+      "context": "module",
+      "capabilities": [
+        "mod/workshop:editdimensions"
+      ],
+      "transports": [
+        "rest",
+        "mcp",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true
+        },
+        "module_id": {
+          "type": "integer",
+          "required": true
+        },
+        "strategy": {
+          "type": "string",
+          "required": true,
+          "enum": [
+            "accumulative"
+          ]
+        },
+        "definition": {
+          "type": "object",
+          "required": true
+        }
+      },
+      "returns": {
+        "course_id": "integer",
+        "module_id": "integer",
+        "workshop_id": "integer",
+        "strategy": "string",
+        "updated": "boolean",
+        "dimensions_count": "integer",
+        "dimensions_json": "string"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "mcp",
+        "cli"
+      ]
+    },
+    {
       "name": "update_workshop_assessment",
       "summary": "Update a Moodle Workshop assessment using Moodle assessment form data.",
       "type": "write",

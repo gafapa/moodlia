@@ -1125,6 +1125,16 @@ final class manifest {
                 ]),
             ],
             [
+                'name' => 'set_workshop_grading_form',
+                'description' => 'Create or replace an accumulative Moodle Workshop grading form.',
+                'inputSchema' => self::schema([
+                    'course_id' => ['type' => 'integer', 'required' => true],
+                    'module_id' => ['type' => 'integer', 'required' => true],
+                    'strategy' => ['type' => 'string', 'required' => true, 'enum' => ['accumulative']],
+                    'definition' => ['type' => 'object', 'required' => true],
+                ]),
+            ],
+            [
                 'name' => 'update_workshop_assessment',
                 'description' => 'Update a Moodle Workshop assessment using Moodle assessment form data.',
                 'inputSchema' => self::schema([

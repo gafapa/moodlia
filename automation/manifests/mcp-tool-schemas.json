@@ -124,6 +124,11 @@
         "preview"
       ]
     },
+    "set_workshop_grading_form": {
+      "strategy": [
+        "accumulative"
+      ]
+    },
     "evaluate_workshop_assessment": {
       "feedback_format": [
         "html",

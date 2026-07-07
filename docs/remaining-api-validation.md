@@ -41,17 +41,24 @@ Required evidence before broadening implementation:
 
 ## Workshop Grading Form Mutation
 
-Status: not implemented.
+Status: partially implemented for the accumulative strategy.
 
-Moodle Workshop grading-form subplugins expose strategy-specific `save_edit_strategy_form(...)` methods, but they write strategy tables such as `workshopform_rubric` and `workshopform_accumulative` internally and require form-shaped data. MoodlIA already supports phase management, user plans, submissions, allocation, assessment form reads, assessment updates, and assessment evaluation. Grading-form definition mutation remains blocked until the strategy-specific API contract is narrowed and smoke tested.
+Moodle Workshop grading-form subplugins expose strategy-specific `save_edit_strategy_form(...)` methods. MoodlIA now exposes `set_workshop_grading_form` for the active `accumulative` strategy in setup phase only. The operation builds the form-shaped data required by Moodle and delegates persistence to the Workshop strategy instance instead of writing `workshopform_accumulative` tables directly. Other strategies remain blocked until their payload contracts are narrowed and smoke tested.
 
 Primary sources:
 
 - https://raw.githubusercontent.com/moodle/moodle/MOODLE_405_STABLE/mod/workshop/form/rubric/lib.php
 - https://raw.githubusercontent.com/moodle/moodle/MOODLE_405_STABLE/mod/workshop/form/accumulative/lib.php
 
-Required evidence before implementation:
+Implemented evidence:
 
-- Supported strategy list and exact public payload schema per strategy.
+- Supported strategy is limited to `accumulative`.
+- Mutation requires setup phase and `mod/workshop:editdimensions`.
+- Persistence goes through `grading_strategy_instance()->save_edit_strategy_form(...)`.
+- Static coverage verifies contract, REST, MCP, CLI, services, capabilities, and no direct `$DB` usage in the operation.
+
+Required evidence before broadening implementation:
+
+- Exact public payload schema per additional strategy.
 - Capability and phase rules for mutating the form after submissions or assessments exist.
 - A smoke test that writes a form definition, reads it back through `get_workshop_assessment_form_definition`, and verifies assessment updates still work.

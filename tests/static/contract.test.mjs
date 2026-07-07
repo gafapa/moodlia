@@ -32,7 +32,6 @@ test('remaining high-risk subelement writes stay documented and unexposed until 
   for (const operationName of [
     'create_feedback_item',
     'update_feedback_item',
-    'set_workshop_grading_form',
     'create_workshop_assessment'
   ]) {
     assert.equal(
@@ -44,7 +43,7 @@ test('remaining high-risk subelement writes stay documented and unexposed until 
 
   assert.match(boundaries, /Feedback question\/item creation and arbitrary item updates/);
   assert.match(boundaries, /Lesson question page mutation and unsupported answer\/jump payloads/);
-  assert.match(boundaries, /Workshop grading form mutation/);
+  assert.match(boundaries, /Workshop grading form strategies beyond accumulative/);
   assert.match(boundaries, /\[remaining-api-validation\.md\]\(remaining-api-validation\.md\)/);
 
   for (const marker of [
