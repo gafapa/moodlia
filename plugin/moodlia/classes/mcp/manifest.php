@@ -165,6 +165,88 @@ final class manifest {
                 ]),
             ],
             [
+                'name' => 'get_grade_categories',
+                'description' => 'Return Moodle gradebook categories for a course.',
+                'inputSchema' => self::schema([
+                    'course_id' => ['type' => 'integer', 'required' => true],
+                ]),
+            ],
+            [
+                'name' => 'create_grade_category',
+                'description' => 'Create a Moodle gradebook category.',
+                'inputSchema' => self::schema([
+                    'course_id' => ['type' => 'integer', 'required' => true],
+                    'name' => ['type' => 'string', 'required' => true],
+                    'aggregation' => ['type' => 'integer', 'required' => false],
+                ]),
+            ],
+            [
+                'name' => 'update_grade_category',
+                'description' => 'Update a Moodle gradebook category.',
+                'inputSchema' => self::schema([
+                    'course_id' => ['type' => 'integer', 'required' => true],
+                    'category_id' => ['type' => 'integer', 'required' => true],
+                    'name' => ['type' => 'string', 'required' => false],
+                    'aggregation' => ['type' => 'integer', 'required' => false],
+                    'hidden' => ['type' => 'boolean', 'required' => false],
+                ]),
+            ],
+            [
+                'name' => 'delete_grade_category',
+                'description' => 'Delete a Moodle gradebook category.',
+                'inputSchema' => self::schema([
+                    'course_id' => ['type' => 'integer', 'required' => true],
+                    'category_id' => ['type' => 'integer', 'required' => true],
+                ]),
+            ],
+            [
+                'name' => 'create_grade_item',
+                'description' => 'Create a manual Moodle gradebook item.',
+                'inputSchema' => self::schema([
+                    'course_id' => ['type' => 'integer', 'required' => true],
+                    'name' => ['type' => 'string', 'required' => true],
+                    'grade_max' => ['type' => 'number', 'required' => false],
+                    'grade_min' => ['type' => 'number', 'required' => false],
+                    'grade_pass' => ['type' => 'number', 'required' => false],
+                    'category_id' => ['type' => 'integer', 'required' => false],
+                    'hidden' => ['type' => 'boolean', 'required' => false],
+                ]),
+            ],
+            [
+                'name' => 'update_grade_item',
+                'description' => 'Update a manual Moodle gradebook item.',
+                'inputSchema' => self::schema([
+                    'course_id' => ['type' => 'integer', 'required' => true],
+                    'item_id' => ['type' => 'integer', 'required' => true],
+                    'name' => ['type' => 'string', 'required' => false],
+                    'grade_max' => ['type' => 'number', 'required' => false],
+                    'grade_min' => ['type' => 'number', 'required' => false],
+                    'grade_pass' => ['type' => 'number', 'required' => false],
+                    'category_id' => ['type' => 'integer', 'required' => false],
+                    'hidden' => ['type' => 'boolean', 'required' => false],
+                    'locked' => ['type' => 'boolean', 'required' => false],
+                ]),
+            ],
+            [
+                'name' => 'delete_grade_item',
+                'description' => 'Delete a manual Moodle gradebook item.',
+                'inputSchema' => self::schema([
+                    'course_id' => ['type' => 'integer', 'required' => true],
+                    'item_id' => ['type' => 'integer', 'required' => true],
+                ]),
+            ],
+            [
+                'name' => 'update_grade_value',
+                'description' => 'Update a manual Moodle gradebook value for a user.',
+                'inputSchema' => self::schema([
+                    'course_id' => ['type' => 'integer', 'required' => true],
+                    'item_id' => ['type' => 'integer', 'required' => true],
+                    'user_id' => ['type' => 'integer', 'required' => true],
+                    'grade' => ['type' => 'number', 'required' => true],
+                    'feedback' => ['type' => 'string', 'required' => false],
+                ]),
+            ],
+            [
                 'name' => 'get_course_completion_status',
                 'description' => 'Return Moodle course completion status for a user.',
                 'inputSchema' => self::schema([
@@ -194,6 +276,108 @@ final class manifest {
                 'inputSchema' => self::schema([
                     'module_id' => ['type' => 'integer', 'required' => true],
                     'completed' => ['type' => 'boolean', 'required' => true],
+                ]),
+            ],
+            [
+                'name' => 'get_user_details',
+                'description' => 'Return Moodle user profile details.',
+                'inputSchema' => self::schema([
+                    'user_id' => ['type' => 'integer', 'required' => true],
+                ]),
+            ],
+            [
+                'name' => 'create_user',
+                'description' => 'Create a Moodle user account.',
+                'inputSchema' => self::schema([
+                    'username' => ['type' => 'string', 'required' => true],
+                    'firstname' => ['type' => 'string', 'required' => true],
+                    'lastname' => ['type' => 'string', 'required' => true],
+                    'email' => ['type' => 'string', 'required' => true],
+                    'password' => ['type' => 'string', 'required' => true],
+                    'auth' => ['type' => 'string', 'required' => false],
+                    'suspended' => ['type' => 'boolean', 'required' => false],
+                ]),
+            ],
+            [
+                'name' => 'update_user',
+                'description' => 'Update Moodle user account fields.',
+                'inputSchema' => self::schema([
+                    'user_id' => ['type' => 'integer', 'required' => true],
+                    'firstname' => ['type' => 'string', 'required' => false],
+                    'lastname' => ['type' => 'string', 'required' => false],
+                    'email' => ['type' => 'string', 'required' => false],
+                    'password' => ['type' => 'string', 'required' => false],
+                    'auth' => ['type' => 'string', 'required' => false],
+                    'suspended' => ['type' => 'boolean', 'required' => false],
+                ]),
+            ],
+            [
+                'name' => 'delete_user',
+                'description' => 'Delete a Moodle user account.',
+                'inputSchema' => self::schema([
+                    'user_id' => ['type' => 'integer', 'required' => true],
+                ]),
+            ],
+            [
+                'name' => 'create_cohort',
+                'description' => 'Create a Moodle site cohort.',
+                'inputSchema' => self::schema([
+                    'name' => ['type' => 'string', 'required' => true],
+                    'idnumber' => ['type' => 'string', 'required' => false],
+                    'description' => ['type' => 'string', 'required' => false],
+                    'visible' => ['type' => 'boolean', 'required' => false],
+                ]),
+            ],
+            [
+                'name' => 'update_cohort',
+                'description' => 'Update a Moodle site cohort.',
+                'inputSchema' => self::schema([
+                    'cohort_id' => ['type' => 'integer', 'required' => true],
+                    'name' => ['type' => 'string', 'required' => false],
+                    'idnumber' => ['type' => 'string', 'required' => false],
+                    'description' => ['type' => 'string', 'required' => false],
+                    'visible' => ['type' => 'boolean', 'required' => false],
+                ]),
+            ],
+            [
+                'name' => 'delete_cohort',
+                'description' => 'Delete a Moodle site cohort.',
+                'inputSchema' => self::schema([
+                    'cohort_id' => ['type' => 'integer', 'required' => true],
+                ]),
+            ],
+            [
+                'name' => 'add_cohort_member',
+                'description' => 'Add a Moodle user to a site cohort.',
+                'inputSchema' => self::schema([
+                    'cohort_id' => ['type' => 'integer', 'required' => true],
+                    'user_id' => ['type' => 'integer', 'required' => true],
+                ]),
+            ],
+            [
+                'name' => 'remove_cohort_member',
+                'description' => 'Remove a Moodle user from a site cohort.',
+                'inputSchema' => self::schema([
+                    'cohort_id' => ['type' => 'integer', 'required' => true],
+                    'user_id' => ['type' => 'integer', 'required' => true],
+                ]),
+            ],
+            [
+                'name' => 'assign_course_role',
+                'description' => 'Assign a course role to a Moodle user.',
+                'inputSchema' => self::schema([
+                    'course_id' => ['type' => 'integer', 'required' => true],
+                    'user_id' => ['type' => 'integer', 'required' => true],
+                    'role_archetype' => ['type' => 'string', 'required' => false, 'enum' => ['student', 'teacher', 'editingteacher']],
+                ]),
+            ],
+            [
+                'name' => 'unassign_course_role',
+                'description' => 'Unassign a course role from a Moodle user.',
+                'inputSchema' => self::schema([
+                    'course_id' => ['type' => 'integer', 'required' => true],
+                    'user_id' => ['type' => 'integer', 'required' => true],
+                    'role_archetype' => ['type' => 'string', 'required' => false, 'enum' => ['student', 'teacher', 'editingteacher']],
                 ]),
             ],
             [
@@ -1714,6 +1898,31 @@ final class manifest {
                     'question_bank_module_id' => ['type' => 'integer', 'required' => false],
                     'quiz_module_id' => ['type' => 'integer', 'required' => false],
                     'include_top' => ['type' => 'boolean', 'required' => false],
+                ]),
+            ],
+            [
+                'name' => 'export_question_bank_blueprint',
+                'description' => 'Export a portable MoodlIA JSON blueprint from a Moodle question bank.',
+                'inputSchema' => self::schema([
+                    'course_id' => ['type' => 'integer', 'required' => true],
+                    'bank_scope' => ['type' => 'string', 'required' => false, 'enum' => ['course_shared', 'quiz_private']],
+                    'question_bank_module_id' => ['type' => 'integer', 'required' => false],
+                    'quiz_module_id' => ['type' => 'integer', 'required' => false],
+                    'category_id' => ['type' => 'integer', 'required' => false],
+                    'include_unsupported' => ['type' => 'boolean', 'required' => false],
+                ]),
+            ],
+            [
+                'name' => 'import_question_bank_blueprint',
+                'description' => 'Import a portable MoodlIA JSON blueprint into a Moodle question bank.',
+                'inputSchema' => self::schema([
+                    'course_id' => ['type' => 'integer', 'required' => true],
+                    'blueprint_json' => ['type' => 'string', 'required' => true],
+                    'bank_scope' => ['type' => 'string', 'required' => false, 'enum' => ['course_shared', 'quiz_private']],
+                    'question_bank_module_id' => ['type' => 'integer', 'required' => false],
+                    'quiz_module_id' => ['type' => 'integer', 'required' => false],
+                    'category_id' => ['type' => 'integer', 'required' => false],
+                    'create_categories' => ['type' => 'boolean', 'required' => false],
                 ]),
             ],
             [

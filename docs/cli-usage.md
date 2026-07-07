@@ -370,6 +370,32 @@ moodlia enrol-user --course-id <course_id> --user-id <user_id> --role-archetype 
 moodlia unenrol-user --course-id <course_id> --user-id <user_id>
 ```
 
+Manage Moodle user accounts:
+
+```text
+moodlia create-user --username "generated.student" --firstname "Generated" --lastname "Student" --email "generated.student@example.edu" --password "Use-A-Strong-Password-Here"
+moodlia get-user-details --user-id <user_id>
+moodlia update-user --user-id <user_id> --firstname "Updated" --suspended false
+moodlia delete-user --user-id <user_id>
+```
+
+Manage site cohorts and cohort membership:
+
+```text
+moodlia create-cohort --name "Generated Cohort" --idnumber "generated-cohort-001" --visible true
+moodlia update-cohort --cohort-id <cohort_id> --description "<p>Updated cohort.</p>"
+moodlia add-cohort-member --cohort-id <cohort_id> --user-id <user_id>
+moodlia remove-cohort-member --cohort-id <cohort_id> --user-id <user_id>
+moodlia delete-cohort --cohort-id <cohort_id>
+```
+
+Assign and unassign course-level roles without changing enrolment records:
+
+```text
+moodlia assign-course-role --course-id <course_id> --user-id <user_id> --role-archetype student
+moodlia unassign-course-role --course-id <course_id> --user-id <user_id> --role-archetype student
+```
+
 Create a group and add a member:
 
 ```text
@@ -384,6 +410,19 @@ Read progress and completion:
 moodlia get-course-completion-status --course-id <course_id> --user-id <user_id>
 moodlia get-activity-completion-statuses --course-id <course_id> --user-id <user_id>
 moodlia get-course-progress-report --course-id <course_id> --limit 50
+```
+
+Manage Gradebook categories and manual grade items:
+
+```text
+moodlia get-grade-categories --course-id <course_id>
+moodlia create-grade-category --course-id <course_id> --name "Portfolio"
+moodlia update-grade-category --course-id <course_id> --category-id <category_id> --name "Portfolio Updated" --hidden false
+moodlia create-grade-item --course-id <course_id> --name "Participation" --grade-max 10 --grade-min 0 --grade-pass 5 --category-id <category_id>
+moodlia update-grade-item --course-id <course_id> --item-id <item_id> --name "Participation Updated" --grade-max 20 --hidden false
+moodlia update-grade-value --course-id <course_id> --item-id <item_id> --user-id <user_id> --grade 8 --feedback "<p>Good participation.</p>"
+moodlia delete-grade-item --course-id <course_id> --item-id <item_id>
+moodlia delete-grade-category --course-id <course_id> --category-id <category_id>
 ```
 
 ## Assignment Workflow
@@ -532,6 +571,15 @@ moodlia create-module --course-id <course_id> --section-number 0 --module-type q
 ```
 
 Moodle question bank activities are not displayed as normal course-section activities, so MoodlIA requires `module-type qbank` to be created in `section-number 0`.
+
+Export and import a portable MoodlIA question bank blueprint:
+
+```text
+moodlia export-question-bank-blueprint --course-id <course_id> --bank-scope course_shared --question-bank-module-id <qbank_module_id>
+moodlia import-question-bank-blueprint --course-id <target_course_id> --blueprint-json '<blueprint_json>' --bank-scope course_shared --question-bank-module-id <target_qbank_module_id> --create-categories true
+```
+
+The blueprint is MoodlIA JSON for automation workflows. It is not a Moodle XML export and it is not a native `.mbz` backup. Export includes directly reconstructable question types and reports unsupported questions inside the blueprint `skipped_questions` list unless `--include-unsupported false` is used.
 
 Create a shared question category:
 

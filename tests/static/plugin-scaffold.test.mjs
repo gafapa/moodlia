@@ -24,13 +24,33 @@ const requiredFiles = [
   'classes/operation/delete_course.php',
   'classes/operation/get_course_contents.php',
   'classes/operation/get_module_details.php',
+  'classes/operation/admin_tools.php',
   'classes/operation/enrolment_tools.php',
   'classes/operation/get_enrolled_users.php',
+  'classes/operation/get_user_details.php',
+  'classes/operation/create_user.php',
+  'classes/operation/update_user.php',
+  'classes/operation/delete_user.php',
+  'classes/operation/create_cohort.php',
+  'classes/operation/update_cohort.php',
+  'classes/operation/delete_cohort.php',
+  'classes/operation/add_cohort_member.php',
+  'classes/operation/remove_cohort_member.php',
+  'classes/operation/assign_course_role.php',
+  'classes/operation/unassign_course_role.php',
   'classes/operation/enrol_user.php',
   'classes/operation/unenrol_user.php',
   'classes/operation/gradebook_tools.php',
   'classes/operation/get_grade_items.php',
   'classes/operation/get_user_grades.php',
+  'classes/operation/get_grade_categories.php',
+  'classes/operation/create_grade_category.php',
+  'classes/operation/update_grade_category.php',
+  'classes/operation/delete_grade_category.php',
+  'classes/operation/create_grade_item.php',
+  'classes/operation/update_grade_item.php',
+  'classes/operation/delete_grade_item.php',
+  'classes/operation/update_grade_value.php',
   'classes/operation/get_course_progress_report.php',
   'classes/operation/group_tools.php',
   'classes/operation/get_groups.php',
@@ -192,6 +212,8 @@ const requiredFiles = [
   'classes/operation/question_tools.php',
   'classes/operation/get_question_banks.php',
   'classes/operation/get_question_categories.php',
+  'classes/operation/export_question_bank_blueprint.php',
+  'classes/operation/import_question_bank_blueprint.php',
   'classes/operation/create_question_category.php',
   'classes/operation/update_question_category.php',
   'classes/operation/delete_question_category.php',
@@ -248,10 +270,31 @@ const requiredFiles = [
   'classes/external/get_course_contents.php',
   'classes/external/get_module_details.php',
   'classes/external/get_enrolled_users.php',
+  'classes/external/admin_response.php',
+  'classes/external/get_user_details.php',
+  'classes/external/create_user.php',
+  'classes/external/update_user.php',
+  'classes/external/delete_user.php',
+  'classes/external/create_cohort.php',
+  'classes/external/update_cohort.php',
+  'classes/external/delete_cohort.php',
+  'classes/external/add_cohort_member.php',
+  'classes/external/remove_cohort_member.php',
+  'classes/external/assign_course_role.php',
+  'classes/external/unassign_course_role.php',
   'classes/external/enrol_user.php',
   'classes/external/unenrol_user.php',
   'classes/external/get_grade_items.php',
   'classes/external/get_user_grades.php',
+  'classes/external/gradebook_response.php',
+  'classes/external/get_grade_categories.php',
+  'classes/external/create_grade_category.php',
+  'classes/external/update_grade_category.php',
+  'classes/external/delete_grade_category.php',
+  'classes/external/create_grade_item.php',
+  'classes/external/update_grade_item.php',
+  'classes/external/delete_grade_item.php',
+  'classes/external/update_grade_value.php',
   'classes/external/get_course_progress_report.php',
   'classes/external/get_groups.php',
   'classes/external/create_group.php',
@@ -388,6 +431,8 @@ const requiredFiles = [
   'classes/external/delete_folder_file.php',
   'classes/external/get_question_banks.php',
   'classes/external/get_question_categories.php',
+  'classes/external/export_question_bank_blueprint.php',
+  'classes/external/import_question_bank_blueprint.php',
   'classes/external/create_question_category.php',
   'classes/external/update_question_category.php',
   'classes/external/delete_question_category.php',
@@ -783,6 +828,38 @@ test('calculated question distribution accepts only v1 contract names', async ()
   assert.doesNotMatch(questionTools, /compatibility aliases/);
 });
 
+test('question bank blueprint import and export stay portable and API-backed', async () => {
+  const contract = JSON.parse(await fs.readFile(fromRoot('contract/operations.json'), 'utf8'));
+  const byName = new Map(contract.operations.map((operation) => [operation.name, operation]));
+  const services = await fs.readFile(fromRoot('plugin/moodlia/db/services.php'), 'utf8');
+  const questionTools = await fs.readFile(fromRoot('plugin/moodlia/classes/operation/question_tools.php'), 'utf8');
+  const exportOperation = await fs.readFile(fromRoot('plugin/moodlia/classes/operation/export_question_bank_blueprint.php'), 'utf8');
+  const importOperation = await fs.readFile(fromRoot('plugin/moodlia/classes/operation/import_question_bank_blueprint.php'), 'utf8');
+  const exportExternal = await fs.readFile(fromRoot('plugin/moodlia/classes/external/export_question_bank_blueprint.php'), 'utf8');
+  const importExternal = await fs.readFile(fromRoot('plugin/moodlia/classes/external/import_question_bank_blueprint.php'), 'utf8');
+
+  for (const operationName of ['export_question_bank_blueprint', 'import_question_bank_blueprint']) {
+    assert.ok(byName.has(operationName), `${operationName} must exist in the operation contract.`);
+    assert.match(services, new RegExp(`local_moodlia_${operationName}\\b`), `${operationName} must be registered as REST.`);
+  }
+
+  assert.equal(byName.get('export_question_bank_blueprint')?.returns.blueprint_json, 'string');
+  assert.equal(byName.get('import_question_bank_blueprint')?.parameters.blueprint_json.type, 'string');
+  assert.equal(byName.get('import_question_bank_blueprint')?.returns.created_questions_json, 'string');
+  assert.match(exportOperation, /moodlia\.question_bank_blueprint\.v1/);
+  assert.match(exportOperation, /question_tools::get_question_objects/);
+  assert.match(exportOperation, /question_tools::question_to_blueprint/);
+  assert.match(importOperation, /create_question_category::execute/);
+  assert.match(importOperation, /create_question::execute/);
+  assert.match(questionTools, /function question_to_blueprint/);
+  assert.match(questionTools, /function question_options_to_blueprint/);
+  assert.match(questionTools, /function get_question_objects/);
+  assert.doesNotMatch(exportOperation + importOperation, /\$DB\b/);
+  assert.match(exportExternal, /require_capability\('moodle\/question:viewall'/);
+  assert.match(importExternal, /require_capability\('moodle\/question:managecategory'/);
+  assert.match(importExternal, /require_capability\('moodle\/question:add'/);
+});
+
 test('create_module exposes audited common Moodle module options', async () => {
   const contract = JSON.parse(await fs.readFile(fromRoot('contract/operations.json'), 'utf8'));
   const createModule = contract.operations.find((operation) => operation.name === 'create_module');
@@ -982,8 +1059,177 @@ test('native Moodle backup and restore operations use backup controllers and str
   assert.match(backupExternal, /require_capability\('moodle\/backup:backupcourse'/);
   assert.match(restoreExternal, /require_capability\('moodle\/restore:restorecourse'/);
   assert.match(restoreExternal, /require_capability\('moodle\/course:create'/);
+  assert.match(restoreExternal, /course_backup_tools::get_backup_file/);
+  assert.match(restoreExternal, /CONTEXT_USER/);
+  assert.match(restoreExternal, /CONTEXT_COURSE/);
   assert.match(uploadExternal, /require_capability\('local\/moodlia:useapi'/);
   assert.match(listExternal, /require_capability\('moodle\/backup:backupcourse'/);
   assert.match(deleteExternal, /CONTEXT_USER/);
   assert.match(deleteExternal, /require_capability\('moodle\/backup:backupcourse'/);
+});
+
+test('site administration operations manage users, cohorts, and course role assignments through Moodle APIs', async () => {
+  const contract = JSON.parse(await fs.readFile(fromRoot('contract/operations.json'), 'utf8'));
+  const byName = new Map(contract.operations.map((operation) => [operation.name, operation]));
+  const services = await fs.readFile(fromRoot('plugin/moodlia/db/services.php'), 'utf8');
+  const adminTools = await fs.readFile(fromRoot('plugin/moodlia/classes/operation/admin_tools.php'), 'utf8');
+  const [
+    createUser,
+    updateUser,
+    deleteUser,
+    createCohort,
+    updateCohort,
+    deleteCohort,
+    addMember,
+    removeMember,
+    assignRole,
+    unassignRole
+  ] = await Promise.all([
+    fs.readFile(fromRoot('plugin/moodlia/classes/operation/create_user.php'), 'utf8'),
+    fs.readFile(fromRoot('plugin/moodlia/classes/operation/update_user.php'), 'utf8'),
+    fs.readFile(fromRoot('plugin/moodlia/classes/operation/delete_user.php'), 'utf8'),
+    fs.readFile(fromRoot('plugin/moodlia/classes/operation/create_cohort.php'), 'utf8'),
+    fs.readFile(fromRoot('plugin/moodlia/classes/operation/update_cohort.php'), 'utf8'),
+    fs.readFile(fromRoot('plugin/moodlia/classes/operation/delete_cohort.php'), 'utf8'),
+    fs.readFile(fromRoot('plugin/moodlia/classes/operation/add_cohort_member.php'), 'utf8'),
+    fs.readFile(fromRoot('plugin/moodlia/classes/operation/remove_cohort_member.php'), 'utf8'),
+    fs.readFile(fromRoot('plugin/moodlia/classes/operation/assign_course_role.php'), 'utf8'),
+    fs.readFile(fromRoot('plugin/moodlia/classes/operation/unassign_course_role.php'), 'utf8')
+  ]);
+
+  const operationNames = [
+    'get_user_details',
+    'create_user',
+    'update_user',
+    'delete_user',
+    'create_cohort',
+    'update_cohort',
+    'delete_cohort',
+    'add_cohort_member',
+    'remove_cohort_member',
+    'assign_course_role',
+    'unassign_course_role'
+  ];
+
+  for (const operationName of operationNames) {
+    assert.ok(byName.has(operationName), `${operationName} must exist in the operation contract.`);
+    assert.match(services, new RegExp(`local_moodlia_${operationName}\\b`), `${operationName} must be registered as REST.`);
+  }
+
+  assert.equal(byName.get('create_user')?.type, 'write');
+  assert.equal(byName.get('create_cohort')?.type, 'write');
+  assert.equal(byName.get('assign_course_role')?.context, 'course');
+  assert.deepEqual(byName.get('assign_course_role')?.parameters.role_archetype.enum, [
+    'student',
+    'teacher',
+    'editingteacher'
+  ]);
+
+  assert.match(adminTools, /user\/lib\.php/);
+  assert.match(adminTools, /cohort\/lib\.php/);
+  assert.match(adminTools, /accesslib\.php/);
+  assert.match(adminTools, /\\core_user::get_user/);
+  assert.match(adminTools, /cohort_get_cohort/);
+  assert.match(adminTools, /resolve_role_id/);
+
+  assert.match(createUser, /user_create_user/);
+  assert.match(updateUser, /user_update_user/);
+  assert.match(deleteUser, /delete_user/);
+  assert.match(createCohort, /cohort_add_cohort/);
+  assert.match(updateCohort, /cohort_update_cohort/);
+  assert.match(deleteCohort, /cohort_delete_cohort/);
+  assert.match(addMember, /cohort_add_member/);
+  assert.match(removeMember, /cohort_remove_member/);
+  assert.match(assignRole, /role_assign/);
+  assert.match(unassignRole, /role_unassign/);
+
+  for (const [operationName, capability] of [
+    ['get_user_details', 'moodle/user:viewdetails'],
+    ['create_user', 'moodle/user:create'],
+    ['update_user', 'moodle/user:update'],
+    ['delete_user', 'moodle/user:delete'],
+    ['create_cohort', 'moodle/cohort:manage'],
+    ['update_cohort', 'moodle/cohort:manage'],
+    ['delete_cohort', 'moodle/cohort:manage'],
+    ['add_cohort_member', 'moodle/cohort:manage'],
+    ['remove_cohort_member', 'moodle/cohort:manage'],
+    ['assign_course_role', 'moodle/role:assign'],
+    ['unassign_course_role', 'moodle/role:assign']
+  ]) {
+    const external = await fs.readFile(fromRoot(`plugin/moodlia/classes/external/${operationName}.php`), 'utf8');
+    assert.match(external, /require_capability\('local\/moodlia:useapi'/);
+    assert.ok(
+      external.includes(`require_capability('${capability}'`),
+      `${operationName} must require ${capability}.`
+    );
+  }
+});
+
+test('advanced gradebook operations manage manual categories, items, and grades through Moodle grade APIs', async () => {
+  const contract = JSON.parse(await fs.readFile(fromRoot('contract/operations.json'), 'utf8'));
+  const byName = new Map(contract.operations.map((operation) => [operation.name, operation]));
+  const services = await fs.readFile(fromRoot('plugin/moodlia/db/services.php'), 'utf8');
+  const gradebookTools = await fs.readFile(fromRoot('plugin/moodlia/classes/operation/gradebook_tools.php'), 'utf8');
+  const createCategory = await fs.readFile(fromRoot('plugin/moodlia/classes/operation/create_grade_category.php'), 'utf8');
+  const updateCategory = await fs.readFile(fromRoot('plugin/moodlia/classes/operation/update_grade_category.php'), 'utf8');
+  const deleteCategory = await fs.readFile(fromRoot('plugin/moodlia/classes/operation/delete_grade_category.php'), 'utf8');
+  const createItem = await fs.readFile(fromRoot('plugin/moodlia/classes/operation/create_grade_item.php'), 'utf8');
+  const updateItem = await fs.readFile(fromRoot('plugin/moodlia/classes/operation/update_grade_item.php'), 'utf8');
+  const deleteItem = await fs.readFile(fromRoot('plugin/moodlia/classes/operation/delete_grade_item.php'), 'utf8');
+  const updateValue = await fs.readFile(fromRoot('plugin/moodlia/classes/operation/update_grade_value.php'), 'utf8');
+
+  const operationNames = [
+    'get_grade_categories',
+    'create_grade_category',
+    'update_grade_category',
+    'delete_grade_category',
+    'create_grade_item',
+    'update_grade_item',
+    'delete_grade_item',
+    'update_grade_value'
+  ];
+
+  for (const operationName of operationNames) {
+    assert.ok(byName.has(operationName), `${operationName} must exist in the operation contract.`);
+    assert.match(services, new RegExp(`local_moodlia_${operationName}\\b`), `${operationName} must be registered as REST.`);
+  }
+
+  assert.equal(byName.get('create_grade_category')?.capabilities[0], 'moodle/grade:manage');
+  assert.equal(byName.get('create_grade_item')?.capabilities[0], 'moodle/grade:manage');
+  assert.equal(byName.get('update_grade_value')?.capabilities[0], 'moodle/grade:edit');
+  assert.equal(byName.get('create_grade_item')?.parameters.grade_max.type, 'number');
+
+  assert.match(gradebookTools, /grade\/grade_category\.php/);
+  assert.match(gradebookTools, /grade\/grade_item\.php/);
+  assert.match(gradebookTools, /\\grade_category::fetch/);
+  assert.match(gradebookTools, /\\grade_item::fetch/);
+  assert.match(gradebookTools, /require_manual_grade_item/);
+
+  assert.match(createCategory, /new \\grade_category/);
+  assert.match(updateCategory, /->update\('local_moodlia'\)/);
+  assert.match(deleteCategory, /->delete\('local_moodlia'\)/);
+  assert.match(createItem, /new \\grade_item/);
+  assert.match(createItem, /'itemtype'\s*=>\s*'manual'/);
+  assert.match(updateItem, /require_manual_grade_item/);
+  assert.match(deleteItem, /require_manual_grade_item/);
+  assert.match(updateValue, /require_manual_grade_item/);
+  assert.match(updateValue, /update_final_grade/);
+
+  for (const [operationName, capability] of [
+    ['get_grade_categories', 'moodle/grade:viewall'],
+    ['create_grade_category', 'moodle/grade:manage'],
+    ['update_grade_category', 'moodle/grade:manage'],
+    ['delete_grade_category', 'moodle/grade:manage'],
+    ['create_grade_item', 'moodle/grade:manage'],
+    ['update_grade_item', 'moodle/grade:manage'],
+    ['delete_grade_item', 'moodle/grade:manage'],
+    ['update_grade_value', 'moodle/grade:edit']
+  ]) {
+    const external = await fs.readFile(fromRoot(`plugin/moodlia/classes/external/${operationName}.php`), 'utf8');
+    assert.match(external, /require_capability\('local\/moodlia:useapi'/);
+    assert.ok(
+      external.includes(`require_capability('${capability}'`),
+      `${operationName} must require ${capability}.`
+    );
+  }
 });

@@ -979,6 +979,469 @@
       ]
     },
     {
+      "name": "get_grade_categories",
+      "summary": "Return Moodle gradebook categories for a course.",
+      "type": "read",
+      "context": "course",
+      "capabilities": [
+        "moodle/grade:viewall"
+      ],
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true,
+          "minimum": 1
+        }
+      },
+      "returns": {
+        "course_id": "integer",
+        "categories": [
+          {
+            "category_id": "integer",
+            "course_id": "integer",
+            "name": "string",
+            "aggregation": "integer",
+            "hidden": "boolean",
+            "time_modified": "integer"
+          }
+        ]
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli"
+      ]
+    },
+    {
+      "name": "create_grade_category",
+      "summary": "Create a Moodle gradebook category.",
+      "type": "write",
+      "context": "course",
+      "capabilities": [
+        "moodle/grade:manage"
+      ],
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true,
+          "minimum": 1
+        },
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "aggregation": {
+          "type": "integer",
+          "required": false
+        }
+      },
+      "returns": {
+        "category_id": "integer",
+        "course_id": "integer",
+        "name": "string",
+        "aggregation": "integer",
+        "hidden": "boolean",
+        "time_modified": "integer"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli"
+      ]
+    },
+    {
+      "name": "update_grade_category",
+      "summary": "Update a Moodle gradebook category.",
+      "type": "write",
+      "context": "course",
+      "capabilities": [
+        "moodle/grade:manage"
+      ],
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true,
+          "minimum": 1
+        },
+        "category_id": {
+          "type": "integer",
+          "required": true,
+          "minimum": 1
+        },
+        "name": {
+          "type": "string",
+          "required": false
+        },
+        "aggregation": {
+          "type": "integer",
+          "required": false
+        },
+        "hidden": {
+          "type": "boolean",
+          "required": false
+        }
+      },
+      "returns": {
+        "category_id": "integer",
+        "course_id": "integer",
+        "name": "string",
+        "aggregation": "integer",
+        "hidden": "boolean",
+        "time_modified": "integer"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli"
+      ]
+    },
+    {
+      "name": "delete_grade_category",
+      "summary": "Delete a Moodle gradebook category.",
+      "type": "write",
+      "context": "course",
+      "capabilities": [
+        "moodle/grade:manage"
+      ],
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true,
+          "minimum": 1
+        },
+        "category_id": {
+          "type": "integer",
+          "required": true,
+          "minimum": 1
+        }
+      },
+      "returns": {
+        "course_id": "integer",
+        "category_id": "integer",
+        "deleted": "boolean"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli"
+      ]
+    },
+    {
+      "name": "create_grade_item",
+      "summary": "Create a manual Moodle gradebook item.",
+      "type": "write",
+      "context": "course",
+      "capabilities": [
+        "moodle/grade:manage"
+      ],
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true,
+          "minimum": 1
+        },
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "grade_max": {
+          "type": "number",
+          "required": false,
+          "minimum": 0
+        },
+        "grade_min": {
+          "type": "number",
+          "required": false,
+          "minimum": 0
+        },
+        "grade_pass": {
+          "type": "number",
+          "required": false,
+          "minimum": 0
+        },
+        "category_id": {
+          "type": "integer",
+          "required": false,
+          "minimum": 1
+        },
+        "hidden": {
+          "type": "boolean",
+          "required": false
+        }
+      },
+      "returns": {
+        "item_id": "integer",
+        "course_id": "integer",
+        "category_id": "integer",
+        "name": "string",
+        "item_type": "string",
+        "grade_min": "number",
+        "grade_max": "number",
+        "grade_pass": "number",
+        "hidden": "boolean",
+        "locked": "boolean",
+        "time_modified": "integer"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli"
+      ]
+    },
+    {
+      "name": "update_grade_item",
+      "summary": "Update a manual Moodle gradebook item.",
+      "type": "write",
+      "context": "course",
+      "capabilities": [
+        "moodle/grade:manage"
+      ],
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true,
+          "minimum": 1
+        },
+        "item_id": {
+          "type": "integer",
+          "required": true,
+          "minimum": 1
+        },
+        "name": {
+          "type": "string",
+          "required": false
+        },
+        "grade_max": {
+          "type": "number",
+          "required": false,
+          "minimum": 0
+        },
+        "grade_min": {
+          "type": "number",
+          "required": false,
+          "minimum": 0
+        },
+        "grade_pass": {
+          "type": "number",
+          "required": false,
+          "minimum": 0
+        },
+        "category_id": {
+          "type": "integer",
+          "required": false,
+          "minimum": 1
+        },
+        "hidden": {
+          "type": "boolean",
+          "required": false
+        },
+        "locked": {
+          "type": "boolean",
+          "required": false
+        }
+      },
+      "returns": {
+        "item_id": "integer",
+        "course_id": "integer",
+        "category_id": "integer",
+        "name": "string",
+        "item_type": "string",
+        "grade_min": "number",
+        "grade_max": "number",
+        "grade_pass": "number",
+        "hidden": "boolean",
+        "locked": "boolean",
+        "time_modified": "integer"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli"
+      ]
+    },
+    {
+      "name": "delete_grade_item",
+      "summary": "Delete a manual Moodle gradebook item.",
+      "type": "write",
+      "context": "course",
+      "capabilities": [
+        "moodle/grade:manage"
+      ],
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true,
+          "minimum": 1
+        },
+        "item_id": {
+          "type": "integer",
+          "required": true,
+          "minimum": 1
+        }
+      },
+      "returns": {
+        "course_id": "integer",
+        "item_id": "integer",
+        "deleted": "boolean"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli"
+      ]
+    },
+    {
+      "name": "update_grade_value",
+      "summary": "Update a manual Moodle gradebook value for a user.",
+      "type": "write",
+      "context": "course",
+      "capabilities": [
+        "moodle/grade:edit"
+      ],
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true,
+          "minimum": 1
+        },
+        "item_id": {
+          "type": "integer",
+          "required": true,
+          "minimum": 1
+        },
+        "user_id": {
+          "type": "integer",
+          "required": true,
+          "minimum": 1
+        },
+        "grade": {
+          "type": "number",
+          "required": true,
+          "minimum": 0
+        },
+        "feedback": {
+          "type": "string",
+          "required": false
+        }
+      },
+      "returns": {
+        "course_id": "integer",
+        "item_id": "integer",
+        "user_id": "integer",
+        "grade": "number",
+        "updated": "boolean"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli"
+      ]
+    },
+    {
       "name": "get_course_progress_report",
       "summary": "Return a compact progress and grade report for enrolled users in a Moodle course.",
       "type": "read",
@@ -1103,6 +1566,591 @@
         "api",
         "cli",
         "browser"
+      ]
+    },
+    {
+      "name": "get_user_details",
+      "summary": "Return Moodle user profile details.",
+      "type": "read",
+      "context": "system",
+      "capabilities": [
+        "moodle/user:viewdetails"
+      ],
+      "parameters": {
+        "user_id": {
+          "type": "integer",
+          "required": true,
+          "minimum": 1
+        }
+      },
+      "returns": {
+        "user_id": "integer",
+        "username": "string",
+        "firstname": "string",
+        "lastname": "string",
+        "fullname": "string",
+        "email": "string",
+        "auth": "string",
+        "suspended": "boolean",
+        "deleted": "boolean",
+        "confirmed": "boolean",
+        "time_modified": "integer"
+      },
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli"
+      ]
+    },
+    {
+      "name": "create_user",
+      "summary": "Create a Moodle user through Moodle core user APIs.",
+      "type": "write",
+      "context": "system",
+      "capabilities": [
+        "moodle/user:create"
+      ],
+      "parameters": {
+        "username": {
+          "type": "string",
+          "required": true
+        },
+        "firstname": {
+          "type": "string",
+          "required": true
+        },
+        "lastname": {
+          "type": "string",
+          "required": true
+        },
+        "email": {
+          "type": "string",
+          "required": true
+        },
+        "password": {
+          "type": "string",
+          "required": true
+        },
+        "auth": {
+          "type": "string",
+          "required": false
+        },
+        "suspended": {
+          "type": "boolean",
+          "required": false
+        }
+      },
+      "returns": {
+        "user_id": "integer",
+        "username": "string",
+        "firstname": "string",
+        "lastname": "string",
+        "fullname": "string",
+        "email": "string",
+        "auth": "string",
+        "suspended": "boolean",
+        "deleted": "boolean",
+        "confirmed": "boolean",
+        "time_modified": "integer"
+      },
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli"
+      ]
+    },
+    {
+      "name": "update_user",
+      "summary": "Update a Moodle user through Moodle core user APIs.",
+      "type": "write",
+      "context": "system",
+      "capabilities": [
+        "moodle/user:update"
+      ],
+      "parameters": {
+        "user_id": {
+          "type": "integer",
+          "required": true,
+          "minimum": 1
+        },
+        "firstname": {
+          "type": "string",
+          "required": false
+        },
+        "lastname": {
+          "type": "string",
+          "required": false
+        },
+        "email": {
+          "type": "string",
+          "required": false
+        },
+        "password": {
+          "type": "string",
+          "required": false
+        },
+        "auth": {
+          "type": "string",
+          "required": false
+        },
+        "suspended": {
+          "type": "boolean",
+          "required": false
+        }
+      },
+      "returns": {
+        "user_id": "integer",
+        "username": "string",
+        "firstname": "string",
+        "lastname": "string",
+        "fullname": "string",
+        "email": "string",
+        "auth": "string",
+        "suspended": "boolean",
+        "deleted": "boolean",
+        "confirmed": "boolean",
+        "time_modified": "integer"
+      },
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli"
+      ]
+    },
+    {
+      "name": "delete_user",
+      "summary": "Delete a Moodle user through Moodle core user APIs.",
+      "type": "write",
+      "context": "system",
+      "capabilities": [
+        "moodle/user:delete"
+      ],
+      "parameters": {
+        "user_id": {
+          "type": "integer",
+          "required": true,
+          "minimum": 1
+        }
+      },
+      "returns": {
+        "deleted": "boolean",
+        "id": "integer"
+      },
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli"
+      ]
+    },
+    {
+      "name": "create_cohort",
+      "summary": "Create a Moodle system cohort.",
+      "type": "write",
+      "context": "system",
+      "capabilities": [
+        "moodle/cohort:manage"
+      ],
+      "parameters": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "idnumber": {
+          "type": "string",
+          "required": false
+        },
+        "description": {
+          "type": "string",
+          "required": false
+        },
+        "visible": {
+          "type": "boolean",
+          "required": false
+        }
+      },
+      "returns": {
+        "cohort_id": "integer",
+        "context_id": "integer",
+        "name": "string",
+        "idnumber": "string",
+        "description": "string",
+        "description_format": "integer",
+        "visible": "boolean",
+        "time_created": "integer",
+        "time_modified": "integer"
+      },
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli"
+      ]
+    },
+    {
+      "name": "update_cohort",
+      "summary": "Update a Moodle cohort.",
+      "type": "write",
+      "context": "system",
+      "capabilities": [
+        "moodle/cohort:manage"
+      ],
+      "parameters": {
+        "cohort_id": {
+          "type": "integer",
+          "required": true,
+          "minimum": 1
+        },
+        "name": {
+          "type": "string",
+          "required": false
+        },
+        "idnumber": {
+          "type": "string",
+          "required": false
+        },
+        "description": {
+          "type": "string",
+          "required": false
+        },
+        "visible": {
+          "type": "boolean",
+          "required": false
+        }
+      },
+      "returns": {
+        "cohort_id": "integer",
+        "context_id": "integer",
+        "name": "string",
+        "idnumber": "string",
+        "description": "string",
+        "description_format": "integer",
+        "visible": "boolean",
+        "time_created": "integer",
+        "time_modified": "integer"
+      },
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli"
+      ]
+    },
+    {
+      "name": "delete_cohort",
+      "summary": "Delete a Moodle cohort.",
+      "type": "write",
+      "context": "system",
+      "capabilities": [
+        "moodle/cohort:manage"
+      ],
+      "parameters": {
+        "cohort_id": {
+          "type": "integer",
+          "required": true,
+          "minimum": 1
+        }
+      },
+      "returns": {
+        "deleted": "boolean",
+        "id": "integer"
+      },
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli"
+      ]
+    },
+    {
+      "name": "add_cohort_member",
+      "summary": "Add a Moodle user to a cohort.",
+      "type": "write",
+      "context": "system",
+      "capabilities": [
+        "moodle/cohort:manage"
+      ],
+      "parameters": {
+        "cohort_id": {
+          "type": "integer",
+          "required": true,
+          "minimum": 1
+        },
+        "user_id": {
+          "type": "integer",
+          "required": true,
+          "minimum": 1
+        }
+      },
+      "returns": {
+        "cohort_id": "integer",
+        "user_id": "integer",
+        "member": "boolean"
+      },
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli"
+      ]
+    },
+    {
+      "name": "remove_cohort_member",
+      "summary": "Remove a Moodle user from a cohort.",
+      "type": "write",
+      "context": "system",
+      "capabilities": [
+        "moodle/cohort:manage"
+      ],
+      "parameters": {
+        "cohort_id": {
+          "type": "integer",
+          "required": true,
+          "minimum": 1
+        },
+        "user_id": {
+          "type": "integer",
+          "required": true,
+          "minimum": 1
+        }
+      },
+      "returns": {
+        "cohort_id": "integer",
+        "user_id": "integer",
+        "member": "boolean"
+      },
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli"
+      ]
+    },
+    {
+      "name": "assign_course_role",
+      "summary": "Assign a supported Moodle role archetype in a course context.",
+      "type": "write",
+      "context": "course",
+      "capabilities": [
+        "moodle/role:assign"
+      ],
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true,
+          "minimum": 1
+        },
+        "user_id": {
+          "type": "integer",
+          "required": true,
+          "minimum": 1
+        },
+        "role_archetype": {
+          "type": "string",
+          "required": false,
+          "enum": [
+            "student",
+            "teacher",
+            "editingteacher"
+          ]
+        }
+      },
+      "returns": {
+        "course_id": "integer",
+        "user_id": "integer",
+        "role_id": "integer",
+        "role_archetype": "string",
+        "assigned": "boolean",
+        "roles": [
+          "string"
+        ]
+      },
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli"
+      ]
+    },
+    {
+      "name": "unassign_course_role",
+      "summary": "Unassign a supported Moodle role archetype from a course context.",
+      "type": "write",
+      "context": "course",
+      "capabilities": [
+        "moodle/role:assign"
+      ],
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true,
+          "minimum": 1
+        },
+        "user_id": {
+          "type": "integer",
+          "required": true,
+          "minimum": 1
+        },
+        "role_archetype": {
+          "type": "string",
+          "required": false,
+          "enum": [
+            "student",
+            "teacher",
+            "editingteacher"
+          ]
+        }
+      },
+      "returns": {
+        "course_id": "integer",
+        "user_id": "integer",
+        "role_id": "integer",
+        "role_archetype": "string",
+        "unassigned": "boolean",
+        "roles": [
+          "string"
+        ]
+      },
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli"
       ]
     },
     {
@@ -11057,6 +12105,155 @@
         "api",
         "cli",
         "browser"
+      ]
+    },
+    {
+      "name": "export_question_bank_blueprint",
+      "summary": "Export a portable MoodlIA JSON blueprint from a Moodle question bank.",
+      "type": "read",
+      "context": "question_bank",
+      "capabilities": [
+        "moodle/question:viewall"
+      ],
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true,
+          "minimum": 1
+        },
+        "bank_scope": {
+          "type": "string",
+          "required": false,
+          "enum": [
+            "course_shared",
+            "quiz_private"
+          ]
+        },
+        "question_bank_module_id": {
+          "type": "integer",
+          "required": false,
+          "minimum": 1
+        },
+        "quiz_module_id": {
+          "type": "integer",
+          "required": false,
+          "minimum": 1
+        },
+        "category_id": {
+          "type": "integer",
+          "required": false,
+          "minimum": 1
+        },
+        "include_unsupported": {
+          "type": "boolean",
+          "required": false
+        }
+      },
+      "returns": {
+        "course_id": "integer",
+        "bank_scope": "string",
+        "context_id": "integer",
+        "question_bank_module_id": "integer|null",
+        "quiz_module_id": "integer|null",
+        "category_count": "integer",
+        "question_count": "integer",
+        "skipped_question_count": "integer",
+        "blueprint_json": "string"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli"
+      ]
+    },
+    {
+      "name": "import_question_bank_blueprint",
+      "summary": "Import a portable MoodlIA JSON blueprint into a Moodle question bank.",
+      "type": "write",
+      "context": "question_bank",
+      "capabilities": [
+        "moodle/question:managecategory",
+        "moodle/question:add"
+      ],
+      "transports": [
+        "rest",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true,
+          "minimum": 1
+        },
+        "blueprint_json": {
+          "type": "string",
+          "required": true
+        },
+        "bank_scope": {
+          "type": "string",
+          "required": false,
+          "enum": [
+            "course_shared",
+            "quiz_private"
+          ]
+        },
+        "question_bank_module_id": {
+          "type": "integer",
+          "required": false,
+          "minimum": 1
+        },
+        "quiz_module_id": {
+          "type": "integer",
+          "required": false,
+          "minimum": 1
+        },
+        "category_id": {
+          "type": "integer",
+          "required": false,
+          "minimum": 1
+        },
+        "create_categories": {
+          "type": "boolean",
+          "required": false
+        }
+      },
+      "returns": {
+        "course_id": "integer",
+        "bank_scope": "string",
+        "context_id": "integer",
+        "question_bank_module_id": "integer|null",
+        "quiz_module_id": "integer|null",
+        "created_category_count": "integer",
+        "created_question_count": "integer",
+        "created_categories_json": "string",
+        "created_questions_json": "string"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "cli"
       ]
     },
     {

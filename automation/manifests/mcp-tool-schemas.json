@@ -1,5 +1,19 @@
 {
   "tools": {
+    "assign_course_role": {
+      "role_archetype": [
+        "student",
+        "teacher",
+        "editingteacher"
+      ]
+    },
+    "unassign_course_role": {
+      "role_archetype": [
+        "student",
+        "teacher",
+        "editingteacher"
+      ]
+    },
     "enrol_user": {
       "role_archetype": [
         "student",
@@ -215,6 +229,18 @@
       ]
     },
     "get_question_categories": {
+      "bank_scope": [
+        "course_shared",
+        "quiz_private"
+      ]
+    },
+    "export_question_bank_blueprint": {
+      "bank_scope": [
+        "course_shared",
+        "quiz_private"
+      ]
+    },
+    "import_question_bank_blueprint": {
       "bank_scope": [
         "course_shared",
         "quiz_private"

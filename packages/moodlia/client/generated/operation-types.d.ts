@@ -5,7 +5,7 @@ export type JsonPrimitive = string | number | boolean | null;
 export type JsonValue = JsonPrimitive | JsonObject | JsonValue[];
 export interface JsonObject { [key: string]: JsonValue; }
 
-export type MoodleOperationName = "get_current_user" | "get_moodlia_status" | "get_courses" | "get_course_categories" | "create_course_category" | "update_course_category" | "delete_course_category" | "get_course_contents" | "get_course_details" | "get_module_details" | "get_calendar_events" | "create_calendar_event" | "update_calendar_event" | "delete_calendar_event" | "get_enrolled_users" | "get_grade_items" | "get_user_grades" | "get_course_completion_status" | "get_activity_completion_statuses" | "get_course_progress_report" | "set_activity_completion_status" | "enrol_user" | "unenrol_user" | "get_groups" | "create_group" | "update_group" | "delete_group" | "get_groupings" | "create_grouping" | "update_grouping" | "delete_grouping" | "add_group_to_grouping" | "remove_group_from_grouping" | "get_group_members" | "add_group_member" | "remove_group_member" | "create_course" | "export_course_blueprint" | "create_course_from_blueprint" | "apply_course_blueprint" | "copy_course_structure" | "sync_course_enrolments" | "set_course_publish_state" | "audit_course" | "backup_course" | "restore_course_backup" | "upload_course_backup" | "get_course_backup_files" | "delete_course_backup_file" | "audit_course_completion" | "repair_course_completion" | "update_course" | "move_course" | "delete_course" | "create_section" | "update_section" | "delete_section" | "create_module" | "update_module" | "duplicate_module" | "move_module" | "get_course_books" | "get_book_chapters" | "view_book" | "create_book_chapter" | "update_book_chapter" | "move_book_chapter" | "delete_book_chapter" | "get_lesson_access_information" | "get_lesson_details" | "get_course_lessons" | "get_lesson_pages" | "view_lesson" | "get_lesson_user_grade" | "get_lesson_user_timers" | "get_lesson_possible_jumps" | "get_lesson_attempts_overview" | "get_data_fields" | "create_data_field" | "update_data_field" | "delete_data_field" | "get_data_entries" | "create_data_entry" | "update_data_entry" | "delete_data_entry" | "set_workshop_phase" | "get_workshop_submissions" | "get_workshop_user_plan" | "get_workshop_grades" | "get_workshop_grades_report" | "get_workshop_reviewer_assessments" | "get_workshop_submission_assessments" | "allocate_workshop_submission" | "get_workshop_assessment_form_definition" | "update_workshop_assessment" | "evaluate_workshop_assessment" | "create_workshop_submission" | "update_workshop_submission" | "delete_workshop_submission" | "create_glossary_entry" | "get_course_glossaries" | "view_glossary" | "view_glossary_entry" | "get_glossary_entry" | "get_glossary_entries_by_letter" | "get_glossary_entries_by_category" | "get_glossary_entries_by_author" | "get_glossary_entries_by_author_id" | "get_glossary_entries_by_date" | "get_glossary_entries_by_term" | "get_glossary_categories" | "get_glossary_authors" | "search_glossary_entries" | "get_glossary_entries_to_approve" | "update_glossary_entry" | "delete_glossary_entry" | "create_wiki_page" | "get_wiki_pages" | "get_wiki_subwikis" | "get_wiki_files" | "view_wiki" | "view_wiki_page" | "update_wiki_page" | "delete_wiki_page" | "get_choice_options" | "get_course_choices" | "view_choice" | "submit_choice_response" | "delete_choice_responses" | "get_course_feedbacks" | "view_feedback" | "get_feedback_access_information" | "get_feedback_items" | "get_feedback_page_items" | "get_feedback_analysis" | "get_feedback_finished_responses" | "delete_feedback_item" | "get_choice_results" | "get_course_forums" | "view_forum" | "get_forum_discussions" | "create_forum_discussion" | "get_forum_discussion_posts" | "create_forum_discussion_post" | "update_forum_discussion_post" | "set_forum_discussion_pin" | "set_forum_discussion_favourite" | "set_forum_discussion_subscription" | "set_forum_discussion_lock" | "delete_forum_discussion_post" | "get_course_assignments" | "get_assignment_submission_status" | "save_assignment_submission" | "submit_assignment_for_grading" | "save_assignment_grade" | "get_assignment_grading_form" | "set_assignment_rubric" | "set_assignment_checklist" | "set_assignment_marking_guide" | "grade_assignment_with_rubric" | "grade_assignment_with_checklist" | "grade_assignment_with_marking_guide" | "get_assignment_submissions" | "get_assignment_grades" | "view_assignment" | "view_assignment_submission_status" | "view_assignment_grading_table" | "delete_module" | "upload_folder_file" | "get_folder_files" | "download_folder_file" | "get_resource_files" | "download_resource_file" | "delete_folder_file" | "get_question_banks" | "get_question_categories" | "create_question_category" | "update_question_category" | "delete_question_category" | "create_question" | "get_questions" | "update_question" | "move_question" | "delete_question" | "get_quiz_questions" | "get_course_quizzes" | "start_quiz_attempt" | "get_quiz_attempts" | "get_quiz_results_report" | "get_quiz_attempt_access_information" | "get_quiz_attempt_data" | "get_quiz_attempt_summary" | "save_quiz_attempt" | "process_quiz_attempt" | "get_quiz_attempt_review" | "get_quiz_access_information" | "get_quiz_combined_review_options" | "view_quiz" | "view_quiz_attempt" | "view_quiz_attempt_summary" | "view_quiz_attempt_review" | "get_quiz_user_best_grade" | "get_quiz_feedback_for_grade" | "get_quiz_required_question_types" | "add_question_to_quiz" | "add_random_questions_to_quiz" | "remove_question_from_quiz" | "update_quiz_question_slot";
+export type MoodleOperationName = "get_current_user" | "get_moodlia_status" | "get_courses" | "get_course_categories" | "create_course_category" | "update_course_category" | "delete_course_category" | "get_course_contents" | "get_course_details" | "get_module_details" | "get_calendar_events" | "create_calendar_event" | "update_calendar_event" | "delete_calendar_event" | "get_enrolled_users" | "get_grade_items" | "get_user_grades" | "get_course_completion_status" | "get_activity_completion_statuses" | "get_grade_categories" | "create_grade_category" | "update_grade_category" | "delete_grade_category" | "create_grade_item" | "update_grade_item" | "delete_grade_item" | "update_grade_value" | "get_course_progress_report" | "set_activity_completion_status" | "get_user_details" | "create_user" | "update_user" | "delete_user" | "create_cohort" | "update_cohort" | "delete_cohort" | "add_cohort_member" | "remove_cohort_member" | "assign_course_role" | "unassign_course_role" | "enrol_user" | "unenrol_user" | "get_groups" | "create_group" | "update_group" | "delete_group" | "get_groupings" | "create_grouping" | "update_grouping" | "delete_grouping" | "add_group_to_grouping" | "remove_group_from_grouping" | "get_group_members" | "add_group_member" | "remove_group_member" | "create_course" | "export_course_blueprint" | "create_course_from_blueprint" | "apply_course_blueprint" | "copy_course_structure" | "sync_course_enrolments" | "set_course_publish_state" | "audit_course" | "backup_course" | "restore_course_backup" | "upload_course_backup" | "get_course_backup_files" | "delete_course_backup_file" | "audit_course_completion" | "repair_course_completion" | "update_course" | "move_course" | "delete_course" | "create_section" | "update_section" | "delete_section" | "create_module" | "update_module" | "duplicate_module" | "move_module" | "get_course_books" | "get_book_chapters" | "view_book" | "create_book_chapter" | "update_book_chapter" | "move_book_chapter" | "delete_book_chapter" | "get_lesson_access_information" | "get_lesson_details" | "get_course_lessons" | "get_lesson_pages" | "view_lesson" | "get_lesson_user_grade" | "get_lesson_user_timers" | "get_lesson_possible_jumps" | "get_lesson_attempts_overview" | "get_data_fields" | "create_data_field" | "update_data_field" | "delete_data_field" | "get_data_entries" | "create_data_entry" | "update_data_entry" | "delete_data_entry" | "set_workshop_phase" | "get_workshop_submissions" | "get_workshop_user_plan" | "get_workshop_grades" | "get_workshop_grades_report" | "get_workshop_reviewer_assessments" | "get_workshop_submission_assessments" | "allocate_workshop_submission" | "get_workshop_assessment_form_definition" | "update_workshop_assessment" | "evaluate_workshop_assessment" | "create_workshop_submission" | "update_workshop_submission" | "delete_workshop_submission" | "create_glossary_entry" | "get_course_glossaries" | "view_glossary" | "view_glossary_entry" | "get_glossary_entry" | "get_glossary_entries_by_letter" | "get_glossary_entries_by_category" | "get_glossary_entries_by_author" | "get_glossary_entries_by_author_id" | "get_glossary_entries_by_date" | "get_glossary_entries_by_term" | "get_glossary_categories" | "get_glossary_authors" | "search_glossary_entries" | "get_glossary_entries_to_approve" | "update_glossary_entry" | "delete_glossary_entry" | "create_wiki_page" | "get_wiki_pages" | "get_wiki_subwikis" | "get_wiki_files" | "view_wiki" | "view_wiki_page" | "update_wiki_page" | "delete_wiki_page" | "get_choice_options" | "get_course_choices" | "view_choice" | "submit_choice_response" | "delete_choice_responses" | "get_course_feedbacks" | "view_feedback" | "get_feedback_access_information" | "get_feedback_items" | "get_feedback_page_items" | "get_feedback_analysis" | "get_feedback_finished_responses" | "delete_feedback_item" | "get_choice_results" | "get_course_forums" | "view_forum" | "get_forum_discussions" | "create_forum_discussion" | "get_forum_discussion_posts" | "create_forum_discussion_post" | "update_forum_discussion_post" | "set_forum_discussion_pin" | "set_forum_discussion_favourite" | "set_forum_discussion_subscription" | "set_forum_discussion_lock" | "delete_forum_discussion_post" | "get_course_assignments" | "get_assignment_submission_status" | "save_assignment_submission" | "submit_assignment_for_grading" | "save_assignment_grade" | "get_assignment_grading_form" | "set_assignment_rubric" | "set_assignment_checklist" | "set_assignment_marking_guide" | "grade_assignment_with_rubric" | "grade_assignment_with_checklist" | "grade_assignment_with_marking_guide" | "get_assignment_submissions" | "get_assignment_grades" | "view_assignment" | "view_assignment_submission_status" | "view_assignment_grading_table" | "delete_module" | "upload_folder_file" | "get_folder_files" | "download_folder_file" | "get_resource_files" | "download_resource_file" | "delete_folder_file" | "get_question_banks" | "get_question_categories" | "export_question_bank_blueprint" | "import_question_bank_blueprint" | "create_question_category" | "update_question_category" | "delete_question_category" | "create_question" | "get_questions" | "update_question" | "move_question" | "delete_question" | "get_quiz_questions" | "get_course_quizzes" | "start_quiz_attempt" | "get_quiz_attempts" | "get_quiz_results_report" | "get_quiz_attempt_access_information" | "get_quiz_attempt_data" | "get_quiz_attempt_summary" | "save_quiz_attempt" | "process_quiz_attempt" | "get_quiz_attempt_review" | "get_quiz_access_information" | "get_quiz_combined_review_options" | "view_quiz" | "view_quiz_attempt" | "view_quiz_attempt_summary" | "view_quiz_attempt_review" | "get_quiz_user_best_grade" | "get_quiz_feedback_for_grade" | "get_quiz_required_question_types" | "add_question_to_quiz" | "add_random_questions_to_quiz" | "remove_question_from_quiz" | "update_quiz_question_slot";
 
 export interface GetCurrentUserParameters {}
 
@@ -101,6 +101,64 @@ export interface GetActivityCompletionStatusesParameters {
   user_id?: number;
 }
 
+export interface GetGradeCategoriesParameters {
+  course_id: number;
+}
+
+export interface CreateGradeCategoryParameters {
+  course_id: number;
+  name: string;
+  aggregation?: number;
+}
+
+export interface UpdateGradeCategoryParameters {
+  course_id: number;
+  category_id: number;
+  name?: string;
+  aggregation?: number;
+  hidden?: boolean;
+}
+
+export interface DeleteGradeCategoryParameters {
+  course_id: number;
+  category_id: number;
+}
+
+export interface CreateGradeItemParameters {
+  course_id: number;
+  name: string;
+  grade_max?: number;
+  grade_min?: number;
+  grade_pass?: number;
+  category_id?: number;
+  hidden?: boolean;
+}
+
+export interface UpdateGradeItemParameters {
+  course_id: number;
+  item_id: number;
+  name?: string;
+  grade_max?: number;
+  grade_min?: number;
+  grade_pass?: number;
+  category_id?: number;
+  hidden?: boolean;
+  locked?: boolean;
+}
+
+export interface DeleteGradeItemParameters {
+  course_id: number;
+  item_id: number;
+}
+
+export interface UpdateGradeValueParameters {
+  course_id: number;
+  item_id: number;
+  user_id: number;
+  grade: number;
+  feedback?: string;
+}
+
 export interface GetCourseProgressReportParameters {
   course_id: number;
   limit?: number;
@@ -109,6 +167,75 @@ export interface GetCourseProgressReportParameters {
 export interface SetActivityCompletionStatusParameters {
   module_id: number;
   completed: boolean;
+}
+
+export interface GetUserDetailsParameters {
+  user_id: number;
+}
+
+export interface CreateUserParameters {
+  username: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+  password: string;
+  auth?: string;
+  suspended?: boolean;
+}
+
+export interface UpdateUserParameters {
+  user_id: number;
+  firstname?: string;
+  lastname?: string;
+  email?: string;
+  password?: string;
+  auth?: string;
+  suspended?: boolean;
+}
+
+export interface DeleteUserParameters {
+  user_id: number;
+}
+
+export interface CreateCohortParameters {
+  name: string;
+  idnumber?: string;
+  description?: string;
+  visible?: boolean;
+}
+
+export interface UpdateCohortParameters {
+  cohort_id: number;
+  name?: string;
+  idnumber?: string;
+  description?: string;
+  visible?: boolean;
+}
+
+export interface DeleteCohortParameters {
+  cohort_id: number;
+}
+
+export interface AddCohortMemberParameters {
+  cohort_id: number;
+  user_id: number;
+}
+
+export interface RemoveCohortMemberParameters {
+  cohort_id: number;
+  user_id: number;
+}
+
+export interface AssignCourseRoleParameters {
+  course_id: number;
+  user_id: number;
+  role_archetype?: "student" | "teacher" | "editingteacher";
+}
+
+export interface UnassignCourseRoleParameters {
+  course_id: number;
+  user_id: number;
+  role_archetype?: "student" | "teacher" | "editingteacher";
 }
 
 export interface EnrolUserParameters {
@@ -1168,6 +1295,25 @@ export interface GetQuestionCategoriesParameters {
   include_top?: boolean;
 }
 
+export interface ExportQuestionBankBlueprintParameters {
+  course_id: number;
+  bank_scope?: "course_shared" | "quiz_private";
+  question_bank_module_id?: number;
+  quiz_module_id?: number;
+  category_id?: number;
+  include_unsupported?: boolean;
+}
+
+export interface ImportQuestionBankBlueprintParameters {
+  course_id: number;
+  blueprint_json: string;
+  bank_scope?: "course_shared" | "quiz_private";
+  question_bank_module_id?: number;
+  quiz_module_id?: number;
+  category_id?: number;
+  create_categories?: boolean;
+}
+
 export interface CreateQuestionCategoryParameters {
   course_id: number;
   name: string;
@@ -1630,6 +1776,84 @@ export interface GetActivityCompletionStatusesResponse {
   }[];
 }
 
+export interface GetGradeCategoriesResponse {
+  course_id: number;
+  categories: {
+    category_id: number;
+    course_id: number;
+    name: string;
+    aggregation: number;
+    hidden: boolean;
+    time_modified: number;
+  }[];
+}
+
+export interface CreateGradeCategoryResponse {
+  category_id: number;
+  course_id: number;
+  name: string;
+  aggregation: number;
+  hidden: boolean;
+  time_modified: number;
+}
+
+export interface UpdateGradeCategoryResponse {
+  category_id: number;
+  course_id: number;
+  name: string;
+  aggregation: number;
+  hidden: boolean;
+  time_modified: number;
+}
+
+export interface DeleteGradeCategoryResponse {
+  course_id: number;
+  category_id: number;
+  deleted: boolean;
+}
+
+export interface CreateGradeItemResponse {
+  item_id: number;
+  course_id: number;
+  category_id: number;
+  name: string;
+  item_type: string;
+  grade_min: number;
+  grade_max: number;
+  grade_pass: number;
+  hidden: boolean;
+  locked: boolean;
+  time_modified: number;
+}
+
+export interface UpdateGradeItemResponse {
+  item_id: number;
+  course_id: number;
+  category_id: number;
+  name: string;
+  item_type: string;
+  grade_min: number;
+  grade_max: number;
+  grade_pass: number;
+  hidden: boolean;
+  locked: boolean;
+  time_modified: number;
+}
+
+export interface DeleteGradeItemResponse {
+  course_id: number;
+  item_id: number;
+  deleted: boolean;
+}
+
+export interface UpdateGradeValueResponse {
+  course_id: number;
+  item_id: number;
+  user_id: number;
+  grade: number;
+  updated: boolean;
+}
+
 export interface GetCourseProgressReportResponse {
   course_id: number;
   requested_limit: number;
@@ -1674,6 +1898,112 @@ export interface SetActivityCompletionStatusResponse {
     warning_code: string;
     message: string;
   }[];
+}
+
+export interface GetUserDetailsResponse {
+  user_id: number;
+  username: string;
+  firstname: string;
+  lastname: string;
+  fullname: string;
+  email: string;
+  auth: string;
+  suspended: boolean;
+  deleted: boolean;
+  confirmed: boolean;
+  time_modified: number;
+}
+
+export interface CreateUserResponse {
+  user_id: number;
+  username: string;
+  firstname: string;
+  lastname: string;
+  fullname: string;
+  email: string;
+  auth: string;
+  suspended: boolean;
+  deleted: boolean;
+  confirmed: boolean;
+  time_modified: number;
+}
+
+export interface UpdateUserResponse {
+  user_id: number;
+  username: string;
+  firstname: string;
+  lastname: string;
+  fullname: string;
+  email: string;
+  auth: string;
+  suspended: boolean;
+  deleted: boolean;
+  confirmed: boolean;
+  time_modified: number;
+}
+
+export interface DeleteUserResponse {
+  deleted: boolean;
+  id: number;
+}
+
+export interface CreateCohortResponse {
+  cohort_id: number;
+  context_id: number;
+  name: string;
+  idnumber: string;
+  description: string;
+  description_format: number;
+  visible: boolean;
+  time_created: number;
+  time_modified: number;
+}
+
+export interface UpdateCohortResponse {
+  cohort_id: number;
+  context_id: number;
+  name: string;
+  idnumber: string;
+  description: string;
+  description_format: number;
+  visible: boolean;
+  time_created: number;
+  time_modified: number;
+}
+
+export interface DeleteCohortResponse {
+  deleted: boolean;
+  id: number;
+}
+
+export interface AddCohortMemberResponse {
+  cohort_id: number;
+  user_id: number;
+  member: boolean;
+}
+
+export interface RemoveCohortMemberResponse {
+  cohort_id: number;
+  user_id: number;
+  member: boolean;
+}
+
+export interface AssignCourseRoleResponse {
+  course_id: number;
+  user_id: number;
+  role_id: number;
+  role_archetype: string;
+  assigned: boolean;
+  roles: string[];
+}
+
+export interface UnassignCourseRoleResponse {
+  course_id: number;
+  user_id: number;
+  role_id: number;
+  role_archetype: string;
+  unassigned: boolean;
+  roles: string[];
 }
 
 export interface EnrolUserResponse {
@@ -4107,6 +4437,30 @@ export interface GetQuestionCategoriesResponse {
   }[];
 }
 
+export interface ExportQuestionBankBlueprintResponse {
+  course_id: number;
+  bank_scope: string;
+  context_id: number;
+  question_bank_module_id: number | null;
+  quiz_module_id: number | null;
+  category_count: number;
+  question_count: number;
+  skipped_question_count: number;
+  blueprint_json: string;
+}
+
+export interface ImportQuestionBankBlueprintResponse {
+  course_id: number;
+  bank_scope: string;
+  context_id: number;
+  question_bank_module_id: number | null;
+  quiz_module_id: number | null;
+  created_category_count: number;
+  created_question_count: number;
+  created_categories_json: string;
+  created_questions_json: string;
+}
+
 export interface CreateQuestionCategoryResponse {
   category_id: number;
   name: string;
@@ -4625,8 +4979,27 @@ export interface MoodleOperationParameters {
   get_user_grades: GetUserGradesParameters;
   get_course_completion_status: GetCourseCompletionStatusParameters;
   get_activity_completion_statuses: GetActivityCompletionStatusesParameters;
+  get_grade_categories: GetGradeCategoriesParameters;
+  create_grade_category: CreateGradeCategoryParameters;
+  update_grade_category: UpdateGradeCategoryParameters;
+  delete_grade_category: DeleteGradeCategoryParameters;
+  create_grade_item: CreateGradeItemParameters;
+  update_grade_item: UpdateGradeItemParameters;
+  delete_grade_item: DeleteGradeItemParameters;
+  update_grade_value: UpdateGradeValueParameters;
   get_course_progress_report: GetCourseProgressReportParameters;
   set_activity_completion_status: SetActivityCompletionStatusParameters;
+  get_user_details: GetUserDetailsParameters;
+  create_user: CreateUserParameters;
+  update_user: UpdateUserParameters;
+  delete_user: DeleteUserParameters;
+  create_cohort: CreateCohortParameters;
+  update_cohort: UpdateCohortParameters;
+  delete_cohort: DeleteCohortParameters;
+  add_cohort_member: AddCohortMemberParameters;
+  remove_cohort_member: RemoveCohortMemberParameters;
+  assign_course_role: AssignCourseRoleParameters;
+  unassign_course_role: UnassignCourseRoleParameters;
   enrol_user: EnrolUserParameters;
   unenrol_user: UnenrolUserParameters;
   get_groups: GetGroupsParameters;
@@ -4782,6 +5155,8 @@ export interface MoodleOperationParameters {
   delete_folder_file: DeleteFolderFileParameters;
   get_question_banks: GetQuestionBanksParameters;
   get_question_categories: GetQuestionCategoriesParameters;
+  export_question_bank_blueprint: ExportQuestionBankBlueprintParameters;
+  import_question_bank_blueprint: ImportQuestionBankBlueprintParameters;
   create_question_category: CreateQuestionCategoryParameters;
   update_question_category: UpdateQuestionCategoryParameters;
   delete_question_category: DeleteQuestionCategoryParameters;
@@ -4836,8 +5211,27 @@ export interface MoodleOperationResponses {
   get_user_grades: GetUserGradesResponse;
   get_course_completion_status: GetCourseCompletionStatusResponse;
   get_activity_completion_statuses: GetActivityCompletionStatusesResponse;
+  get_grade_categories: GetGradeCategoriesResponse;
+  create_grade_category: CreateGradeCategoryResponse;
+  update_grade_category: UpdateGradeCategoryResponse;
+  delete_grade_category: DeleteGradeCategoryResponse;
+  create_grade_item: CreateGradeItemResponse;
+  update_grade_item: UpdateGradeItemResponse;
+  delete_grade_item: DeleteGradeItemResponse;
+  update_grade_value: UpdateGradeValueResponse;
   get_course_progress_report: GetCourseProgressReportResponse;
   set_activity_completion_status: SetActivityCompletionStatusResponse;
+  get_user_details: GetUserDetailsResponse;
+  create_user: CreateUserResponse;
+  update_user: UpdateUserResponse;
+  delete_user: DeleteUserResponse;
+  create_cohort: CreateCohortResponse;
+  update_cohort: UpdateCohortResponse;
+  delete_cohort: DeleteCohortResponse;
+  add_cohort_member: AddCohortMemberResponse;
+  remove_cohort_member: RemoveCohortMemberResponse;
+  assign_course_role: AssignCourseRoleResponse;
+  unassign_course_role: UnassignCourseRoleResponse;
   enrol_user: EnrolUserResponse;
   unenrol_user: UnenrolUserResponse;
   get_groups: GetGroupsResponse;
@@ -4993,6 +5387,8 @@ export interface MoodleOperationResponses {
   delete_folder_file: DeleteFolderFileResponse;
   get_question_banks: GetQuestionBanksResponse;
   get_question_categories: GetQuestionCategoriesResponse;
+  export_question_bank_blueprint: ExportQuestionBankBlueprintResponse;
+  import_question_bank_blueprint: ImportQuestionBankBlueprintResponse;
   create_question_category: CreateQuestionCategoryResponse;
   update_question_category: UpdateQuestionCategoryResponse;
   delete_question_category: DeleteQuestionCategoryResponse;
@@ -5056,8 +5452,27 @@ export interface TypedMoodleClient {
   get_user_grades(parameters: GetUserGradesParameters): Promise<GetUserGradesResponse>;
   get_course_completion_status(parameters: GetCourseCompletionStatusParameters): Promise<GetCourseCompletionStatusResponse>;
   get_activity_completion_statuses(parameters: GetActivityCompletionStatusesParameters): Promise<GetActivityCompletionStatusesResponse>;
+  get_grade_categories(parameters: GetGradeCategoriesParameters): Promise<GetGradeCategoriesResponse>;
+  create_grade_category(parameters: CreateGradeCategoryParameters): Promise<CreateGradeCategoryResponse>;
+  update_grade_category(parameters: UpdateGradeCategoryParameters): Promise<UpdateGradeCategoryResponse>;
+  delete_grade_category(parameters: DeleteGradeCategoryParameters): Promise<DeleteGradeCategoryResponse>;
+  create_grade_item(parameters: CreateGradeItemParameters): Promise<CreateGradeItemResponse>;
+  update_grade_item(parameters: UpdateGradeItemParameters): Promise<UpdateGradeItemResponse>;
+  delete_grade_item(parameters: DeleteGradeItemParameters): Promise<DeleteGradeItemResponse>;
+  update_grade_value(parameters: UpdateGradeValueParameters): Promise<UpdateGradeValueResponse>;
   get_course_progress_report(parameters: GetCourseProgressReportParameters): Promise<GetCourseProgressReportResponse>;
   set_activity_completion_status(parameters: SetActivityCompletionStatusParameters): Promise<SetActivityCompletionStatusResponse>;
+  get_user_details(parameters: GetUserDetailsParameters): Promise<GetUserDetailsResponse>;
+  create_user(parameters: CreateUserParameters): Promise<CreateUserResponse>;
+  update_user(parameters: UpdateUserParameters): Promise<UpdateUserResponse>;
+  delete_user(parameters: DeleteUserParameters): Promise<DeleteUserResponse>;
+  create_cohort(parameters: CreateCohortParameters): Promise<CreateCohortResponse>;
+  update_cohort(parameters: UpdateCohortParameters): Promise<UpdateCohortResponse>;
+  delete_cohort(parameters: DeleteCohortParameters): Promise<DeleteCohortResponse>;
+  add_cohort_member(parameters: AddCohortMemberParameters): Promise<AddCohortMemberResponse>;
+  remove_cohort_member(parameters: RemoveCohortMemberParameters): Promise<RemoveCohortMemberResponse>;
+  assign_course_role(parameters: AssignCourseRoleParameters): Promise<AssignCourseRoleResponse>;
+  unassign_course_role(parameters: UnassignCourseRoleParameters): Promise<UnassignCourseRoleResponse>;
   enrol_user(parameters: EnrolUserParameters): Promise<EnrolUserResponse>;
   unenrol_user(parameters: UnenrolUserParameters): Promise<UnenrolUserResponse>;
   get_groups(parameters: GetGroupsParameters): Promise<GetGroupsResponse>;
@@ -5213,6 +5628,8 @@ export interface TypedMoodleClient {
   delete_folder_file(parameters: DeleteFolderFileParameters): Promise<DeleteFolderFileResponse>;
   get_question_banks(parameters: GetQuestionBanksParameters): Promise<GetQuestionBanksResponse>;
   get_question_categories(parameters: GetQuestionCategoriesParameters): Promise<GetQuestionCategoriesResponse>;
+  export_question_bank_blueprint(parameters: ExportQuestionBankBlueprintParameters): Promise<ExportQuestionBankBlueprintResponse>;
+  import_question_bank_blueprint(parameters: ImportQuestionBankBlueprintParameters): Promise<ImportQuestionBankBlueprintResponse>;
   create_question_category(parameters: CreateQuestionCategoryParameters): Promise<CreateQuestionCategoryResponse>;
   update_question_category(parameters: UpdateQuestionCategoryParameters): Promise<UpdateQuestionCategoryResponse>;
   delete_question_category(parameters: DeleteQuestionCategoryParameters): Promise<DeleteQuestionCategoryResponse>;

@@ -757,6 +757,200 @@ class question_tools {
     }
 
     /**
+     * Return raw question objects from a question category.
+     *
+     * @param int $categoryid Question category id.
+     * @return \stdClass[]
+     */
+    public static function get_question_objects(int $categoryid): array {
+        self::require_question_api();
+
+        if ($categoryid <= 0) {
+            throw new \invalid_parameter_exception('category_id must be a positive integer.');
+        }
+
+        $questionids = \question_bank::get_finder()->get_questions_from_categories([$categoryid], null);
+        if (empty($questionids)) {
+            return [];
+        }
+
+        $loaded = question_load_questions(array_values($questionids));
+        $questions = [];
+        foreach ($questionids as $questionid) {
+            if (!empty($loaded[$questionid])) {
+                $questions[] = $loaded[$questionid];
+            }
+        }
+
+        return $questions;
+    }
+
+    /**
+     * Convert a Moodle question to a portable MoodlIA blueprint entry.
+     *
+     * @param \stdClass $question Question object.
+     * @return array
+     */
+    public static function question_to_blueprint(\stdClass $question): array {
+        $base = self::question_to_detailed_response($question);
+        $type = (string) $base['question_type'];
+        $options = self::question_options_to_blueprint($question, $type);
+
+        return [
+            'source_question_id' => (int) $question->id,
+            'question_type' => $type,
+            'name' => (string) $base['name'],
+            'question_text' => (string) $base['question_text'],
+            'options' => $options,
+        ];
+    }
+
+    /**
+     * Convert loaded Moodle question options to create_question-compatible options.
+     *
+     * @param \stdClass $question Question object.
+     * @param string $type Public question type.
+     * @return array
+     */
+    private static function question_options_to_blueprint(\stdClass $question, string $type): array {
+        $options = [
+            'default_mark' => (float) ($question->defaultmark ?? 1),
+            'general_feedback' => self::format_question_text((string) ($question->generalfeedback ?? ''), (int) ($question->generalfeedbackformat ?? FORMAT_HTML)),
+        ];
+
+        if ($type === 'description') {
+            return $options;
+        }
+
+        if (!isset($question->options) || !is_object($question->options)) {
+            throw new \invalid_parameter_exception("Question {$question->id} does not expose exportable {$type} options.");
+        }
+
+        $rawoptions = $question->options;
+        if ($type === 'truefalse') {
+            $options['correct_answer'] = isset($rawoptions->trueanswer) && (int) $rawoptions->trueanswer === (int) ($rawoptions->correctanswer ?? $rawoptions->trueanswer);
+            $options['feedback_true'] = isset($rawoptions->trueanswer) ? self::answer_feedback_to_text($rawoptions->trueanswer) : '';
+            $options['feedback_false'] = isset($rawoptions->falseanswer) ? self::answer_feedback_to_text($rawoptions->falseanswer) : '';
+            return $options;
+        }
+
+        if (in_array($type, ['shortanswer', 'multichoice', 'numerical'], true)) {
+            $answers = self::answers_to_blueprint($rawoptions->answers ?? []);
+            if ($answers === []) {
+                throw new \invalid_parameter_exception("Question {$question->id} has no exportable answers.");
+            }
+            $options['answers'] = $answers;
+
+            if ($type === 'shortanswer') {
+                $options['case_sensitive'] = !empty($rawoptions->usecase);
+            } else if ($type === 'multichoice') {
+                $options['single'] = !empty($rawoptions->single);
+                $options['shuffle_answers'] = !empty($rawoptions->shuffleanswers);
+                $options['answer_numbering'] = (string) ($rawoptions->answernumbering ?? 'abc');
+                $options['correct_feedback'] = self::format_question_text((string) ($rawoptions->correctfeedback ?? ''), (int) ($rawoptions->correctfeedbackformat ?? FORMAT_HTML));
+                $options['partially_correct_feedback'] = self::format_question_text((string) ($rawoptions->partiallycorrectfeedback ?? ''), (int) ($rawoptions->partiallycorrectfeedbackformat ?? FORMAT_HTML));
+                $options['incorrect_feedback'] = self::format_question_text((string) ($rawoptions->incorrectfeedback ?? ''), (int) ($rawoptions->incorrectfeedbackformat ?? FORMAT_HTML));
+            }
+
+            return $options;
+        }
+
+        if ($type === 'matching') {
+            $subquestions = [];
+            foreach (($rawoptions->subquestions ?? []) as $subquestion) {
+                $questiontext = self::format_question_text(
+                    (string) ($subquestion->questiontext ?? ''),
+                    (int) ($subquestion->questiontextformat ?? FORMAT_HTML)
+                );
+                $answertext = trim((string) ($subquestion->answertext ?? ''));
+                if ($questiontext === '' || $answertext === '') {
+                    continue;
+                }
+                $subquestions[] = [
+                    'question' => $questiontext,
+                    'answer' => $answertext,
+                ];
+            }
+            if (count($subquestions) < 2) {
+                throw new \invalid_parameter_exception("Question {$question->id} has no exportable matching pairs.");
+            }
+            $options['subquestions'] = $subquestions;
+            $options['shuffle_answers'] = !empty($rawoptions->shuffleanswers);
+            $options['correct_feedback'] = self::format_question_text((string) ($rawoptions->correctfeedback ?? ''), (int) ($rawoptions->correctfeedbackformat ?? FORMAT_HTML));
+            $options['partially_correct_feedback'] = self::format_question_text((string) ($rawoptions->partiallycorrectfeedback ?? ''), (int) ($rawoptions->partiallycorrectfeedbackformat ?? FORMAT_HTML));
+            $options['incorrect_feedback'] = self::format_question_text((string) ($rawoptions->incorrectfeedback ?? ''), (int) ($rawoptions->incorrectfeedbackformat ?? FORMAT_HTML));
+            return $options;
+        }
+
+        if ($type === 'essay') {
+            $options['response_format'] = (string) ($rawoptions->responseformat ?? 'editor');
+            $options['response_field_lines'] = (int) ($rawoptions->responsefieldlines ?? 10);
+            $options['attachments'] = (int) ($rawoptions->attachments ?? 0);
+            $options['attachments_required'] = (int) ($rawoptions->attachmentsrequired ?? 0);
+            $options['grader_info'] = self::format_question_text((string) ($rawoptions->graderinfo ?? ''), (int) ($rawoptions->graderinfoformat ?? FORMAT_HTML));
+            $options['response_template'] = self::format_question_text((string) ($rawoptions->responsetemplate ?? ''), (int) ($rawoptions->responsetemplateformat ?? FORMAT_HTML));
+            return $options;
+        }
+
+        throw new \invalid_parameter_exception("question_type={$type} is not exportable as a MoodlIA blueprint yet.");
+    }
+
+    /**
+     * Convert a Moodle answers collection to public blueprint answers.
+     *
+     * @param mixed $answers Moodle answers.
+     * @return array
+     */
+    private static function answers_to_blueprint($answers): array {
+        if (!is_array($answers)) {
+            return [];
+        }
+
+        $result = [];
+        foreach ($answers as $answer) {
+            if (!is_object($answer)) {
+                continue;
+            }
+            $entry = [
+                'text' => (string) ($answer->answer ?? ''),
+                'fraction' => (float) ($answer->fraction ?? 0),
+                'feedback' => self::answer_feedback_to_text($answer),
+            ];
+            if (isset($answer->tolerance)) {
+                $entry['tolerance'] = (string) $answer->tolerance;
+            }
+            $result[] = $entry;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Return formatted answer feedback text.
+     *
+     * @param mixed $answer Moodle answer object.
+     * @return string
+     */
+    private static function answer_feedback_to_text($answer): string {
+        if (!is_object($answer)) {
+            return '';
+        }
+
+        return self::format_question_text((string) ($answer->feedback ?? ''), (int) ($answer->feedbackformat ?? FORMAT_HTML));
+    }
+
+    /**
+     * Format question text consistently for blueprint output.
+     *
+     * @param string $text Raw text.
+     * @param int $format Moodle text format.
+     * @return string
+     */
+    private static function format_question_text(string $text, int $format): string {
+        return format_text($text, $format, ['para' => false]);
+    }
+
+    /**
      * Move a question to another question category.
      *
      * @param int $courseid Moodle course id used to resolve the destination bank.

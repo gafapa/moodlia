@@ -29,6 +29,8 @@ class gradebook_tools {
         global $CFG;
 
         require_once($CFG->libdir . '/gradelib.php');
+        require_once($CFG->libdir . '/grade/grade_category.php');
+        require_once($CFG->libdir . '/grade/grade_item.php');
     }
 
     /**
@@ -44,6 +46,45 @@ class gradebook_tools {
             'item_id' => (int) ($item['id'] ?? 0),
             'name' => (string) ($item['itemname'] ?? ''),
             'category' => (string) ($item['category'] ?? ''),
+        ];
+    }
+
+    /**
+     * Convert a grade category object to the canonical response shape.
+     *
+     * @param \grade_category $category Moodle grade category.
+     * @return array
+     */
+    public static function grade_category_to_response(\grade_category $category): array {
+        return [
+            'category_id' => (int) $category->id,
+            'course_id' => (int) $category->courseid,
+            'name' => (string) $category->fullname,
+            'aggregation' => (int) $category->aggregation,
+            'hidden' => (bool) $category->hidden,
+            'time_modified' => (int) $category->timemodified,
+        ];
+    }
+
+    /**
+     * Convert a grade item object to an advanced canonical response shape.
+     *
+     * @param \grade_item $item Moodle grade item.
+     * @return array
+     */
+    public static function manual_grade_item_to_response(\grade_item $item): array {
+        return [
+            'item_id' => (int) $item->id,
+            'course_id' => (int) $item->courseid,
+            'category_id' => (int) ($item->categoryid ?? 0),
+            'name' => (string) ($item->itemname ?? ''),
+            'item_type' => (string) ($item->itemtype ?? ''),
+            'grade_min' => (float) ($item->grademin ?? 0),
+            'grade_max' => (float) ($item->grademax ?? 0),
+            'grade_pass' => (float) ($item->gradepass ?? 0),
+            'hidden' => (bool) ($item->hidden ?? false),
+            'locked' => (bool) ($item->locked ?? false),
+            'time_modified' => (int) ($item->timemodified ?? 0),
         ];
     }
 
@@ -89,6 +130,61 @@ class gradebook_tools {
         $warning = self::to_array(reset($warnings));
         $message = (string) ($warning['message'] ?? $warning['warningcode'] ?? 'Moodle gradebook operation returned warnings.');
         throw new \moodle_exception('error', 'local_moodlia', '', null, $message);
+    }
+
+    /**
+     * Load and validate a grade category in a course.
+     *
+     * @param int $courseid Moodle course id.
+     * @param int $categoryid Grade category id.
+     * @return \grade_category
+     */
+    public static function get_grade_category(int $courseid, int $categoryid): \grade_category {
+        self::require_gradebook_api();
+
+        $category = \grade_category::fetch([
+            'id' => $categoryid,
+            'courseid' => $courseid,
+        ]);
+
+        if (!$category) {
+            throw new \invalid_parameter_exception('Grade category not found in the selected course.');
+        }
+
+        return $category;
+    }
+
+    /**
+     * Load and validate a grade item in a course.
+     *
+     * @param int $courseid Moodle course id.
+     * @param int $itemid Grade item id.
+     * @return \grade_item
+     */
+    public static function get_grade_item(int $courseid, int $itemid): \grade_item {
+        self::require_gradebook_api();
+
+        $item = \grade_item::fetch([
+            'id' => $itemid,
+            'courseid' => $courseid,
+        ]);
+
+        if (!$item) {
+            throw new \invalid_parameter_exception('Grade item not found in the selected course.');
+        }
+
+        return $item;
+    }
+
+    /**
+     * Ensure that a grade item is manually owned.
+     *
+     * @param \grade_item $item Moodle grade item.
+     */
+    public static function require_manual_grade_item(\grade_item $item): void {
+        if (($item->itemtype ?? '') !== 'manual') {
+            throw new \invalid_parameter_exception('Only manual grade items can be changed by this operation.');
+        }
     }
 
     /**

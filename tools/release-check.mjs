@@ -18,6 +18,9 @@ if (includeSmokeSyntax) {
     ['node', ['--check', 'tests/smoke/module-custom-completion-rules.test.mjs']],
     ['node', ['--check', 'tests/smoke/generated-course-lifecycle.test.mjs']],
     ['node', ['--check', 'tests/smoke/course-workflows.test.mjs']],
+    ['node', ['--check', 'tests/smoke/user-cohort-role-management.test.mjs']],
+    ['node', ['--check', 'tests/smoke/gradebook-management.test.mjs']],
+    ['node', ['--check', 'tests/smoke/question-bank-blueprint.test.mjs']],
     ['node', ['--check', 'tests/browser/moodle-generated-content.spec.mjs']],
     ['node', ['--check', 'tools/cleanup-generated-test-data.mjs']]
   );

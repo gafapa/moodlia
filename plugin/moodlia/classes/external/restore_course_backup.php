@@ -22,6 +22,7 @@ use core_external\external_api;
 use core_external\external_function_parameters;
 use core_external\external_single_structure;
 use core_external\external_value;
+use local_moodlia\operation\course_backup_tools;
 use local_moodlia\operation\course_tools;
 use local_moodlia\operation\restore_course_backup as restore_course_backup_operation;
 
@@ -64,9 +65,23 @@ class restore_course_backup extends external_api {
             'shortname' => $shortname,
         ]);
 
+        global $USER;
+
         $systemcontext = \context_system::instance();
         self::validate_context($systemcontext);
         require_capability('local/moodlia:useapi', $systemcontext);
+
+        $backupfile = course_backup_tools::get_backup_file((int) $backupfileid);
+        $sourcecontext = \context::instance_by_id((int) $backupfile->get_contextid());
+        self::validate_context($sourcecontext);
+
+        if ($sourcecontext->contextlevel === CONTEXT_USER && (int) $sourcecontext->instanceid === (int) $USER->id) {
+            // The caller owns this backup file (e.g. it was uploaded via upload_course_backup).
+        } else if ($sourcecontext->contextlevel === CONTEXT_COURSE) {
+            require_capability('moodle/backup:backupcourse', $sourcecontext);
+        } else {
+            throw new \required_capability_exception($sourcecontext, 'moodle/backup:backupcourse', 'nopermissions', '');
+        }
 
         $target = (string) $target;
         if ($target === 'new_course') {

@@ -36,8 +36,27 @@ create_calendar_event
 update_calendar_event
 delete_calendar_event
 get_enrolled_users
+get_user_details
+create_user
+update_user
+delete_user
+create_cohort
+update_cohort
+delete_cohort
+add_cohort_member
+remove_cohort_member
+assign_course_role
+unassign_course_role
 enrol_user
 unenrol_user
+get_grade_categories
+create_grade_category
+update_grade_category
+delete_grade_category
+create_grade_item
+update_grade_item
+delete_grade_item
+update_grade_value
 get_groups
 create_group
 update_group
@@ -67,6 +86,8 @@ download_resource_file
 delete_folder_file
 get_question_banks
 get_question_categories
+export_question_bank_blueprint
+import_question_bank_blueprint
 create_question_category
 update_question_category
 delete_question_category
@@ -973,6 +994,85 @@ Do not expose secrets, local filesystem paths, stack traces, or raw token values
 - Capabilities: `mod/workshop:submit`.
 - Deletes a submission after validating that it belongs to the selected Workshop activity.
 
+## User, Cohort, And Role Operations
+
+`get_user_details`
+
+- Parameters: `user_id`.
+- Context: system.
+- Capabilities: `moodle/user:viewdetails`.
+- Returns normalized user profile metadata including id, username, name fields, email, authentication method, suspension/deletion/confirmation flags, and last modification time.
+
+`create_user`
+
+- Parameters: `username`, `firstname`, `lastname`, `email`, `password`, optional `auth`, optional `suspended`.
+- Context: system.
+- Capabilities: `moodle/user:create`.
+- Creates a Moodle user through Moodle's user API and returns the normalized user profile.
+
+`update_user`
+
+- Parameters: `user_id`, optional `firstname`, optional `lastname`, optional `email`, optional `password`, optional `auth`, optional `suspended`.
+- Context: system.
+- Capabilities: `moodle/user:update`.
+- Updates Moodle user fields through Moodle's user API and returns the normalized user profile.
+
+`delete_user`
+
+- Parameters: `user_id`.
+- Context: system.
+- Capabilities: `moodle/user:delete`.
+- Deletes a Moodle user through Moodle's user API and returns the deleted user id.
+
+`create_cohort`
+
+- Parameters: `name`, optional `idnumber`, optional `description`, optional `visible`.
+- Context: system.
+- Capabilities: `moodle/cohort:manage`.
+- Creates a site cohort through Moodle's cohort API and returns normalized cohort metadata.
+
+`update_cohort`
+
+- Parameters: `cohort_id`, optional `name`, optional `idnumber`, optional `description`, optional `visible`.
+- Context: system.
+- Capabilities: `moodle/cohort:manage`.
+- Updates a site cohort through Moodle's cohort API and returns normalized cohort metadata.
+
+`delete_cohort`
+
+- Parameters: `cohort_id`.
+- Context: system.
+- Capabilities: `moodle/cohort:manage`.
+- Deletes a site cohort through Moodle's cohort API and returns the deleted cohort id.
+
+`add_cohort_member`
+
+- Parameters: `cohort_id`, `user_id`.
+- Context: system.
+- Capabilities: `moodle/cohort:manage`.
+- Adds an existing Moodle user to a site cohort.
+
+`remove_cohort_member`
+
+- Parameters: `cohort_id`, `user_id`.
+- Context: system.
+- Capabilities: `moodle/cohort:manage`.
+- Removes an existing Moodle user from a site cohort.
+
+`assign_course_role`
+
+- Parameters: `course_id`, `user_id`, optional `role_archetype` (`student`, `teacher`, or `editingteacher`).
+- Context: course.
+- Capabilities: `moodle/role:assign`.
+- Assigns a role in the selected course context without creating or changing enrolment records, then returns the user's current course role shortnames.
+
+`unassign_course_role`
+
+- Parameters: `course_id`, `user_id`, optional `role_archetype` (`student`, `teacher`, or `editingteacher`).
+- Context: course.
+- Capabilities: `moodle/role:assign`.
+- Removes the selected course role assignment without changing enrolment records, then returns the user's current course role shortnames.
+
 ## Gradebook Operations
 
 `get_grade_items`
@@ -988,6 +1088,62 @@ Do not expose secrets, local filesystem paths, stack traces, or raw token values
 - Context: course.
 - Capabilities: `moodle/grade:viewall`.
 - Returns user grade rows with item metadata, course module id where available, raw and formatted grade values, range, percentage, feedback, hidden state, and locked state.
+
+`get_grade_categories`
+
+- Parameters: `course_id`.
+- Context: course.
+- Capabilities: `moodle/grade:viewall`.
+- Returns Gradebook categories for the selected course with category id, name, aggregation constant, hidden state, and modification timestamp.
+
+`create_grade_category`
+
+- Parameters: `course_id`, `name`, optional `aggregation`.
+- Context: course.
+- Capabilities: `moodle/grade:manage`.
+- Creates a Moodle Gradebook category through Moodle's grade category API and returns normalized category metadata.
+
+`update_grade_category`
+
+- Parameters: `course_id`, `category_id`, optional `name`, optional `aggregation`, optional `hidden`.
+- Context: course.
+- Capabilities: `moodle/grade:manage`.
+- Updates a Moodle Gradebook category through Moodle's grade category API and returns normalized category metadata.
+
+`delete_grade_category`
+
+- Parameters: `course_id`, `category_id`.
+- Context: course.
+- Capabilities: `moodle/grade:manage`.
+- Deletes a Moodle Gradebook category through Moodle's grade category API. Moodle validates whether the category can be deleted.
+
+`create_grade_item`
+
+- Parameters: `course_id`, `name`, optional `grade_max`, optional `grade_min`, optional `grade_pass`, optional `category_id`, optional `hidden`.
+- Context: course.
+- Capabilities: `moodle/grade:manage`.
+- Creates a manual Gradebook item. MoodlIA does not use this operation to create or mutate module-owned grade items.
+
+`update_grade_item`
+
+- Parameters: `course_id`, `item_id`, optional `name`, optional `grade_max`, optional `grade_min`, optional `grade_pass`, optional `category_id`, optional `hidden`, optional `locked`.
+- Context: course.
+- Capabilities: `moodle/grade:manage`.
+- Updates only manual Gradebook items. Module-owned grade items must be changed through their owning activity.
+
+`delete_grade_item`
+
+- Parameters: `course_id`, `item_id`.
+- Context: course.
+- Capabilities: `moodle/grade:manage`.
+- Deletes only manual Gradebook items.
+
+`update_grade_value`
+
+- Parameters: `course_id`, `item_id`, `user_id`, `grade`, optional `feedback`.
+- Context: course.
+- Capabilities: `moodle/grade:edit`.
+- Updates a user's final grade for a manual Gradebook item through Moodle's grade item API after validating the grade is within the item range.
 
 `get_course_progress_report`
 
@@ -1446,6 +1602,25 @@ Do not expose secrets, local filesystem paths, stack traces, or raw token values
 - Context: resolved existing question bank context.
 - Returns: category id, name, context id, parent id, question count, scope metadata, and a direct category URL.
 - This operation must not create a question bank or a default category. It only reads existing Moodle question bank state.
+
+`export_question_bank_blueprint`
+
+- Type: read.
+- Parameters: `course_id`, optional `bank_scope`, optional `question_bank_module_id`, optional `quiz_module_id`, optional `category_id`, optional `include_unsupported`.
+- Default `bank_scope`: `course_shared`.
+- Context: resolved existing question bank context.
+- Capabilities: `moodle/question:viewall`.
+- Returns a portable MoodlIA JSON blueprint string with schema `moodlia.question_bank_blueprint.v1`, source category metadata, directly reconstructable questions, and skipped unsupported questions.
+- The blueprint is for MoodlIA automation. It is not a Moodle XML export, not a native `.mbz` backup, and does not read question bank tables directly.
+
+`import_question_bank_blueprint`
+
+- Type: write.
+- Parameters: `course_id`, `blueprint_json`, optional `bank_scope`, optional `question_bank_module_id`, optional `quiz_module_id`, optional `category_id`, optional `create_categories`.
+- Default `bank_scope`: `course_shared`.
+- Context: resolved target question bank context.
+- Capabilities: `moodle/question:managecategory`, `moodle/question:add`.
+- Recreates category structure and questions from a MoodlIA blueprint through the existing question category and question creation operations. If `create_categories=false`, all blueprint questions are imported into the selected target category or the target bank's default category.
 
 `create_question_category`
 
