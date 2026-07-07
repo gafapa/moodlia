@@ -22,6 +22,9 @@ defined('MOODLE_INTERNAL') || die();
  * Helper methods for Moodle Lesson operations.
  */
 class lesson_tools {
+    /** Moodle Lesson content page type id. */
+    private const CONTENT_PAGE_TYPE = 20;
+
     /**
      * Load Moodle Lesson APIs.
      */
@@ -47,6 +50,300 @@ class lesson_tools {
         }
 
         return $cm;
+    }
+
+    /**
+     * Return lesson instance data exposed through Moodle's Lesson external API.
+     *
+     * @param \stdClass $course Moodle course.
+     * @param \cm_info $cm Lesson course module.
+     * @return array
+     */
+    public static function get_lesson_instance_data(\stdClass $course, \cm_info $cm): array {
+        self::require_lesson_api();
+
+        $result = \mod_lesson_external::get_lessons_by_courses([(int) $course->id]);
+        foreach (($result['lessons'] ?? []) as $lesson) {
+            $lesson = (array) $lesson;
+            if (
+                (int) ($lesson['id'] ?? 0) === (int) $cm->instance ||
+                (int) ($lesson['coursemodule'] ?? $lesson['cmid'] ?? $lesson['coursemoduleid'] ?? 0) === (int) $cm->id
+            ) {
+                return $lesson;
+            }
+        }
+
+        throw new \invalid_parameter_exception('module_id must reference a visible lesson activity in the selected course.');
+    }
+
+    /**
+     * Return a Lesson domain object with course and course-module context.
+     *
+     * @param \stdClass $course Moodle course.
+     * @param \cm_info $cm Lesson course module.
+     * @return \lesson
+     */
+    public static function get_lesson_object(\stdClass $course, \cm_info $cm): \lesson {
+        self::require_lesson_api();
+
+        $data = (object) self::get_lesson_instance_data($course, $cm);
+        $data->id = (int) $cm->instance;
+        $data->course = (int) $course->id;
+        $cmrecord = get_coursemodule_from_id('lesson', (int) $cm->id, (int) $course->id, false, MUST_EXIST);
+
+        return new \lesson($data, $cmrecord, $course);
+    }
+
+    /**
+     * Prepare Moodle page globals required by Lesson page component APIs.
+     *
+     * @param \stdClass $course Moodle course.
+     * @param \cm_info $cm Lesson course module.
+     * @return \stdClass Course-module record.
+     */
+    public static function prepare_page_context(\stdClass $course, \cm_info $cm): \stdClass {
+        global $PAGE;
+
+        $cmrecord = get_coursemodule_from_id('lesson', (int) $cm->id, (int) $course->id, false, MUST_EXIST);
+        $PAGE->set_course($course);
+        $PAGE->set_cm($cmrecord, $course);
+
+        return $cmrecord;
+    }
+
+    /**
+     * Return a Lesson page and verify ownership.
+     *
+     * @param \lesson $lesson Lesson domain object.
+     * @param \cm_info $cm Lesson course module.
+     * @param int $pageid Lesson page id.
+     * @return \lesson_page
+     */
+    public static function get_page(\lesson $lesson, \cm_info $cm, int $pageid): \lesson_page {
+        if ($pageid <= 0) {
+            throw new \invalid_parameter_exception('page_id must be a positive integer.');
+        }
+
+        $page = \lesson_page::load($pageid, $lesson);
+        $properties = $page->properties();
+        if ((int) ($properties->lessonid ?? 0) !== (int) $cm->instance) {
+            throw new \invalid_parameter_exception('page_id must reference a page in the selected lesson module.');
+        }
+
+        return $page;
+    }
+
+    /**
+     * Return a canonical response for one Lesson page.
+     *
+     * @param \cm_info $cm Lesson course module.
+     * @param \lesson_page $page Lesson page object.
+     * @return array
+     */
+    public static function page_to_response(\cm_info $cm, \lesson_page $page): array {
+        $properties = $page->properties();
+        $answers = [];
+        $answerids = [];
+        $jumps = [];
+
+        foreach ($page->get_answers() as $answer) {
+            $answers[] = [
+                'answer_id' => (int) ($answer->id ?? 0),
+                'title' => (string) ($answer->answer ?? ''),
+                'title_format' => (int) ($answer->answerformat ?? FORMAT_MOODLE),
+                'response' => (string) ($answer->response ?? ''),
+                'response_format' => (int) ($answer->responseformat ?? FORMAT_MOODLE),
+                'jump_to' => (int) ($answer->jumpto ?? 0),
+                'score' => (float) ($answer->score ?? 0),
+            ];
+            $answerids[] = (int) ($answer->id ?? 0);
+            $jumps[] = (int) ($answer->jumpto ?? 0);
+        }
+
+        return [
+            'page_id' => (int) ($properties->id ?? 0),
+            'lesson_id' => (int) ($properties->lessonid ?? $cm->instance),
+            'module_id' => (int) $cm->id,
+            'previous_page_id' => (int) ($properties->prevpageid ?? 0),
+            'next_page_id' => (int) ($properties->nextpageid ?? 0),
+            'question_type' => (int) ($properties->qtype ?? 0),
+            'question_option' => (int) ($properties->qoption ?? 0),
+            'layout' => (int) ($properties->layout ?? 0),
+            'display' => (int) ($properties->display ?? 0),
+            'display_in_menu_block' => (bool) ($properties->display ?? false),
+            'type' => (int) ($page->type ?? 0),
+            'type_id' => (int) ($page->typeid ?? ($properties->qtype ?? 0)),
+            'type_string' => (string) ($page->typestring ?? ''),
+            'title' => (string) ($properties->title ?? ''),
+            'content' => (string) ($properties->contents ?? ''),
+            'content_format' => (int) ($properties->contentsformat ?? FORMAT_HTML),
+            'time_created' => (int) ($properties->timecreated ?? 0),
+            'time_modified' => (int) ($properties->timemodified ?? 0),
+            'answer_ids' => $answerids,
+            'jumps' => $jumps,
+            'files_count' => 0,
+            'files_size_total' => 0,
+            'branches_count' => count($answers),
+            'branches' => $answers,
+        ];
+    }
+
+    /**
+     * Decode and validate Lesson content page branches.
+     *
+     * @param string $branchesjson JSON object or array.
+     * @return array
+     */
+    public static function decode_branches(string $branchesjson): array {
+        $decoded = json_decode($branchesjson, true);
+        if (!is_array($decoded)) {
+            throw new \invalid_parameter_exception('branches must be a JSON array or an object with a branches array.');
+        }
+
+        $items = self::is_list_array($decoded) ? $decoded : ($decoded['branches'] ?? null);
+        if (!is_array($items) || !self::is_list_array($items) || count($items) === 0) {
+            throw new \invalid_parameter_exception('branches must contain at least one branch.');
+        }
+
+        $branches = [];
+        foreach ($items as $item) {
+            if (!is_array($item)) {
+                throw new \invalid_parameter_exception('Each branch must be an object.');
+            }
+            $title = trim((string) ($item['title'] ?? $item['answer'] ?? ''));
+            if ($title === '') {
+                throw new \invalid_parameter_exception('Each branch title must be non-empty.');
+            }
+            $branches[] = [
+                'title' => $title,
+                'response' => (string) ($item['response'] ?? ''),
+                'jump_to' => self::normalise_jump($item['jump_to'] ?? $item['jumpto'] ?? -1),
+                'score' => (float) ($item['score'] ?? 0),
+            ];
+        }
+
+        return $branches;
+    }
+
+    /**
+     * Build Moodle Lesson page properties for a content page.
+     *
+     * @param \lesson $lesson Lesson domain object.
+     * @param string $title Page title.
+     * @param string $content Page content.
+     * @param int $contentformat Content format.
+     * @param array $branches Normalized branch rows.
+     * @param int $afterpageid Previous page id or 0 for first.
+     * @param bool $displayinmenu Whether the page appears in Lesson menu.
+     * @param bool $horizontal Whether branch buttons are horizontal.
+     * @return \stdClass
+     */
+    public static function content_page_properties(
+        \lesson $lesson,
+        string $title,
+        string $content,
+        int $contentformat,
+        array $branches,
+        int $afterpageid = 0,
+        bool $displayinmenu = true,
+        bool $horizontal = true
+    ): \stdClass {
+        $title = trim($title);
+        if ($title === '') {
+            throw new \invalid_parameter_exception('title must be non-empty.');
+        }
+
+        $properties = (object) [
+            'title' => $title,
+            'contents_editor' => [
+                'text' => $content,
+                'format' => $contentformat,
+            ],
+            'qtype' => self::CONTENT_PAGE_TYPE,
+            'qoption' => 0,
+            'pageid' => max(0, $afterpageid),
+            'layout' => $horizontal ? 1 : 0,
+            'display' => $displayinmenu ? 1 : 0,
+            'answer_editor' => [],
+            'response_editor' => [],
+            'jumpto' => [],
+            'score' => [],
+        ];
+
+        $index = 0;
+        foreach (array_slice($branches, 0, max(1, (int) $lesson->maxanswers)) as $branch) {
+            $properties->answer_editor[$index] = $branch['title'];
+            $properties->response_editor[$index] = [
+                'text' => $branch['response'],
+                'format' => FORMAT_HTML,
+            ];
+            $properties->jumpto[$index] = $branch['jump_to'];
+            $properties->score[$index] = $branch['score'];
+            $index++;
+        }
+
+        return $properties;
+    }
+
+    /**
+     * Return current content-page branches for update preservation.
+     *
+     * @param \lesson_page $page Lesson page object.
+     * @return array
+     */
+    public static function branches_from_page(\lesson_page $page): array {
+        $branches = [];
+        foreach ($page->get_answers() as $answer) {
+            $title = (string) ($answer->answer ?? '');
+            if ($title === '') {
+                continue;
+            }
+            $branches[] = [
+                'title' => $title,
+                'response' => (string) ($answer->response ?? ''),
+                'jump_to' => (int) ($answer->jumpto ?? 0),
+                'score' => (float) ($answer->score ?? 0),
+            ];
+        }
+
+        return $branches;
+    }
+
+    /**
+     * Normalize a Lesson jump target.
+     *
+     * @param mixed $value Raw jump value.
+     * @return int
+     */
+    private static function normalise_jump($value): int {
+        if (is_string($value)) {
+            $map = [
+                'this_page' => 0,
+                'next_page' => -1,
+                'previous_page' => -40,
+                'end_of_lesson' => -9,
+            ];
+            $key = strtolower(trim($value));
+            if (array_key_exists($key, $map)) {
+                return $map[$key];
+            }
+        }
+
+        if (!is_numeric($value)) {
+            throw new \invalid_parameter_exception('branch jump_to must be an integer or supported jump name.');
+        }
+
+        return (int) $value;
+    }
+
+    /**
+     * Return whether an array has consecutive integer keys.
+     *
+     * @param array $value Array to inspect.
+     * @return bool
+     */
+    private static function is_list_array(array $value): bool {
+        return array_keys($value) === range(0, count($value) - 1);
     }
 
     /**

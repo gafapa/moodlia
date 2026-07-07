@@ -20,19 +20,24 @@ Required evidence before implementation:
 
 ## Lesson Page Mutation
 
-Status: not implemented.
+Status: partially implemented for content pages.
 
-Moodle 4.5 has `lesson_page::create(...)`, but the implementation writes `lesson_pages`, updates neighbouring page links, and delegates answer creation to page-type classes. That may be a usable component boundary later, but it needs Moodle-version validation for page ordering, answer/jump payloads, events, and file editor handling before exposing it as REST/MCP/CLI.
+Moodle 4.5 has `lesson_page::create(...)`, `lesson_page::update(...)`, and page `delete()` methods. MoodlIA now exposes a narrow content-page contract that creates, updates, and deletes Lesson content pages and their branch jumps through those component APIs. The operation intentionally does not expose arbitrary Lesson question page types yet, because each page type has its own answer, scoring, file, and jump payload contract.
 
 Primary source:
 
 - https://raw.githubusercontent.com/moodle/moodle/MOODLE_405_STABLE/mod/lesson/locallib.php
 
-Required evidence before implementation:
+Implemented evidence:
 
-- A narrow set of supported page types and answer/jump payload schemas.
-- Ownership checks that every page belongs to the selected Lesson module.
-- A smoke test that creates pages, verifies page order through `get_lesson_pages`, updates content/jumps, deletes a page, and confirms Moodle-visible state.
+- Supported page type is limited to content pages with branch definitions.
+- Ownership checks verify that every target page belongs to the selected Lesson module before update or delete.
+- Static coverage requires contract, REST, MCP, CLI, services, helper APIs, and smoke syntax for create/update/delete.
+
+Required evidence before broadening implementation:
+
+- Supported schemas for each additional Lesson question page type.
+- Smoke tests for scoring, jumps, files, and Moodle-visible rendering per page type.
 
 ## Workshop Grading Form Mutation
 

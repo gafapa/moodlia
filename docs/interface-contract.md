@@ -598,7 +598,7 @@ Do not expose secrets, local filesystem paths, stack traces, or raw token values
 - Database entry operations: `get_data_entries` lists entries with optional contents, `create_data_entry` creates an entry from a JSON object keyed by field name or field id, `update_data_entry` updates selected fields after validating the entry belongs to the selected activity, and `delete_data_entry` deletes an entry after the same ownership validation.
 - Feedback module options: `intro`, `anonymous`, `multiple_submit`, `email_notification`, `autonumbering`, `publish_stats`, `page_after_submit`, `site_after_submit`, `completion_submit`, `time_open`, and `time_close`. MoodlIA creates the activity through Moodle's standard module creation API and exposes course listings, view events, access/status flags, settings, and items through Moodle feedback APIs and course module metadata.
 - Feedback item operations: `get_feedback_items` lists all Feedback activity items through Moodle's `mod_feedback_external::get_items`; `get_feedback_page_items` lists the items and page navigation flags for one Feedback page through `mod_feedback_external::get_page_items`; `get_feedback_analysis` exposes aggregated analysis through `mod_feedback_external::get_analysis`; `get_feedback_finished_responses` exposes the current user's finished response values through `mod_feedback_external::get_finished_responses`; `delete_feedback_item` validates that the item belongs to the selected Feedback activity and deletes it through Moodle's Feedback API. MoodlIA does not create arbitrary Feedback questions yet because Moodle does not expose a stable item-creation webservice, and direct `feedback_item` table writes are intentionally forbidden.
-- Lesson module options: `intro`, `practice`, `allow_review`, `ongoing_score`, `progress_bar`, `display_left_menu`, `display_left_if`, `slideshow`, `max_answers`, `default_feedback`, `available_from`, `deadline`, `time_limit_seconds`, `use_password`, `password`, `allow_question_retry`, `max_attempts`, `after_correct_answer`, `pages_to_show`, `grade`, `custom_scoring`, `retakes_allowed`, `use_max_grade`, `minimum_questions`, `activity_link`, `allow_offline_attempts`, `completion_end_reached`, `completion_time_spent_seconds`, media popup settings, and slideshow size/background settings. MoodlIA creates the activity through Moodle's standard module creation API and exposes course Lesson listing, settings/details, access information, page listing, possible jumps, view registration, user grade reads, timer reads, and attempts overview reports through Moodle lesson APIs and course module metadata. Lesson page creation is intentionally separate from module creation and is not exposed until it can be implemented through stable Moodle APIs without direct table access.
+- Lesson module options: `intro`, `practice`, `allow_review`, `ongoing_score`, `progress_bar`, `display_left_menu`, `display_left_if`, `slideshow`, `max_answers`, `default_feedback`, `available_from`, `deadline`, `time_limit_seconds`, `use_password`, `password`, `allow_question_retry`, `max_attempts`, `after_correct_answer`, `pages_to_show`, `grade`, `custom_scoring`, `retakes_allowed`, `use_max_grade`, `minimum_questions`, `activity_link`, `allow_offline_attempts`, `completion_end_reached`, `completion_time_spent_seconds`, media popup settings, and slideshow size/background settings. MoodlIA creates the activity through Moodle's standard module creation API and exposes course Lesson listing, settings/details, access information, page listing, possible jumps, view registration, user grade reads, timer reads, attempts overview reports, and content-page create/update/delete through Moodle lesson APIs and course module metadata. Lesson question page types remain intentionally separate because each type has its own answer and scoring payload rules.
 - LTI module options (`module_type=lti`): `intro`, required `tool_url`, optional `secure_tool_url`, `type_id`, `launch_container`, privacy toggles (`send_name`, `send_email`, `allow_roster`, `allow_setting`), `accept_grades`, `grade`, `custom_parameters`, `resource_key`, `shared_secret`, `debug_launch`, `show_title_launch`, `show_description_launch`, `icon`, and `secure_icon`. MoodlIA creates the activity through Moodle's standard module creation API and exposes settings through `mod_lti_external::get_ltis_by_courses`; returned details intentionally omit shared secrets and passwords. Privacy-related options default to disabled.
 - Glossary module options: `intro`, `main_glossary`, `default_approval`, `edit_always`, `allow_duplicated_entries`, `allow_comments`, `use_dynamic_linking`, `display_format`, `approval_display_format`, `entries_per_page`, `show_alphabet`, `show_all`, `show_special`, `allow_print_view`, and `completion_entries`. MoodlIA creates the activity through Moodle's standard module creation API and exposes settings, browse modes, entries, and entry-count completion rules through Moodle glossary APIs.
 - Question bank module options (`module_type=qbank`): `intro` plus common module options. Moodle treats this as an explicit question bank module rather than a normal course-section activity, so it must be created with `section_number=0`. MoodlIA creates it through Moodle's standard module creation API and `get_module_details` exposes the module context, question bank URL, category count, question count, and category summaries through Moodle question APIs. Question category and question CRUD continue to use the canonical question bank operations.
@@ -719,6 +719,34 @@ Do not expose secrets, local filesystem paths, stack traces, or raw token values
 - Context: Lesson module.
 - Capabilities: `mod/lesson:view`.
 - Returns Lesson page ids, navigation ids, page type metadata, title/content where Moodle exposes them, answer ids, jump ids, file counts, and Moodle warnings.
+
+`create_lesson_page`
+
+- Type: write.
+- Parameters: `course_id`, `module_id`, `title`, `content`, `branches`, optional `content_format`, optional `after_page_id`, optional `display_in_menu`, optional `horizontal`.
+- Context: Lesson module.
+- Capabilities: `mod/lesson:manage`.
+- Creates a Moodle Lesson content page through `lesson_page::create(...)` after validating that the module belongs to the selected course.
+- `branches` is a JSON object with a `branches` array. Each branch supports `title`, optional `response`, optional `score`, and `jump_to` as an integer page id or one of `this_page`, `next_page`, `previous_page`, or `end_of_lesson`.
+- Returns the created page, answer ids, branch jumps, and normalized branch metadata.
+
+`update_lesson_page`
+
+- Type: write.
+- Parameters: `course_id`, `module_id`, `page_id`, optional `title`, optional `content`, optional `content_format`, optional `branches`, optional `display_in_menu`, optional `horizontal`.
+- Context: Lesson module.
+- Capabilities: `mod/lesson:manage`.
+- Updates a Moodle Lesson content page through the Lesson page component `update(...)` method after verifying that the page belongs to the selected Lesson module.
+- Returns the updated page, answer ids, branch jumps, and normalized branch metadata.
+
+`delete_lesson_page`
+
+- Type: write.
+- Parameters: `course_id`, `module_id`, `page_id`.
+- Context: Lesson module.
+- Capabilities: `mod/lesson:manage`.
+- Deletes a Moodle Lesson page through the Lesson page component `delete()` method after verifying that the page belongs to the selected Lesson module.
+- Returns the deleted page id and deletion status.
 
 `view_lesson`
 

@@ -32,9 +32,6 @@ test('remaining high-risk subelement writes stay documented and unexposed until 
   for (const operationName of [
     'create_feedback_item',
     'update_feedback_item',
-    'create_lesson_page',
-    'update_lesson_page',
-    'delete_lesson_page',
     'set_workshop_grading_form',
     'create_workshop_assessment'
   ]) {
@@ -46,13 +43,12 @@ test('remaining high-risk subelement writes stay documented and unexposed until 
   }
 
   assert.match(boundaries, /Feedback question\/item creation and arbitrary item updates/);
-  assert.match(boundaries, /Lesson page creation, update, deletion, and answer\/jump mutation/);
+  assert.match(boundaries, /Lesson question page mutation and unsupported answer\/jump payloads/);
   assert.match(boundaries, /Workshop grading form mutation/);
   assert.match(boundaries, /\[remaining-api-validation\.md\]\(remaining-api-validation\.md\)/);
 
   for (const marker of [
     'feedback_create_item()',
-    'lesson_page::create',
     'save_edit_strategy_form',
     'Status: not implemented',
     'Required evidence before implementation'

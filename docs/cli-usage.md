@@ -562,6 +562,16 @@ moodlia get-workshop-user-plan --course-id <course_id> --module-id <workshop_mod
 moodlia get-workshop-submissions --course-id <course_id> --module-id <workshop_module_id>
 ```
 
+Create and manage Lesson content pages:
+
+```text
+moodlia create-lesson-page --course-id <course_id> --module-id <lesson_module_id> --title "Start" --content "<p>Read this page first.</p>" --branches '{"branches":[{"title":"Continue","jump_to":"next_page"}]}'
+moodlia update-lesson-page --course-id <course_id> --module-id <lesson_module_id> --page-id <page_id> --title "Updated start" --branches '{"branches":[{"title":"Finish","jump_to":"end_of_lesson"}]}'
+moodlia delete-lesson-page --course-id <course_id> --module-id <lesson_module_id> --page-id <page_id>
+```
+
+Lesson page writes currently support Moodle Lesson content pages with branch buttons and jump targets. Question page types are intentionally separate because each type has its own answer and scoring payload rules.
+
 ## Question Bank And Quiz
 
 Create a shared course question bank module:

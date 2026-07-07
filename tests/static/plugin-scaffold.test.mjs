@@ -149,6 +149,9 @@ const requiredFiles = [
   'classes/operation/get_lesson_details.php',
   'classes/operation/get_course_lessons.php',
   'classes/operation/get_lesson_pages.php',
+  'classes/operation/create_lesson_page.php',
+  'classes/operation/update_lesson_page.php',
+  'classes/operation/delete_lesson_page.php',
   'classes/operation/view_lesson.php',
   'classes/operation/get_lesson_user_grade.php',
   'classes/operation/get_lesson_user_timers.php',
@@ -380,6 +383,10 @@ const requiredFiles = [
   'classes/external/get_lesson_details.php',
   'classes/external/get_course_lessons.php',
   'classes/external/get_lesson_pages.php',
+  'classes/external/lesson_page_response.php',
+  'classes/external/create_lesson_page.php',
+  'classes/external/update_lesson_page.php',
+  'classes/external/delete_lesson_page.php',
   'classes/external/view_lesson.php',
   'classes/external/get_lesson_user_grade.php',
   'classes/external/get_lesson_user_timers.php',
@@ -858,6 +865,37 @@ test('question bank blueprint import and export stay portable and API-backed', a
   assert.match(exportExternal, /require_capability\('moodle\/question:viewall'/);
   assert.match(importExternal, /require_capability\('moodle\/question:managecategory'/);
   assert.match(importExternal, /require_capability\('moodle\/question:add'/);
+});
+
+test('lesson content page lifecycle uses Moodle Lesson component APIs', async () => {
+  const contract = JSON.parse(await fs.readFile(fromRoot('contract/operations.json'), 'utf8'));
+  const byName = new Map(contract.operations.map((operation) => [operation.name, operation]));
+  const services = await fs.readFile(fromRoot('plugin/moodlia/db/services.php'), 'utf8');
+  const lessonTools = await fs.readFile(fromRoot('plugin/moodlia/classes/operation/lesson_tools.php'), 'utf8');
+  const createOperation = await fs.readFile(fromRoot('plugin/moodlia/classes/operation/create_lesson_page.php'), 'utf8');
+  const updateOperation = await fs.readFile(fromRoot('plugin/moodlia/classes/operation/update_lesson_page.php'), 'utf8');
+  const deleteOperation = await fs.readFile(fromRoot('plugin/moodlia/classes/operation/delete_lesson_page.php'), 'utf8');
+
+  for (const operationName of ['create_lesson_page', 'update_lesson_page', 'delete_lesson_page']) {
+    assert.ok(byName.has(operationName), `${operationName} must exist in the operation contract.`);
+    assert.match(services, new RegExp(`local_moodlia_${operationName}\\b`), `${operationName} must be registered as REST.`);
+    assert.equal(byName.get(operationName)?.capabilities[0], 'mod/lesson:manage');
+
+    const external = await fs.readFile(fromRoot(`plugin/moodlia/classes/external/${operationName}.php`), 'utf8');
+    assert.match(external, /require_capability\('local\/moodlia:useapi'/);
+    assert.match(external, /require_capability\('mod\/lesson:manage'/);
+  }
+
+  assert.equal(byName.get('create_lesson_page')?.parameters.branches.type, 'object');
+  assert.equal(byName.get('update_lesson_page')?.parameters.branches.required, false);
+  assert.equal(byName.get('create_lesson_page')?.returns.page.branches[0].jump_to, 'integer');
+  assert.match(lessonTools, /CONTENT_PAGE_TYPE\s*=\s*20/);
+  assert.match(lessonTools, /function decode_branches/);
+  assert.match(lessonTools, /function get_page/);
+  assert.match(createOperation, /\\lesson_page::create/);
+  assert.match(updateOperation, /->update\(/);
+  assert.match(deleteOperation, /->delete\(/);
+  assert.doesNotMatch(createOperation + updateOperation + deleteOperation, /\$DB\b/);
 });
 
 test('create_module exposes audited common Moodle module options', async () => {

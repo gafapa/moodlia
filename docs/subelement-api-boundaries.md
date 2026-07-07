@@ -15,6 +15,7 @@ MoodlIA exposes activity subelements when Moodle provides a public API path that
 - Forum discussions, posts, and discussion state through Moodle Forum APIs.
 - Glossary entries, categories, authors, browse filters, search, pending approval reads, and entry CRUD through Moodle Glossary APIs.
 - Lesson page, jump, access, grade, timer, and attempt report reads through Moodle Lesson APIs.
+- Lesson content page creation, update, deletion, and branch jump mutation through Moodle Lesson page component APIs. This currently covers content pages only; question-page type-specific payloads remain intentionally unavailable.
 - Quiz question slots, attempts, attempt data, attempt review, review options, grades, and view events through Moodle Quiz APIs.
 - Wiki pages, subwikis, files, and view events through Moodle Wiki APIs.
 - Workshop phases, user plans, grades, grade reports, reviewer/submission assessment reads, allocations, assessment form-definition reads, assessment updates, assessment evaluation, and submissions through Moodle Workshop APIs.
@@ -24,7 +25,7 @@ MoodlIA exposes activity subelements when Moodle provides a public API path that
 These areas remain blocked until a stable Moodle API path is identified and tested:
 
 - Feedback question/item creation and arbitrary item updates.
-- Lesson page creation, update, deletion, and answer/jump mutation.
+- Lesson question page mutation and unsupported answer/jump payloads beyond content-page branches.
 - Workshop grading form mutation and standalone assessment creation outside Moodle's allocation flow.
 
 ## Required Standard Before Adding One
@@ -43,7 +44,7 @@ Every new subelement write must satisfy all of these conditions:
 ## Preferred Implementation Order
 
 1. Feedback item creation/update, only after validating `feedback_get_item_class()` and `feedback_update_item()` across the supported Moodle versions with a smoke test that confirms UI-visible item state.
-2. Lesson page mutation, only after validating the Lesson page and answer classes across the supported Moodle versions with ownership checks and a smoke test that confirms page order, jumps, and content.
+2. Additional Lesson question page types, only after validating each page and answer class across the supported Moodle versions with ownership checks and smoke tests that confirm page order, jumps, scoring, and content.
 3. Workshop grading form mutation, only after identifying stable Workshop grading-form subplugin APIs and capability boundaries.
 
 See [remaining-api-validation.md](remaining-api-validation.md) for the current source-level validation notes and the evidence required before exposing these writes.

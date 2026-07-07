@@ -5571,6 +5571,273 @@
       ]
     },
     {
+      "name": "create_lesson_page",
+      "summary": "Create a content page in a Moodle Lesson activity.",
+      "type": "write",
+      "context": "module",
+      "capabilities": [
+        "mod/lesson:manage"
+      ],
+      "transports": [
+        "rest",
+        "mcp",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true
+        },
+        "module_id": {
+          "type": "integer",
+          "required": true
+        },
+        "title": {
+          "type": "string",
+          "required": true
+        },
+        "content": {
+          "type": "string",
+          "required": true
+        },
+        "content_format": {
+          "type": "integer",
+          "required": false
+        },
+        "branches": {
+          "type": "object",
+          "required": true
+        },
+        "after_page_id": {
+          "type": "integer",
+          "required": false
+        },
+        "display_in_menu": {
+          "type": "boolean",
+          "required": false
+        },
+        "horizontal": {
+          "type": "boolean",
+          "required": false
+        }
+      },
+      "returns": {
+        "created": "boolean",
+        "page": {
+          "page_id": "integer",
+          "lesson_id": "integer",
+          "module_id": "integer",
+          "previous_page_id": "integer",
+          "next_page_id": "integer",
+          "question_type": "integer",
+          "question_option": "integer",
+          "layout": "integer",
+          "display": "integer",
+          "display_in_menu_block": "boolean",
+          "type": "integer",
+          "type_id": "integer",
+          "type_string": "string",
+          "title": "string",
+          "content": "string",
+          "content_format": "integer",
+          "time_created": "integer",
+          "time_modified": "integer",
+          "answer_ids": [
+            "integer"
+          ],
+          "jumps": [
+            "integer"
+          ],
+          "files_count": "integer",
+          "files_size_total": "integer",
+          "branches_count": "integer",
+          "branches": [
+            {
+              "answer_id": "integer",
+              "title": "string",
+              "title_format": "integer",
+              "response": "string",
+              "response_format": "integer",
+              "jump_to": "integer",
+              "score": "number"
+            }
+          ]
+        }
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "mcp",
+        "cli"
+      ]
+    },
+    {
+      "name": "update_lesson_page",
+      "summary": "Update a content page in a Moodle Lesson activity.",
+      "type": "write",
+      "context": "module",
+      "capabilities": [
+        "mod/lesson:manage"
+      ],
+      "transports": [
+        "rest",
+        "mcp",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true
+        },
+        "module_id": {
+          "type": "integer",
+          "required": true
+        },
+        "page_id": {
+          "type": "integer",
+          "required": true
+        },
+        "title": {
+          "type": "string",
+          "required": false
+        },
+        "content": {
+          "type": "string",
+          "required": false
+        },
+        "content_format": {
+          "type": "integer",
+          "required": false
+        },
+        "branches": {
+          "type": "object",
+          "required": false
+        },
+        "display_in_menu": {
+          "type": "boolean",
+          "required": false
+        },
+        "horizontal": {
+          "type": "boolean",
+          "required": false
+        }
+      },
+      "returns": {
+        "updated": "boolean",
+        "page": {
+          "page_id": "integer",
+          "lesson_id": "integer",
+          "module_id": "integer",
+          "previous_page_id": "integer",
+          "next_page_id": "integer",
+          "question_type": "integer",
+          "question_option": "integer",
+          "layout": "integer",
+          "display": "integer",
+          "display_in_menu_block": "boolean",
+          "type": "integer",
+          "type_id": "integer",
+          "type_string": "string",
+          "title": "string",
+          "content": "string",
+          "content_format": "integer",
+          "time_created": "integer",
+          "time_modified": "integer",
+          "answer_ids": [
+            "integer"
+          ],
+          "jumps": [
+            "integer"
+          ],
+          "files_count": "integer",
+          "files_size_total": "integer",
+          "branches_count": "integer",
+          "branches": [
+            {
+              "answer_id": "integer",
+              "title": "string",
+              "title_format": "integer",
+              "response": "string",
+              "response_format": "integer",
+              "jump_to": "integer",
+              "score": "number"
+            }
+          ]
+        }
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "mcp",
+        "cli"
+      ]
+    },
+    {
+      "name": "delete_lesson_page",
+      "summary": "Delete a page from a Moodle Lesson activity.",
+      "type": "write",
+      "context": "module",
+      "capabilities": [
+        "mod/lesson:manage"
+      ],
+      "transports": [
+        "rest",
+        "mcp",
+        "cli"
+      ],
+      "files": "none",
+      "parameters": {
+        "course_id": {
+          "type": "integer",
+          "required": true
+        },
+        "module_id": {
+          "type": "integer",
+          "required": true
+        },
+        "page_id": {
+          "type": "integer",
+          "required": true
+        }
+      },
+      "returns": {
+        "deleted": "boolean",
+        "id": "integer"
+      },
+      "errors": [
+        "invalid_parameters",
+        "invalid_context",
+        "missing_capability",
+        "not_found",
+        "moodle_error",
+        "internal_error"
+      ],
+      "tests": [
+        "parity",
+        "api",
+        "mcp",
+        "cli"
+      ]
+    },
+    {
       "name": "view_lesson",
       "summary": "Register a Moodle Lesson view.",
       "type": "write",

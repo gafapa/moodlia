@@ -150,6 +150,18 @@ function assertLessonPages(pages, created) {
   }
 }
 
+function assertLessonContentPage(result, created, expectedTitle, expectedContent, expectedBranchTitle) {
+  assert.equal(result.page.module_id, created.course_module_id);
+  assert.equal(result.page.lesson_id, created.instance_id);
+  assert.equal(typeof result.page.page_id, 'number');
+  assert.equal(result.page.title, expectedTitle);
+  assert.match(result.page.content, new RegExp(expectedContent.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  assert.equal(result.page.branches_count, result.page.branches.length);
+  assert.ok(result.page.branches.some((branch) => branch.title === expectedBranchTitle));
+  assert.equal(Array.isArray(result.page.answer_ids), true);
+  assert.equal(Array.isArray(result.page.jumps), true);
+}
+
 function assertLessonPossibleJumps(jumps, created) {
   assert.equal(jumps.module_id, created.course_module_id);
   assert.equal(jumps.lesson_id, created.instance_id);
@@ -281,6 +293,46 @@ test('Lesson module lifecycle works through REST, MCP, and CLI', { skip: !hasCon
     });
     assertLessonPages(restPages, restLesson);
 
+    const restPage = await callRestFunction(toRestFunctionName(contract, 'create_lesson_page'), {
+      course_id: courseId,
+      module_id: restLesson.course_module_id,
+      title: `REST Lesson Page ${suffix}`,
+      content: `<p>REST lesson page content ${suffix}</p>`,
+      branches: JSON.stringify({ branches: [{ title: 'Continue', jump_to: 'next_page' }] })
+    });
+    assert.equal(restPage.created, true);
+    assertLessonContentPage(restPage, restLesson, `REST Lesson Page ${suffix}`, `REST lesson page content ${suffix}`, 'Continue');
+
+    const restPagesAfterCreate = await callRestFunction(toRestFunctionName(contract, 'get_lesson_pages'), {
+      course_id: courseId,
+      module_id: restLesson.course_module_id
+    });
+    assert.ok(restPagesAfterCreate.pages.some((page) => page.page_id === restPage.page.page_id));
+
+    const updatedRestPage = await callRestFunction(toRestFunctionName(contract, 'update_lesson_page'), {
+      course_id: courseId,
+      module_id: restLesson.course_module_id,
+      page_id: restPage.page.page_id,
+      title: `Updated REST Lesson Page ${suffix}`,
+      content: `<p>Updated REST lesson page content ${suffix}</p>`,
+      branches: JSON.stringify({ branches: [{ title: 'Finish', jump_to: 'end_of_lesson' }] })
+    });
+    assert.equal(updatedRestPage.updated, true);
+    assertLessonContentPage(
+      updatedRestPage,
+      restLesson,
+      `Updated REST Lesson Page ${suffix}`,
+      `Updated REST lesson page content ${suffix}`,
+      'Finish'
+    );
+
+    const deletedRestPage = await callRestFunction(toRestFunctionName(contract, 'delete_lesson_page'), {
+      course_id: courseId,
+      module_id: restLesson.course_module_id,
+      page_id: restPage.page.page_id
+    });
+    assert.equal(deletedRestPage.deleted, true);
+
     const restJumps = await callRestFunction(toRestFunctionName(contract, 'get_lesson_possible_jumps'), {
       course_id: courseId,
       module_id: restLesson.course_module_id
@@ -352,6 +404,33 @@ test('Lesson module lifecycle works through REST, MCP, and CLI', { skip: !hasCon
       module_id: mcpLesson.course_module_id
     });
     assertLessonPages(mcpPages, mcpLesson);
+
+    const mcpPage = await callMcpTool('create_lesson_page', {
+      course_id: courseId,
+      module_id: mcpLesson.course_module_id,
+      title: `MCP Lesson Page ${suffix}`,
+      content: `<p>MCP lesson page content ${suffix}</p>`,
+      branches: { branches: [{ title: 'Continue', jump_to: 'next_page' }] }
+    });
+    assert.equal(mcpPage.created, true);
+    assertLessonContentPage(mcpPage, mcpLesson, `MCP Lesson Page ${suffix}`, `MCP lesson page content ${suffix}`, 'Continue');
+
+    const updatedMcpPage = await callMcpTool('update_lesson_page', {
+      course_id: courseId,
+      module_id: mcpLesson.course_module_id,
+      page_id: mcpPage.page.page_id,
+      title: `Updated MCP Lesson Page ${suffix}`,
+      branches: { branches: [{ title: 'Finish', jump_to: 'end_of_lesson' }] }
+    });
+    assert.equal(updatedMcpPage.updated, true);
+    assertLessonContentPage(updatedMcpPage, mcpLesson, `Updated MCP Lesson Page ${suffix}`, `MCP lesson page content ${suffix}`, 'Finish');
+
+    const deletedMcpPage = await callMcpTool('delete_lesson_page', {
+      course_id: courseId,
+      module_id: mcpLesson.course_module_id,
+      page_id: mcpPage.page.page_id
+    });
+    assert.equal(deletedMcpPage.deleted, true);
 
     const mcpJumps = await callMcpTool('get_lesson_possible_jumps', {
       course_id: courseId,
@@ -431,6 +510,36 @@ test('Lesson module lifecycle works through REST, MCP, and CLI', { skip: !hasCon
       '--module-id', String(cliLesson.course_module_id)
     ]);
     assertLessonPages(cliPages, cliLesson);
+
+    const cliPage = await callCli([
+      'create-lesson-page',
+      '--course-id', String(courseId),
+      '--module-id', String(cliLesson.course_module_id),
+      '--title', `CLI Lesson Page ${suffix}`,
+      '--content', `<p>CLI lesson page content ${suffix}</p>`,
+      '--branches', JSON.stringify({ branches: [{ title: 'Continue', jump_to: 'next_page' }] })
+    ]);
+    assert.equal(cliPage.created, true);
+    assertLessonContentPage(cliPage, cliLesson, `CLI Lesson Page ${suffix}`, `CLI lesson page content ${suffix}`, 'Continue');
+
+    const updatedCliPage = await callCli([
+      'update-lesson-page',
+      '--course-id', String(courseId),
+      '--module-id', String(cliLesson.course_module_id),
+      '--page-id', String(cliPage.page.page_id),
+      '--title', `Updated CLI Lesson Page ${suffix}`,
+      '--branches', JSON.stringify({ branches: [{ title: 'Finish', jump_to: 'end_of_lesson' }] })
+    ]);
+    assert.equal(updatedCliPage.updated, true);
+    assertLessonContentPage(updatedCliPage, cliLesson, `Updated CLI Lesson Page ${suffix}`, `CLI lesson page content ${suffix}`, 'Finish');
+
+    const deletedCliPage = await callCli([
+      'delete-lesson-page',
+      '--course-id', String(courseId),
+      '--module-id', String(cliLesson.course_module_id),
+      '--page-id', String(cliPage.page.page_id)
+    ]);
+    assert.equal(deletedCliPage.deleted, true);
 
     const cliJumps = await callCli([
       'get-lesson-possible-jumps',
