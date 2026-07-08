@@ -97,6 +97,24 @@ test('course blueprint workflows create, publish, audit, apply, export, and copy
               options: {
                 content: `<p>Blueprint page content ${suffix}</p>`
               }
+            },
+            {
+              module_type: 'book',
+              name: `Blueprint Book ${suffix}`,
+              options: {
+                intro: `<p>Blueprint book intro ${suffix}</p>`
+              },
+              chapters: [
+                {
+                  title: `Blueprint Chapter ${suffix}`,
+                  content: `<p>Blueprint chapter content ${suffix}</p>`
+                },
+                {
+                  title: `Blueprint Subchapter ${suffix}`,
+                  content: `<p>Blueprint subchapter content ${suffix}</p>`,
+                  subchapter: true
+                }
+              ]
             }
           ]
         }
@@ -116,7 +134,11 @@ test('course blueprint workflows create, publish, audit, apply, export, and copy
     assert.equal(createdFromBlueprint.publish_state, 'draft');
     assert.equal(JSON.parse(createdFromBlueprint.course_json).visible, false);
     assert.equal(parseJsonField(createdFromBlueprint, 'sections_json').length, 1);
-    assert.equal(parseJsonField(createdFromBlueprint, 'modules_json').length, 1);
+    const createdModules = parseJsonField(createdFromBlueprint, 'modules_json');
+    assert.equal(createdModules.length, 2);
+    const createdBook = createdModules.find((module) => module.module_type === 'book');
+    assert.equal(createdBook?.subelements?.chapters?.length, 2);
+    assert.equal(createdBook.subelements.chapters[1].subchapter, true);
     assert.equal(parseJsonField(createdFromBlueprint, 'groups_json').length, 1);
 
     const draftAudit = await callRestFunction(restName('audit_course'), {
@@ -135,6 +157,11 @@ test('course blueprint workflows create, publish, audit, apply, export, and copy
     const exportedBlueprint = parseJsonField(exported, 'blueprint_json');
     assert.equal(exportedBlueprint.course.fullname, blueprint.course.fullname);
     assert.ok(exportedBlueprint.sections.length >= 1);
+    const exportedBook = exportedBlueprint.sections
+      .flatMap((section) => section.modules)
+      .find((module) => module.module_type === 'book' && module.name === `Blueprint Book ${suffix}`);
+    assert.equal(exportedBook?.chapters?.length, 2);
+    assert.match(exportedBook.chapters[0].content, /Blueprint chapter content/);
     assert.ok(exportedBlueprint.groups.length >= 1);
 
     const published = await callRestFunction(restName('set_course_publish_state'), {
@@ -188,7 +215,10 @@ test('course blueprint workflows create, publish, audit, apply, export, and copy
     assert.equal(copied.source_course_id, created.sourceCourseId);
     assert.equal(copied.target_course_id, created.targetCourseId);
     assert.ok(parseJsonField(copied, 'sections_json').length >= 1);
-    assert.ok(parseJsonField(copied, 'modules_json').length >= 1);
+    const copiedModules = parseJsonField(copied, 'modules_json');
+    assert.ok(copiedModules.length >= 1);
+    const copiedBook = copiedModules.find((module) => module.module_type === 'book' && module.name === `Blueprint Book ${suffix}`);
+    assert.equal(copiedBook?.subelements?.chapters?.length, 2);
 
   } finally {
     const cleanupCalls = [
@@ -294,6 +324,48 @@ test('course workflow operations reject malformed and no-op payloads', { skip: !
         ]
       })
     }), 'apply_course_blueprint with unsupported module_type');
+
+    await assertInvalidRestCall(callRestFunction(restName('apply_course_blueprint'), {
+      course_id: created.sourceCourseId,
+      blueprint: JSON.stringify({
+        sections: [
+          {
+            name: 'Invalid chapters module',
+            modules: [
+              {
+                module_type: 'page',
+                name: 'Page with invalid chapters',
+                chapters: []
+              }
+            ]
+          }
+        ]
+      })
+    }), 'apply_course_blueprint with chapters on a non-book module');
+
+    await assertInvalidRestCall(callRestFunction(restName('apply_course_blueprint'), {
+      course_id: created.sourceCourseId,
+      blueprint: JSON.stringify({
+        sections: [
+          {
+            name: 'Invalid first book subchapter',
+            modules: [
+              {
+                module_type: 'book',
+                name: 'Book with invalid first subchapter',
+                chapters: [
+                  {
+                    title: 'Invalid first chapter',
+                    content: '<p>Invalid first chapter.</p>',
+                    subchapter: true
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      })
+    }), 'apply_course_blueprint with first Book chapter marked as subchapter');
 
     await assertInvalidRestCall(callRestFunction(restName('sync_course_enrolments'), {
       course_id: created.sourceCourseId,

@@ -176,13 +176,18 @@ class course_workflow_tools {
 
             foreach (self::list_or_empty($section['modules'] ?? []) as $module) {
                 try {
-                    $createdmodules[] = create_module::execute(
+                    $createdmodule = create_module::execute(
                         $courseid,
                         $sectionnumber,
                         (string) ($module['module_type'] ?? ''),
                         (string) ($module['name'] ?? ''),
                         self::array_or_empty($module['options'] ?? [])
                     );
+                    $createdsubelements = self::apply_module_subelements($courseid, $createdmodule, $module);
+                    if (!empty($createdsubelements)) {
+                        $createdmodule['subelements'] = $createdsubelements;
+                    }
+                    $createdmodules[] = $createdmodule;
                 } catch (\Throwable $error) {
                     $warnings[] = [
                         'type' => 'module',
@@ -275,7 +280,7 @@ class course_workflow_tools {
                 }
                 $modules = [];
                 foreach ($section['modules'] as $module) {
-                    $modules[] = [
+                    $blueprintmodule = [
                         'module_type' => $module['module_type'],
                         'name' => $module['name'],
                         'options' => [
@@ -283,6 +288,10 @@ class course_workflow_tools {
                             'visible_on_course_page' => (bool) $module['visible_on_course_page'],
                         ],
                     ];
+                    $modules[] = array_merge(
+                        $blueprintmodule,
+                        self::export_module_subelements($courseid, $module)
+                    );
                 }
                 $blueprint['sections'][] = [
                     'name' => $section['name'],
@@ -528,6 +537,119 @@ class course_workflow_tools {
                 && (!is_array($module['options']) || array_is_list($module['options']))) {
             throw new \invalid_parameter_exception($prefix . '.options must be a JSON object.');
         }
+        if (array_key_exists('chapters', $module)) {
+            if ($moduletype !== 'book') {
+                throw new \invalid_parameter_exception($prefix . '.chapters is only supported for module_type=book.');
+            }
+            self::validate_book_chapters($module['chapters'], $prefix . '.chapters');
+        }
+    }
+
+    /**
+     * Export supported activity subelements for a course blueprint module.
+     *
+     * @param int $courseid Moodle course id.
+     * @param array $module Course-content module response.
+     * @return array
+     */
+    private static function export_module_subelements(int $courseid, array $module): array {
+        if (($module['module_type'] ?? '') !== 'book') {
+            return [];
+        }
+
+        $chapters = get_book_chapters::execute($courseid, (int) ($module['module_id'] ?? 0), true, true);
+        return [
+            'chapters' => array_map(static function (array $chapter): array {
+                return [
+                    'title' => $chapter['title'],
+                    'content' => $chapter['content'],
+                    'content_format' => $chapter['content_format'],
+                    'subchapter' => $chapter['subchapter'],
+                    'hidden' => $chapter['hidden'],
+                ];
+            }, $chapters['chapters'] ?? []),
+        ];
+    }
+
+    /**
+     * Apply supported activity subelements after a module shell is created.
+     *
+     * @param int $courseid Moodle course id.
+     * @param array $createdmodule Created module response.
+     * @param array $blueprintmodule Original blueprint module.
+     * @return array
+     */
+    private static function apply_module_subelements(int $courseid, array $createdmodule, array $blueprintmodule): array {
+        if (($createdmodule['module_type'] ?? '') !== 'book') {
+            return [];
+        }
+
+        $chapters = self::list_or_empty($blueprintmodule['chapters'] ?? []);
+        if (empty($chapters)) {
+            return [];
+        }
+
+        $modulecontext = \context_module::instance((int) $createdmodule['module_id']);
+        require_capability('mod/book:edit', $modulecontext);
+
+        $createdchapters = [];
+        $afterchapterid = null;
+        foreach ($chapters as $chapter) {
+            $createdchapter = create_book_chapter::execute(
+                $courseid,
+                (int) $createdmodule['module_id'],
+                (string) $chapter['title'],
+                (string) ($chapter['content'] ?? ''),
+                (int) ($chapter['content_format'] ?? FORMAT_HTML),
+                (bool) ($chapter['subchapter'] ?? false),
+                $afterchapterid,
+                (bool) ($chapter['hidden'] ?? false)
+            );
+            $afterchapterid = (int) $createdchapter['chapter_id'];
+            $createdchapters[] = $createdchapter;
+        }
+
+        return ['chapters' => $createdchapters];
+    }
+
+    /**
+     * Validate Book chapter blueprints.
+     *
+     * @param mixed $chapters Chapter list.
+     * @param string $prefix Error path prefix.
+     */
+    private static function validate_book_chapters($chapters, string $prefix): void {
+        if (!is_array($chapters) || !array_is_list($chapters)) {
+            throw new \invalid_parameter_exception($prefix . ' must be a JSON array.');
+        }
+
+        foreach ($chapters as $index => $chapter) {
+            if (!is_array($chapter) || array_is_list($chapter)) {
+                throw new \invalid_parameter_exception($prefix . '[' . $index . '] must be a JSON object.');
+            }
+            if (!array_key_exists('title', $chapter) || !self::text_like_value($chapter['title'])
+                    || trim((string) $chapter['title']) === '') {
+                throw new \invalid_parameter_exception($prefix . '[' . $index . '].title is required.');
+            }
+            if (array_key_exists('content', $chapter) && !self::text_like_value($chapter['content'])) {
+                throw new \invalid_parameter_exception($prefix . '[' . $index . '].content must be a string.');
+            }
+            if (array_key_exists('content_format', $chapter)
+                    && self::non_negative_integer_value($chapter['content_format']) === null) {
+                throw new \invalid_parameter_exception(
+                    $prefix . '[' . $index . '].content_format must be a non-negative integer.'
+                );
+            }
+            if (array_key_exists('subchapter', $chapter) && !self::boolean_like_value($chapter['subchapter'])) {
+                throw new \invalid_parameter_exception($prefix . '[' . $index . '].subchapter must be a boolean.');
+            }
+            if (array_key_exists('hidden', $chapter) && !self::boolean_like_value($chapter['hidden'])) {
+                throw new \invalid_parameter_exception($prefix . '[' . $index . '].hidden must be a boolean.');
+            }
+            if ($index === 0 && !empty($chapter['subchapter'])) {
+                throw new \invalid_parameter_exception($prefix . '[0].subchapter must be false.');
+            }
+        }
     }
 
     /**
@@ -575,6 +697,43 @@ class course_workflow_tools {
         }
 
         return null;
+    }
+
+    /**
+     * Return a non-negative integer value when the input is strictly integer-like.
+     *
+     * @param mixed $value Input value.
+     * @return int|null
+     */
+    private static function non_negative_integer_value($value): ?int {
+        if (is_int($value) && $value >= 0) {
+            return $value;
+        }
+        if (is_string($value) && preg_match('/^[0-9]+$/', trim($value))) {
+            return (int) trim($value);
+        }
+
+        return null;
+    }
+
+    /**
+     * Return whether a JSON value is safely boolean-like.
+     *
+     * @param mixed $value Input value.
+     * @return bool
+     */
+    private static function boolean_like_value($value): bool {
+        return is_bool($value) || $value === 0 || $value === 1;
+    }
+
+    /**
+     * Return whether a JSON value can be safely used as text.
+     *
+     * @param mixed $value Input value.
+     * @return bool
+     */
+    private static function text_like_value($value): bool {
+        return is_string($value) || is_int($value) || is_float($value);
     }
 
     /**
