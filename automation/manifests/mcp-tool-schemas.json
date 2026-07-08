@@ -84,6 +84,12 @@
         "workshop"
       ]
     },
+    "create_lesson_page": {
+      "page_type": [
+        "content",
+        "truefalse"
+      ]
+    },
     "create_data_field": {
       "field_type": [
         "text",

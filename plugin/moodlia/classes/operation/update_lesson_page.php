@@ -19,7 +19,7 @@ namespace local_moodlia\operation;
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Updates a Moodle Lesson content page through Moodle Lesson component APIs.
+ * Updates a supported Moodle Lesson page through Moodle Lesson component APIs.
  */
 class update_lesson_page {
     /**
@@ -34,6 +34,7 @@ class update_lesson_page {
      * @param string|null $branchesjson Optional JSON branch definitions.
      * @param bool|null $displayinmenu Optional menu display setting.
      * @param bool|null $horizontal Optional branch layout setting.
+     * @param string|null $answersjson Optional JSON answer definitions for question pages.
      * @return array
      */
     public static function execute(
@@ -45,7 +46,8 @@ class update_lesson_page {
         ?int $contentformat = null,
         ?string $branchesjson = null,
         ?bool $displayinmenu = null,
-        ?bool $horizontal = null
+        ?bool $horizontal = null,
+        ?string $answersjson = null
     ): array {
         lesson_tools::require_lesson_api();
 
@@ -56,8 +58,8 @@ class update_lesson_page {
         $page = lesson_tools::get_page($lesson, $cm, $pageid);
         $current = $page->properties();
 
-        if ((int) ($current->qtype ?? 0) !== 20) {
-            throw new \invalid_parameter_exception('Only Lesson content pages are supported for update_lesson_page.');
+        if (!lesson_tools::is_content_page($current) && !lesson_tools::is_truefalse_page($current)) {
+            throw new \invalid_parameter_exception('Only Lesson content and truefalse pages are supported for update_lesson_page.');
         }
 
         if (
@@ -66,25 +68,52 @@ class update_lesson_page {
             $contentformat === null &&
             $branchesjson === null &&
             $displayinmenu === null &&
-            $horizontal === null
+            $horizontal === null &&
+            $answersjson === null
         ) {
             throw new \invalid_parameter_exception('At least one page field is required.');
         }
 
-        $branches = $branchesjson === null
-            ? lesson_tools::branches_from_page($page)
-            : lesson_tools::decode_branches($branchesjson);
+        if (lesson_tools::is_content_page($current)) {
+            if ($answersjson !== null && trim($answersjson) !== '') {
+                throw new \invalid_parameter_exception('answers is only supported for truefalse Lesson pages.');
+            }
 
-        $properties = lesson_tools::content_page_properties(
-            $lesson,
-            $title ?? (string) ($current->title ?? ''),
-            $content ?? (string) ($current->contents ?? ''),
-            $contentformat ?? (int) ($current->contentsformat ?? FORMAT_HTML),
-            $branches,
-            0,
-            $displayinmenu ?? ((int) ($current->display ?? 0) === 1),
-            $horizontal ?? ((int) ($current->layout ?? 0) === 1)
-        );
+            $branches = $branchesjson === null
+                ? lesson_tools::branches_from_page($page)
+                : lesson_tools::decode_branches($branchesjson);
+
+            $properties = lesson_tools::content_page_properties(
+                $lesson,
+                $title ?? (string) ($current->title ?? ''),
+                $content ?? (string) ($current->contents ?? ''),
+                $contentformat ?? (int) ($current->contentsformat ?? FORMAT_HTML),
+                $branches,
+                0,
+                $displayinmenu ?? ((int) ($current->display ?? 0) === 1),
+                $horizontal ?? ((int) ($current->layout ?? 0) === 1)
+            );
+        } else {
+            if ($branchesjson !== null && trim($branchesjson) !== '') {
+                throw new \invalid_parameter_exception('branches is only supported for content Lesson pages.');
+            }
+            if ($displayinmenu !== null || $horizontal !== null) {
+                throw new \invalid_parameter_exception('display_in_menu and horizontal are only supported for content Lesson pages.');
+            }
+
+            $answers = $answersjson === null
+                ? lesson_tools::truefalse_answers_from_page($page)
+                : lesson_tools::decode_truefalse_answers($answersjson);
+
+            $properties = lesson_tools::truefalse_page_properties(
+                $lesson,
+                $title ?? (string) ($current->title ?? ''),
+                $content ?? (string) ($current->contents ?? ''),
+                $contentformat ?? (int) ($current->contentsformat ?? FORMAT_HTML),
+                $answers,
+                0
+            );
+        }
 
         $context = \context_module::instance($cm->id);
         $page->update($properties, $context, get_user_max_upload_file_size($context));

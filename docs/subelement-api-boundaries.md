@@ -15,7 +15,7 @@ MoodlIA exposes activity subelements when Moodle provides a public API path that
 - Forum discussions, posts, and discussion state through Moodle Forum APIs.
 - Glossary entries, categories, authors, browse filters, search, pending approval reads, and entry CRUD through Moodle Glossary APIs.
 - Lesson page, jump, access, grade, timer, and attempt report reads through Moodle Lesson APIs.
-- Lesson content page creation, update, deletion, and branch jump mutation through Moodle Lesson page component APIs. This currently covers content pages only; question-page type-specific payloads remain intentionally unavailable.
+- Lesson content page creation, update, deletion, branch jump mutation, and truefalse question page creation/update through Moodle Lesson page component APIs. Other question-page type-specific payloads remain intentionally unavailable.
 - Quiz question slots, attempts, attempt data, attempt review, review options, grades, and view events through Moodle Quiz APIs.
 - Wiki pages, subwikis, files, and view events through Moodle Wiki APIs.
 - Workshop phases, user plans, grades, grade reports, reviewer/submission assessment reads, allocations, assessment form-definition reads, assessment updates, assessment evaluation, and submissions through Moodle Workshop APIs.
@@ -26,7 +26,7 @@ MoodlIA exposes activity subelements when Moodle provides a public API path that
 These areas remain blocked until a stable Moodle API path is identified and tested:
 
 - Feedback item types beyond textfield, textarea, numeric, multichoice, multichoicerated, label, info, and pagebreak creation, plus direct response-value mutation.
-- Lesson question page mutation and unsupported answer/jump payloads beyond content-page branches.
+- Lesson question page types beyond truefalse and unsupported answer/jump payloads beyond content-page branches and truefalse answers.
 - Workshop grading form strategies beyond accumulative and standalone assessment creation outside Moodle's allocation flow.
 
 ## Required Standard Before Adding One
@@ -45,7 +45,7 @@ Every new subelement write must satisfy all of these conditions:
 ## Preferred Implementation Order
 
 1. Additional Feedback item types, only after validating the type-specific item class payload and smoke testing UI-visible item state.
-2. Additional Lesson question page types, only after validating each page and answer class across the supported Moodle versions with ownership checks and smoke tests that confirm page order, jumps, scoring, and content.
+2. Additional Lesson question page types beyond truefalse, only after validating each page and answer class across the supported Moodle versions with ownership checks and smoke tests that confirm page order, jumps, scoring, and content.
 3. Additional Workshop grading form strategies, only after identifying stable subplugin APIs, payload schemas, and capability boundaries.
 
 See [remaining-api-validation.md](remaining-api-validation.md) for the current source-level validation notes and the evidence required before exposing these writes.

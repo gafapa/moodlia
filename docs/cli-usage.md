@@ -584,15 +584,17 @@ moodlia set-workshop-grading-form --course-id <course_id> --module-id <workshop_
 
 Workshop grading-form writes currently support the active `accumulative` strategy only. Rubric and other strategy definitions remain intentionally separate until their Moodle subplugin payloads are validated.
 
-Create and manage Lesson content pages:
+Create and manage Lesson content pages and truefalse question pages:
 
 ```text
 moodlia create-lesson-page --course-id <course_id> --module-id <lesson_module_id> --title "Start" --content "<p>Read this page first.</p>" --branches '{"branches":[{"title":"Continue","jump_to":"next_page"}]}'
 moodlia update-lesson-page --course-id <course_id> --module-id <lesson_module_id> --page-id <page_id> --title "Updated start" --branches '{"branches":[{"title":"Finish","jump_to":"end_of_lesson"}]}'
+moodlia create-lesson-page --course-id <course_id> --module-id <lesson_module_id> --page-type truefalse --title "Check" --content "<p>Select the correct answer.</p>" --answers '{"correct":{"answer":"True","response":"Correct","jump_to":"next_page","score":1},"wrong":{"answer":"False","response":"Review the content","jump_to":"this_page","score":0}}'
+moodlia update-lesson-page --course-id <course_id> --module-id <lesson_module_id> --page-id <page_id> --answers '{"answers":[{"answer":"True","response":"Correct","jump_to":"next_page","score":1},{"answer":"False","response":"Try again","jump_to":"this_page","score":0}]}'
 moodlia delete-lesson-page --course-id <course_id> --module-id <lesson_module_id> --page-id <page_id>
 ```
 
-Lesson page writes currently support Moodle Lesson content pages with branch buttons and jump targets. Question page types are intentionally separate because each type has its own answer and scoring payload rules.
+Lesson page writes currently support Moodle Lesson content pages with branch buttons and truefalse question pages with exactly two answers. Other question page types remain intentionally separate because each type has its own answer and scoring payload rules.
 
 ## Question Bank And Quiz
 

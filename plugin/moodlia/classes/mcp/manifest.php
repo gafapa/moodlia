@@ -868,22 +868,24 @@ final class manifest {
             ],
             [
                 'name' => 'create_lesson_page',
-                'description' => 'Create a content page in a Moodle Lesson activity.',
+                'description' => 'Create a content or truefalse question page in a Moodle Lesson activity.',
                 'inputSchema' => self::schema([
                     'course_id' => ['type' => 'integer', 'required' => true],
                     'module_id' => ['type' => 'integer', 'required' => true],
                     'title' => ['type' => 'string', 'required' => true],
                     'content' => ['type' => 'string', 'required' => true],
                     'content_format' => ['type' => 'integer', 'required' => false],
-                    'branches' => ['type' => 'object', 'required' => true],
+                    'branches' => ['type' => 'object', 'required' => false],
                     'after_page_id' => ['type' => 'integer', 'required' => false],
                     'display_in_menu' => ['type' => 'boolean', 'required' => false],
                     'horizontal' => ['type' => 'boolean', 'required' => false],
+                    'page_type' => ['type' => 'string', 'required' => false, 'enum' => ['content', 'truefalse']],
+                    'answers' => ['type' => 'object', 'required' => false],
                 ]),
             ],
             [
                 'name' => 'update_lesson_page',
-                'description' => 'Update a content page in a Moodle Lesson activity.',
+                'description' => 'Update a content or truefalse question page in a Moodle Lesson activity.',
                 'inputSchema' => self::schema([
                     'course_id' => ['type' => 'integer', 'required' => true],
                     'module_id' => ['type' => 'integer', 'required' => true],
@@ -894,6 +896,7 @@ final class manifest {
                     'branches' => ['type' => 'object', 'required' => false],
                     'display_in_menu' => ['type' => 'boolean', 'required' => false],
                     'horizontal' => ['type' => 'boolean', 'required' => false],
+                    'answers' => ['type' => 'object', 'required' => false],
                 ]),
             ],
             [

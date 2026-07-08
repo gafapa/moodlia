@@ -19,7 +19,7 @@ namespace local_moodlia\operation;
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Creates a Moodle Lesson content page through Moodle Lesson component APIs.
+ * Creates a Moodle Lesson page through Moodle Lesson component APIs.
  */
 class create_lesson_page {
     /**
@@ -30,10 +30,12 @@ class create_lesson_page {
      * @param string $title Page title.
      * @param string $content Page content.
      * @param int $contentformat Moodle text format.
-     * @param string $branchesjson JSON branch definitions.
+     * @param string|null $branchesjson Optional JSON branch definitions for content pages.
      * @param int $afterpageid Previous page id or 0 for first.
      * @param bool $displayinmenu Whether the page appears in the Lesson menu.
      * @param bool $horizontal Whether branch buttons are horizontal.
+     * @param string $pagetype Lesson page type.
+     * @param string|null $answersjson Optional JSON answer definitions for question pages.
      * @return array
      */
     public static function execute(
@@ -42,10 +44,12 @@ class create_lesson_page {
         string $title,
         string $content,
         int $contentformat,
-        string $branchesjson,
+        ?string $branchesjson = null,
         int $afterpageid = 0,
         bool $displayinmenu = true,
-        bool $horizontal = true
+        bool $horizontal = true,
+        string $pagetype = 'content',
+        ?string $answersjson = null
     ): array {
         lesson_tools::require_lesson_api();
 
@@ -59,16 +63,43 @@ class create_lesson_page {
         }
 
         $context = \context_module::instance($cm->id);
-        $properties = lesson_tools::content_page_properties(
-            $lesson,
-            $title,
-            $content,
-            $contentformat,
-            lesson_tools::decode_branches($branchesjson),
-            $afterpageid,
-            $displayinmenu,
-            $horizontal
-        );
+        $pagetype = lesson_tools::normalise_page_type($pagetype);
+
+        if ($pagetype === 'content') {
+            if ($branchesjson === null || trim($branchesjson) === '') {
+                throw new \invalid_parameter_exception('branches is required for content Lesson pages.');
+            }
+            if ($answersjson !== null && trim($answersjson) !== '') {
+                throw new \invalid_parameter_exception('answers is only supported for truefalse Lesson pages.');
+            }
+
+            $properties = lesson_tools::content_page_properties(
+                $lesson,
+                $title,
+                $content,
+                $contentformat,
+                lesson_tools::decode_branches($branchesjson),
+                $afterpageid,
+                $displayinmenu,
+                $horizontal
+            );
+        } else {
+            if ($branchesjson !== null && trim($branchesjson) !== '') {
+                throw new \invalid_parameter_exception('branches is only supported for content Lesson pages.');
+            }
+            if ($answersjson === null || trim($answersjson) === '') {
+                throw new \invalid_parameter_exception('answers is required for truefalse Lesson pages.');
+            }
+
+            $properties = lesson_tools::truefalse_page_properties(
+                $lesson,
+                $title,
+                $content,
+                $contentformat,
+                lesson_tools::decode_truefalse_answers($answersjson),
+                $afterpageid
+            );
+        }
 
         $page = \lesson_page::create($properties, $lesson, $context, get_user_max_upload_file_size($context));
         rebuild_course_cache($course->id, true);

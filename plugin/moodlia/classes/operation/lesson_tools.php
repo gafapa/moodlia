@@ -25,6 +25,9 @@ class lesson_tools {
     /** Moodle Lesson content page type id. */
     private const CONTENT_PAGE_TYPE = 20;
 
+    /** Moodle Lesson true/false question page type id. */
+    private const TRUEFALSE_PAGE_TYPE = 2;
+
     /**
      * Load Moodle Lesson APIs.
      */
@@ -226,6 +229,102 @@ class lesson_tools {
     }
 
     /**
+     * Normalize the requested Lesson page type.
+     *
+     * @param string $pagetype Raw page type.
+     * @return string
+     */
+    public static function normalise_page_type(string $pagetype): string {
+        $normalized = strtolower(trim($pagetype));
+        $aliases = [
+            'branchtable' => 'content',
+            'branch_table' => 'content',
+            'true_false' => 'truefalse',
+            'true-false' => 'truefalse',
+        ];
+        $normalized = $aliases[$normalized] ?? $normalized;
+
+        if (!in_array($normalized, ['content', 'truefalse'], true)) {
+            throw new \invalid_parameter_exception('page_type must be content or truefalse.');
+        }
+
+        return $normalized;
+    }
+
+    /**
+     * Return whether a Lesson page is a supported content page.
+     *
+     * @param \stdClass $properties Page properties.
+     * @return bool
+     */
+    public static function is_content_page(\stdClass $properties): bool {
+        return (int) ($properties->qtype ?? 0) === self::CONTENT_PAGE_TYPE;
+    }
+
+    /**
+     * Return whether a Lesson page is a supported true/false question page.
+     *
+     * @param \stdClass $properties Page properties.
+     * @return bool
+     */
+    public static function is_truefalse_page(\stdClass $properties): bool {
+        return (int) ($properties->qtype ?? 0) === self::TRUEFALSE_PAGE_TYPE;
+    }
+
+    /**
+     * Decode and validate Lesson true/false answers.
+     *
+     * @param string $answersjson JSON object with correct/wrong answers or an answers array.
+     * @return array
+     */
+    public static function decode_truefalse_answers(string $answersjson): array {
+        $decoded = json_decode($answersjson, true);
+        if (!is_array($decoded)) {
+            throw new \invalid_parameter_exception('answers must be a JSON object.');
+        }
+
+        if (isset($decoded['correct']) || isset($decoded['wrong'])) {
+            $items = [$decoded['correct'] ?? null, $decoded['wrong'] ?? null];
+        } else {
+            $items = self::is_list_array($decoded) ? $decoded : ($decoded['answers'] ?? null);
+        }
+
+        if (!is_array($items) || !self::is_list_array($items) || count($items) !== 2) {
+            throw new \invalid_parameter_exception('answers must contain exactly two truefalse answers.');
+        }
+
+        $answers = [];
+        $seen = [];
+        foreach ($items as $index => $item) {
+            if (!is_array($item)) {
+                throw new \invalid_parameter_exception('Each truefalse answer must be an object.');
+            }
+
+            $answer = trim((string) ($item['answer'] ?? $item['title'] ?? $item['label'] ?? ''));
+            if ($answer === '') {
+                throw new \invalid_parameter_exception('Each truefalse answer text must be non-empty.');
+            }
+
+            $key = strtolower($answer);
+            if (array_key_exists($key, $seen)) {
+                throw new \invalid_parameter_exception('truefalse answer texts must be unique.');
+            }
+            $seen[$key] = true;
+
+            $answers[] = [
+                'answer' => $answer,
+                'answer_format' => self::normalise_text_format($item['answer_format'] ?? $item['title_format'] ?? FORMAT_HTML, 'answer_format'),
+                'response' => (string) ($item['response'] ?? ''),
+                'response_format' => self::normalise_text_format($item['response_format'] ?? FORMAT_HTML, 'response_format'),
+                'jump_to' => self::normalise_jump($item['jump_to'] ?? $item['jumpto'] ?? ($index === 0 ? -1 : 0), 'answer jump_to'),
+                'score' => self::normalise_score($item['score'] ?? ($index === 0 ? 1 : 0)),
+            ];
+        }
+
+        return $answers;
+    }
+
+    /**
      * Build Moodle Lesson page properties for a content page.
      *
      * @param \lesson $lesson Lesson domain object.
@@ -286,6 +385,64 @@ class lesson_tools {
     }
 
     /**
+     * Build Moodle Lesson page properties for a true/false question page.
+     *
+     * @param \lesson $lesson Lesson domain object.
+     * @param string $title Page title.
+     * @param string $content Page content.
+     * @param int $contentformat Content format.
+     * @param array $answers Normalized true/false answers.
+     * @param int $afterpageid Previous page id or 0 for first.
+     * @return \stdClass
+     */
+    public static function truefalse_page_properties(
+        \lesson $lesson,
+        string $title,
+        string $content,
+        int $contentformat,
+        array $answers,
+        int $afterpageid = 0
+    ): \stdClass {
+        $title = trim($title);
+        if ($title === '') {
+            throw new \invalid_parameter_exception('title must be non-empty.');
+        }
+
+        if (count($answers) !== 2) {
+            throw new \invalid_parameter_exception('truefalse pages require exactly two answers.');
+        }
+
+        $properties = (object) [
+            'title' => $title,
+            'contents_editor' => [
+                'text' => $content,
+                'format' => $contentformat,
+            ],
+            'qtype' => self::TRUEFALSE_PAGE_TYPE,
+            'pageid' => max(0, $afterpageid),
+            'answer_editor' => [],
+            'response_editor' => [],
+            'jumpto' => [],
+            'score' => [],
+        ];
+
+        foreach ($answers as $index => $answer) {
+            $properties->answer_editor[$index] = [
+                'text' => $answer['answer'],
+                'format' => $answer['answer_format'],
+            ];
+            $properties->response_editor[$index] = [
+                'text' => $answer['response'],
+                'format' => $answer['response_format'],
+            ];
+            $properties->jumpto[$index] = $answer['jump_to'];
+            $properties->score[$index] = $answer['score'];
+        }
+
+        return $properties;
+    }
+
+    /**
      * Return current content-page branches for update preservation.
      *
      * @param \lesson_page $page Lesson page object.
@@ -310,12 +467,43 @@ class lesson_tools {
     }
 
     /**
+     * Return current true/false answers for update preservation.
+     *
+     * @param \lesson_page $page Lesson page object.
+     * @return array
+     */
+    public static function truefalse_answers_from_page(\lesson_page $page): array {
+        $answers = [];
+        foreach ($page->get_answers() as $answer) {
+            $text = (string) ($answer->answer ?? '');
+            if ($text === '') {
+                continue;
+            }
+            $answers[] = [
+                'answer' => $text,
+                'answer_format' => (int) ($answer->answerformat ?? FORMAT_HTML),
+                'response' => (string) ($answer->response ?? ''),
+                'response_format' => (int) ($answer->responseformat ?? FORMAT_HTML),
+                'jump_to' => (int) ($answer->jumpto ?? 0),
+                'score' => (float) ($answer->score ?? 0),
+            ];
+        }
+
+        if (count($answers) !== 2) {
+            throw new \invalid_parameter_exception('Existing truefalse page must contain exactly two answers before update.');
+        }
+
+        return $answers;
+    }
+
+    /**
      * Normalize a Lesson jump target.
      *
      * @param mixed $value Raw jump value.
+     * @param string $label Parameter label.
      * @return int
      */
-    private static function normalise_jump($value): int {
+    private static function normalise_jump($value, string $label = 'branch jump_to'): int {
         if (is_string($value)) {
             $map = [
                 'this_page' => 0,
@@ -330,10 +518,44 @@ class lesson_tools {
         }
 
         if (!is_numeric($value)) {
-            throw new \invalid_parameter_exception('branch jump_to must be an integer or supported jump name.');
+            throw new \invalid_parameter_exception($label . ' must be an integer or supported jump name.');
         }
 
         return (int) $value;
+    }
+
+    /**
+     * Normalize a Moodle text format.
+     *
+     * @param mixed $value Raw text format.
+     * @param string $label Parameter label.
+     * @return int
+     */
+    private static function normalise_text_format($value, string $label): int {
+        if (!is_numeric($value)) {
+            throw new \invalid_parameter_exception($label . ' must be an integer.');
+        }
+
+        $format = (int) $value;
+        if ($format < 0) {
+            throw new \invalid_parameter_exception($label . ' must be zero or greater.');
+        }
+
+        return $format;
+    }
+
+    /**
+     * Normalize a Lesson answer score.
+     *
+     * @param mixed $value Raw score.
+     * @return float
+     */
+    private static function normalise_score($value): float {
+        if (!is_numeric($value)) {
+            throw new \invalid_parameter_exception('answer score must be numeric.');
+        }
+
+        return (float) $value;
     }
 
     /**

@@ -275,6 +275,66 @@ test('MoodleClient validates operation parameters against the contract', async (
   );
 });
 
+test('Lesson page parameter validation rejects invalid truefalse payload shapes early', () => {
+  const operation = {
+    name: 'create_lesson_page',
+    parameters: {
+      course_id: { type: 'integer', required: true },
+      module_id: { type: 'integer', required: true },
+      title: { type: 'string', required: true },
+      content: { type: 'string', required: true },
+      branches: { type: 'object', required: false },
+      page_type: { type: 'string', required: false, enum: ['content', 'truefalse'] },
+      answers: { type: 'object', required: false }
+    }
+  };
+
+  assert.deepEqual(
+    buildContractParameters(operation, {
+      course_id: 42,
+      module_id: 7,
+      title: 'Check',
+      content: '<p>Check this.</p>',
+      page_type: 'truefalse',
+      answers: {
+        correct: { answer: 'True', jump_to: 'next_page', score: 1 },
+        wrong: { answer: 'False', jump_to: 'this_page', score: 0 }
+      }
+    }),
+    {
+      course_id: 42,
+      module_id: 7,
+      title: 'Check',
+      content: '<p>Check this.</p>',
+      page_type: 'truefalse',
+      answers: '{"correct":{"answer":"True","jump_to":"next_page","score":1},"wrong":{"answer":"False","jump_to":"this_page","score":0}}'
+    }
+  );
+
+  assert.throws(
+    () => buildContractParameters(operation, {
+      course_id: 42,
+      module_id: 7,
+      title: 'Check',
+      content: '<p>Check this.</p>',
+      page_type: 'essay'
+    }),
+    /page_type must be one of: content, truefalse/
+  );
+
+  assert.throws(
+    () => buildContractParameters(operation, {
+      course_id: 42,
+      module_id: 7,
+      title: 'Check',
+      content: '<p>Check this.</p>',
+      page_type: 'truefalse',
+      answers: []
+    }),
+    /answers must be a JSON object/
+  );
+});
+
 test('shared REST client reports Moodle REST payload errors', async () => {
   const transport = new RestTransport({
     baseUrl: 'https://moodle.example.test/',

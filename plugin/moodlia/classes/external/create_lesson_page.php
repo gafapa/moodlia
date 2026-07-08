@@ -41,10 +41,12 @@ class create_lesson_page extends external_api {
             'title' => new external_value(PARAM_RAW, 'Lesson page title'),
             'content' => new external_value(PARAM_RAW, 'Lesson page content'),
             'content_format' => new external_value(PARAM_INT, 'Moodle content format', VALUE_DEFAULT, FORMAT_HTML),
-            'branches' => new external_value(PARAM_RAW, 'JSON object with a branches array'),
+            'branches' => new external_value(PARAM_RAW, 'Optional JSON object with a branches array for content pages', VALUE_DEFAULT, null, NULL_ALLOWED),
             'after_page_id' => new external_value(PARAM_INT, 'Insert after this Lesson page id, or 0 for first', VALUE_DEFAULT, 0),
             'display_in_menu' => new external_value(PARAM_BOOL, 'Whether the page appears in the Lesson menu', VALUE_DEFAULT, true),
             'horizontal' => new external_value(PARAM_BOOL, 'Whether branch buttons use horizontal layout', VALUE_DEFAULT, true),
+            'page_type' => new external_value(PARAM_ALPHA, 'Lesson page type: content or truefalse', VALUE_DEFAULT, 'content'),
+            'answers' => new external_value(PARAM_RAW, 'Optional JSON object with answer definitions for question pages', VALUE_DEFAULT, null, NULL_ALLOWED),
         ]);
     }
 
@@ -60,6 +62,8 @@ class create_lesson_page extends external_api {
      * @param int $after_page_id Previous page id.
      * @param bool $display_in_menu Menu display setting.
      * @param bool $horizontal Branch layout setting.
+     * @param string $page_type Lesson page type.
+     * @param string|null $answers JSON answer definitions.
      * @return array
      */
     public static function execute(
@@ -68,10 +72,12 @@ class create_lesson_page extends external_api {
         string $title,
         string $content,
         int $content_format,
-        string $branches,
+        ?string $branches = null,
         int $after_page_id = 0,
         bool $display_in_menu = true,
-        bool $horizontal = true
+        bool $horizontal = true,
+        string $page_type = 'content',
+        ?string $answers = null
     ): array {
         [
             'course_id' => $courseid,
@@ -83,6 +89,8 @@ class create_lesson_page extends external_api {
             'after_page_id' => $afterpageid,
             'display_in_menu' => $displayinmenu,
             'horizontal' => $horizontal,
+            'page_type' => $pagetype,
+            'answers' => $answersjson,
         ] = self::validate_parameters(self::execute_parameters(), [
             'course_id' => $course_id,
             'module_id' => $module_id,
@@ -93,6 +101,8 @@ class create_lesson_page extends external_api {
             'after_page_id' => $after_page_id,
             'display_in_menu' => $display_in_menu,
             'horizontal' => $horizontal,
+            'page_type' => $page_type,
+            'answers' => $answers,
         ]);
 
         $systemcontext = \context_system::instance();
@@ -111,10 +121,12 @@ class create_lesson_page extends external_api {
             (string) $title,
             (string) $content,
             (int) $contentformat,
-            (string) $branchesjson,
+            $branchesjson === null ? null : (string) $branchesjson,
             (int) $afterpageid,
             (bool) $displayinmenu,
-            (bool) $horizontal
+            (bool) $horizontal,
+            (string) $pagetype,
+            $answersjson === null ? null : (string) $answersjson
         );
     }
 

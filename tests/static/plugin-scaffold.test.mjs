@@ -873,7 +873,7 @@ test('question bank blueprint import and export stay portable and API-backed', a
   assert.match(importExternal, /require_capability\('moodle\/question:add'/);
 });
 
-test('lesson content page lifecycle uses Moodle Lesson component APIs', async () => {
+test('lesson content and truefalse page lifecycle uses Moodle Lesson component APIs', async () => {
   const contract = JSON.parse(await fs.readFile(fromRoot('contract/operations.json'), 'utf8'));
   const byName = new Map(contract.operations.map((operation) => [operation.name, operation]));
   const services = await fs.readFile(fromRoot('plugin/moodlia/db/services.php'), 'utf8');
@@ -893,10 +893,17 @@ test('lesson content page lifecycle uses Moodle Lesson component APIs', async ()
   }
 
   assert.equal(byName.get('create_lesson_page')?.parameters.branches.type, 'object');
+  assert.equal(byName.get('create_lesson_page')?.parameters.branches.required, false);
+  assert.deepEqual(byName.get('create_lesson_page')?.parameters.page_type.enum, ['content', 'truefalse']);
+  assert.equal(byName.get('create_lesson_page')?.parameters.answers.type, 'object');
   assert.equal(byName.get('update_lesson_page')?.parameters.branches.required, false);
+  assert.equal(byName.get('update_lesson_page')?.parameters.answers.required, false);
   assert.equal(byName.get('create_lesson_page')?.returns.page.branches[0].jump_to, 'integer');
   assert.match(lessonTools, /CONTENT_PAGE_TYPE\s*=\s*20/);
+  assert.match(lessonTools, /TRUEFALSE_PAGE_TYPE\s*=\s*2/);
   assert.match(lessonTools, /function decode_branches/);
+  assert.match(lessonTools, /function decode_truefalse_answers/);
+  assert.match(lessonTools, /function truefalse_page_properties/);
   assert.match(lessonTools, /function get_page/);
   assert.match(createOperation, /\\lesson_page::create/);
   assert.match(updateOperation, /->update\(/);

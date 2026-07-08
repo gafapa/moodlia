@@ -579,10 +579,12 @@ export interface CreateLessonPageParameters {
   title: string;
   content: string;
   content_format?: number;
-  branches: JsonObject | string;
+  branches?: JsonObject | string;
   after_page_id?: number;
   display_in_menu?: boolean;
   horizontal?: boolean;
+  page_type?: "content" | "truefalse";
+  answers?: JsonObject | string;
 }
 
 export interface UpdateLessonPageParameters {
@@ -595,6 +597,7 @@ export interface UpdateLessonPageParameters {
   branches?: JsonObject | string;
   display_in_menu?: boolean;
   horizontal?: boolean;
+  answers?: JsonObject | string;
 }
 
 export interface DeleteLessonPageParameters {

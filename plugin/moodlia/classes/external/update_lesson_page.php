@@ -45,6 +45,7 @@ class update_lesson_page extends external_api {
             'branches' => new external_value(PARAM_RAW, 'Optional JSON object with a branches array', VALUE_DEFAULT, null, NULL_ALLOWED),
             'display_in_menu' => new external_value(PARAM_BOOL, 'Optional Lesson menu display setting', VALUE_DEFAULT, null, NULL_ALLOWED),
             'horizontal' => new external_value(PARAM_BOOL, 'Optional branch layout setting', VALUE_DEFAULT, null, NULL_ALLOWED),
+            'answers' => new external_value(PARAM_RAW, 'Optional JSON object with answer definitions for question pages', VALUE_DEFAULT, null, NULL_ALLOWED),
         ]);
     }
 
@@ -62,7 +63,8 @@ class update_lesson_page extends external_api {
         ?int $content_format = null,
         ?string $branches = null,
         ?bool $display_in_menu = null,
-        ?bool $horizontal = null
+        ?bool $horizontal = null,
+        ?string $answers = null
     ): array {
         [
             'course_id' => $courseid,
@@ -74,6 +76,7 @@ class update_lesson_page extends external_api {
             'branches' => $branchesjson,
             'display_in_menu' => $displayinmenu,
             'horizontal' => $horizontal,
+            'answers' => $answersjson,
         ] = self::validate_parameters(self::execute_parameters(), [
             'course_id' => $course_id,
             'module_id' => $module_id,
@@ -84,6 +87,7 @@ class update_lesson_page extends external_api {
             'branches' => $branches,
             'display_in_menu' => $display_in_menu,
             'horizontal' => $horizontal,
+            'answers' => $answers,
         ]);
 
         $systemcontext = \context_system::instance();
@@ -105,7 +109,8 @@ class update_lesson_page extends external_api {
             $contentformat === null ? null : (int) $contentformat,
             $branchesjson === null ? null : (string) $branchesjson,
             $displayinmenu === null ? null : (bool) $displayinmenu,
-            $horizontal === null ? null : (bool) $horizontal
+            $horizontal === null ? null : (bool) $horizontal,
+            $answersjson === null ? null : (string) $answersjson
         );
     }
 

@@ -154,12 +154,30 @@ function assertLessonContentPage(result, created, expectedTitle, expectedContent
   assert.equal(result.page.module_id, created.course_module_id);
   assert.equal(result.page.lesson_id, created.instance_id);
   assert.equal(typeof result.page.page_id, 'number');
+  assert.equal(result.page.question_type, 20);
   assert.equal(result.page.title, expectedTitle);
   assert.match(result.page.content, new RegExp(expectedContent.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
   assert.equal(result.page.branches_count, result.page.branches.length);
   assert.ok(result.page.branches.some((branch) => branch.title === expectedBranchTitle));
   assert.equal(Array.isArray(result.page.answer_ids), true);
   assert.equal(Array.isArray(result.page.jumps), true);
+}
+
+function assertLessonTrueFalsePage(result, created, expectedTitle, expectedContent, expectedCorrectAnswer, expectedWrongAnswer) {
+  assert.equal(result.page.module_id, created.course_module_id);
+  assert.equal(result.page.lesson_id, created.instance_id);
+  assert.equal(typeof result.page.page_id, 'number');
+  assert.equal(result.page.question_type, 2);
+  assert.equal(result.page.title, expectedTitle);
+  assert.match(result.page.content, new RegExp(expectedContent.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  assert.equal(result.page.branches_count, 2);
+  assert.equal(result.page.branches.length, 2);
+  assert.ok(result.page.branches.some((answer) => answer.title === expectedCorrectAnswer && answer.score >= 0));
+  assert.ok(result.page.branches.some((answer) => answer.title === expectedWrongAnswer));
+  assert.equal(Array.isArray(result.page.answer_ids), true);
+  assert.equal(result.page.answer_ids.length, 2);
+  assert.equal(Array.isArray(result.page.jumps), true);
+  assert.equal(result.page.jumps.length, 2);
 }
 
 function assertLessonPossibleJumps(jumps, created) {
@@ -326,6 +344,56 @@ test('Lesson module lifecycle works through REST, MCP, and CLI', { skip: !hasCon
       'Finish'
     );
 
+    const restTrueFalsePage = await callRestFunction(toRestFunctionName(contract, 'create_lesson_page'), {
+      course_id: courseId,
+      module_id: restLesson.course_module_id,
+      page_type: 'truefalse',
+      title: `REST TrueFalse Lesson Page ${suffix}`,
+      content: `<p>REST truefalse lesson page content ${suffix}</p>`,
+      answers: JSON.stringify({
+        correct: { answer: 'True', response: 'Correct', jump_to: 'next_page', score: 1 },
+        wrong: { answer: 'False', response: 'Try again', jump_to: 'this_page', score: 0 }
+      })
+    });
+    assert.equal(restTrueFalsePage.created, true);
+    assertLessonTrueFalsePage(
+      restTrueFalsePage,
+      restLesson,
+      `REST TrueFalse Lesson Page ${suffix}`,
+      `REST truefalse lesson page content ${suffix}`,
+      'True',
+      'False'
+    );
+
+    const updatedRestTrueFalsePage = await callRestFunction(toRestFunctionName(contract, 'update_lesson_page'), {
+      course_id: courseId,
+      module_id: restLesson.course_module_id,
+      page_id: restTrueFalsePage.page.page_id,
+      title: `Updated REST TrueFalse Lesson Page ${suffix}`,
+      answers: JSON.stringify({
+        answers: [
+          { answer: 'Correct option', response: 'Correct', jump_to: 'next_page', score: 1 },
+          { answer: 'Wrong option', response: 'Review the page', jump_to: 'this_page', score: 0 }
+        ]
+      })
+    });
+    assert.equal(updatedRestTrueFalsePage.updated, true);
+    assertLessonTrueFalsePage(
+      updatedRestTrueFalsePage,
+      restLesson,
+      `Updated REST TrueFalse Lesson Page ${suffix}`,
+      `REST truefalse lesson page content ${suffix}`,
+      'Correct option',
+      'Wrong option'
+    );
+
+    const deletedRestTrueFalsePage = await callRestFunction(toRestFunctionName(contract, 'delete_lesson_page'), {
+      course_id: courseId,
+      module_id: restLesson.course_module_id,
+      page_id: restTrueFalsePage.page.page_id
+    });
+    assert.equal(deletedRestTrueFalsePage.deleted, true);
+
     const deletedRestPage = await callRestFunction(toRestFunctionName(contract, 'delete_lesson_page'), {
       course_id: courseId,
       module_id: restLesson.course_module_id,
@@ -424,6 +492,55 @@ test('Lesson module lifecycle works through REST, MCP, and CLI', { skip: !hasCon
     });
     assert.equal(updatedMcpPage.updated, true);
     assertLessonContentPage(updatedMcpPage, mcpLesson, `Updated MCP Lesson Page ${suffix}`, `MCP lesson page content ${suffix}`, 'Finish');
+
+    const mcpTrueFalsePage = await callMcpTool('create_lesson_page', {
+      course_id: courseId,
+      module_id: mcpLesson.course_module_id,
+      page_type: 'truefalse',
+      title: `MCP TrueFalse Lesson Page ${suffix}`,
+      content: `<p>MCP truefalse lesson page content ${suffix}</p>`,
+      answers: {
+        correct: { answer: 'True', response: 'Correct', jump_to: 'next_page', score: 1 },
+        wrong: { answer: 'False', response: 'Try again', jump_to: 'this_page', score: 0 }
+      }
+    });
+    assert.equal(mcpTrueFalsePage.created, true);
+    assertLessonTrueFalsePage(
+      mcpTrueFalsePage,
+      mcpLesson,
+      `MCP TrueFalse Lesson Page ${suffix}`,
+      `MCP truefalse lesson page content ${suffix}`,
+      'True',
+      'False'
+    );
+
+    const updatedMcpTrueFalsePage = await callMcpTool('update_lesson_page', {
+      course_id: courseId,
+      module_id: mcpLesson.course_module_id,
+      page_id: mcpTrueFalsePage.page.page_id,
+      answers: {
+        answers: [
+          { answer: 'Correct option', response: 'Correct', jump_to: 'next_page', score: 1 },
+          { answer: 'Wrong option', response: 'Review the page', jump_to: 'this_page', score: 0 }
+        ]
+      }
+    });
+    assert.equal(updatedMcpTrueFalsePage.updated, true);
+    assertLessonTrueFalsePage(
+      updatedMcpTrueFalsePage,
+      mcpLesson,
+      `MCP TrueFalse Lesson Page ${suffix}`,
+      `MCP truefalse lesson page content ${suffix}`,
+      'Correct option',
+      'Wrong option'
+    );
+
+    const deletedMcpTrueFalsePage = await callMcpTool('delete_lesson_page', {
+      course_id: courseId,
+      module_id: mcpLesson.course_module_id,
+      page_id: mcpTrueFalsePage.page.page_id
+    });
+    assert.equal(deletedMcpTrueFalsePage.deleted, true);
 
     const deletedMcpPage = await callMcpTool('delete_lesson_page', {
       course_id: courseId,
@@ -532,6 +649,58 @@ test('Lesson module lifecycle works through REST, MCP, and CLI', { skip: !hasCon
     ]);
     assert.equal(updatedCliPage.updated, true);
     assertLessonContentPage(updatedCliPage, cliLesson, `Updated CLI Lesson Page ${suffix}`, `CLI lesson page content ${suffix}`, 'Finish');
+
+    const cliTrueFalsePage = await callCli([
+      'create-lesson-page',
+      '--course-id', String(courseId),
+      '--module-id', String(cliLesson.course_module_id),
+      '--page-type', 'truefalse',
+      '--title', `CLI TrueFalse Lesson Page ${suffix}`,
+      '--content', `<p>CLI truefalse lesson page content ${suffix}</p>`,
+      '--answers', JSON.stringify({
+        correct: { answer: 'True', response: 'Correct', jump_to: 'next_page', score: 1 },
+        wrong: { answer: 'False', response: 'Try again', jump_to: 'this_page', score: 0 }
+      })
+    ]);
+    assert.equal(cliTrueFalsePage.created, true);
+    assertLessonTrueFalsePage(
+      cliTrueFalsePage,
+      cliLesson,
+      `CLI TrueFalse Lesson Page ${suffix}`,
+      `CLI truefalse lesson page content ${suffix}`,
+      'True',
+      'False'
+    );
+
+    const updatedCliTrueFalsePage = await callCli([
+      'update-lesson-page',
+      '--course-id', String(courseId),
+      '--module-id', String(cliLesson.course_module_id),
+      '--page-id', String(cliTrueFalsePage.page.page_id),
+      '--answers', JSON.stringify({
+        answers: [
+          { answer: 'Correct option', response: 'Correct', jump_to: 'next_page', score: 1 },
+          { answer: 'Wrong option', response: 'Review the page', jump_to: 'this_page', score: 0 }
+        ]
+      })
+    ]);
+    assert.equal(updatedCliTrueFalsePage.updated, true);
+    assertLessonTrueFalsePage(
+      updatedCliTrueFalsePage,
+      cliLesson,
+      `CLI TrueFalse Lesson Page ${suffix}`,
+      `CLI truefalse lesson page content ${suffix}`,
+      'Correct option',
+      'Wrong option'
+    );
+
+    const deletedCliTrueFalsePage = await callCli([
+      'delete-lesson-page',
+      '--course-id', String(courseId),
+      '--module-id', String(cliLesson.course_module_id),
+      '--page-id', String(cliTrueFalsePage.page.page_id)
+    ]);
+    assert.equal(deletedCliTrueFalsePage.deleted, true);
 
     const deletedCliPage = await callCli([
       'delete-lesson-page',

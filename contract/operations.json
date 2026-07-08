@@ -5572,7 +5572,7 @@
     },
     {
       "name": "create_lesson_page",
-      "summary": "Create a content page in a Moodle Lesson activity.",
+      "summary": "Create a content or truefalse question page in a Moodle Lesson activity.",
       "type": "write",
       "context": "module",
       "capabilities": [
@@ -5607,7 +5607,7 @@
         },
         "branches": {
           "type": "object",
-          "required": true
+          "required": false
         },
         "after_page_id": {
           "type": "integer",
@@ -5619,6 +5619,18 @@
         },
         "horizontal": {
           "type": "boolean",
+          "required": false
+        },
+        "page_type": {
+          "type": "string",
+          "required": false,
+          "enum": [
+            "content",
+            "truefalse"
+          ]
+        },
+        "answers": {
+          "type": "object",
           "required": false
         }
       },
@@ -5682,7 +5694,7 @@
     },
     {
       "name": "update_lesson_page",
-      "summary": "Update a content page in a Moodle Lesson activity.",
+      "summary": "Update a content or truefalse question page in a Moodle Lesson activity.",
       "type": "write",
       "context": "module",
       "capabilities": [
@@ -5729,6 +5741,10 @@
         },
         "horizontal": {
           "type": "boolean",
+          "required": false
+        },
+        "answers": {
+          "type": "object",
           "required": false
         }
       },
