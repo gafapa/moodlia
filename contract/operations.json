@@ -5572,7 +5572,7 @@
     },
     {
       "name": "create_lesson_page",
-      "summary": "Create a content or truefalse question page in a Moodle Lesson activity.",
+      "summary": "Create a content or supported question page in a Moodle Lesson activity.",
       "type": "write",
       "context": "module",
       "capabilities": [
@@ -5626,6 +5626,7 @@
           "required": false,
           "enum": [
             "content",
+            "multichoice",
             "truefalse"
           ]
         },
@@ -5694,7 +5695,7 @@
     },
     {
       "name": "update_lesson_page",
-      "summary": "Update a content or truefalse question page in a Moodle Lesson activity.",
+      "summary": "Update a content or supported question page in a Moodle Lesson activity.",
       "type": "write",
       "context": "module",
       "capabilities": [

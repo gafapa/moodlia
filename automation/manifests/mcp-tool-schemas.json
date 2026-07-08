@@ -87,6 +87,7 @@
     "create_lesson_page": {
       "page_type": [
         "content",
+        "multichoice",
         "truefalse"
       ]
     },

@@ -868,7 +868,7 @@ final class manifest {
             ],
             [
                 'name' => 'create_lesson_page',
-                'description' => 'Create a content or truefalse question page in a Moodle Lesson activity.',
+                'description' => 'Create a content or supported question page in a Moodle Lesson activity.',
                 'inputSchema' => self::schema([
                     'course_id' => ['type' => 'integer', 'required' => true],
                     'module_id' => ['type' => 'integer', 'required' => true],
@@ -879,13 +879,13 @@ final class manifest {
                     'after_page_id' => ['type' => 'integer', 'required' => false],
                     'display_in_menu' => ['type' => 'boolean', 'required' => false],
                     'horizontal' => ['type' => 'boolean', 'required' => false],
-                    'page_type' => ['type' => 'string', 'required' => false, 'enum' => ['content', 'truefalse']],
+                    'page_type' => ['type' => 'string', 'required' => false, 'enum' => ['content', 'multichoice', 'truefalse']],
                     'answers' => ['type' => 'object', 'required' => false],
                 ]),
             ],
             [
                 'name' => 'update_lesson_page',
-                'description' => 'Update a content or truefalse question page in a Moodle Lesson activity.',
+                'description' => 'Update a content or supported question page in a Moodle Lesson activity.',
                 'inputSchema' => self::schema([
                     'course_id' => ['type' => 'integer', 'required' => true],
                     'module_id' => ['type' => 'integer', 'required' => true],

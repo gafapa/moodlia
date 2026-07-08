@@ -275,7 +275,7 @@ test('MoodleClient validates operation parameters against the contract', async (
   );
 });
 
-test('Lesson page parameter validation rejects invalid truefalse payload shapes early', () => {
+test('Lesson page parameter validation rejects invalid question payload shapes early', () => {
   const operation = {
     name: 'create_lesson_page',
     parameters: {
@@ -284,7 +284,7 @@ test('Lesson page parameter validation rejects invalid truefalse payload shapes 
       title: { type: 'string', required: true },
       content: { type: 'string', required: true },
       branches: { type: 'object', required: false },
-      page_type: { type: 'string', required: false, enum: ['content', 'truefalse'] },
+      page_type: { type: 'string', required: false, enum: ['content', 'multichoice', 'truefalse'] },
       answers: { type: 'object', required: false }
     }
   };
@@ -319,7 +319,7 @@ test('Lesson page parameter validation rejects invalid truefalse payload shapes 
       content: '<p>Check this.</p>',
       page_type: 'essay'
     }),
-    /page_type must be one of: content, truefalse/
+    /page_type must be one of: content, multichoice, truefalse/
   );
 
   assert.throws(

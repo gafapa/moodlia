@@ -45,7 +45,7 @@ class create_lesson_page extends external_api {
             'after_page_id' => new external_value(PARAM_INT, 'Insert after this Lesson page id, or 0 for first', VALUE_DEFAULT, 0),
             'display_in_menu' => new external_value(PARAM_BOOL, 'Whether the page appears in the Lesson menu', VALUE_DEFAULT, true),
             'horizontal' => new external_value(PARAM_BOOL, 'Whether branch buttons use horizontal layout', VALUE_DEFAULT, true),
-            'page_type' => new external_value(PARAM_ALPHA, 'Lesson page type: content or truefalse', VALUE_DEFAULT, 'content'),
+            'page_type' => new external_value(PARAM_ALPHA, 'Lesson page type: content, truefalse, or multichoice', VALUE_DEFAULT, 'content'),
             'answers' => new external_value(PARAM_RAW, 'Optional JSON object with answer definitions for question pages', VALUE_DEFAULT, null, NULL_ALLOWED),
         ]);
     }

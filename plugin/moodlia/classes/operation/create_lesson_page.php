@@ -70,7 +70,7 @@ class create_lesson_page {
                 throw new \invalid_parameter_exception('branches is required for content Lesson pages.');
             }
             if ($answersjson !== null && trim($answersjson) !== '') {
-                throw new \invalid_parameter_exception('answers is only supported for truefalse Lesson pages.');
+                throw new \invalid_parameter_exception('answers is only supported for Lesson question pages.');
             }
 
             $properties = lesson_tools::content_page_properties(
@@ -83,7 +83,7 @@ class create_lesson_page {
                 $displayinmenu,
                 $horizontal
             );
-        } else {
+        } elseif ($pagetype === 'truefalse') {
             if ($branchesjson !== null && trim($branchesjson) !== '') {
                 throw new \invalid_parameter_exception('branches is only supported for content Lesson pages.');
             }
@@ -97,6 +97,22 @@ class create_lesson_page {
                 $content,
                 $contentformat,
                 lesson_tools::decode_truefalse_answers($answersjson),
+                $afterpageid
+            );
+        } else {
+            if ($branchesjson !== null && trim($branchesjson) !== '') {
+                throw new \invalid_parameter_exception('branches is only supported for content Lesson pages.');
+            }
+            if ($answersjson === null || trim($answersjson) === '') {
+                throw new \invalid_parameter_exception('answers is required for multichoice Lesson pages.');
+            }
+
+            $properties = lesson_tools::multichoice_page_properties(
+                $lesson,
+                $title,
+                $content,
+                $contentformat,
+                lesson_tools::decode_multichoice_answers($answersjson),
                 $afterpageid
             );
         }

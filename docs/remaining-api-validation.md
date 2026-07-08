@@ -37,7 +37,7 @@ Required evidence before broadening implementation:
 
 ## Lesson Page Mutation
 
-Status: partially implemented for content pages and truefalse question pages.
+Status: partially implemented for content pages, truefalse question pages, and multichoice question pages.
 
 Moodle 4.5 has `lesson_page::create(...)`, `lesson_page::update(...)`, and page `delete()` methods. MoodlIA now exposes a narrow content-page contract that creates, updates, and deletes Lesson content pages and their branch jumps through those component APIs. It also exposes truefalse question-page creation and update through the same page component APIs, using exactly two answer editors, response editors, jumps, and scores. The operation intentionally does not expose arbitrary Lesson question page types yet, because each page type has its own answer, scoring, file, and jump payload contract.
 
@@ -48,7 +48,7 @@ Primary sources:
 
 Implemented evidence:
 
-- Supported page types are limited to content pages with branch definitions and truefalse question pages with exactly two answers.
+- Supported page types are limited to content pages with branch definitions, truefalse question pages with exactly two answers, and multichoice question pages with single-answer or multi-answer choices.
 - Truefalse answer payloads validate non-empty unique answer text, response text, Moodle text formats, jump targets, and numeric scores before delegating to Moodle's page APIs.
 - Ownership checks verify that every target page belongs to the selected Lesson module before update or delete.
 - Static coverage requires contract, REST, MCP, CLI, services, helper APIs, and smoke syntax for content and truefalse create/update/delete.

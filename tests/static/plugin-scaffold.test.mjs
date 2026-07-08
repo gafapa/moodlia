@@ -894,16 +894,20 @@ test('lesson content and truefalse page lifecycle uses Moodle Lesson component A
 
   assert.equal(byName.get('create_lesson_page')?.parameters.branches.type, 'object');
   assert.equal(byName.get('create_lesson_page')?.parameters.branches.required, false);
-  assert.deepEqual(byName.get('create_lesson_page')?.parameters.page_type.enum, ['content', 'truefalse']);
+  assert.deepEqual(byName.get('create_lesson_page')?.parameters.page_type.enum, ['content', 'multichoice', 'truefalse']);
   assert.equal(byName.get('create_lesson_page')?.parameters.answers.type, 'object');
   assert.equal(byName.get('update_lesson_page')?.parameters.branches.required, false);
   assert.equal(byName.get('update_lesson_page')?.parameters.answers.required, false);
   assert.equal(byName.get('create_lesson_page')?.returns.page.branches[0].jump_to, 'integer');
   assert.match(lessonTools, /CONTENT_PAGE_TYPE\s*=\s*20/);
   assert.match(lessonTools, /TRUEFALSE_PAGE_TYPE\s*=\s*2/);
+  assert.match(lessonTools, /MULTICHOICE_PAGE_TYPE\s*=\s*3/);
   assert.match(lessonTools, /function decode_branches/);
   assert.match(lessonTools, /function decode_truefalse_answers/);
+  assert.match(lessonTools, /function decode_multichoice_answers/);
   assert.match(lessonTools, /function truefalse_page_properties/);
+  assert.match(lessonTools, /function multichoice_page_properties/);
+  assert.match(lessonTools, /function multichoice_answers_from_page/);
   assert.match(lessonTools, /function get_page/);
   assert.match(createOperation, /\\lesson_page::create/);
   assert.match(updateOperation, /->update\(/);

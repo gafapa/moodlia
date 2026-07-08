@@ -583,7 +583,7 @@ export interface CreateLessonPageParameters {
   after_page_id?: number;
   display_in_menu?: boolean;
   horizontal?: boolean;
-  page_type?: "content" | "truefalse";
+  page_type?: "content" | "multichoice" | "truefalse";
   answers?: JsonObject | string;
 }
 

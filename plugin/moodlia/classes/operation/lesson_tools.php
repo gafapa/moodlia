@@ -28,6 +28,9 @@ class lesson_tools {
     /** Moodle Lesson true/false question page type id. */
     private const TRUEFALSE_PAGE_TYPE = 2;
 
+    /** Moodle Lesson multichoice question page type id. */
+    private const MULTICHOICE_PAGE_TYPE = 3;
+
     /**
      * Load Moodle Lesson APIs.
      */
@@ -241,11 +244,13 @@ class lesson_tools {
             'branch_table' => 'content',
             'true_false' => 'truefalse',
             'true-false' => 'truefalse',
+            'multiple_choice' => 'multichoice',
+            'multiple-choice' => 'multichoice',
         ];
         $normalized = $aliases[$normalized] ?? $normalized;
 
-        if (!in_array($normalized, ['content', 'truefalse'], true)) {
-            throw new \invalid_parameter_exception('page_type must be content or truefalse.');
+        if (!in_array($normalized, ['content', 'truefalse', 'multichoice'], true)) {
+            throw new \invalid_parameter_exception('page_type must be content, truefalse, or multichoice.');
         }
 
         return $normalized;
@@ -269,6 +274,16 @@ class lesson_tools {
      */
     public static function is_truefalse_page(\stdClass $properties): bool {
         return (int) ($properties->qtype ?? 0) === self::TRUEFALSE_PAGE_TYPE;
+    }
+
+    /**
+     * Return whether a Lesson page is a supported multichoice question page.
+     *
+     * @param \stdClass $properties Page properties.
+     * @return bool
+     */
+    public static function is_multichoice_page(\stdClass $properties): bool {
+        return (int) ($properties->qtype ?? 0) === self::MULTICHOICE_PAGE_TYPE;
     }
 
     /**
@@ -322,6 +337,71 @@ class lesson_tools {
         }
 
         return $answers;
+    }
+
+    /**
+     * Decode and validate Lesson multichoice answers.
+     *
+     * @param string $answersjson JSON object with answers and optional multi_answer.
+     * @return array
+     */
+    public static function decode_multichoice_answers(string $answersjson): array {
+        $decoded = json_decode($answersjson, true);
+        if (!is_array($decoded)) {
+            throw new \invalid_parameter_exception('answers must be a JSON object.');
+        }
+
+        $items = self::is_list_array($decoded) ? $decoded : ($decoded['answers'] ?? null);
+        if (!is_array($items) || !self::is_list_array($items) || count($items) < 2) {
+            throw new \invalid_parameter_exception('answers must contain at least two multichoice answers.');
+        }
+
+        $answers = [];
+        $seen = [];
+        $positive = 0;
+        foreach ($items as $index => $item) {
+            if (!is_array($item)) {
+                throw new \invalid_parameter_exception('Each multichoice answer must be an object.');
+            }
+
+            $answer = trim((string) ($item['answer'] ?? $item['title'] ?? $item['label'] ?? ''));
+            if ($answer === '') {
+                throw new \invalid_parameter_exception('Each multichoice answer text must be non-empty.');
+            }
+
+            $key = strtolower($answer);
+            if (array_key_exists($key, $seen)) {
+                throw new \invalid_parameter_exception('multichoice answer texts must be unique.');
+            }
+            $seen[$key] = true;
+
+            $score = self::normalise_score($item['score'] ?? ($index === 0 ? 1 : 0));
+            if ($score > 0) {
+                $positive++;
+            }
+
+            $answers[] = [
+                'answer' => $answer,
+                'answer_format' => self::normalise_text_format($item['answer_format'] ?? $item['title_format'] ?? FORMAT_HTML, 'answer_format'),
+                'response' => (string) ($item['response'] ?? ''),
+                'response_format' => self::normalise_text_format($item['response_format'] ?? FORMAT_HTML, 'response_format'),
+                'jump_to' => self::normalise_jump($item['jump_to'] ?? $item['jumpto'] ?? ($index === 0 ? -1 : 0), 'answer jump_to'),
+                'score' => $score,
+            ];
+        }
+
+        $multianswer = (bool) ($decoded['multi_answer'] ?? $decoded['multianswer'] ?? false);
+        if (!$multianswer && $positive !== 1) {
+            throw new \invalid_parameter_exception('Single-answer multichoice pages require exactly one positive-score answer.');
+        }
+        if ($multianswer && $positive === 0) {
+            throw new \invalid_parameter_exception('Multi-answer multichoice pages require at least one positive-score answer.');
+        }
+
+        return [
+            'multi_answer' => $multianswer,
+            'answers' => $answers,
+        ];
     }
 
     /**
@@ -443,6 +523,69 @@ class lesson_tools {
     }
 
     /**
+     * Build Moodle Lesson page properties for a multichoice question page.
+     *
+     * @param \lesson $lesson Lesson domain object.
+     * @param string $title Page title.
+     * @param string $content Page content.
+     * @param int $contentformat Content format.
+     * @param array $definition Normalized multichoice answers.
+     * @param int $afterpageid Previous page id or 0 for first.
+     * @return \stdClass
+     */
+    public static function multichoice_page_properties(
+        \lesson $lesson,
+        string $title,
+        string $content,
+        int $contentformat,
+        array $definition,
+        int $afterpageid = 0
+    ): \stdClass {
+        $title = trim($title);
+        if ($title === '') {
+            throw new \invalid_parameter_exception('title must be non-empty.');
+        }
+
+        $answers = $definition['answers'] ?? [];
+        if (count($answers) < 2) {
+            throw new \invalid_parameter_exception('multichoice pages require at least two answers.');
+        }
+        if (count($answers) > (int) $lesson->maxanswers) {
+            throw new \invalid_parameter_exception('multichoice answer count must not exceed the Lesson max_answers setting.');
+        }
+
+        $properties = (object) [
+            'title' => $title,
+            'contents_editor' => [
+                'text' => $content,
+                'format' => $contentformat,
+            ],
+            'qtype' => self::MULTICHOICE_PAGE_TYPE,
+            'qoption' => !empty($definition['multi_answer']) ? 1 : 0,
+            'pageid' => max(0, $afterpageid),
+            'answer_editor' => [],
+            'response_editor' => [],
+            'jumpto' => [],
+            'score' => [],
+        ];
+
+        foreach ($answers as $index => $answer) {
+            $properties->answer_editor[$index] = [
+                'text' => $answer['answer'],
+                'format' => $answer['answer_format'],
+            ];
+            $properties->response_editor[$index] = [
+                'text' => $answer['response'],
+                'format' => $answer['response_format'],
+            ];
+            $properties->jumpto[$index] = $answer['jump_to'];
+            $properties->score[$index] = $answer['score'];
+        }
+
+        return $properties;
+    }
+
+    /**
      * Return current content-page branches for update preservation.
      *
      * @param \lesson_page $page Lesson page object.
@@ -494,6 +637,40 @@ class lesson_tools {
         }
 
         return $answers;
+    }
+
+    /**
+     * Return current multichoice answers for update preservation.
+     *
+     * @param \lesson_page $page Lesson page object.
+     * @return array
+     */
+    public static function multichoice_answers_from_page(\lesson_page $page): array {
+        $properties = $page->properties();
+        $answers = [];
+        foreach ($page->get_answers() as $answer) {
+            $text = (string) ($answer->answer ?? '');
+            if ($text === '') {
+                continue;
+            }
+            $answers[] = [
+                'answer' => $text,
+                'answer_format' => (int) ($answer->answerformat ?? FORMAT_HTML),
+                'response' => (string) ($answer->response ?? ''),
+                'response_format' => (int) ($answer->responseformat ?? FORMAT_HTML),
+                'jump_to' => (int) ($answer->jumpto ?? 0),
+                'score' => (float) ($answer->score ?? 0),
+            ];
+        }
+
+        if (count($answers) < 2) {
+            throw new \invalid_parameter_exception('Existing multichoice page must contain at least two answers before update.');
+        }
+
+        return [
+            'multi_answer' => (int) ($properties->qoption ?? 0) === 1,
+            'answers' => $answers,
+        ];
     }
 
     /**

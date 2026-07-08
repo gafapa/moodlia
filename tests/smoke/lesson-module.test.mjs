@@ -180,6 +180,25 @@ function assertLessonTrueFalsePage(result, created, expectedTitle, expectedConte
   assert.equal(result.page.jumps.length, 2);
 }
 
+function assertLessonMultichoicePage(result, created, expectedTitle, expectedContent, expectedAnswers, expectedMultiAnswer = false) {
+  assert.equal(result.page.module_id, created.course_module_id);
+  assert.equal(result.page.lesson_id, created.instance_id);
+  assert.equal(typeof result.page.page_id, 'number');
+  assert.equal(result.page.question_type, 3);
+  assert.equal(result.page.question_option, expectedMultiAnswer ? 1 : 0);
+  assert.equal(result.page.title, expectedTitle);
+  assert.match(result.page.content, new RegExp(expectedContent.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  assert.equal(result.page.branches_count, expectedAnswers.length);
+  assert.equal(result.page.branches.length, expectedAnswers.length);
+  for (const expectedAnswer of expectedAnswers) {
+    assert.ok(result.page.branches.some((answer) => answer.title === expectedAnswer));
+  }
+  assert.equal(Array.isArray(result.page.answer_ids), true);
+  assert.equal(result.page.answer_ids.length, expectedAnswers.length);
+  assert.equal(Array.isArray(result.page.jumps), true);
+  assert.equal(result.page.jumps.length, expectedAnswers.length);
+}
+
 function assertLessonPossibleJumps(jumps, created) {
   assert.equal(jumps.module_id, created.course_module_id);
   assert.equal(jumps.lesson_id, created.instance_id);
@@ -393,6 +412,61 @@ test('Lesson module lifecycle works through REST, MCP, and CLI', { skip: !hasCon
       page_id: restTrueFalsePage.page.page_id
     });
     assert.equal(deletedRestTrueFalsePage.deleted, true);
+
+    const restMultichoicePage = await callRestFunction(toRestFunctionName(contract, 'create_lesson_page'), {
+      course_id: courseId,
+      module_id: restLesson.course_module_id,
+      page_type: 'multichoice',
+      title: `REST Multichoice Lesson Page ${suffix}`,
+      content: `<p>REST multichoice lesson page content ${suffix}</p>`,
+      answers: JSON.stringify({
+        multi_answer: false,
+        answers: [
+          { answer: 'Best option', response: 'Correct', jump_to: 'next_page', score: 1 },
+          { answer: 'Distractor', response: 'Review the content', jump_to: 'this_page', score: 0 },
+          { answer: 'Another distractor', response: 'Try again', jump_to: 'this_page', score: 0 }
+        ]
+      })
+    });
+    assert.equal(restMultichoicePage.created, true);
+    assertLessonMultichoicePage(
+      restMultichoicePage,
+      restLesson,
+      `REST Multichoice Lesson Page ${suffix}`,
+      `REST multichoice lesson page content ${suffix}`,
+      ['Best option', 'Distractor', 'Another distractor']
+    );
+
+    const updatedRestMultichoicePage = await callRestFunction(toRestFunctionName(contract, 'update_lesson_page'), {
+      course_id: courseId,
+      module_id: restLesson.course_module_id,
+      page_id: restMultichoicePage.page.page_id,
+      title: `Updated REST Multichoice Lesson Page ${suffix}`,
+      answers: JSON.stringify({
+        multi_answer: true,
+        answers: [
+          { answer: 'First valid option', response: 'Correct', jump_to: 'next_page', score: 1 },
+          { answer: 'Second valid option', response: 'Correct', jump_to: 'next_page', score: 1 },
+          { answer: 'Invalid option', response: 'Review the content', jump_to: 'this_page', score: 0 }
+        ]
+      })
+    });
+    assert.equal(updatedRestMultichoicePage.updated, true);
+    assertLessonMultichoicePage(
+      updatedRestMultichoicePage,
+      restLesson,
+      `Updated REST Multichoice Lesson Page ${suffix}`,
+      `REST multichoice lesson page content ${suffix}`,
+      ['First valid option', 'Second valid option', 'Invalid option'],
+      true
+    );
+
+    const deletedRestMultichoicePage = await callRestFunction(toRestFunctionName(contract, 'delete_lesson_page'), {
+      course_id: courseId,
+      module_id: restLesson.course_module_id,
+      page_id: restMultichoicePage.page.page_id
+    });
+    assert.equal(deletedRestMultichoicePage.deleted, true);
 
     const deletedRestPage = await callRestFunction(toRestFunctionName(contract, 'delete_lesson_page'), {
       course_id: courseId,
