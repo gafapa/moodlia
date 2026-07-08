@@ -103,11 +103,24 @@ function workshopGradingFormDefinition(suffix) {
   };
 }
 
+function workshopCommentsFormDefinition(suffix) {
+  return {
+    dimensions: [
+      {
+        description: `<p>Content feedback ${suffix}</p>`
+      },
+      {
+        description: `<p>Practical feedback ${suffix}</p>`
+      }
+    ]
+  };
+}
+
 function assertWorkshopGradingForm(form, expected) {
   assert.equal(form.course_id, expected.courseId);
   assert.equal(form.module_id, expected.moduleId);
   assert.equal(form.workshop_id, expected.workshopId);
-  assert.equal(form.strategy, 'accumulative');
+  assert.equal(form.strategy, expected.strategy ?? 'accumulative');
   assert.equal(form.updated, true);
   assert.equal(form.dimensions_count, expected.dimensionsCount);
   const dimensions = JSON.parse(form.dimensions_json);
@@ -297,6 +310,36 @@ test('Workshop module lifecycle works through REST, MCP, and CLI', { skip: !hasC
       course_id: courseId,
       name: sectionName
     });
+
+    const restCommentsOptions = workshopOptions(suffix, { strategy: 'comments' });
+    const restCommentsWorkshop = await callRestFunction(toRestFunctionName(contract, 'create_module'), {
+      course_id: courseId,
+      section_number: section.section_number,
+      module_type: 'workshop',
+      name: `MoodlIA REST Comments Workshop ${suffix}`,
+      options: JSON.stringify(restCommentsOptions)
+    });
+    assert.equal(restCommentsWorkshop.module_type, 'workshop');
+
+    const restCommentsGradingForm = await callRestFunction(toRestFunctionName(contract, 'set_workshop_grading_form'), {
+      course_id: courseId,
+      module_id: restCommentsWorkshop.course_module_id,
+      strategy: 'comments',
+      definition: JSON.stringify(workshopCommentsFormDefinition(suffix))
+    });
+    assertWorkshopGradingForm(restCommentsGradingForm, {
+      courseId,
+      moduleId: restCommentsWorkshop.course_module_id,
+      workshopId: restCommentsWorkshop.instance_id,
+      strategy: 'comments',
+      dimensionsCount: 2
+    });
+
+    const deletedRestCommentsWorkshop = await callRestFunction(toRestFunctionName(contract, 'delete_module'), {
+      course_id: courseId,
+      module_id: restCommentsWorkshop.course_module_id
+    });
+    assert.equal(deletedRestCommentsWorkshop.deleted, true);
 
     const restOptions = workshopOptions(suffix);
     const restWorkshop = await callRestFunction(toRestFunctionName(contract, 'create_module'), {

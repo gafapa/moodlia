@@ -576,13 +576,14 @@ moodlia get-workshop-user-plan --course-id <course_id> --module-id <workshop_mod
 moodlia get-workshop-submissions --course-id <course_id> --module-id <workshop_module_id>
 ```
 
-Configure an accumulative Workshop grading form while the Workshop is still in setup phase:
+Configure a Workshop grading form while the Workshop is still in setup phase:
 
 ```text
 moodlia set-workshop-grading-form --course-id <course_id> --module-id <workshop_module_id> --strategy accumulative --definition '{"dimensions":[{"description":"<p>Content quality</p>","grade":10,"weight":1},{"description":"<p>Practical applicability</p>","grade":10,"weight":1}]}'
+moodlia set-workshop-grading-form --course-id <course_id> --module-id <workshop_module_id> --strategy comments --definition '{"dimensions":[{"description":"<p>Content feedback</p>"},{"description":"<p>Practical feedback</p>"}]}'
 ```
 
-Workshop grading-form writes currently support the active `accumulative` strategy only. Rubric and other strategy definitions remain intentionally separate until their Moodle subplugin payloads are validated.
+Workshop grading-form writes currently support the active `accumulative` and `comments` strategies only. Rubric and other strategy definitions remain intentionally separate until their Moodle subplugin payloads are validated.
 
 Create and manage Lesson content pages and truefalse question pages:
 

@@ -152,6 +152,45 @@ class workshop_tools {
     }
 
     /**
+     * Decode and validate a comments grading-form definition.
+     *
+     * @param string $definitionjson JSON object with a dimensions array.
+     * @return array
+     */
+    public static function decode_comments_definition(string $definitionjson): array {
+        $decoded = json_decode($definitionjson, true);
+        if (!is_array($decoded) || !isset($decoded['dimensions']) || !is_array($decoded['dimensions'])) {
+            throw new \invalid_parameter_exception('definition must be a JSON object with a dimensions array.');
+        }
+        if (count($decoded['dimensions']) === 0) {
+            throw new \invalid_parameter_exception('definition.dimensions must contain at least one dimension.');
+        }
+
+        $dimensions = [];
+        $seen = [];
+        foreach ($decoded['dimensions'] as $dimension) {
+            if (!is_array($dimension)) {
+                throw new \invalid_parameter_exception('Each dimension must be an object.');
+            }
+            $description = trim((string) ($dimension['description'] ?? ''));
+            if ($description === '') {
+                throw new \invalid_parameter_exception('Each dimension description must be non-empty.');
+            }
+            $key = \core_text::strtolower(strip_tags($description));
+            if (array_key_exists($key, $seen)) {
+                throw new \invalid_parameter_exception('Comments dimensions must have unique descriptions.');
+            }
+            $seen[$key] = true;
+
+            $dimensions[] = [
+                'description' => $description,
+            ];
+        }
+
+        return $dimensions;
+    }
+
+    /**
      * Build form-shaped data for Workshop accumulative strategy saving.
      *
      * @param \workshop $workshop Workshop domain object.
@@ -186,6 +225,43 @@ class workshop_tools {
             ];
             $data->{'grade__idx_' . $index} = $dimension['grade'];
             $data->{'weight__idx_' . $index} = $dimension['weight'];
+            $index++;
+        }
+
+        return $data;
+    }
+
+    /**
+     * Build form-shaped data for Workshop comments strategy saving.
+     *
+     * @param \workshop $workshop Workshop domain object.
+     * @param array $dimensions New dimension rows.
+     * @param array $existing Existing dimension info keyed by id.
+     * @return \stdClass
+     */
+    public static function comments_edit_form_data(\workshop $workshop, array $dimensions, array $existing = []): \stdClass {
+        $data = new \stdClass();
+        $data->workshopid = (int) $workshop->id;
+        $data->norepeats = count($existing) + count($dimensions);
+
+        $index = 0;
+        foreach (array_keys($existing) as $dimensionid) {
+            $data->{'dimensionid__idx_' . $index} = (int) $dimensionid;
+            $data->{'description__idx_' . $index . '_editor'} = [
+                'text' => '',
+                'format' => FORMAT_HTML,
+                'itemid' => 0,
+            ];
+            $index++;
+        }
+
+        foreach ($dimensions as $dimension) {
+            $data->{'dimensionid__idx_' . $index} = 0;
+            $data->{'description__idx_' . $index . '_editor'} = [
+                'text' => $dimension['description'],
+                'format' => FORMAT_HTML,
+                'itemid' => 0,
+            ];
             $index++;
         }
 

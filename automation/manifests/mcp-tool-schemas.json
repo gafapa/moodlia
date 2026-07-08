@@ -132,7 +132,8 @@
     },
     "set_workshop_grading_form": {
       "strategy": [
-        "accumulative"
+        "accumulative",
+        "comments"
       ]
     },
     "evaluate_workshop_assessment": {

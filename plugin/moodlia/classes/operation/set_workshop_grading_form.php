@@ -19,7 +19,7 @@ namespace local_moodlia\operation;
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Creates or replaces a Workshop accumulative grading form through Moodle strategy APIs.
+ * Creates or replaces a supported Workshop grading form through Moodle strategy APIs.
  */
 class set_workshop_grading_form {
     /**
@@ -40,8 +40,8 @@ class set_workshop_grading_form {
         $workshop = workshop_tools::get_workshop_object($course, $cm);
         $strategy = clean_param($strategy, PARAM_PLUGIN);
 
-        if ($strategy !== 'accumulative') {
-            throw new \invalid_parameter_exception('strategy must be accumulative.');
+        if (!in_array($strategy, ['accumulative', 'comments'], true)) {
+            throw new \invalid_parameter_exception('strategy must be accumulative or comments.');
         }
         if ((string) $workshop->strategy !== $strategy) {
             throw new \invalid_parameter_exception('strategy must match the Workshop module strategy.');
@@ -50,12 +50,17 @@ class set_workshop_grading_form {
             throw new \invalid_parameter_exception('Workshop grading forms can only be changed in setup phase.');
         }
 
-        $dimensions = workshop_tools::decode_accumulative_definition($definitionjson);
         $strategyinstance = $workshop->grading_strategy_instance();
         $existing = $strategyinstance->get_dimensions_info();
-        $strategyinstance->save_edit_strategy_form(
-            workshop_tools::accumulative_edit_form_data($workshop, $dimensions, $existing)
-        );
+        if ($strategy === 'accumulative') {
+            $dimensions = workshop_tools::decode_accumulative_definition($definitionjson);
+            $formdata = workshop_tools::accumulative_edit_form_data($workshop, $dimensions, $existing);
+        } else {
+            $dimensions = workshop_tools::decode_comments_definition($definitionjson);
+            $formdata = workshop_tools::comments_edit_form_data($workshop, $dimensions, $existing);
+        }
+
+        $strategyinstance->save_edit_strategy_form($formdata);
 
         $updatedworkshop = workshop_tools::get_workshop_object($course, $cm);
         $updatedstrategy = $updatedworkshop->grading_strategy_instance();

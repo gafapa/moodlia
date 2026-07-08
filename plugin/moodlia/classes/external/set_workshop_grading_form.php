@@ -38,8 +38,8 @@ class set_workshop_grading_form extends external_api {
         return new external_function_parameters([
             'course_id' => new external_value(PARAM_INT, 'Moodle course id'),
             'module_id' => new external_value(PARAM_INT, 'Workshop course module id'),
-            'strategy' => new external_value(PARAM_PLUGIN, 'Workshop grading strategy. Currently supports accumulative only'),
-            'definition' => new external_value(PARAM_RAW, 'JSON object with accumulative dimensions'),
+            'strategy' => new external_value(PARAM_PLUGIN, 'Workshop grading strategy. Currently supports accumulative and comments'),
+            'definition' => new external_value(PARAM_RAW, 'JSON object with strategy dimensions'),
         ]);
     }
 

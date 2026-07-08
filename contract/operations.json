@@ -7377,7 +7377,7 @@
     },
     {
       "name": "set_workshop_grading_form",
-      "summary": "Create or replace an accumulative Moodle Workshop grading form.",
+      "summary": "Create or replace a supported Moodle Workshop grading form.",
       "type": "write",
       "context": "module",
       "capabilities": [
@@ -7402,7 +7402,8 @@
           "type": "string",
           "required": true,
           "enum": [
-            "accumulative"
+            "accumulative",
+            "comments"
           ]
         },
         "definition": {
