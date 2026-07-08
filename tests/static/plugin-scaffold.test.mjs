@@ -909,9 +909,16 @@ test('lesson content and truefalse page lifecycle uses Moodle Lesson component A
   assert.match(lessonTools, /function multichoice_page_properties/);
   assert.match(lessonTools, /function multichoice_answers_from_page/);
   assert.match(lessonTools, /function get_page/);
+  assert.doesNotMatch(lessonTools, /'qoption'\s*=>\s*!empty\(\$definition\['multi_answer'\]\)\s*\?\s*1\s*:\s*0/);
+  assert.match(lessonTools, /if \(!empty\(\$definition\['multi_answer'\]\)\)\s*{\s*\$properties->qoption = 1;/);
+  assert.match(lessonTools, /\$modulecontext\s*=\s*\\context_module::instance\(\(int\) \$cm->id\)/);
+  assert.match(lessonTools, /\$PAGE->set_context\(\$modulecontext\)/);
   assert.match(createOperation, /\\lesson_page::create/);
   assert.match(updateOperation, /->update\(/);
   assert.match(deleteOperation, /->delete\(/);
+  assert.match(createOperation, /get_lesson_object\(\$course, \$cm\)[\s\S]*prepare_page_context\(\$course, \$cm\)/);
+  assert.match(updateOperation, /get_lesson_object\(\$course, \$cm\)[\s\S]*prepare_page_context\(\$course, \$cm\)/);
+  assert.match(deleteOperation, /get_lesson_object\(\$course, \$cm\)[\s\S]*prepare_page_context\(\$course, \$cm\)/);
   assert.doesNotMatch(createOperation + updateOperation + deleteOperation, /\$DB\b/);
 });
 

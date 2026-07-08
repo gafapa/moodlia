@@ -200,6 +200,14 @@ sudo docker exec -w /var/www/html moodle php admin/cli/purge_caches.php
 
 The plugin path and CLI root are allowed to differ in this container layout. The plugin is installed under `/var/www/html/public/local/moodlia`; the upgrade CLI is run from whichever directory exposes `admin/cli`, commonly `/var/www/html`.
 
+Run PHP syntax checks on the server after copying or deploying the plugin:
+
+```text
+npm run plugin:php:lint:server
+```
+
+PHP checks should use the target Moodle server runtime. Do not treat local Windows PHP availability as a release requirement.
+
 ## Verify
 
 Run static checks locally:

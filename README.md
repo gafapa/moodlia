@@ -120,6 +120,12 @@ php admin/cli/upgrade.php --non-interactive
 php admin/cli/purge_caches.php
 ```
 
+PHP syntax checks should run on the target Moodle server after deployment so they use the same PHP runtime and plugin path as Moodle:
+
+```text
+npm run plugin:php:lint:server
+```
+
 The repository's Docker/WinSCP scripts are for the configured development/staging target. They are not required for normal Moodle servers. Use `DEPLOY_MODE=direct` with `npm run deploy:commands` to print generic server commands from your environment file.
 
 ## Release And Demo Commands

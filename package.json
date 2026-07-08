@@ -23,6 +23,7 @@
     "deploy:winscp:test": "node tools/run-winscp-script.mjs tools/winscp-connection-test.txt",
     "deploy:winscp": "node tools/run-winscp-script.mjs tools/winscp-deploy-template.txt D:\\tmp\\mcpapiclimoodle-winscp-deploy.log",
     "deploy:winscp:upgrade": "node tools/run-winscp-script.mjs tools/winscp-upgrade-only.txt D:\\tmp\\mcpapiclimoodle-winscp-upgrade.log",
+    "plugin:php:lint:server": "node tools/run-winscp-script.mjs tools/winscp-php-lint-plugin.txt D:\\tmp\\mcpapiclimoodle-php-lint.log",
     "npm:sync": "node tools/sync-npm-package.mjs",
     "npm:sync:check": "node tools/sync-npm-package.mjs --check",
     "npm:pack:dry-run": "node tools/pack-npm-package.mjs --dry-run",

@@ -55,8 +55,8 @@ class create_lesson_page {
 
         $course = course_tools::get_course($courseid);
         $cm = lesson_tools::get_lesson_module($course, $moduleid);
-        lesson_tools::prepare_page_context($course, $cm);
         $lesson = lesson_tools::get_lesson_object($course, $cm);
+        lesson_tools::prepare_page_context($course, $cm);
 
         if ($afterpageid > 0) {
             lesson_tools::get_page($lesson, $cm, $afterpageid);

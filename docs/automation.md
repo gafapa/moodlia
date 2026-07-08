@@ -147,6 +147,12 @@ npm run deploy:winscp:test
 npm run deploy:winscp
 ```
 
+Run PHP syntax checks on the Moodle server after deployment. This validates the plugin with the server PHP runtime and Moodle filesystem layout instead of a local developer machine:
+
+```text
+npm run plugin:php:lint:server
+```
+
 If files are already copied and only Moodle upgrade/cache purge is needed:
 
 ```text

@@ -111,8 +111,10 @@ class lesson_tools {
         global $PAGE;
 
         $cmrecord = get_coursemodule_from_id('lesson', (int) $cm->id, (int) $course->id, false, MUST_EXIST);
+        $modulecontext = \context_module::instance((int) $cm->id);
         $PAGE->set_course($course);
         $PAGE->set_cm($cmrecord, $course);
+        $PAGE->set_context($modulecontext);
 
         return $cmrecord;
     }
@@ -439,15 +441,19 @@ class lesson_tools {
                 'format' => $contentformat,
             ],
             'qtype' => self::CONTENT_PAGE_TYPE,
-            'qoption' => 0,
             'pageid' => max(0, $afterpageid),
-            'layout' => $horizontal ? 1 : 0,
-            'display' => $displayinmenu ? 1 : 0,
             'answer_editor' => [],
             'response_editor' => [],
             'jumpto' => [],
             'score' => [],
         ];
+
+        if ($horizontal) {
+            $properties->layout = 1;
+        }
+        if ($displayinmenu) {
+            $properties->display = 1;
+        }
 
         $index = 0;
         foreach (array_slice($branches, 0, max(1, (int) $lesson->maxanswers)) as $branch) {
@@ -561,13 +567,16 @@ class lesson_tools {
                 'format' => $contentformat,
             ],
             'qtype' => self::MULTICHOICE_PAGE_TYPE,
-            'qoption' => !empty($definition['multi_answer']) ? 1 : 0,
             'pageid' => max(0, $afterpageid),
             'answer_editor' => [],
             'response_editor' => [],
             'jumpto' => [],
             'score' => [],
         ];
+
+        if (!empty($definition['multi_answer'])) {
+            $properties->qoption = 1;
+        }
 
         foreach ($answers as $index => $answer) {
             $properties->answer_editor[$index] = [
