@@ -19,7 +19,7 @@ MoodlIA exposes activity subelements when Moodle provides a public API path that
 - Quiz question slots, attempts, attempt data, attempt review, review options, grades, and view events through Moodle Quiz APIs.
 - Wiki pages, subwikis, files, and view events through Moodle Wiki APIs.
 - Workshop phases, user plans, grades, grade reports, reviewer/submission assessment reads, allocations, assessment form-definition reads, assessment updates, assessment evaluation, and submissions through Moodle Workshop APIs.
-- Workshop accumulative, comments, and rubric grading form creation/replacement through Moodle Workshop grading strategy APIs, limited to setup phase and the active strategy.
+- Workshop accumulative, comments, number-of-errors, and rubric grading form creation/replacement through Moodle Workshop grading strategy APIs, limited to setup phase and the active strategy.
 
 ## Intentionally Not Exposed Yet
 
@@ -27,7 +27,7 @@ These areas remain blocked until a stable Moodle API path is identified and test
 
 - Feedback item types beyond textfield, textarea, numeric, multichoice, multichoicerated, label, info, and pagebreak creation, plus direct response-value mutation.
 - Lesson question page types beyond truefalse and unsupported answer/jump payloads beyond content-page branches and truefalse answers.
-- Workshop grading form strategies beyond accumulative, comments, and rubric, and standalone assessment creation outside Moodle's allocation flow.
+- Workshop grading form strategies beyond accumulative, comments, number-of-errors, and rubric, and standalone assessment creation outside Moodle's allocation flow.
 
 ## Required Standard Before Adding One
 
@@ -46,6 +46,6 @@ Every new subelement write must satisfy all of these conditions:
 
 1. Additional Feedback item types, only after validating the type-specific item class payload and smoke testing UI-visible item state.
 2. Additional Lesson question page types beyond truefalse, only after validating each page and answer class across the supported Moodle versions with ownership checks and smoke tests that confirm page order, jumps, scoring, and content.
-3. Additional Workshop grading form strategies beyond accumulative, comments, and rubric, only after identifying stable subplugin APIs, payload schemas, and capability boundaries.
+3. Additional Workshop grading form strategies beyond accumulative, comments, number-of-errors, and rubric, only after identifying stable subplugin APIs, payload schemas, and capability boundaries.
 
 See [remaining-api-validation.md](remaining-api-validation.md) for the current source-level validation notes and the evidence required before exposing these writes.

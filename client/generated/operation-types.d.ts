@@ -762,7 +762,7 @@ export interface GetWorkshopAssessmentFormDefinitionParameters {
 export interface SetWorkshopGradingFormParameters {
   course_id: number;
   module_id: number;
-  strategy: "accumulative" | "comments" | "rubric";
+  strategy: "accumulative" | "comments" | "numerrors" | "rubric";
   definition: JsonObject | string;
 }
 

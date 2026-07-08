@@ -7404,6 +7404,7 @@
             "enum": [
               "accumulative",
               "comments",
+              "numerrors",
               "rubric"
             ]
         },

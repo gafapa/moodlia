@@ -134,6 +134,7 @@
       "strategy": [
         "accumulative",
         "comments",
+        "numerrors",
         "rubric"
       ]
     },

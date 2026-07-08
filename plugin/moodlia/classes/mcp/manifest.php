@@ -1133,7 +1133,7 @@ final class manifest {
                 'inputSchema' => self::schema([
                     'course_id' => ['type' => 'integer', 'required' => true],
                     'module_id' => ['type' => 'integer', 'required' => true],
-                    'strategy' => ['type' => 'string', 'required' => true, 'enum' => ['accumulative', 'comments', 'rubric']],
+                    'strategy' => ['type' => 'string', 'required' => true, 'enum' => ['accumulative', 'comments', 'numerrors', 'rubric']],
                     'definition' => ['type' => 'object', 'required' => true],
                 ]),
             ],

@@ -920,7 +920,7 @@ test('workshop grading form lifecycle uses Moodle strategy APIs', async () => {
   const external = await fs.readFile(fromRoot('plugin/moodlia/classes/external/set_workshop_grading_form.php'), 'utf8');
 
   assert.ok(byName.has('set_workshop_grading_form'), 'set_workshop_grading_form must exist in the operation contract.');
-  assert.deepEqual(byName.get('set_workshop_grading_form')?.parameters.strategy.enum, ['accumulative', 'comments', 'rubric']);
+  assert.deepEqual(byName.get('set_workshop_grading_form')?.parameters.strategy.enum, ['accumulative', 'comments', 'numerrors', 'rubric']);
   assert.equal(byName.get('set_workshop_grading_form')?.parameters.definition.type, 'object');
   assert.equal(byName.get('set_workshop_grading_form')?.capabilities[0], 'mod/workshop:editdimensions');
   assert.match(services, /local_moodlia_set_workshop_grading_form\b/);
@@ -930,9 +930,13 @@ test('workshop grading form lifecycle uses Moodle strategy APIs', async () => {
   assert.match(workshopTools, /function accumulative_edit_form_data/);
   assert.match(workshopTools, /function decode_comments_definition/);
   assert.match(workshopTools, /function comments_edit_form_data/);
+  assert.match(workshopTools, /function decode_numerrors_definition/);
+  assert.match(workshopTools, /function numerrors_edit_form_data/);
   assert.match(workshopTools, /function decode_rubric_definition/);
   assert.match(workshopTools, /function rubric_existing_dimensions/);
   assert.match(workshopTools, /function rubric_edit_form_data/);
+  assert.match(workshopTools, /Number-of-errors mapping grade must be between 0 and 100/);
+  assert.match(workshopTools, /grade0 and grade1 labels must be different/);
   assert.match(workshopTools, /definition\.layout must be list or grid/);
   assert.match(workshopTools, /Rubric dimensions must have unique descriptions/);
   assert.match(workshopTools, /Rubric level grades must be unique within each dimension/);

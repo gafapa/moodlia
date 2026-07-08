@@ -191,6 +191,111 @@ class workshop_tools {
     }
 
     /**
+     * Decode and validate a number-of-errors grading-form definition.
+     *
+     * @param string $definitionjson JSON object with dimensions and optional mappings.
+     * @return array
+     */
+    public static function decode_numerrors_definition(string $definitionjson): array {
+        $decoded = json_decode($definitionjson, true);
+        if (!is_array($decoded) || !isset($decoded['dimensions']) || !is_array($decoded['dimensions'])) {
+            throw new \invalid_parameter_exception('definition must be a JSON object with a dimensions array.');
+        }
+        if (count($decoded['dimensions']) === 0) {
+            throw new \invalid_parameter_exception('definition.dimensions must contain at least one dimension.');
+        }
+
+        $dimensions = [];
+        $seen = [];
+        $totalweight = 0;
+        foreach ($decoded['dimensions'] as $dimension) {
+            if (!is_array($dimension)) {
+                throw new \invalid_parameter_exception('Each dimension must be an object.');
+            }
+            $description = trim((string) ($dimension['description'] ?? ''));
+            if ($description === '' || trim(strip_tags($description)) === '') {
+                throw new \invalid_parameter_exception('Each dimension description must be non-empty.');
+            }
+            $key = \core_text::strtolower(strip_tags($description));
+            if (array_key_exists($key, $seen)) {
+                throw new \invalid_parameter_exception('Number-of-errors dimensions must have unique descriptions.');
+            }
+            $seen[$key] = true;
+
+            $grade0 = trim((string) ($dimension['grade0'] ?? 'No'));
+            $grade1 = trim((string) ($dimension['grade1'] ?? 'Yes'));
+            if ($grade0 === '' || trim(strip_tags($grade0)) === '' || $grade1 === '' || trim(strip_tags($grade1)) === '') {
+                throw new \invalid_parameter_exception('Each number-of-errors dimension requires non-empty grade0 and grade1 labels.');
+            }
+            if (\core_text::strtolower(strip_tags($grade0)) === \core_text::strtolower(strip_tags($grade1))) {
+                throw new \invalid_parameter_exception('grade0 and grade1 labels must be different.');
+            }
+
+            if (array_key_exists('weight', $dimension) && !is_numeric($dimension['weight'])) {
+                throw new \invalid_parameter_exception('Each dimension weight must be numeric.');
+            }
+            $weight = (int) ($dimension['weight'] ?? 1);
+            if ($weight <= 0) {
+                throw new \invalid_parameter_exception('Each number-of-errors dimension weight must be greater than zero.');
+            }
+            $totalweight += $weight;
+
+            $dimensions[] = [
+                'description' => $description,
+                'grade0' => $grade0,
+                'grade1' => $grade1,
+                'weight' => $weight,
+            ];
+        }
+
+        $mappings = [];
+        if (isset($decoded['mappings'])) {
+            if (!is_array($decoded['mappings'])) {
+                throw new \invalid_parameter_exception('definition.mappings must be an array or object.');
+            }
+
+            foreach ($decoded['mappings'] as $key => $mapping) {
+                if (is_array($mapping)) {
+                    if (!array_key_exists('errors', $mapping) || !is_numeric($mapping['errors'])) {
+                        throw new \invalid_parameter_exception('Each number-of-errors mapping requires a numeric errors value.');
+                    }
+                    if (!array_key_exists('grade', $mapping) || !is_numeric($mapping['grade'])) {
+                        throw new \invalid_parameter_exception('Each number-of-errors mapping requires a numeric grade value.');
+                    }
+                    $errors = (int) $mapping['errors'];
+                    $grade = (float) $mapping['grade'];
+                } else {
+                    if (!is_numeric($key) || !is_numeric($mapping)) {
+                        throw new \invalid_parameter_exception('definition.mappings object keys and values must be numeric.');
+                    }
+                    $errors = (int) $key;
+                    $grade = (float) $mapping;
+                }
+
+                if ($errors < 1 || $errors > $totalweight) {
+                    throw new \invalid_parameter_exception('Number-of-errors mapping errors must be between 1 and the total dimension weight.');
+                }
+                if ($grade < 0 || $grade > 100) {
+                    throw new \invalid_parameter_exception('Number-of-errors mapping grade must be between 0 and 100.');
+                }
+                $mappings[$errors] = $grade;
+            }
+        } else {
+            for ($errors = 1; $errors <= $totalweight; $errors++) {
+                $mappings[$errors] = floor(100 - $errors * 100 / $totalweight);
+            }
+        }
+
+        ksort($mappings, SORT_NUMERIC);
+
+        return [
+            'dimensions' => $dimensions,
+            'mappings' => $mappings,
+            'total_weight' => $totalweight,
+        ];
+    }
+
+    /**
      * Decode and validate a rubric grading-form definition.
      *
      * @param string $definitionjson JSON object with layout and dimensions.
@@ -348,6 +453,56 @@ class workshop_tools {
                 'itemid' => 0,
             ];
             $index++;
+        }
+
+        return $data;
+    }
+
+    /**
+     * Build form-shaped data for Workshop number-of-errors strategy saving.
+     *
+     * @param \workshop $workshop Workshop domain object.
+     * @param array $definition Validated number-of-errors definition.
+     * @param array $existing Existing dimension info keyed by id.
+     * @return \stdClass
+     */
+    public static function numerrors_edit_form_data(\workshop $workshop, array $definition, array $existing = []): \stdClass {
+        $dimensions = $definition['dimensions'];
+        $data = new \stdClass();
+        $data->workshopid = (int) $workshop->id;
+        $data->norepeats = count($existing) + count($dimensions);
+
+        $index = 0;
+        foreach (array_keys($existing) as $dimensionid) {
+            $data->{'dimensionid__idx_' . $index} = (int) $dimensionid;
+            $data->{'description__idx_' . $index . '_editor'} = [
+                'text' => '',
+                'format' => FORMAT_HTML,
+                'itemid' => 0,
+            ];
+            $data->{'grade0__idx_' . $index} = 'No';
+            $data->{'grade1__idx_' . $index} = 'Yes';
+            $data->{'weight__idx_' . $index} = 1;
+            $index++;
+        }
+
+        foreach ($dimensions as $dimension) {
+            $data->{'dimensionid__idx_' . $index} = 0;
+            $data->{'description__idx_' . $index . '_editor'} = [
+                'text' => $dimension['description'],
+                'format' => FORMAT_HTML,
+                'itemid' => 0,
+            ];
+            $data->{'grade0__idx_' . $index} = $dimension['grade0'];
+            $data->{'grade1__idx_' . $index} = $dimension['grade1'];
+            $data->{'weight__idx_' . $index} = $dimension['weight'];
+            $index++;
+        }
+
+        for ($errors = 1; $errors <= $definition['total_weight']; $errors++) {
+            $data->{'map__idx_' . $errors} = array_key_exists($errors, $definition['mappings'])
+                ? $definition['mappings'][$errors]
+                : '';
         }
 
         return $data;

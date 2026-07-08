@@ -40,8 +40,8 @@ class set_workshop_grading_form {
         $workshop = workshop_tools::get_workshop_object($course, $cm);
         $strategy = clean_param($strategy, PARAM_PLUGIN);
 
-        if (!in_array($strategy, ['accumulative', 'comments', 'rubric'], true)) {
-            throw new \invalid_parameter_exception('strategy must be accumulative, comments, or rubric.');
+        if (!in_array($strategy, ['accumulative', 'comments', 'numerrors', 'rubric'], true)) {
+            throw new \invalid_parameter_exception('strategy must be accumulative, comments, numerrors, or rubric.');
         }
         if ((string) $workshop->strategy !== $strategy) {
             throw new \invalid_parameter_exception('strategy must match the Workshop module strategy.');
@@ -58,6 +58,9 @@ class set_workshop_grading_form {
         } elseif ($strategy === 'comments') {
             $dimensions = workshop_tools::decode_comments_definition($definitionjson);
             $formdata = workshop_tools::comments_edit_form_data($workshop, $dimensions, $existing);
+        } elseif ($strategy === 'numerrors') {
+            $definition = workshop_tools::decode_numerrors_definition($definitionjson);
+            $formdata = workshop_tools::numerrors_edit_form_data($workshop, $definition, $existing);
         } else {
             $definition = workshop_tools::decode_rubric_definition($definitionjson);
             $existingrubric = workshop_tools::rubric_existing_dimensions($strategyinstance);
