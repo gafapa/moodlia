@@ -22,19 +22,19 @@ Implemented:
 - MCP negative validation tests for missing bearer tokens, invalid tokens, unknown methods, unknown tools, invalid tool arguments, malformed JSON, invalid JSON-RPC envelopes, and non-POST requests.
 - CLI smoke/write lifecycle tests for generated course categories, courses, calendar events, enrolment, groups, groupings, sections, assignment, assignment course listing, Book course listing, chapter creation/listing/update/movement/deletion and view registration, Choice course listing, view, submission, response deletion, and result operations, Database field and entry operations, Feedback item creation/update/listing, Lesson course listing, settings/details, content page lifecycle, access/page/jump/view/grade/timer/attempt-report operations, LTI, Question bank, Subsection, Workshop phases, accumulative, comments, number-of-errors, and rubric grading forms, user plans, grades, grade reports, and submissions, page, label, URL, forum, glossary, and wiki modules, assignment submissions and grades, gradebook item/user-grade checks, forum discussions, forum replies, glossary entries, wiki pages, folder files, question categories, `truefalse`, `shortanswer`, `multichoice`, `numerical`, `essay`, `matching`, `description`, `randomsamatch`, `gapselect`, `ddwtos`, `ordering`, `multianswer`, `ddmarker`, `ddimageortext`, `calculatedsimple`, `calculated`, and `calculatedmulti` questions, quizzes, and quiz attempts.
 - CLI negative validation tests for unknown commands, missing required options, invalid booleans, and invalid JSON object parameters.
-- Restricted-token permission smoke tests prove a non-admin token can authenticate through REST/MCP/CLI but cannot call administrative operations without the required Moodle capabilities.
+- Restricted-token permission smoke tests prove a non-admin token can authenticate through REST/MCP/CLI but cannot call administrative course, module, file, question, quiz-structure, gradebook, backup, and activity subelement operations without the required Moodle capabilities.
 - Playwright browser checks for login, course index, and generated course visibility.
 - Playwright browser checks verify generated activity subelements for Subsection, Page, Assignment, Book, Label, URL, LTI, Choice, Database, Lesson, Workshop, Forum, Glossary, Wiki, Folder, Resource, Quiz, question bank views, gradebook, groups, participants, calendar, and category pages.
 - Generic Moodle server deployment documentation plus SFTP/WinSCP automation for the configured Docker-based development target.
+- Protected-target release gate for production-like Moodle validation using only read-only REST, MCP, and CLI operations, with optional server-side PHP syntax validation.
 - GitHub Actions CI for local checks that do not require a Moodle target.
 - Selective generated-data cleanup for courses and empty course categories marked with MoodlIA test prefixes.
 - High-level course workflow operations for portable blueprints, blueprint application, structure copy, Book chapter and Feedback item round-tripping, manual enrolment sync, publishing states, and readiness audit.
 
 Still pending:
 
-- Broader restricted-user coverage across course, module, file, question, quiz, and activity subelement writes.
 - Additional subelement write operations where Moodle exposes stable APIs, or where the owning Moodle component has no public writer API and a narrow audited Moodle-DML boundary can mirror core behavior without raw SQL or plugin-owned tables.
-- Production hardening for release gates that run against protected Moodle targets.
+- Additional production hardening as deployment targets require stricter policy checks, such as environment-specific capability matrices or signed release artifacts.
 
 ## Phase 0: Documentation And Decisions
 
@@ -228,7 +228,7 @@ Verification:
 
 ## Phase 6B: Activity Subelements
 
-Status: implemented where Moodle exposes stable public APIs, with one documented exception for Book chapter writes. Feedback page item reads, analysis reads, finished response reads, item listing, supported item creation/update, pagebreak creation, and item deletion use Moodle Feedback APIs and item class APIs. Database fields and entries, Choice options/responses/results, Book chapter reads and writes, Lesson content page mutation, Lesson truefalse question-page mutation, Lesson multichoice question-page mutation, Lesson page/report reads, Workshop submission/report/assessment reads, allocation, assessment form-definition reads, accumulative, comments, number-of-errors, and rubric grading-form setup, assessment updates, assessment evaluation, Forum discussions/posts, Glossary entry reads/browse filters/author filters/pending approval reads, Wiki pages/subwikis/files/view events, Assignment submissions/grades, and controlled Folder/Resource file operations are exposed through Moodle APIs or documented Moodle component boundaries. Book chapter mutation is isolated in `book_chapter_tools` because Moodle Book has no public writer API; it mirrors Moodle Book's own edit/delete/move scripts, uses Moodle DML without raw SQL, validates ownership/capabilities, and triggers Book events. Feedback item types beyond the supported set, advanced Lesson page types beyond truefalse and multichoice, and Workshop grading form strategies beyond accumulative, comments, number-of-errors, and rubric remain intentionally unavailable until they can be implemented through stable APIs or an equally narrow audited component boundary. See `docs/subelement-api-boundaries.md` for the acceptance standard and preferred implementation order.
+Status: implemented where Moodle exposes stable public APIs, with one documented exception for Book chapter writes. Feedback page item reads, analysis reads, finished response reads, item listing, supported item creation/update, captcha creation, pagebreak creation, and item deletion use Moodle Feedback APIs and item class APIs. Database fields and entries, Choice options/responses/results, Book chapter reads and writes, Lesson content page mutation, Lesson truefalse question-page mutation, Lesson multichoice question-page mutation, Lesson page/report reads, Workshop submission/report/assessment reads, allocation, assessment form-definition reads, accumulative, comments, number-of-errors, and rubric grading-form setup, assessment updates, assessment evaluation, Forum discussions/posts, Glossary entry reads/browse filters/author filters/pending approval reads, Wiki pages/subwikis/files/view events, Assignment submissions/grades, and controlled Folder/Resource file operations are exposed through Moodle APIs or documented Moodle component boundaries. Book chapter mutation is isolated in `book_chapter_tools` because Moodle Book has no public writer API; it mirrors Moodle Book's own edit/delete/move scripts, uses Moodle DML without raw SQL, validates ownership/capabilities, and triggers Book events. Feedback item types beyond the supported set, advanced Lesson page types beyond truefalse and multichoice, and Workshop grading form strategies beyond accumulative, comments, number-of-errors, and rubric remain intentionally unavailable until they can be implemented through stable APIs or an equally narrow audited component boundary. See `docs/subelement-api-boundaries.md` for the acceptance standard and preferred implementation order.
 
 Verification:
 
@@ -286,6 +286,7 @@ Verification:
 - Staging deployment completes from a clean local checkout.
 - Upgrade verification confirms service discovery.
 - API, MCP, CLI, and browser smoke checks run after deployment.
+- Protected production-like targets can run `npm run release:protected` without creating Moodle data.
 - Rollback procedure is documented and tested for non-schema releases.
 
 ## Phase 9: Hardening

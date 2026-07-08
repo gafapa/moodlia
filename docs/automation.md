@@ -95,14 +95,22 @@ Smoke tests are skipped automatically when their required environment variables 
 Focused transport and advanced-question checks can be run directly:
 
 ```text
+node --test tests/smoke/protected-target-readonly.test.mjs
 node --test tests/smoke/transport-parity.test.mjs
 node --test tests/smoke/embedded-choice-question.test.mjs
 node --test tests/smoke/restricted-permissions.test.mjs
 ```
 
-The transport parity smoke compares REST, MCP, and CLI result shapes for stable read operations. The embedded-choice smoke creates `gapselect` and `ddwtos` questions through REST, MCP, and CLI, adds them to a quiz, and verifies the quiz slot listing.
+The protected-target read-only smoke compares REST, MCP, and CLI result shapes for stable read operations and is safe for production-like targets because it does not create Moodle data. The transport parity smoke also compares REST, MCP, and CLI behavior, but it creates generated course data and should run only on targets where generated test data is acceptable. The embedded-choice smoke creates `gapselect` and `ddwtos` questions through REST, MCP, and CLI, adds them to a quiz, and verifies the quiz slot listing.
 
-The restricted permission smoke requires a token for a real non-admin user. That user must be allowed to use the MoodlIA external service and must have `local/moodlia:useapi`, but must not have administrative capabilities such as `moodle/category:manage`, `moodle/course:create`, `moodle/course:update`, `moodle/course:manageactivities`, `moodle/question:add`, `moodle/question:editall`, or `mod/quiz:manage`. The test first proves the token can call `get_current_user`, then verifies that course category, course, section, module, question, and quiz-structure writes are rejected across REST, MCP, and CLI coverage.
+Use the protected release gate for production-like Moodle validation:
+
+```text
+npm run release:protected
+npm run release:protected:php
+```
+
+The restricted permission smoke requires a token for a real non-admin user. That user must be allowed to use the MoodlIA external service and must have `local/moodlia:useapi`, but must not have administrative capabilities such as `moodle/category:manage`, `moodle/course:create`, `moodle/course:update`, `moodle/course:manageactivities`, `moodle/question:add`, `moodle/question:editall`, `mod/quiz:manage`, `moodle/backup:backupcourse`, `moodle/grade:manage`, or `mod/feedback:edititems`. The test first proves the token can call `get_current_user`, then verifies that course category, course, section, module, file, question, quiz-structure, gradebook, backup, and activity subelement writes are rejected across REST, MCP, and CLI coverage.
 
 Print the effective test configuration with secrets redacted:
 

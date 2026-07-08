@@ -87,6 +87,20 @@ Use a faster preflight while iterating:
 node tools/release-check.mjs --skip-package
 ```
 
+Run the protected-target gate when validating a production-like Moodle site where generated test courses are not acceptable:
+
+```text
+npm run release:protected
+```
+
+This gate is intentionally non-destructive. It runs local static and npm package sync checks, validates the protected smoke syntax, and calls only read-only Moodle operations across REST, MCP, and CLI (`get_moodlia_status`, `get_current_user`, `get_courses`, and `tools/list`) plus a missing-token MCP negative check.
+
+When server file access is available, include server-side PHP syntax validation:
+
+```text
+npm run release:protected:php
+```
+
 ## Package
 
 Create the deployable plugin folder:
@@ -222,6 +236,7 @@ Run focused remote smoke tests:
 
 ```text
 node --test tests/smoke/api.test.mjs
+node --test tests/smoke/protected-target-readonly.test.mjs
 node --test tests/smoke/transport-parity.test.mjs
 node --test tests/smoke/module-completion-matrix.test.mjs
 node --test tests/smoke/module-custom-completion-rules.test.mjs

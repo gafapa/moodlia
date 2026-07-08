@@ -10,7 +10,7 @@ MoodlIA exposes activity subelements when Moodle provides a public API path that
 - Course activity-completion audit and repair through Moodle course-module APIs and MoodlIA's audited `update_module` path. This covers stale Book grade-completion rules and supports dry-run repair before changing Moodle state.
 - Choice options, responses, and results through Moodle Choice APIs.
 - Database fields and entries through Moodle Database APIs.
-- Feedback item reads, page item reads, analysis reads, finished response reads, item creation/update for `textfield`, `textarea`, `numeric`, `multichoice`, `multichoicerated`, `label`, and `info`, pagebreak creation, and item deletion through Moodle Feedback APIs and item class APIs.
+- Feedback item reads, page item reads, analysis reads, finished response reads, item creation/update for `textfield`, `textarea`, `numeric`, `multichoice`, `multichoicerated`, `label`, and `info`, captcha creation, pagebreak creation, and item deletion through Moodle Feedback APIs and item class APIs.
 - Folder and Resource file reads, downloads, and deletes through Moodle File API rules.
 - Forum discussions, posts, and discussion state through Moodle Forum APIs.
 - Glossary entries, categories, authors, browse filters, search, pending approval reads, and entry CRUD through Moodle Glossary APIs.
@@ -25,7 +25,7 @@ MoodlIA exposes activity subelements when Moodle provides a public API path that
 
 These areas remain blocked until a stable Moodle API path is identified and tested:
 
-- Feedback item types beyond textfield, textarea, numeric, multichoice, multichoicerated, label, info, and pagebreak creation, plus direct response-value mutation.
+- Feedback item types beyond textfield, textarea, numeric, multichoice, multichoicerated, label, info, captcha creation, and pagebreak creation, plus direct response-value mutation.
 - Lesson question page types beyond truefalse and multichoice, and unsupported answer/jump payloads beyond content-page branches, truefalse answers, and multichoice answers.
 - Workshop grading form strategies beyond accumulative, comments, number-of-errors, and rubric, and standalone assessment creation outside Moodle's allocation flow.
 

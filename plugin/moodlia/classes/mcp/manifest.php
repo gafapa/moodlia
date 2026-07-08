@@ -1562,6 +1562,7 @@ final class manifest {
                         'multichoicerated',
                         'label',
                         'info',
+                        'captcha',
                         'pagebreak',
                     ]],
                     'name' => ['type' => 'string', 'required' => false],

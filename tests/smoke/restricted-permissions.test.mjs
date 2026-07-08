@@ -301,6 +301,19 @@ test('restricted token cannot write courses, modules, questions, or quiz structu
     await assertRestrictedRestDenied(contract, 'audit_course', {
       course_id: courseId
     }, restrictedToken);
+    await assertRestrictedRestDenied(contract, 'backup_course', {
+      course_id: courseId,
+      filename: `restricted-backup-${suffix}.mbz`
+    }, restrictedToken);
+    await assertRestrictedRestDenied(contract, 'create_grade_category', {
+      course_id: courseId,
+      name: `MoodlIA Forbidden Grade Category ${suffix}`
+    }, restrictedToken);
+    await assertRestrictedRestDenied(contract, 'create_grade_item', {
+      course_id: courseId,
+      name: `MoodlIA Forbidden Grade Item ${suffix}`,
+      grade_max: 100
+    }, restrictedToken);
 
     const qbank = await callAdminRest(contract, 'create_module', {
       course_id: courseId,
@@ -843,6 +856,12 @@ test('restricted token cannot write courses, modules, questions, or quiz structu
       course_id: courseId,
       module_id: feedback.course_module_id,
       item_id: 999999999
+    }, restrictedToken);
+    await assertRestrictedRestDenied(contract, 'create_feedback_item', {
+      course_id: courseId,
+      module_id: feedback.course_module_id,
+      type: 'captcha',
+      definition: JSON.stringify({})
     }, restrictedToken);
     await assertRestrictedRestDenied(contract, 'create_course_from_blueprint', {
       blueprint: JSON.stringify({

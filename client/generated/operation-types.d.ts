@@ -1050,7 +1050,7 @@ export interface GetFeedbackAccessInformationParameters {
 export interface CreateFeedbackItemParameters {
   course_id: number;
   module_id: number;
-  type: "textfield" | "textarea" | "numeric" | "multichoice" | "multichoicerated" | "label" | "info" | "pagebreak";
+  type: "textfield" | "textarea" | "numeric" | "multichoice" | "multichoicerated" | "label" | "info" | "captcha" | "pagebreak";
   name?: string;
   definition: JsonObject | string;
   position?: number;

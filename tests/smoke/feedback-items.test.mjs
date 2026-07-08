@@ -55,7 +55,7 @@ function assertFeedbackItem(payload, feedbackModule, expected) {
   if (typeof expected.required === 'boolean') {
     assert.equal(payload.required, expected.required);
   }
-  if (expected.presentation) {
+  if (expected.presentation !== undefined) {
     assert.equal(payload.presentation, expected.presentation);
   }
   if (expected.dependItemId !== undefined) {
@@ -283,6 +283,43 @@ test('Feedback item listing works through REST, MCP, and CLI', { skip: !hasConfi
       presentation: '2'
     });
 
+    const restCaptcha = await callRestFunction(toRestFunctionName(contract, 'create_feedback_item'), {
+      course_id: courseId,
+      module_id: feedback.course_module_id,
+      type: 'captcha',
+      definition: JSON.stringify({})
+    });
+    assertFeedbackItem(restCaptcha, feedback, {
+      type: 'captcha',
+      required: true,
+      presentation: ''
+    });
+
+    await assert.rejects(
+      () => callRestFunction(toRestFunctionName(contract, 'create_feedback_item'), {
+        course_id: courseId,
+        module_id: feedback.course_module_id,
+        type: 'captcha',
+        definition: JSON.stringify({})
+      }),
+      /Only one captcha item is allowed|Moodle REST error|invalidparameter|Detectado valor de parámetro no válido/i
+    );
+    const afterDuplicateCaptcha = await callRestFunction(toRestFunctionName(contract, 'get_feedback_items'), {
+      course_id: courseId,
+      module_id: feedback.course_module_id
+    });
+    assert.equal(afterDuplicateCaptcha.items.filter((item) => item.type === 'captcha').length, 1);
+
+    await assert.rejects(
+      () => callRestFunction(toRestFunctionName(contract, 'update_feedback_item'), {
+        course_id: courseId,
+        module_id: feedback.course_module_id,
+        item_id: restCaptcha.item_id,
+        definition: JSON.stringify({})
+      }),
+      /captcha items cannot be updated|Moodle REST error|invalidparameter|Detectado valor de parámetro no válido/i
+    );
+
     const cliPagebreak = await callCli([
       'create-feedback-item',
       '--course-id', String(courseId),
@@ -301,7 +338,7 @@ test('Feedback item listing works through REST, MCP, and CLI', { skip: !hasConfi
       module_id: feedback.course_module_id
     });
     assert.equal(populatedItems.course_id, courseId);
-    assert.equal(populatedItems.count, 7);
+    assert.equal(populatedItems.count, 8);
     assert.deepEqual(
       populatedItems.items.map((item) => item.item_id).sort((a, b) => a - b),
       [
@@ -311,6 +348,7 @@ test('Feedback item listing works through REST, MCP, and CLI', { skip: !hasConfi
         restNumeric.item_id,
         mcpRated.item_id,
         cliInfo.item_id,
+        restCaptcha.item_id,
         cliPagebreak.item_id
       ].sort((a, b) => a - b)
     );

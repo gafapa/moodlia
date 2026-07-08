@@ -561,11 +561,12 @@ moodlia create-feedback-item --course-id <course_id> --module-id <feedback_modul
 moodlia create-feedback-item --course-id <course_id> --module-id <feedback_module_id> --type numeric --name "Expected study hours" --definition '{"range_from":0,"range_to":40}'
 moodlia create-feedback-item --course-id <course_id> --module-id <feedback_module_id> --type multichoicerated --name "Satisfaction" --definition '{"subtype":"radio","choices":[{"value":1,"text":"Low"},{"value":3,"text":"Medium"},{"value":5,"text":"High"}]}'
 moodlia create-feedback-item --course-id <course_id> --module-id <feedback_module_id> --type info --name "Course metadata" --definition '{"mode":"course"}'
+moodlia create-feedback-item --course-id <course_id> --module-id <feedback_module_id> --type captcha --definition '{}'
 moodlia create-feedback-item --course-id <course_id> --module-id <feedback_module_id> --type pagebreak --definition '{}'
 moodlia update-feedback-item --course-id <course_id> --module-id <feedback_module_id> --item-id <item_id> --name "Updated difficulty" --definition '{"subtype":"dropdown","choices":["Easy","Appropriate","Hard","Too hard"]}'
 ```
 
-Feedback item writes currently support `textfield`, `textarea`, `numeric`, `multichoice`, `multichoicerated`, `label`, `info`, and pagebreak creation. Updating a pagebreak is intentionally not exposed; delete and recreate it instead.
+Feedback item writes currently support `textfield`, `textarea`, `numeric`, `multichoice`, `multichoicerated`, `label`, `info`, captcha creation, and pagebreak creation. Updating a captcha or pagebreak is intentionally not exposed; delete and recreate it instead. Moodle allows only one captcha item per Feedback activity, and captcha items do not accept definition settings.
 
 Read Lesson and Workshop state:
 

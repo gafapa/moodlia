@@ -138,6 +138,13 @@ npm run release:check
 
 GitHub Actions runs the local CI preflight on pushes and pull requests: npm package mirror drift, release checks, plugin packaging, and project website tests. Remote Moodle smoke/browser suites are intentionally not part of the default CI job because they need target-specific credentials and generate Moodle data.
 
+Run the non-destructive protected-target gate against production-like Moodle targets:
+
+```text
+npm run release:protected
+npm run release:protected:php
+```
+
 Prepare and inspect the public npm package:
 
 ```text

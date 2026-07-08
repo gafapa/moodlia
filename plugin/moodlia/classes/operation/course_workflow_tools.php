@@ -697,6 +697,9 @@ class course_workflow_tools {
                 $modes = ['1' => 'response_time', '2' => 'course', '3' => 'category'];
                 return ['mode' => $modes[$presentation] ?? 'course'];
 
+            case 'captcha':
+                return [];
+
             case 'pagebreak':
                 return [];
         }
@@ -806,8 +809,9 @@ class course_workflow_tools {
             throw new \invalid_parameter_exception($prefix . ' must be a JSON array.');
         }
 
-        $supported = ['textfield', 'textarea', 'numeric', 'multichoice', 'multichoicerated', 'label', 'info', 'pagebreak'];
+        $supported = ['textfield', 'textarea', 'numeric', 'multichoice', 'multichoicerated', 'label', 'info', 'captcha', 'pagebreak'];
         $seenids = [];
+        $hascaptcha = false;
         $previoustype = '';
         foreach ($items as $index => $item) {
             $itemprefix = $prefix . '[' . $index . ']';
@@ -818,10 +822,22 @@ class course_workflow_tools {
             if (!in_array($type, $supported, true)) {
                 throw new \invalid_parameter_exception($itemprefix . '.type is unsupported.');
             }
-            if ($type !== 'pagebreak'
+            if ($type !== 'pagebreak' && $type !== 'captcha'
                     && (!array_key_exists('name', $item) || !self::text_like_value($item['name'])
                         || trim((string) $item['name']) === '')) {
                 throw new \invalid_parameter_exception($itemprefix . '.name is required.');
+            }
+            if ($type === 'captcha') {
+                if ($hascaptcha) {
+                    throw new \invalid_parameter_exception($itemprefix . ' cannot add a second captcha item.');
+                }
+                $hascaptcha = true;
+                if (array_key_exists('required', $item) && !$item['required']) {
+                    throw new \invalid_parameter_exception($itemprefix . '.required must not be false for captcha items.');
+                }
+                if (array_key_exists('depend_source_item_id', $item) || array_key_exists('depend_value', $item)) {
+                    throw new \invalid_parameter_exception($itemprefix . ' cannot define dependencies for captcha items.');
+                }
             }
             if ($type === 'pagebreak' && ($index === 0 || $previoustype === 'pagebreak')) {
                 throw new \invalid_parameter_exception($itemprefix . ' cannot be the first item or follow another pagebreak.');
@@ -915,6 +931,12 @@ class course_workflow_tools {
                 $mode = (string) ($definition['mode'] ?? 'course');
                 if (!in_array($mode, ['response_time', 'responsetime', '1', 'course', '2', 'category', 'course_category', '3'], true)) {
                     throw new \invalid_parameter_exception($prefix . '.mode is unsupported.');
+                }
+                break;
+
+            case 'captcha':
+                if (!empty($definition)) {
+                    throw new \invalid_parameter_exception($prefix . ' must be empty for captcha items.');
                 }
                 break;
         }

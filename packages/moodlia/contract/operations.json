@@ -9801,6 +9801,7 @@
             "multichoicerated",
             "label",
             "info",
+            "captcha",
             "pagebreak"
           ]
         },

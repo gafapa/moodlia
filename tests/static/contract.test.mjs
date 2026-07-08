@@ -39,14 +39,14 @@ test('remaining high-risk subelement writes stay documented and unexposed until 
     );
   }
 
-  assert.match(boundaries, /Feedback item types beyond textfield, textarea, numeric, multichoice, multichoicerated, label, info, and pagebreak creation/);
+  assert.match(boundaries, /Feedback item types beyond textfield, textarea, numeric, multichoice, multichoicerated, label, info, captcha creation, and pagebreak creation/);
   assert.match(boundaries, /Lesson question page types beyond truefalse and multichoice/);
   assert.match(boundaries, /Workshop grading form strategies beyond accumulative, comments, number-of-errors, and rubric/);
   assert.match(boundaries, /\[remaining-api-validation\.md\]\(remaining-api-validation\.md\)/);
 
   for (const marker of [
     'feedback_get_item_class()',
-    'Status: partially implemented for textfield, textarea, numeric, multichoice, multichoicerated, label, info, and pagebreak creation.',
+    'Status: partially implemented for textfield, textarea, numeric, multichoice, multichoicerated, label, info, captcha creation, and pagebreak creation.',
     'Status: partially implemented for content pages, truefalse question pages, and multichoice question pages.',
     'Status: partially implemented for the accumulative, comments, number-of-errors, and rubric strategies.',
     'save_edit_strategy_form',

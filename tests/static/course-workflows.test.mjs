@@ -104,6 +104,8 @@ test('course workflow writes validate nested payloads before applying side effec
   assert.match(courseWorkflowTools, /get_feedback_items::execute/);
   assert.match(courseWorkflowTools, /create_feedback_item::execute/);
   assert.match(courseWorkflowTools, /depend_source_item_id must reference an earlier item/);
+  assert.match(courseWorkflowTools, /cannot add a second captcha item/);
+  assert.match(courseWorkflowTools, /must be empty for captcha items/);
   assert.match(courseWorkflowTools, /validate_feedback_item_definition/);
   assert.match(courseWorkflowTools, /reject_feedback_separator/);
   assert.match(courseWorkflowTools, /require_capability\('mod\/feedback:edititems'/);

@@ -987,6 +987,7 @@ test('feedback item lifecycle uses Moodle item class APIs', async () => {
     'multichoicerated',
     'label',
     'info',
+    'captcha',
     'pagebreak'
   ]);
   assert.equal(byName.get('update_feedback_item')?.parameters.item_id.required, true);
@@ -995,6 +996,10 @@ test('feedback item lifecycle uses Moodle item class APIs', async () => {
   assert.match(feedbackTools, /function save_item/);
   assert.match(feedbackTools, /feedback_create_pagebreak/);
   assert.match(feedbackTools, /feedback_get_item_class\(\$type\)/);
+  assert.match(feedbackTools, /validate_captcha_definition/);
+  assert.match(feedbackTools, /Only one captcha item is allowed in a feedback activity/);
+  assert.match(feedbackTools, /captcha items cannot be updated/);
+  assert.match(feedbackTools, /\$item->name = \$type === 'captcha' \? get_string\('captcha', 'feedback'\)/);
   assert.match(feedbackTools, /->build_editform\(/);
   assert.match(feedbackTools, /->set_data\(/);
   assert.match(feedbackTools, /->save_item\(/);
@@ -1376,5 +1381,38 @@ test('advanced gradebook operations manage manual categories, items, and grades 
       external.includes(`require_capability('${capability}'`),
       `${operationName} must require ${capability}.`
     );
+  }
+});
+
+test('protected target and restricted-permission gates cover production hardening domains', async () => {
+  const packageJson = JSON.parse(await fs.readFile(fromRoot('package.json'), 'utf8'));
+  const releaseCheck = await fs.readFile(fromRoot('tools/release-check.mjs'), 'utf8');
+  const protectedCheck = await fs.readFile(fromRoot('tools/protected-target-check.mjs'), 'utf8');
+  const protectedSmoke = await fs.readFile(fromRoot('tests/smoke/protected-target-readonly.test.mjs'), 'utf8');
+  const restrictedSmoke = await fs.readFile(fromRoot('tests/smoke/restricted-permissions.test.mjs'), 'utf8');
+
+  assert.equal(packageJson.scripts['release:protected'], 'node tools/protected-target-check.mjs');
+  assert.equal(packageJson.scripts['release:protected:php'], 'node tools/protected-target-check.mjs --php-lint');
+  assert.match(releaseCheck, /tests\/smoke\/protected-target-readonly\.test\.mjs/);
+  assert.match(releaseCheck, /tools\/protected-target-check\.mjs/);
+  assert.match(protectedCheck, /MOODLE_BASE_URL/);
+  assert.match(protectedCheck, /MOODLE_REST_TOKEN/);
+  assert.match(protectedCheck, /plugin:php:lint:server/);
+
+  for (const operationName of ['get_moodlia_status', 'get_current_user', 'get_courses', 'tools/list']) {
+    assert.ok(protectedSmoke.includes(operationName), `protected smoke must cover ${operationName}.`);
+  }
+  assert.doesNotMatch(protectedSmoke, /create_|update_|delete_|backup_course|restore_course_backup|upload_/);
+
+  for (const operationName of [
+    'backup_course',
+    'create_grade_category',
+    'create_grade_item',
+    'create_feedback_item',
+    'upload_folder_file',
+    'add_question_to_quiz',
+    'set_course_publish_state'
+  ]) {
+    assert.ok(restrictedSmoke.includes(`'${operationName}'`), `restricted smoke must deny ${operationName}.`);
   }
 });

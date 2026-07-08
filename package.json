@@ -28,6 +28,8 @@
     "npm:sync:check": "node tools/sync-npm-package.mjs --check",
     "npm:pack:dry-run": "node tools/pack-npm-package.mjs --dry-run",
     "release:check": "node tools/release-check.mjs",
+    "release:protected": "node tools/protected-target-check.mjs",
+    "release:protected:php": "node tools/protected-target-check.mjs --php-lint",
     "moodle:create-demo-course": "node tools/reset-and-create-full-course.mjs",
     "moodle:reset-full-course": "node tools/reset-and-create-full-course.mjs --reset-courses",
     "moodle:reset-and-create-demo-course": "node tools/reset-and-create-full-course.mjs --reset-courses",

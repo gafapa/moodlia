@@ -213,12 +213,16 @@ class feedback_tools {
             return self::get_item($cm, (int) $itemid);
         }
 
+        if ($type === 'captcha') {
+            self::validate_captcha_definition($definition, $currentitems, $isupdate, $required, $dependitemid, $dependvalue);
+        }
+
         $item = new \stdClass();
         $item->id = $isupdate ? (int) $existing['item_id'] : 0;
         $item->feedback = (int) $cm->instance;
         $item->template = 0;
         $item->typ = $type;
-        $item->name = self::resolve_item_name($name, $existing);
+        $item->name = $type === 'captcha' ? get_string('captcha', 'feedback') : self::resolve_item_name($name, $existing);
         $item->nameformat = FORMAT_HTML;
         $item->label = self::resolve_optional_string($label, $existing['label'] ?? '');
         $item->position = $isupdate ? $existingposition : count($currentitems) + 1;
@@ -285,12 +289,49 @@ class feedback_tools {
      */
     private static function clean_item_type(string $type): string {
         $type = clean_param($type, PARAM_ALPHANUMEXT);
-        $supported = ['textfield', 'textarea', 'numeric', 'multichoice', 'multichoicerated', 'label', 'info', 'pagebreak'];
+        $supported = ['textfield', 'textarea', 'numeric', 'multichoice', 'multichoicerated', 'label', 'info', 'captcha', 'pagebreak'];
         if (!in_array($type, $supported, true)) {
-            throw new \invalid_parameter_exception('type must be one of: textfield, textarea, numeric, multichoice, multichoicerated, label, info, pagebreak.');
+            throw new \invalid_parameter_exception('type must be one of: textfield, textarea, numeric, multichoice, multichoicerated, label, info, captcha, pagebreak.');
         }
 
         return $type;
+    }
+
+    /**
+     * Validate the narrow Feedback captcha writer contract before Moodle item code can call notice()/exit.
+     *
+     * @param array $definition Definition payload.
+     * @param array $currentitems Existing Feedback items.
+     * @param bool $isupdate Whether this is an update.
+     * @param bool|null $required Requested required flag.
+     * @param int|null $dependitemid Requested dependency item id.
+     * @param string|null $dependvalue Requested dependency value.
+     */
+    private static function validate_captcha_definition(
+        array $definition,
+        array $currentitems,
+        bool $isupdate,
+        ?bool $required,
+        ?int $dependitemid,
+        ?string $dependvalue
+    ): void {
+        if ($isupdate) {
+            throw new \invalid_parameter_exception('captcha items cannot be updated; delete and recreate the captcha item.');
+        }
+        if (!empty($definition)) {
+            throw new \invalid_parameter_exception('captcha items do not accept definition settings.');
+        }
+        if ($required === false) {
+            throw new \invalid_parameter_exception('captcha items are always required.');
+        }
+        if (($dependitemid !== null && $dependitemid > 0) || trim((string) $dependvalue) !== '') {
+            throw new \invalid_parameter_exception('captcha items cannot depend on another feedback item.');
+        }
+        foreach ($currentitems as $item) {
+            if ((string) ($item['type'] ?? '') === 'captcha') {
+                throw new \invalid_parameter_exception('Only one captcha item is allowed in a feedback activity.');
+            }
+        }
     }
 
     /**
@@ -507,6 +548,16 @@ class feedback_tools {
                 $item->presentation = (string) $modes[$mode];
                 $item->presentationformat = FORMAT_HTML;
                 $item->required = 0;
+                break;
+
+            case 'captcha':
+                $item->presentation = '';
+                $item->presentationformat = FORMAT_HTML;
+                $item->required = 1;
+                $item->label = '';
+                $item->dependitem = 0;
+                $item->dependvalue = '';
+                $item->options = '';
                 break;
         }
     }
