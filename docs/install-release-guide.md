@@ -237,6 +237,7 @@ Run focused remote smoke tests:
 ```text
 node --test tests/smoke/api.test.mjs
 node --test tests/smoke/protected-target-readonly.test.mjs
+node --test tests/smoke/course-integrated-subelements.test.mjs
 node --test tests/smoke/transport-parity.test.mjs
 node --test tests/smoke/module-completion-matrix.test.mjs
 node --test tests/smoke/module-custom-completion-rules.test.mjs

@@ -88,6 +88,8 @@
       "page_type": [
         "content",
         "multichoice",
+        "numerical",
+        "shortanswer",
         "truefalse"
       ]
     },
@@ -99,7 +101,8 @@
         "menu",
         "checkbox",
         "radiobutton",
-        "multimenu"
+        "multimenu",
+        "url"
       ]
     },
     "set_workshop_phase": {

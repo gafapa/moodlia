@@ -284,7 +284,7 @@ test('Lesson page parameter validation rejects invalid question payload shapes e
       title: { type: 'string', required: true },
       content: { type: 'string', required: true },
       branches: { type: 'object', required: false },
-      page_type: { type: 'string', required: false, enum: ['content', 'multichoice', 'truefalse'] },
+      page_type: { type: 'string', required: false, enum: ['content', 'multichoice', 'numerical', 'shortanswer', 'truefalse'] },
       answers: { type: 'object', required: false }
     }
   };
@@ -319,7 +319,7 @@ test('Lesson page parameter validation rejects invalid question payload shapes e
       content: '<p>Check this.</p>',
       page_type: 'essay'
     }),
-    /page_type must be one of: content, multichoice, truefalse/
+    /page_type must be one of: content, multichoice, numerical, shortanswer, truefalse/
   );
 
   assert.throws(

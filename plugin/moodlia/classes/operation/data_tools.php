@@ -23,7 +23,7 @@ defined('MOODLE_INTERNAL') || die();
  */
 class data_tools {
     /** @var array Supported field types for initial safe entry CRUD. */
-    private const SUPPORTED_FIELD_TYPES = ['text', 'textarea', 'number', 'menu', 'checkbox', 'radiobutton', 'multimenu'];
+    private const SUPPORTED_FIELD_TYPES = ['text', 'textarea', 'number', 'menu', 'checkbox', 'radiobutton', 'multimenu', 'url'];
 
     /**
      * Load Moodle Database activity APIs.
@@ -351,6 +351,12 @@ class data_tools {
             $fielddata->param2 = (string) (int) max(1, (int) ($options['columns'] ?? 60));
         }
 
+        if ($type === 'url') {
+            $fielddata->param1 = !empty($options['auto_link']) ? '1' : '0';
+            $fielddata->param2 = trim((string) ($options['forced_link_text'] ?? ''));
+            $fielddata->param3 = !empty($options['open_in_new_window']) ? '1' : '0';
+        }
+
         foreach (['param1', 'param2', 'param3', 'param4', 'param5'] as $param) {
             if (array_key_exists($param, $options) && is_scalar($options[$param])) {
                 $fielddata->{$param} = (string) $options[$param];
@@ -418,12 +424,44 @@ class data_tools {
 
             $external[] = [
                 'fieldid' => (int) $field['field_id'],
-                'subfield' => clean_param($subfield, PARAM_NOTAGS),
+                'subfield' => self::normalise_value_subfield($field, $subfield),
                 'value' => json_encode($value, JSON_UNESCAPED_SLASHES),
             ];
         }
 
         return $external;
+    }
+
+    /**
+     * Normalize public Database entry subfield aliases to Moodle's field indexes.
+     *
+     * @param array $field Field metadata.
+     * @param string $subfield Public subfield.
+     * @return string
+     */
+    private static function normalise_value_subfield(array $field, string $subfield): string {
+        $subfield = clean_param($subfield, PARAM_NOTAGS);
+        if ((string) ($field['type'] ?? '') !== 'url') {
+            return $subfield;
+        }
+
+        $key = strtolower(trim($subfield));
+        $aliases = [
+            '' => '0',
+            'url' => '0',
+            'href' => '0',
+            'link' => '0',
+            '0' => '0',
+            'text' => '1',
+            'label' => '1',
+            'title' => '1',
+            '1' => '1',
+        ];
+        if (!array_key_exists($key, $aliases)) {
+            throw new \invalid_parameter_exception('URL database fields only support url and text subfields.');
+        }
+
+        return $aliases[$key];
     }
 
     /**

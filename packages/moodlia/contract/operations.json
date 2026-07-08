@@ -5444,6 +5444,8 @@
           "enum": [
             "content",
             "multichoice",
+            "numerical",
+            "shortanswer",
             "truefalse"
           ]
         },
@@ -6068,7 +6070,8 @@
             "menu",
             "checkbox",
             "radiobutton",
-            "multimenu"
+            "multimenu",
+            "url"
           ]
         },
         "name": {

@@ -61,9 +61,11 @@ class update_lesson_page {
         if (
             !lesson_tools::is_content_page($current) &&
             !lesson_tools::is_truefalse_page($current) &&
-            !lesson_tools::is_multichoice_page($current)
+            !lesson_tools::is_shortanswer_page($current) &&
+            !lesson_tools::is_multichoice_page($current) &&
+            !lesson_tools::is_numerical_page($current)
         ) {
-            throw new \invalid_parameter_exception('Only Lesson content, truefalse, and multichoice pages are supported for update_lesson_page.');
+            throw new \invalid_parameter_exception('Only Lesson content, truefalse, shortanswer, multichoice, and numerical pages are supported for update_lesson_page.');
         }
 
         if (
@@ -117,7 +119,27 @@ class update_lesson_page {
                 $answers,
                 0
             );
-        } else {
+        } elseif (lesson_tools::is_shortanswer_page($current)) {
+            if ($branchesjson !== null && trim($branchesjson) !== '') {
+                throw new \invalid_parameter_exception('branches is only supported for content Lesson pages.');
+            }
+            if ($displayinmenu !== null || $horizontal !== null) {
+                throw new \invalid_parameter_exception('display_in_menu and horizontal are only supported for content Lesson pages.');
+            }
+
+            $answers = $answersjson === null
+                ? lesson_tools::shortanswer_answers_from_page($page)
+                : lesson_tools::decode_shortanswer_answers($answersjson);
+
+            $properties = lesson_tools::shortanswer_page_properties(
+                $lesson,
+                $title ?? (string) ($current->title ?? ''),
+                $content ?? (string) ($current->contents ?? ''),
+                $contentformat ?? (int) ($current->contentsformat ?? FORMAT_HTML),
+                $answers,
+                0
+            );
+        } elseif (lesson_tools::is_multichoice_page($current)) {
             if ($branchesjson !== null && trim($branchesjson) !== '') {
                 throw new \invalid_parameter_exception('branches is only supported for content Lesson pages.');
             }
@@ -130,6 +152,26 @@ class update_lesson_page {
                 : lesson_tools::decode_multichoice_answers($answersjson);
 
             $properties = lesson_tools::multichoice_page_properties(
+                $lesson,
+                $title ?? (string) ($current->title ?? ''),
+                $content ?? (string) ($current->contents ?? ''),
+                $contentformat ?? (int) ($current->contentsformat ?? FORMAT_HTML),
+                $answers,
+                0
+            );
+        } else {
+            if ($branchesjson !== null && trim($branchesjson) !== '') {
+                throw new \invalid_parameter_exception('branches is only supported for content Lesson pages.');
+            }
+            if ($displayinmenu !== null || $horizontal !== null) {
+                throw new \invalid_parameter_exception('display_in_menu and horizontal are only supported for content Lesson pages.');
+            }
+
+            $answers = $answersjson === null
+                ? lesson_tools::numerical_answers_from_page($page)
+                : lesson_tools::decode_numerical_answers($answersjson);
+
+            $properties = lesson_tools::numerical_page_properties(
                 $lesson,
                 $title ?? (string) ($current->title ?? ''),
                 $content ?? (string) ($current->contents ?? ''),

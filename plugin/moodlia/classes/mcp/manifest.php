@@ -879,7 +879,7 @@ final class manifest {
                     'after_page_id' => ['type' => 'integer', 'required' => false],
                     'display_in_menu' => ['type' => 'boolean', 'required' => false],
                     'horizontal' => ['type' => 'boolean', 'required' => false],
-                    'page_type' => ['type' => 'string', 'required' => false, 'enum' => ['content', 'multichoice', 'truefalse']],
+                    'page_type' => ['type' => 'string', 'required' => false, 'enum' => ['content', 'multichoice', 'numerical', 'shortanswer', 'truefalse']],
                     'answers' => ['type' => 'object', 'required' => false],
                 ]),
             ],
@@ -966,7 +966,7 @@ final class manifest {
                 'inputSchema' => self::schema([
                     'course_id' => ['type' => 'integer', 'required' => true],
                     'module_id' => ['type' => 'integer', 'required' => true],
-                    'field_type' => ['type' => 'string', 'required' => true, 'enum' => ['text', 'textarea', 'number', 'menu', 'checkbox', 'radiobutton', 'multimenu']],
+                    'field_type' => ['type' => 'string', 'required' => true, 'enum' => ['text', 'textarea', 'number', 'menu', 'checkbox', 'radiobutton', 'multimenu', 'url']],
                     'name' => ['type' => 'string', 'required' => true],
                     'description' => ['type' => 'string', 'required' => false],
                     'required' => ['type' => 'boolean', 'required' => false],

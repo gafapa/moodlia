@@ -583,7 +583,7 @@ export interface CreateLessonPageParameters {
   after_page_id?: number;
   display_in_menu?: boolean;
   horizontal?: boolean;
-  page_type?: "content" | "multichoice" | "truefalse";
+  page_type?: "content" | "multichoice" | "numerical" | "shortanswer" | "truefalse";
   answers?: JsonObject | string;
 }
 
@@ -643,7 +643,7 @@ export interface GetDataFieldsParameters {
 export interface CreateDataFieldParameters {
   course_id: number;
   module_id: number;
-  field_type: "text" | "textarea" | "number" | "menu" | "checkbox" | "radiobutton" | "multimenu";
+  field_type: "text" | "textarea" | "number" | "menu" | "checkbox" | "radiobutton" | "multimenu" | "url";
   name: string;
   description?: string;
   required?: boolean;

@@ -199,6 +199,25 @@ function assertLessonMultichoicePage(result, created, expectedTitle, expectedCon
   assert.equal(result.page.jumps.length, expectedAnswers.length);
 }
 
+function assertLessonOpenAnswerPage(result, created, expected) {
+  assert.equal(result.page.module_id, created.course_module_id);
+  assert.equal(result.page.lesson_id, created.instance_id);
+  assert.equal(typeof result.page.page_id, 'number');
+  assert.equal(result.page.question_type, expected.questionType);
+  assert.equal(result.page.title, expected.title);
+  assert.match(result.page.content, new RegExp(expected.content.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  assert.equal(result.page.question_option, expected.questionOption ?? 0);
+  assert.equal(result.page.branches_count, result.page.branches.length);
+  assert.ok(result.page.branches.length >= expected.answers.length);
+  for (const expectedAnswer of expected.answers) {
+    assert.ok(result.page.branches.some((answer) => answer.title === expectedAnswer));
+  }
+  assert.equal(Array.isArray(result.page.answer_ids), true);
+  assert.ok(result.page.answer_ids.length >= expected.answers.length);
+  assert.equal(Array.isArray(result.page.jumps), true);
+  assert.ok(result.page.jumps.length >= expected.answers.length);
+}
+
 function assertLessonPossibleJumps(jumps, created) {
   assert.equal(jumps.module_id, created.course_module_id);
   assert.equal(jumps.lesson_id, created.instance_id);
@@ -413,6 +432,55 @@ test('Lesson module lifecycle works through REST, MCP, and CLI', { skip: !hasCon
     });
     assert.equal(deletedRestTrueFalsePage.deleted, true);
 
+    const restShortAnswerPage = await callRestFunction(toRestFunctionName(contract, 'create_lesson_page'), {
+      course_id: courseId,
+      module_id: restLesson.course_module_id,
+      page_type: 'shortanswer',
+      title: `REST Shortanswer Lesson Page ${suffix}`,
+      content: `<p>REST shortanswer lesson page content ${suffix}</p>`,
+      answers: JSON.stringify({
+        answers: [
+          { answer: 'MoodlIA', response: 'Correct', jump_to: 'next_page', score: 1 },
+          { answer: 'Moodle', response: 'Close, but review the content', jump_to: 'this_page', score: 0 }
+        ]
+      })
+    });
+    assert.equal(restShortAnswerPage.created, true);
+    assertLessonOpenAnswerPage(restShortAnswerPage, restLesson, {
+      questionType: 1,
+      title: `REST Shortanswer Lesson Page ${suffix}`,
+      content: `REST shortanswer lesson page content ${suffix}`,
+      answers: ['MoodlIA', 'Moodle']
+    });
+
+    const updatedRestShortAnswerPage = await callRestFunction(toRestFunctionName(contract, 'update_lesson_page'), {
+      course_id: courseId,
+      module_id: restLesson.course_module_id,
+      page_id: restShortAnswerPage.page.page_id,
+      title: `Updated REST Shortanswer Lesson Page ${suffix}`,
+      answers: JSON.stringify({
+        use_regular_expressions: true,
+        answers: [
+          { answer: 'MoodlIA/i', response: 'Correct', jump_to: 'next_page', score: 1 }
+        ]
+      })
+    });
+    assert.equal(updatedRestShortAnswerPage.updated, true);
+    assertLessonOpenAnswerPage(updatedRestShortAnswerPage, restLesson, {
+      questionType: 1,
+      questionOption: 1,
+      title: `Updated REST Shortanswer Lesson Page ${suffix}`,
+      content: `REST shortanswer lesson page content ${suffix}`,
+      answers: ['MoodlIA/i']
+    });
+
+    const deletedRestShortAnswerPage = await callRestFunction(toRestFunctionName(contract, 'delete_lesson_page'), {
+      course_id: courseId,
+      module_id: restLesson.course_module_id,
+      page_id: restShortAnswerPage.page.page_id
+    });
+    assert.equal(deletedRestShortAnswerPage.deleted, true);
+
     const restMultichoicePage = await callRestFunction(toRestFunctionName(contract, 'create_lesson_page'), {
       course_id: courseId,
       module_id: restLesson.course_module_id,
@@ -616,6 +684,52 @@ test('Lesson module lifecycle works through REST, MCP, and CLI', { skip: !hasCon
     });
     assert.equal(deletedMcpTrueFalsePage.deleted, true);
 
+    const mcpNumericalPage = await callMcpTool('create_lesson_page', {
+      course_id: courseId,
+      module_id: mcpLesson.course_module_id,
+      page_type: 'numerical',
+      title: `MCP Numerical Lesson Page ${suffix}`,
+      content: `<p>MCP numerical lesson page content ${suffix}</p>`,
+      answers: {
+        answers: [
+          { answer: '4', response: 'Correct', jump_to: 'next_page', score: 1 },
+          { answer: '3:5', response: 'Almost', jump_to: 'this_page', score: 0.5 }
+        ]
+      }
+    });
+    assert.equal(mcpNumericalPage.created, true);
+    assertLessonOpenAnswerPage(mcpNumericalPage, mcpLesson, {
+      questionType: 8,
+      title: `MCP Numerical Lesson Page ${suffix}`,
+      content: `MCP numerical lesson page content ${suffix}`,
+      answers: ['4', '3:5']
+    });
+
+    const updatedMcpNumericalPage = await callMcpTool('update_lesson_page', {
+      course_id: courseId,
+      module_id: mcpLesson.course_module_id,
+      page_id: mcpNumericalPage.page.page_id,
+      answers: {
+        answers: [
+          { answer: '8:10', response: 'Correct range', jump_to: 'next_page', score: 1 }
+        ]
+      }
+    });
+    assert.equal(updatedMcpNumericalPage.updated, true);
+    assertLessonOpenAnswerPage(updatedMcpNumericalPage, mcpLesson, {
+      questionType: 8,
+      title: `MCP Numerical Lesson Page ${suffix}`,
+      content: `MCP numerical lesson page content ${suffix}`,
+      answers: ['8:10']
+    });
+
+    const deletedMcpNumericalPage = await callMcpTool('delete_lesson_page', {
+      course_id: courseId,
+      module_id: mcpLesson.course_module_id,
+      page_id: mcpNumericalPage.page.page_id
+    });
+    assert.equal(deletedMcpNumericalPage.deleted, true);
+
     const deletedMcpPage = await callMcpTool('delete_lesson_page', {
       course_id: courseId,
       module_id: mcpLesson.course_module_id,
@@ -775,6 +889,55 @@ test('Lesson module lifecycle works through REST, MCP, and CLI', { skip: !hasCon
       '--page-id', String(cliTrueFalsePage.page.page_id)
     ]);
     assert.equal(deletedCliTrueFalsePage.deleted, true);
+
+    const cliShortAnswerPage = await callCli([
+      'create-lesson-page',
+      '--course-id', String(courseId),
+      '--module-id', String(cliLesson.course_module_id),
+      '--page-type', 'shortanswer',
+      '--title', `CLI Shortanswer Lesson Page ${suffix}`,
+      '--content', `<p>CLI shortanswer lesson page content ${suffix}</p>`,
+      '--answers', JSON.stringify({
+        answers: [
+          { answer: 'CLI', response: 'Correct', jump_to: 'next_page', score: 1 },
+          { answer: 'Terminal', response: 'Try again', jump_to: 'this_page', score: 0 }
+        ]
+      })
+    ]);
+    assert.equal(cliShortAnswerPage.created, true);
+    assertLessonOpenAnswerPage(cliShortAnswerPage, cliLesson, {
+      questionType: 1,
+      title: `CLI Shortanswer Lesson Page ${suffix}`,
+      content: `CLI shortanswer lesson page content ${suffix}`,
+      answers: ['CLI', 'Terminal']
+    });
+
+    const updatedCliShortAnswerPage = await callCli([
+      'update-lesson-page',
+      '--course-id', String(courseId),
+      '--module-id', String(cliLesson.course_module_id),
+      '--page-id', String(cliShortAnswerPage.page.page_id),
+      '--answers', JSON.stringify({
+        answers: [
+          { answer: 'MoodlIA CLI', response: 'Correct', jump_to: 'next_page', score: 1 }
+        ]
+      })
+    ]);
+    assert.equal(updatedCliShortAnswerPage.updated, true);
+    assertLessonOpenAnswerPage(updatedCliShortAnswerPage, cliLesson, {
+      questionType: 1,
+      title: `CLI Shortanswer Lesson Page ${suffix}`,
+      content: `CLI shortanswer lesson page content ${suffix}`,
+      answers: ['MoodlIA CLI']
+    });
+
+    const deletedCliShortAnswerPage = await callCli([
+      'delete-lesson-page',
+      '--course-id', String(courseId),
+      '--module-id', String(cliLesson.course_module_id),
+      '--page-id', String(cliShortAnswerPage.page.page_id)
+    ]);
+    assert.equal(deletedCliShortAnswerPage.deleted, true);
 
     const deletedCliPage = await callCli([
       'delete-lesson-page',

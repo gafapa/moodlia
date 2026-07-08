@@ -31,6 +31,12 @@ class lesson_tools {
     /** Moodle Lesson multichoice question page type id. */
     private const MULTICHOICE_PAGE_TYPE = 3;
 
+    /** Moodle Lesson short-answer question page type id. */
+    private const SHORTANSWER_PAGE_TYPE = 1;
+
+    /** Moodle Lesson numerical question page type id. */
+    private const NUMERICAL_PAGE_TYPE = 8;
+
     /**
      * Load Moodle Lesson APIs.
      */
@@ -248,11 +254,13 @@ class lesson_tools {
             'true-false' => 'truefalse',
             'multiple_choice' => 'multichoice',
             'multiple-choice' => 'multichoice',
+            'short_answer' => 'shortanswer',
+            'short-answer' => 'shortanswer',
         ];
         $normalized = $aliases[$normalized] ?? $normalized;
 
-        if (!in_array($normalized, ['content', 'truefalse', 'multichoice'], true)) {
-            throw new \invalid_parameter_exception('page_type must be content, truefalse, or multichoice.');
+        if (!in_array($normalized, ['content', 'truefalse', 'shortanswer', 'multichoice', 'numerical'], true)) {
+            throw new \invalid_parameter_exception('page_type must be content, truefalse, shortanswer, multichoice, or numerical.');
         }
 
         return $normalized;
@@ -286,6 +294,26 @@ class lesson_tools {
      */
     public static function is_multichoice_page(\stdClass $properties): bool {
         return (int) ($properties->qtype ?? 0) === self::MULTICHOICE_PAGE_TYPE;
+    }
+
+    /**
+     * Return whether a Lesson page is a supported short-answer question page.
+     *
+     * @param \stdClass $properties Page properties.
+     * @return bool
+     */
+    public static function is_shortanswer_page(\stdClass $properties): bool {
+        return (int) ($properties->qtype ?? 0) === self::SHORTANSWER_PAGE_TYPE;
+    }
+
+    /**
+     * Return whether a Lesson page is a supported numerical question page.
+     *
+     * @param \stdClass $properties Page properties.
+     * @return bool
+     */
+    public static function is_numerical_page(\stdClass $properties): bool {
+        return (int) ($properties->qtype ?? 0) === self::NUMERICAL_PAGE_TYPE;
     }
 
     /**
@@ -404,6 +432,119 @@ class lesson_tools {
             'multi_answer' => $multianswer,
             'answers' => $answers,
         ];
+    }
+
+    /**
+     * Decode and validate Lesson short-answer answers.
+     *
+     * @param string $answersjson JSON object with answers and optional use_regular_expressions.
+     * @return array
+     */
+    public static function decode_shortanswer_answers(string $answersjson): array {
+        $decoded = json_decode($answersjson, true);
+        if (!is_array($decoded)) {
+            throw new \invalid_parameter_exception('answers must be a JSON object.');
+        }
+
+        $items = self::is_list_array($decoded) ? $decoded : ($decoded['answers'] ?? null);
+        if (!is_array($items) || !self::is_list_array($items) || count($items) < 1) {
+            throw new \invalid_parameter_exception('answers must contain at least one shortanswer answer.');
+        }
+
+        $answers = self::decode_open_question_answers($items, 'shortanswer');
+
+        return [
+            'use_regular_expressions' => (bool) ($decoded['use_regular_expressions'] ?? $decoded['use_regex'] ?? false),
+            'answers' => $answers,
+        ];
+    }
+
+    /**
+     * Decode and validate Lesson numerical answers.
+     *
+     * @param string $answersjson JSON object with numerical answers.
+     * @return array
+     */
+    public static function decode_numerical_answers(string $answersjson): array {
+        $decoded = json_decode($answersjson, true);
+        if (!is_array($decoded)) {
+            throw new \invalid_parameter_exception('answers must be a JSON object.');
+        }
+
+        $items = self::is_list_array($decoded) ? $decoded : ($decoded['answers'] ?? null);
+        if (!is_array($items) || !self::is_list_array($items) || count($items) < 1) {
+            throw new \invalid_parameter_exception('answers must contain at least one numerical answer.');
+        }
+
+        $answers = self::decode_open_question_answers($items, 'numerical');
+        foreach ($answers as $answer) {
+            self::normalise_numerical_answer($answer['answer']);
+        }
+
+        return [
+            'answers' => $answers,
+        ];
+    }
+
+    /**
+     * Decode shared open-question answer rows.
+     *
+     * @param array $items Answer rows.
+     * @param string $label Page-type label for errors.
+     * @return array
+     */
+    private static function decode_open_question_answers(array $items, string $label): array {
+        $answers = [];
+        $seen = [];
+        foreach ($items as $index => $item) {
+            if (!is_array($item)) {
+                throw new \invalid_parameter_exception('Each ' . $label . ' answer must be an object.');
+            }
+
+            $answer = trim((string) ($item['answer'] ?? $item['title'] ?? $item['label'] ?? ''));
+            if ($answer === '') {
+                throw new \invalid_parameter_exception('Each ' . $label . ' answer text must be non-empty.');
+            }
+
+            $key = strtolower($answer);
+            if (array_key_exists($key, $seen)) {
+                throw new \invalid_parameter_exception($label . ' answer texts must be unique.');
+            }
+            $seen[$key] = true;
+
+            $answers[] = [
+                'answer' => $answer,
+                'answer_format' => self::normalise_text_format($item['answer_format'] ?? $item['title_format'] ?? FORMAT_HTML, 'answer_format'),
+                'response' => (string) ($item['response'] ?? ''),
+                'response_format' => self::normalise_text_format($item['response_format'] ?? FORMAT_HTML, 'response_format'),
+                'jump_to' => self::normalise_jump($item['jump_to'] ?? $item['jumpto'] ?? ($index === 0 ? -1 : 0), 'answer jump_to'),
+                'score' => self::normalise_score($item['score'] ?? ($index === 0 ? 1 : 0)),
+            ];
+        }
+
+        return $answers;
+    }
+
+    /**
+     * Validate a Lesson numerical answer or inclusive range.
+     *
+     * @param string $answer Answer value or min:max range.
+     */
+    private static function normalise_numerical_answer(string $answer): void {
+        $parts = explode(':', $answer);
+        if (count($parts) > 2) {
+            throw new \invalid_parameter_exception('numerical answers must be numbers or min:max ranges.');
+        }
+
+        foreach ($parts as $part) {
+            if (!is_numeric(trim($part))) {
+                throw new \invalid_parameter_exception('numerical answers must be numbers or min:max ranges.');
+            }
+        }
+
+        if (count($parts) === 2 && (float) trim($parts[0]) > (float) trim($parts[1])) {
+            throw new \invalid_parameter_exception('numerical answer range minimum must not be greater than maximum.');
+        }
     }
 
     /**
@@ -595,6 +736,135 @@ class lesson_tools {
     }
 
     /**
+     * Build Moodle Lesson page properties for a short-answer question page.
+     *
+     * @param \lesson $lesson Lesson domain object.
+     * @param string $title Page title.
+     * @param string $content Page content.
+     * @param int $contentformat Content format.
+     * @param array $definition Normalized short-answer definition.
+     * @param int $afterpageid Previous page id or 0 for first.
+     * @return \stdClass
+     */
+    public static function shortanswer_page_properties(
+        \lesson $lesson,
+        string $title,
+        string $content,
+        int $contentformat,
+        array $definition,
+        int $afterpageid = 0
+    ): \stdClass {
+        return self::open_question_page_properties(
+            $lesson,
+            $title,
+            $content,
+            $contentformat,
+            self::SHORTANSWER_PAGE_TYPE,
+            $definition['answers'] ?? [],
+            $afterpageid,
+            !empty($definition['use_regular_expressions'])
+        );
+    }
+
+    /**
+     * Build Moodle Lesson page properties for a numerical question page.
+     *
+     * @param \lesson $lesson Lesson domain object.
+     * @param string $title Page title.
+     * @param string $content Page content.
+     * @param int $contentformat Content format.
+     * @param array $definition Normalized numerical definition.
+     * @param int $afterpageid Previous page id or 0 for first.
+     * @return \stdClass
+     */
+    public static function numerical_page_properties(
+        \lesson $lesson,
+        string $title,
+        string $content,
+        int $contentformat,
+        array $definition,
+        int $afterpageid = 0
+    ): \stdClass {
+        return self::open_question_page_properties(
+            $lesson,
+            $title,
+            $content,
+            $contentformat,
+            self::NUMERICAL_PAGE_TYPE,
+            $definition['answers'] ?? [],
+            $afterpageid
+        );
+    }
+
+    /**
+     * Build Moodle Lesson page properties for open-answer question pages.
+     *
+     * @param \lesson $lesson Lesson domain object.
+     * @param string $title Page title.
+     * @param string $content Page content.
+     * @param int $contentformat Content format.
+     * @param int $qtype Moodle Lesson question type.
+     * @param array $answers Normalized answers.
+     * @param int $afterpageid Previous page id or 0 for first.
+     * @param bool $questionoption Optional question option flag.
+     * @return \stdClass
+     */
+    private static function open_question_page_properties(
+        \lesson $lesson,
+        string $title,
+        string $content,
+        int $contentformat,
+        int $qtype,
+        array $answers,
+        int $afterpageid = 0,
+        bool $questionoption = false
+    ): \stdClass {
+        $title = trim($title);
+        if ($title === '') {
+            throw new \invalid_parameter_exception('title must be non-empty.');
+        }
+        if (count($answers) < 1) {
+            throw new \invalid_parameter_exception('open-answer Lesson pages require at least one answer.');
+        }
+        if (count($answers) > (int) $lesson->maxanswers) {
+            throw new \invalid_parameter_exception('answer count must not exceed the Lesson max_answers setting.');
+        }
+
+        $properties = (object) [
+            'title' => $title,
+            'contents_editor' => [
+                'text' => $content,
+                'format' => $contentformat,
+            ],
+            'qtype' => $qtype,
+            'pageid' => max(0, $afterpageid),
+            'answer_editor' => [],
+            'response_editor' => [],
+            'jumpto' => [],
+            'score' => [],
+        ];
+
+        if ($questionoption) {
+            $properties->qoption = 1;
+        }
+
+        foreach ($answers as $index => $answer) {
+            $properties->answer_editor[$index] = [
+                'text' => $answer['answer'],
+                'format' => $answer['answer_format'],
+            ];
+            $properties->response_editor[$index] = [
+                'text' => $answer['response'],
+                'format' => $answer['response_format'],
+            ];
+            $properties->jumpto[$index] = $answer['jump_to'];
+            $properties->score[$index] = $answer['score'];
+        }
+
+        return $properties;
+    }
+
+    /**
      * Return current content-page branches for update preservation.
      *
      * @param \lesson_page $page Lesson page object.
@@ -680,6 +950,64 @@ class lesson_tools {
             'multi_answer' => (int) ($properties->qoption ?? 0) === 1,
             'answers' => $answers,
         ];
+    }
+
+    /**
+     * Return current short-answer answers for update preservation.
+     *
+     * @param \lesson_page $page Lesson page object.
+     * @return array
+     */
+    public static function shortanswer_answers_from_page(\lesson_page $page): array {
+        $properties = $page->properties();
+
+        return [
+            'use_regular_expressions' => (int) ($properties->qoption ?? 0) === 1,
+            'answers' => self::open_question_answers_from_page($page, 'shortanswer'),
+        ];
+    }
+
+    /**
+     * Return current numerical answers for update preservation.
+     *
+     * @param \lesson_page $page Lesson page object.
+     * @return array
+     */
+    public static function numerical_answers_from_page(\lesson_page $page): array {
+        return [
+            'answers' => self::open_question_answers_from_page($page, 'numerical'),
+        ];
+    }
+
+    /**
+     * Return current open-answer rows for update preservation.
+     *
+     * @param \lesson_page $page Lesson page object.
+     * @param string $label Page-type label.
+     * @return array
+     */
+    private static function open_question_answers_from_page(\lesson_page $page, string $label): array {
+        $answers = [];
+        foreach ($page->get_answers() as $answer) {
+            $text = (string) ($answer->answer ?? '');
+            if ($text === '') {
+                continue;
+            }
+            $answers[] = [
+                'answer' => $text,
+                'answer_format' => (int) ($answer->answerformat ?? FORMAT_HTML),
+                'response' => (string) ($answer->response ?? ''),
+                'response_format' => (int) ($answer->responseformat ?? FORMAT_HTML),
+                'jump_to' => (int) ($answer->jumpto ?? 0),
+                'score' => (float) ($answer->score ?? 0),
+            ];
+        }
+
+        if (count($answers) < 1) {
+            throw new \invalid_parameter_exception('Existing ' . $label . ' page must contain at least one answer before update.');
+        }
+
+        return $answers;
     }
 
     /**

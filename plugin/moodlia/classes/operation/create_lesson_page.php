@@ -99,7 +99,23 @@ class create_lesson_page {
                 lesson_tools::decode_truefalse_answers($answersjson),
                 $afterpageid
             );
-        } else {
+        } elseif ($pagetype === 'shortanswer') {
+            if ($branchesjson !== null && trim($branchesjson) !== '') {
+                throw new \invalid_parameter_exception('branches is only supported for content Lesson pages.');
+            }
+            if ($answersjson === null || trim($answersjson) === '') {
+                throw new \invalid_parameter_exception('answers is required for shortanswer Lesson pages.');
+            }
+
+            $properties = lesson_tools::shortanswer_page_properties(
+                $lesson,
+                $title,
+                $content,
+                $contentformat,
+                lesson_tools::decode_shortanswer_answers($answersjson),
+                $afterpageid
+            );
+        } elseif ($pagetype === 'multichoice') {
             if ($branchesjson !== null && trim($branchesjson) !== '') {
                 throw new \invalid_parameter_exception('branches is only supported for content Lesson pages.');
             }
@@ -113,6 +129,22 @@ class create_lesson_page {
                 $content,
                 $contentformat,
                 lesson_tools::decode_multichoice_answers($answersjson),
+                $afterpageid
+            );
+        } else {
+            if ($branchesjson !== null && trim($branchesjson) !== '') {
+                throw new \invalid_parameter_exception('branches is only supported for content Lesson pages.');
+            }
+            if ($answersjson === null || trim($answersjson) === '') {
+                throw new \invalid_parameter_exception('answers is required for numerical Lesson pages.');
+            }
+
+            $properties = lesson_tools::numerical_page_properties(
+                $lesson,
+                $title,
+                $content,
+                $contentformat,
+                lesson_tools::decode_numerical_answers($answersjson),
                 $afterpageid
             );
         }

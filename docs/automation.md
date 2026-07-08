@@ -96,12 +96,14 @@ Focused transport and advanced-question checks can be run directly:
 
 ```text
 node --test tests/smoke/protected-target-readonly.test.mjs
+node --test tests/smoke/course-integrated-subelements.test.mjs
 node --test tests/smoke/transport-parity.test.mjs
 node --test tests/smoke/embedded-choice-question.test.mjs
 node --test tests/smoke/restricted-permissions.test.mjs
 ```
 
 The protected-target read-only smoke compares REST, MCP, and CLI result shapes for stable read operations and is safe for production-like targets because it does not create Moodle data. The transport parity smoke also compares REST, MCP, and CLI behavior, but it creates generated course data and should run only on targets where generated test data is acceptable. The embedded-choice smoke creates `gapselect` and `ddwtos` questions through REST, MCP, and CLI, adds them to a quiz, and verifies the quiz slot listing.
+The integrated subelements smoke creates one generated course and validates Database URL fields and entries, Feedback captcha, Lesson shortanswer and numerical pages, Folder files, manual completion, manual gradebook items, course content listing, and native backup creation in a single end-to-end flow.
 
 Use the protected release gate for production-like Moodle validation:
 

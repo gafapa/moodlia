@@ -38,21 +38,25 @@ Required evidence before broadening implementation:
 
 ## Lesson Page Mutation
 
-Status: partially implemented for content pages, truefalse question pages, and multichoice question pages.
+Status: partially implemented for content pages, truefalse, shortanswer, multichoice, and numerical question pages.
 
-Moodle 4.5 has `lesson_page::create(...)`, `lesson_page::update(...)`, and page `delete()` methods. MoodlIA now exposes a narrow content-page contract that creates, updates, and deletes Lesson content pages and their branch jumps through those component APIs. It also exposes truefalse question-page creation and update through the same page component APIs, using exactly two answer editors, response editors, jumps, and scores. The operation intentionally does not expose arbitrary Lesson question page types yet, because each page type has its own answer, scoring, file, and jump payload contract.
+Moodle 4.5 has `lesson_page::create(...)`, `lesson_page::update(...)`, and page `delete()` methods. MoodlIA now exposes a narrow content-page contract that creates, updates, and deletes Lesson content pages and their branch jumps through those component APIs. It also exposes truefalse, shortanswer, multichoice, and numerical question-page creation and update through the same page component APIs. Shortanswer and numerical pages use Moodle's answer editor, response editor, jump, and score arrays; shortanswer optionally enables Moodle's regular-expression mode, and numerical answers are restricted to numbers or inclusive `min:max` ranges. The operation intentionally does not expose arbitrary Lesson question page types yet, because each page type has its own answer, scoring, file, and jump payload contract.
 
 Primary sources:
 
 - https://raw.githubusercontent.com/moodle/moodle/MOODLE_405_STABLE/mod/lesson/locallib.php
 - https://raw.githubusercontent.com/moodle/moodle/MOODLE_405_STABLE/mod/lesson/pagetypes/truefalse.php
+- https://raw.githubusercontent.com/moodle/moodle/MOODLE_405_STABLE/mod/lesson/pagetypes/shortanswer.php
+- https://raw.githubusercontent.com/moodle/moodle/MOODLE_405_STABLE/mod/lesson/pagetypes/multichoice.php
+- https://raw.githubusercontent.com/moodle/moodle/MOODLE_405_STABLE/mod/lesson/pagetypes/numerical.php
 
 Implemented evidence:
 
-- Supported page types are limited to content pages with branch definitions, truefalse question pages with exactly two answers, and multichoice question pages with single-answer or multi-answer choices.
+- Supported page types are limited to content pages with branch definitions, truefalse question pages with exactly two answers, shortanswer question pages with one or more accepted answers, multichoice question pages with single-answer or multi-answer choices, and numerical question pages with one or more number/range answers.
 - Truefalse answer payloads validate non-empty unique answer text, response text, Moodle text formats, jump targets, and numeric scores before delegating to Moodle's page APIs.
+- Shortanswer and numerical answer payloads validate non-empty unique answer text, response text, Moodle text formats, jump targets, numeric scores, optional regular-expression mode, and numerical range syntax before delegating to Moodle's page APIs.
 - Ownership checks verify that every target page belongs to the selected Lesson module before update or delete.
-- Static coverage requires contract, REST, MCP, CLI, services, helper APIs, and smoke syntax for content and truefalse create/update/delete.
+- Static coverage requires contract, REST, MCP, CLI, services, helper APIs, and smoke syntax for supported content and question page create/update/delete paths.
 
 Required evidence before broadening implementation:
 

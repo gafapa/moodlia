@@ -217,31 +217,55 @@ test('Database fields and entries work through REST, MCP, and CLI', { skip: !has
       moduleId: database.course_module_id
     });
 
+    const restUrlField = await callRestFunction(toRestFunctionName(contract, 'create_data_field'), {
+      course_id: courseId,
+      module_id: database.course_module_id,
+      field_type: 'url',
+      name: `REST Link ${suffix}`,
+      description: 'Link created through REST.',
+      options: JSON.stringify({ auto_link: true, open_in_new_window: true })
+    });
+    assertField(restUrlField, {
+      type: 'url',
+      name: `REST Link ${suffix}`,
+      required: false,
+      moduleId: database.course_module_id
+    });
+
     const restEntryText = `REST entry ${suffix}`;
+    const restEntryUrl = `https://example.com/rest-${suffix}`;
     const restEntry = await callRestFunction(toRestFunctionName(contract, 'create_data_entry'), {
       course_id: courseId,
       module_id: database.course_module_id,
       values: JSON.stringify({
         [updatedRestTitleField.name]: restEntryText,
         [updatedMcpStatusField.name]: 'Draft',
-        [updatedCliNotesField.name]: `REST notes ${suffix}`
+        [updatedCliNotesField.name]: `REST notes ${suffix}`,
+        [`${restUrlField.name}.url`]: restEntryUrl,
+        [`${restUrlField.name}.text`]: 'REST link'
       })
     });
     assertEntry(restEntry, { moduleId: database.course_module_id, text: new RegExp(restEntryText) });
+    assertEntry(restEntry, { moduleId: database.course_module_id, text: new RegExp(restEntryUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')) });
 
     const mcpEntryText = `MCP entry ${suffix}`;
+    const mcpEntryUrl = `https://example.com/mcp-${suffix}`;
     const mcpEntry = await callMcpTool('create_data_entry', {
       course_id: courseId,
       module_id: database.course_module_id,
       values: {
         [updatedRestTitleField.name]: mcpEntryText,
         [updatedMcpStatusField.name]: 'Ready',
-        [updatedCliNotesField.name]: `MCP notes ${suffix}`
+        [updatedCliNotesField.name]: `MCP notes ${suffix}`,
+        [`${restUrlField.name}.url`]: mcpEntryUrl,
+        [`${restUrlField.name}.text`]: 'MCP link'
       }
     });
     assertEntry(mcpEntry, { moduleId: database.course_module_id, text: new RegExp(mcpEntryText) });
+    assertEntry(mcpEntry, { moduleId: database.course_module_id, text: new RegExp(mcpEntryUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')) });
 
     const cliEntryText = `CLI entry ${suffix}`;
+    const cliEntryUrl = `https://example.com/cli-${suffix}`;
     const cliEntry = await callCli([
       'create-data-entry',
       '--course-id', String(courseId),
@@ -249,10 +273,13 @@ test('Database fields and entries work through REST, MCP, and CLI', { skip: !has
       '--values', JSON.stringify({
         [updatedRestTitleField.name]: cliEntryText,
         [updatedMcpStatusField.name]: 'Archived',
-        [updatedCliNotesField.name]: `CLI notes ${suffix}`
+        [updatedCliNotesField.name]: `CLI notes ${suffix}`,
+        [`${restUrlField.name}.url`]: cliEntryUrl,
+        [`${restUrlField.name}.text`]: 'CLI link'
       })
     ]);
     assertEntry(cliEntry, { moduleId: database.course_module_id, text: new RegExp(cliEntryText) });
+    assertEntry(cliEntry, { moduleId: database.course_module_id, text: new RegExp(cliEntryUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')) });
 
     const restEntries = await callRestFunction(toRestFunctionName(contract, 'get_data_entries'), {
       course_id: courseId,
@@ -262,6 +289,7 @@ test('Database fields and entries work through REST, MCP, and CLI', { skip: !has
     assert.equal(restEntries.count >= 3, true);
 
     const updatedRestText = `REST entry updated ${suffix}`;
+    const updatedRestUrl = `https://example.com/rest-updated-${suffix}`;
     const updatedRestEntry = await callRestFunction(toRestFunctionName(contract, 'update_data_entry'), {
       course_id: courseId,
       module_id: database.course_module_id,
@@ -269,10 +297,13 @@ test('Database fields and entries work through REST, MCP, and CLI', { skip: !has
       values: JSON.stringify({
         [updatedRestTitleField.name]: updatedRestText,
         [updatedMcpStatusField.name]: 'Ready',
-        [updatedCliNotesField.name]: `REST notes updated ${suffix}`
+        [updatedCliNotesField.name]: `REST notes updated ${suffix}`,
+        [`${restUrlField.name}.url`]: updatedRestUrl,
+        [`${restUrlField.name}.text`]: 'REST updated link'
       })
     });
     assertEntry(updatedRestEntry, { moduleId: database.course_module_id, text: new RegExp(updatedRestText) });
+    assertEntry(updatedRestEntry, { moduleId: database.course_module_id, text: new RegExp(updatedRestUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')) });
 
     const updatedMcpText = `MCP entry updated ${suffix}`;
     const updatedMcpEntry = await callMcpTool('update_data_entry', {
@@ -306,7 +337,7 @@ test('Database fields and entries work through REST, MCP, and CLI', { skip: !has
       module_id: database.course_module_id
     });
     const extra = JSON.parse(details.extra_json);
-    assert.equal(extra.activity.field_count >= 3, true);
+    assert.equal(extra.activity.field_count >= 4, true);
     assert.equal(extra.activity.entry_count >= 3, true);
 
     const deletedRest = await callRestFunction(toRestFunctionName(contract, 'delete_data_entry'), {
@@ -353,6 +384,13 @@ test('Database fields and entries work through REST, MCP, and CLI', { skip: !has
     ]);
     assert.equal(deletedCliField.deleted, true);
 
+    const deletedRestUrlField = await callRestFunction(toRestFunctionName(contract, 'delete_data_field'), {
+      course_id: courseId,
+      module_id: database.course_module_id,
+      field_id: restUrlField.field_id
+    });
+    assert.equal(deletedRestUrlField.deleted, true);
+
     const fieldsAfterDelete = await callRestFunction(toRestFunctionName(contract, 'get_data_fields'), {
       course_id: courseId,
       module_id: database.course_module_id
@@ -360,6 +398,7 @@ test('Database fields and entries work through REST, MCP, and CLI', { skip: !has
     assert.equal(fieldsAfterDelete.fields.some((field) => field.field_id === updatedRestTitleField.field_id), false);
     assert.equal(fieldsAfterDelete.fields.some((field) => field.field_id === updatedMcpStatusField.field_id), false);
     assert.equal(fieldsAfterDelete.fields.some((field) => field.field_id === updatedCliNotesField.field_id), false);
+    assert.equal(fieldsAfterDelete.fields.some((field) => field.field_id === restUrlField.field_id), false);
 
     const deletedCourse = await callRestFunction(toRestFunctionName(contract, 'delete_course'), {
       course_id: courseId

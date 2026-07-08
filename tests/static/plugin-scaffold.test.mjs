@@ -894,7 +894,13 @@ test('lesson content and truefalse page lifecycle uses Moodle Lesson component A
 
   assert.equal(byName.get('create_lesson_page')?.parameters.branches.type, 'object');
   assert.equal(byName.get('create_lesson_page')?.parameters.branches.required, false);
-  assert.deepEqual(byName.get('create_lesson_page')?.parameters.page_type.enum, ['content', 'multichoice', 'truefalse']);
+  assert.deepEqual(byName.get('create_lesson_page')?.parameters.page_type.enum, [
+    'content',
+    'multichoice',
+    'numerical',
+    'shortanswer',
+    'truefalse'
+  ]);
   assert.equal(byName.get('create_lesson_page')?.parameters.answers.type, 'object');
   assert.equal(byName.get('update_lesson_page')?.parameters.branches.required, false);
   assert.equal(byName.get('update_lesson_page')?.parameters.answers.required, false);
@@ -902,12 +908,21 @@ test('lesson content and truefalse page lifecycle uses Moodle Lesson component A
   assert.match(lessonTools, /CONTENT_PAGE_TYPE\s*=\s*20/);
   assert.match(lessonTools, /TRUEFALSE_PAGE_TYPE\s*=\s*2/);
   assert.match(lessonTools, /MULTICHOICE_PAGE_TYPE\s*=\s*3/);
+  assert.match(lessonTools, /SHORTANSWER_PAGE_TYPE\s*=\s*1/);
+  assert.match(lessonTools, /NUMERICAL_PAGE_TYPE\s*=\s*8/);
   assert.match(lessonTools, /function decode_branches/);
   assert.match(lessonTools, /function decode_truefalse_answers/);
+  assert.match(lessonTools, /function decode_shortanswer_answers/);
   assert.match(lessonTools, /function decode_multichoice_answers/);
+  assert.match(lessonTools, /function decode_numerical_answers/);
   assert.match(lessonTools, /function truefalse_page_properties/);
+  assert.match(lessonTools, /function shortanswer_page_properties/);
   assert.match(lessonTools, /function multichoice_page_properties/);
+  assert.match(lessonTools, /function numerical_page_properties/);
   assert.match(lessonTools, /function multichoice_answers_from_page/);
+  assert.match(lessonTools, /function numerical_answers_from_page/);
+  assert.match(lessonTools, /function normalise_numerical_answer/);
+  assert.match(lessonTools, /use_regular_expressions/);
   assert.match(lessonTools, /function get_page/);
   assert.doesNotMatch(lessonTools, /'qoption'\s*=>\s*!empty\(\$definition\['multi_answer'\]\)\s*\?\s*1\s*:\s*0/);
   assert.match(lessonTools, /if \(!empty\(\$definition\['multi_answer'\]\)\)\s*{\s*\$properties->qoption = 1;/);
@@ -920,6 +935,42 @@ test('lesson content and truefalse page lifecycle uses Moodle Lesson component A
   assert.match(updateOperation, /get_lesson_object\(\$course, \$cm\)[\s\S]*prepare_page_context\(\$course, \$cm\)/);
   assert.match(deleteOperation, /get_lesson_object\(\$course, \$cm\)[\s\S]*prepare_page_context\(\$course, \$cm\)/);
   assert.doesNotMatch(createOperation + updateOperation + deleteOperation, /\$DB\b/);
+});
+
+test('database field lifecycle exposes audited Moodle field types and URL subfields', async () => {
+  const contract = JSON.parse(await fs.readFile(fromRoot('contract/operations.json'), 'utf8'));
+  const byName = new Map(contract.operations.map((operation) => [operation.name, operation]));
+  const services = await fs.readFile(fromRoot('plugin/moodlia/db/services.php'), 'utf8');
+  const dataTools = await fs.readFile(fromRoot('plugin/moodlia/classes/operation/data_tools.php'), 'utf8');
+  const createOperation = await fs.readFile(fromRoot('plugin/moodlia/classes/operation/create_data_field.php'), 'utf8');
+  const updateOperation = await fs.readFile(fromRoot('plugin/moodlia/classes/operation/update_data_field.php'), 'utf8');
+
+  for (const operationName of ['create_data_field', 'update_data_field', 'delete_data_field']) {
+    assert.ok(byName.has(operationName), `${operationName} must exist in the operation contract.`);
+    assert.match(services, new RegExp(`local_moodlia_${operationName}\\b`), `${operationName} must be registered as REST.`);
+
+    const external = await fs.readFile(fromRoot(`plugin/moodlia/classes/external/${operationName}.php`), 'utf8');
+    assert.match(external, /require_capability\('local\/moodlia:useapi'/);
+    assert.match(external, /require_capability\('mod\/data:managetemplates'/);
+  }
+
+  assert.deepEqual(byName.get('create_data_field')?.parameters.field_type.enum, [
+    'text',
+    'textarea',
+    'number',
+    'menu',
+    'checkbox',
+    'radiobutton',
+    'multimenu',
+    'url'
+  ]);
+  assert.match(dataTools, /SUPPORTED_FIELD_TYPES = \['text', 'textarea', 'number', 'menu', 'checkbox', 'radiobutton', 'multimenu', 'url'\]/);
+  assert.match(dataTools, /function normalise_choices/);
+  assert.match(dataTools, /function normalise_value_subfield/);
+  assert.match(dataTools, /URL database fields only support url and text subfields/);
+  assert.match(dataTools, /auto_link/);
+  assert.match(dataTools, /open_in_new_window/);
+  assert.doesNotMatch(createOperation + updateOperation, /\$DB\b/);
 });
 
 test('workshop grading form lifecycle uses Moodle strategy APIs', async () => {

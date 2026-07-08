@@ -15,7 +15,7 @@ MoodlIA exposes activity subelements when Moodle provides a public API path that
 - Forum discussions, posts, and discussion state through Moodle Forum APIs.
 - Glossary entries, categories, authors, browse filters, search, pending approval reads, and entry CRUD through Moodle Glossary APIs.
 - Lesson page, jump, access, grade, timer, and attempt report reads through Moodle Lesson APIs.
-- Lesson content page creation, update, deletion, branch jump mutation, truefalse question page creation/update, and multichoice question page creation/update through Moodle Lesson page component APIs. Other question-page type-specific payloads remain intentionally unavailable.
+- Lesson content page creation, update, deletion, branch jump mutation, truefalse, shortanswer, multichoice, and numerical question page creation/update through Moodle Lesson page component APIs. Other question-page type-specific payloads remain intentionally unavailable.
 - Quiz question slots, attempts, attempt data, attempt review, review options, grades, and view events through Moodle Quiz APIs.
 - Wiki pages, subwikis, files, and view events through Moodle Wiki APIs.
 - Workshop phases, user plans, grades, grade reports, reviewer/submission assessment reads, allocations, assessment form-definition reads, assessment updates, assessment evaluation, and submissions through Moodle Workshop APIs.
@@ -26,7 +26,7 @@ MoodlIA exposes activity subelements when Moodle provides a public API path that
 These areas remain blocked until a stable Moodle API path is identified and tested:
 
 - Feedback item types beyond textfield, textarea, numeric, multichoice, multichoicerated, label, info, captcha creation, and pagebreak creation, plus direct response-value mutation.
-- Lesson question page types beyond truefalse and multichoice, and unsupported answer/jump payloads beyond content-page branches, truefalse answers, and multichoice answers.
+- Lesson question page types beyond truefalse, shortanswer, multichoice, and numerical, and unsupported answer/jump payloads beyond content-page branches, truefalse answers, shortanswer answers, multichoice answers, and numerical answers.
 - Workshop grading form strategies beyond accumulative, comments, number-of-errors, and rubric, and standalone assessment creation outside Moodle's allocation flow.
 
 ## Required Standard Before Adding One
@@ -45,7 +45,7 @@ Every new subelement write must satisfy all of these conditions:
 ## Preferred Implementation Order
 
 1. Additional Feedback item types, only after validating the type-specific item class payload and smoke testing UI-visible item state.
-2. Additional Lesson question page types beyond truefalse and multichoice, only after validating each page and answer class across the supported Moodle versions with ownership checks and smoke tests that confirm page order, jumps, scoring, and content.
+2. Additional Lesson question page types beyond truefalse, shortanswer, multichoice, and numerical, only after validating each page and answer class across the supported Moodle versions with ownership checks and smoke tests that confirm page order, jumps, scoring, and content.
 3. Additional Workshop grading form strategies beyond accumulative, comments, number-of-errors, and rubric, only after identifying stable subplugin APIs, payload schemas, and capability boundaries.
 
 See [remaining-api-validation.md](remaining-api-validation.md) for the current source-level validation notes and the evidence required before exposing these writes.
