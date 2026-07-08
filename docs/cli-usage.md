@@ -581,9 +581,10 @@ Configure a Workshop grading form while the Workshop is still in setup phase:
 ```text
 moodlia set-workshop-grading-form --course-id <course_id> --module-id <workshop_module_id> --strategy accumulative --definition '{"dimensions":[{"description":"<p>Content quality</p>","grade":10,"weight":1},{"description":"<p>Practical applicability</p>","grade":10,"weight":1}]}'
 moodlia set-workshop-grading-form --course-id <course_id> --module-id <workshop_module_id> --strategy comments --definition '{"dimensions":[{"description":"<p>Content feedback</p>"},{"description":"<p>Practical feedback</p>"}]}'
+moodlia set-workshop-grading-form --course-id <course_id> --module-id <workshop_module_id> --strategy rubric --definition '{"layout":"list","dimensions":[{"description":"<p>Content quality</p>","levels":[{"definition":"Missing","grade":0},{"definition":"Adequate","grade":5},{"definition":"Strong","grade":10}]},{"description":"<p>Practical applicability</p>","levels":[{"definition":"Missing","grade":0},{"definition":"Adequate","grade":5},{"definition":"Strong","grade":10}]}]}'
 ```
 
-Workshop grading-form writes currently support the active `accumulative` and `comments` strategies only. Rubric and other strategy definitions remain intentionally separate until their Moodle subplugin payloads are validated.
+Workshop grading-form writes currently support the active `accumulative`, `comments`, and `rubric` strategies. The Workshop must still be in setup phase and the requested strategy must match the module strategy. Other strategy definitions remain intentionally separate until their Moodle subplugin payloads are validated.
 
 Create and manage Lesson content pages and truefalse question pages:
 

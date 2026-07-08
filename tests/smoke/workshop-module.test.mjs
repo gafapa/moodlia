@@ -116,6 +116,30 @@ function workshopCommentsFormDefinition(suffix) {
   };
 }
 
+function workshopRubricFormDefinition(suffix) {
+  return {
+    layout: 'list',
+    dimensions: [
+      {
+        description: `<p>Content quality ${suffix}</p>`,
+        levels: [
+          { definition: 'Missing', grade: 0 },
+          { definition: 'Adequate', grade: 5 },
+          { definition: 'Strong', grade: 10 }
+        ]
+      },
+      {
+        description: `<p>Practical applicability ${suffix}</p>`,
+        levels: [
+          { definition: 'Missing', grade: 0 },
+          { definition: 'Adequate', grade: 5 },
+          { definition: 'Strong', grade: 10 }
+        ]
+      }
+    ]
+  };
+}
+
 function assertWorkshopGradingForm(form, expected) {
   assert.equal(form.course_id, expected.courseId);
   assert.equal(form.module_id, expected.moduleId);
@@ -340,6 +364,36 @@ test('Workshop module lifecycle works through REST, MCP, and CLI', { skip: !hasC
       module_id: restCommentsWorkshop.course_module_id
     });
     assert.equal(deletedRestCommentsWorkshop.deleted, true);
+
+    const restRubricOptions = workshopOptions(suffix, { strategy: 'rubric' });
+    const restRubricWorkshop = await callRestFunction(toRestFunctionName(contract, 'create_module'), {
+      course_id: courseId,
+      section_number: section.section_number,
+      module_type: 'workshop',
+      name: `MoodlIA REST Rubric Workshop ${suffix}`,
+      options: JSON.stringify(restRubricOptions)
+    });
+    assert.equal(restRubricWorkshop.module_type, 'workshop');
+
+    const restRubricGradingForm = await callRestFunction(toRestFunctionName(contract, 'set_workshop_grading_form'), {
+      course_id: courseId,
+      module_id: restRubricWorkshop.course_module_id,
+      strategy: 'rubric',
+      definition: JSON.stringify(workshopRubricFormDefinition(suffix))
+    });
+    assertWorkshopGradingForm(restRubricGradingForm, {
+      courseId,
+      moduleId: restRubricWorkshop.course_module_id,
+      workshopId: restRubricWorkshop.instance_id,
+      strategy: 'rubric',
+      dimensionsCount: 2
+    });
+
+    const deletedRestRubricWorkshop = await callRestFunction(toRestFunctionName(contract, 'delete_module'), {
+      course_id: courseId,
+      module_id: restRubricWorkshop.course_module_id
+    });
+    assert.equal(deletedRestRubricWorkshop.deleted, true);
 
     const restOptions = workshopOptions(suffix);
     const restWorkshop = await callRestFunction(toRestFunctionName(contract, 'create_module'), {

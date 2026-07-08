@@ -129,7 +129,7 @@ class workshop_tools {
                 throw new \invalid_parameter_exception('Each dimension must be an object.');
             }
             $description = trim((string) ($dimension['description'] ?? ''));
-            if ($description === '') {
+            if ($description === '' || trim(strip_tags($description)) === '') {
                 throw new \invalid_parameter_exception('Each dimension description must be non-empty.');
             }
             $grade = (float) ($dimension['grade'] ?? 0);
@@ -173,7 +173,7 @@ class workshop_tools {
                 throw new \invalid_parameter_exception('Each dimension must be an object.');
             }
             $description = trim((string) ($dimension['description'] ?? ''));
-            if ($description === '') {
+            if ($description === '' || trim(strip_tags($description)) === '') {
                 throw new \invalid_parameter_exception('Each dimension description must be non-empty.');
             }
             $key = \core_text::strtolower(strip_tags($description));
@@ -188,6 +188,91 @@ class workshop_tools {
         }
 
         return $dimensions;
+    }
+
+    /**
+     * Decode and validate a rubric grading-form definition.
+     *
+     * @param string $definitionjson JSON object with layout and dimensions.
+     * @return array
+     */
+    public static function decode_rubric_definition(string $definitionjson): array {
+        $decoded = json_decode($definitionjson, true);
+        if (!is_array($decoded) || !isset($decoded['dimensions']) || !is_array($decoded['dimensions'])) {
+            throw new \invalid_parameter_exception('definition must be a JSON object with a dimensions array.');
+        }
+        if (count($decoded['dimensions']) === 0) {
+            throw new \invalid_parameter_exception('definition.dimensions must contain at least one dimension.');
+        }
+
+        $layout = clean_param((string) ($decoded['layout'] ?? 'list'), PARAM_ALPHA);
+        if (!in_array($layout, ['list', 'grid'], true)) {
+            throw new \invalid_parameter_exception('definition.layout must be list or grid.');
+        }
+
+        $dimensions = [];
+        $seen = [];
+        foreach ($decoded['dimensions'] as $dimension) {
+            if (!is_array($dimension)) {
+                throw new \invalid_parameter_exception('Each dimension must be an object.');
+            }
+            $description = trim((string) ($dimension['description'] ?? ''));
+            if ($description === '' || trim(strip_tags($description)) === '') {
+                throw new \invalid_parameter_exception('Each dimension description must be non-empty.');
+            }
+            $dimensionkey = \core_text::strtolower(strip_tags($description));
+            if (array_key_exists($dimensionkey, $seen)) {
+                throw new \invalid_parameter_exception('Rubric dimensions must have unique descriptions.');
+            }
+            $seen[$dimensionkey] = true;
+
+            if (!isset($dimension['levels']) || !is_array($dimension['levels']) || count($dimension['levels']) < 2) {
+                throw new \invalid_parameter_exception('Each rubric dimension must contain at least two levels.');
+            }
+
+            $levels = [];
+            $levelgrades = [];
+            $leveldefinitions = [];
+            foreach ($dimension['levels'] as $level) {
+                if (!is_array($level)) {
+                    throw new \invalid_parameter_exception('Each rubric level must be an object.');
+                }
+                $definition = trim((string) ($level['definition'] ?? ''));
+                if ($definition === '' || trim(strip_tags($definition)) === '') {
+                    throw new \invalid_parameter_exception('Each rubric level definition must be non-empty.');
+                }
+                if (!array_key_exists('grade', $level) || !is_numeric($level['grade'])) {
+                    throw new \invalid_parameter_exception('Each rubric level grade must be numeric.');
+                }
+                $grade = (float) $level['grade'];
+                $gradekey = (string) $grade;
+                if (array_key_exists($gradekey, $levelgrades)) {
+                    throw new \invalid_parameter_exception('Rubric level grades must be unique within each dimension.');
+                }
+                $definitionkey = \core_text::strtolower(strip_tags($definition));
+                if (array_key_exists($definitionkey, $leveldefinitions)) {
+                    throw new \invalid_parameter_exception('Rubric level definitions must be unique within each dimension.');
+                }
+                $levelgrades[$gradekey] = true;
+                $leveldefinitions[$definitionkey] = true;
+                $levels[] = [
+                    'definition' => $definition,
+                    'grade' => $grade,
+                ];
+            }
+
+            usort($levels, static fn($left, $right): int => $left['grade'] <=> $right['grade']);
+
+            $dimensions[] = [
+                'description' => $description,
+                'levels' => $levels,
+            ];
+        }
+
+        return [
+            'layout' => $layout,
+            'dimensions' => $dimensions,
+        ];
     }
 
     /**
@@ -262,6 +347,89 @@ class workshop_tools {
                 'format' => FORMAT_HTML,
                 'itemid' => 0,
             ];
+            $index++;
+        }
+
+        return $data;
+    }
+
+    /**
+     * Return rubric dimensions and levels loaded by Moodle's rubric strategy object.
+     *
+     * @param object $strategyinstance Workshop rubric strategy instance.
+     * @return array
+     */
+    public static function rubric_existing_dimensions(object $strategyinstance): array {
+        if (!property_exists($strategyinstance, 'dimensions')) {
+            return [];
+        }
+
+        $reflection = new \ReflectionObject($strategyinstance);
+        if (!$reflection->hasProperty('dimensions')) {
+            return [];
+        }
+
+        $property = $reflection->getProperty('dimensions');
+        $property->setAccessible(true);
+        $dimensions = $property->getValue($strategyinstance);
+        if (!is_array($dimensions)) {
+            return [];
+        }
+
+        return $dimensions;
+    }
+
+    /**
+     * Build form-shaped data for Workshop rubric strategy saving.
+     *
+     * @param \workshop $workshop Workshop domain object.
+     * @param array $definition Validated rubric definition.
+     * @param array $existing Existing rubric dimensions from the strategy object.
+     * @return \stdClass
+     */
+    public static function rubric_edit_form_data(\workshop $workshop, array $definition, array $existing = []): \stdClass {
+        $dimensions = $definition['dimensions'];
+        $data = new \stdClass();
+        $data->workshopid = (int) $workshop->id;
+        $data->config_layout = $definition['layout'];
+        $data->norepeats = count($existing) + count($dimensions);
+
+        $index = 0;
+        foreach ($existing as $dimension) {
+            $dimension = (object) $dimension;
+            $data->{'dimensionid__idx_' . $index} = (int) ($dimension->id ?? 0);
+            $data->{'description__idx_' . $index . '_editor'} = [
+                'text' => '',
+                'format' => FORMAT_HTML,
+                'itemid' => 0,
+            ];
+
+            $levelindex = 0;
+            foreach ((array) ($dimension->levels ?? []) as $level) {
+                $level = (object) $level;
+                $data->{'levelid__idx_' . $index . '__idy_' . $levelindex} = (int) ($level->id ?? 0);
+                $data->{'grade__idx_' . $index . '__idy_' . $levelindex} = (float) ($level->grade ?? 0);
+                $data->{'definition__idx_' . $index . '__idy_' . $levelindex} = '';
+                $levelindex++;
+            }
+            $index++;
+        }
+
+        foreach ($dimensions as $dimension) {
+            $data->{'dimensionid__idx_' . $index} = 0;
+            $data->{'description__idx_' . $index . '_editor'} = [
+                'text' => $dimension['description'],
+                'format' => FORMAT_HTML,
+                'itemid' => 0,
+            ];
+
+            $levelindex = 0;
+            foreach ($dimension['levels'] as $level) {
+                $data->{'levelid__idx_' . $index . '__idy_' . $levelindex} = 0;
+                $data->{'grade__idx_' . $index . '__idy_' . $levelindex} = $level['grade'];
+                $data->{'definition__idx_' . $index . '__idy_' . $levelindex} = $level['definition'];
+                $levelindex++;
+            }
             $index++;
         }
 

@@ -7401,10 +7401,11 @@
         "strategy": {
           "type": "string",
           "required": true,
-          "enum": [
-            "accumulative",
-            "comments"
-          ]
+            "enum": [
+              "accumulative",
+              "comments",
+              "rubric"
+            ]
         },
         "definition": {
           "type": "object",

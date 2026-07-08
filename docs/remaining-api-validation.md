@@ -60,9 +60,9 @@ Required evidence before broadening implementation:
 
 ## Workshop Grading Form Mutation
 
-Status: partially implemented for the accumulative and comments strategies.
+Status: partially implemented for the accumulative, comments, and rubric strategies.
 
-Moodle Workshop grading-form subplugins expose strategy-specific `save_edit_strategy_form(...)` methods. MoodlIA now exposes `set_workshop_grading_form` for the active `accumulative` and `comments` strategies in setup phase only. The operation builds the form-shaped data required by Moodle and delegates persistence to the Workshop strategy instance instead of writing `workshopform_accumulative` or `workshopform_comments` tables directly. Other strategies remain blocked until their payload contracts are narrowed and smoke tested.
+Moodle Workshop grading-form subplugins expose strategy-specific `save_edit_strategy_form(...)` methods. MoodlIA now exposes `set_workshop_grading_form` for the active `accumulative`, `comments`, and `rubric` strategies in setup phase only. The operation builds the form-shaped data required by Moodle and delegates persistence to the Workshop strategy instance instead of writing `workshopform_accumulative`, `workshopform_comments`, or `workshopform_rubric` tables directly. Rubric replacement includes existing dimension and level ids from the Moodle strategy object so the subplugin can delete old rows through its own save path. Other strategies remain blocked until their payload contracts are narrowed and smoke tested.
 
 Primary sources:
 
@@ -72,7 +72,7 @@ Primary sources:
 
 Implemented evidence:
 
-- Supported strategies are limited to `accumulative` and `comments`.
+- Supported strategies are limited to `accumulative`, `comments`, and `rubric`.
 - Mutation requires setup phase and `mod/workshop:editdimensions`.
 - Persistence goes through `grading_strategy_instance()->save_edit_strategy_form(...)`.
 - Static coverage verifies contract, REST, MCP, CLI, services, capabilities, and no direct `$DB` usage in the operation.

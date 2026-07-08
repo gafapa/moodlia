@@ -133,7 +133,8 @@
     "set_workshop_grading_form": {
       "strategy": [
         "accumulative",
-        "comments"
+        "comments",
+        "rubric"
       ]
     },
     "evaluate_workshop_assessment": {
