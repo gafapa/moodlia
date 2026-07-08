@@ -28,7 +28,7 @@ Implemented:
 - Generic Moodle server deployment documentation plus SFTP/WinSCP automation for the configured Docker-based development target.
 - GitHub Actions CI for local checks that do not require a Moodle target.
 - Selective generated-data cleanup for courses and empty course categories marked with MoodlIA test prefixes.
-- High-level course workflow operations for portable blueprints, blueprint application, structure copy, Book chapter round-tripping, manual enrolment sync, publishing states, and readiness audit.
+- High-level course workflow operations for portable blueprints, blueprint application, structure copy, Book chapter and Feedback item round-tripping, manual enrolment sync, publishing states, and readiness audit.
 
 Still pending:
 

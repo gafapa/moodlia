@@ -117,9 +117,9 @@ Operation names must not drift between transports.
 
 The course workflow operations compose existing course, section, module, group, enrolment, and visibility primitives. They are exposed through REST, MCP, CLI, and the TypeScript client like every other canonical operation.
 
-- `export_course_blueprint`: returns a portable JSON blueprint for lightweight template, backup, and restore workflows. This is not a Moodle `.mbz` backup. When contents are included, Book modules include their chapter list and chapter HTML content in `chapters`.
-- `create_course_from_blueprint`: creates a course, applies sections, module shells, supported module subelements such as Book chapters, groups, enrolments, and initial publish state from a blueprint.
-- `apply_course_blueprint`: applies blueprint sections, module shells, supported module subelements such as Book chapters, groups, and enrolments to an existing course.
+- `export_course_blueprint`: returns a portable JSON blueprint for lightweight template, backup, and restore workflows. This is not a Moodle `.mbz` backup. When contents are included, Book modules include their chapter list and chapter HTML content in `chapters`, and Feedback modules include supported item definitions in `feedback_items`.
+- `create_course_from_blueprint`: creates a course, applies sections, module shells, supported module subelements such as Book chapters and Feedback items, groups, enrolments, and initial publish state from a blueprint.
+- `apply_course_blueprint`: applies blueprint sections, module shells, supported module subelements such as Book chapters and Feedback items, groups, and enrolments to an existing course.
 - `copy_course_structure`: exports a source course blueprint and applies its structure to a target course.
 - `sync_course_enrolments`: applies a desired manual-enrolment list, with optional removal of users missing from the desired list.
 - `set_course_publish_state`: maps `draft`, `ready`, `published`, and `archived` to Moodle visibility and archive date behavior.

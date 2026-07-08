@@ -98,6 +98,15 @@ test('course workflow writes validate nested payloads before applying side effec
   assert.match(courseWorkflowTools, /get_book_chapters::execute/);
   assert.match(courseWorkflowTools, /create_book_chapter::execute/);
   assert.match(courseWorkflowTools, /require_capability\('mod\/book:edit'/);
+  assert.match(courseWorkflowTools, /feedback_items is only supported for module_type=feedback/);
+  assert.match(courseWorkflowTools, /feedback_item_to_blueprint/);
+  assert.match(courseWorkflowTools, /feedback_item_definition/);
+  assert.match(courseWorkflowTools, /get_feedback_items::execute/);
+  assert.match(courseWorkflowTools, /create_feedback_item::execute/);
+  assert.match(courseWorkflowTools, /depend_source_item_id must reference an earlier item/);
+  assert.match(courseWorkflowTools, /validate_feedback_item_definition/);
+  assert.match(courseWorkflowTools, /reject_feedback_separator/);
+  assert.match(courseWorkflowTools, /require_capability\('mod\/feedback:edititems'/);
   assert.match(courseWorkflowTools, /blueprint must include at least one section, group, or enrolment/);
   assert.match(courseWorkflowTools, /role_archetype must be one of: student, teacher, editingteacher/);
   assert.match(courseWorkflowTools, /preg_match\('\/\^\[1-9\]\[0-9\]\*\$\/'/);

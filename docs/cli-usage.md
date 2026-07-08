@@ -181,7 +181,7 @@ moodlia delete-course --course-id <course_id>
 
 ## Course Blueprints And Readiness
 
-Export a lightweight course blueprint. This is a portable JSON description for templates, structure copy, and restore-like workflows; it is not a Moodle `.mbz` backup. With `--include-contents true`, Book modules include their chapter list and chapter HTML content in `chapters`:
+Export a lightweight course blueprint. This is a portable JSON description for templates, structure copy, and restore-like workflows; it is not a Moodle `.mbz` backup. With `--include-contents true`, Book modules include their chapter list and chapter HTML content in `chapters`, and Feedback modules include supported item definitions in `feedback_items`:
 
 ```text
 moodlia export-course-blueprint --course-id <course_id> --include-contents true --include-groups true
@@ -190,7 +190,7 @@ moodlia export-course-blueprint --course-id <course_id> --include-contents true 
 Create a new course from a blueprint:
 
 ```text
-moodlia create-course-from-blueprint --blueprint '{"course":{"fullname":"MoodlIA Blueprint Course","shortname":"moodlia-blueprint-001","category_id":12,"summary":"<p>Created from blueprint.</p>","summary_format":"html","enable_completion":true},"publish_state":"draft","sections":[{"name":"Unit 1","summary":"Introduction","modules":[{"module_type":"page","name":"Welcome","options":{"content":"<p>Start here.</p>"}},{"module_type":"book","name":"Reader","chapters":[{"title":"Chapter 1","content":"<p>Read this first.</p>"},{"title":"Details","content":"<p>More detail.</p>","subchapter":true}]}]}],"groups":[{"name":"Team A"}],"enrolments":[{"user_id":7,"role_archetype":"student"}]}'
+moodlia create-course-from-blueprint --blueprint '{"course":{"fullname":"MoodlIA Blueprint Course","shortname":"moodlia-blueprint-001","category_id":12,"summary":"<p>Created from blueprint.</p>","summary_format":"html","enable_completion":true},"publish_state":"draft","sections":[{"name":"Unit 1","summary":"Introduction","modules":[{"module_type":"page","name":"Welcome","options":{"content":"<p>Start here.</p>"}},{"module_type":"book","name":"Reader","chapters":[{"title":"Chapter 1","content":"<p>Read this first.</p>"},{"title":"Details","content":"<p>More detail.</p>","subchapter":true}]},{"module_type":"feedback","name":"Pulse check","feedback_items":[{"source_item_id":1,"type":"textfield","name":"Goal","definition":{"size":40,"max_length":120}},{"type":"multichoice","name":"Difficulty","definition":{"subtype":"radio","choices":["Easy","Appropriate","Hard"]}}]}]}],"groups":[{"name":"Team A"}],"enrolments":[{"user_id":7,"role_archetype":"student"}]}'
 ```
 
 Create a native Moodle `.mbz` backup for full Moodle restore workflows:
@@ -232,7 +232,7 @@ Delete a stored backup file after it is no longer needed:
 moodlia delete-course-backup-file --file-id <file_id>
 ```
 
-Blueprints are best for controlled templates and automation-friendly JSON. They preserve course structure, module shells, groups, enrolments, and currently supported deep subelements such as Book chapters. Native `.mbz` backups use Moodle's backup/restore controllers and are the right tool when you need Moodle's full restore behavior.
+Blueprints are best for controlled templates and automation-friendly JSON. They preserve course structure, module shells, groups, enrolments, and currently supported deep subelements such as Book chapters and Feedback items. Native `.mbz` backups use Moodle's backup/restore controllers and are the right tool when you need Moodle's full restore behavior.
 
 Apply a blueprint to an existing course:
 

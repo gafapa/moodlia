@@ -115,6 +115,47 @@ test('course blueprint workflows create, publish, audit, apply, export, and copy
                   subchapter: true
                 }
               ]
+            },
+            {
+              module_type: 'feedback',
+              name: `Blueprint Feedback ${suffix}`,
+              options: {
+                intro: `<p>Blueprint feedback intro ${suffix}</p>`,
+                anonymous: 'non_anonymous'
+              },
+              feedback_items: [
+                {
+                  source_item_id: 101,
+                  type: 'textfield',
+                  name: `Blueprint Goal ${suffix}`,
+                  definition: { size: 40, max_length: 160 },
+                  required: true,
+                  label: 'goal'
+                },
+                {
+                  source_item_id: 102,
+                  type: 'multichoice',
+                  name: `Blueprint Difficulty ${suffix}`,
+                  definition: {
+                    subtype: 'radio',
+                    choices: ['Easy', 'Appropriate', 'Hard'],
+                    horizontal: false,
+                    ignore_empty: true
+                  }
+                },
+                {
+                  type: 'pagebreak',
+                  definition: {}
+                },
+                {
+                  source_item_id: 103,
+                  type: 'textarea',
+                  name: `Blueprint Reflection ${suffix}`,
+                  definition: { width: 50, height: 8 },
+                  depend_source_item_id: 101,
+                  depend_value: 'Ready'
+                }
+              ]
             }
           ]
         }
@@ -135,10 +176,14 @@ test('course blueprint workflows create, publish, audit, apply, export, and copy
     assert.equal(JSON.parse(createdFromBlueprint.course_json).visible, false);
     assert.equal(parseJsonField(createdFromBlueprint, 'sections_json').length, 1);
     const createdModules = parseJsonField(createdFromBlueprint, 'modules_json');
-    assert.equal(createdModules.length, 2);
+    assert.equal(createdModules.length, 3);
     const createdBook = createdModules.find((module) => module.module_type === 'book');
     assert.equal(createdBook?.subelements?.chapters?.length, 2);
     assert.equal(createdBook.subelements.chapters[1].subchapter, true);
+    const createdFeedback = createdModules.find((module) => module.module_type === 'feedback');
+    assert.equal(createdFeedback?.subelements?.feedback_items?.length, 4);
+    const [createdGoal, , , createdReflection] = createdFeedback.subelements.feedback_items;
+    assert.equal(createdReflection.depend_item_id, createdGoal.item_id);
     assert.equal(parseJsonField(createdFromBlueprint, 'groups_json').length, 1);
 
     const draftAudit = await callRestFunction(restName('audit_course'), {
@@ -162,6 +207,13 @@ test('course blueprint workflows create, publish, audit, apply, export, and copy
       .find((module) => module.module_type === 'book' && module.name === `Blueprint Book ${suffix}`);
     assert.equal(exportedBook?.chapters?.length, 2);
     assert.match(exportedBook.chapters[0].content, /Blueprint chapter content/);
+    const exportedFeedback = exportedBlueprint.sections
+      .flatMap((section) => section.modules)
+      .find((module) => module.module_type === 'feedback' && module.name === `Blueprint Feedback ${suffix}`);
+    assert.equal(exportedFeedback?.feedback_items?.length, 4);
+    assert.equal(exportedFeedback.feedback_items[0].definition.max_length, 160);
+    assert.equal(exportedFeedback.feedback_items[1].definition.choices.length, 3);
+    assert.equal(exportedFeedback.feedback_items[3].depend_source_item_id, exportedFeedback.feedback_items[0].source_item_id);
     assert.ok(exportedBlueprint.groups.length >= 1);
 
     const published = await callRestFunction(restName('set_course_publish_state'), {
@@ -219,6 +271,8 @@ test('course blueprint workflows create, publish, audit, apply, export, and copy
     assert.ok(copiedModules.length >= 1);
     const copiedBook = copiedModules.find((module) => module.module_type === 'book' && module.name === `Blueprint Book ${suffix}`);
     assert.equal(copiedBook?.subelements?.chapters?.length, 2);
+    const copiedFeedback = copiedModules.find((module) => module.module_type === 'feedback' && module.name === `Blueprint Feedback ${suffix}`);
+    assert.equal(copiedFeedback?.subelements?.feedback_items?.length, 4);
 
   } finally {
     const cleanupCalls = [
@@ -366,6 +420,78 @@ test('course workflow operations reject malformed and no-op payloads', { skip: !
         ]
       })
     }), 'apply_course_blueprint with first Book chapter marked as subchapter');
+
+    await assertInvalidRestCall(callRestFunction(restName('apply_course_blueprint'), {
+      course_id: created.sourceCourseId,
+      blueprint: JSON.stringify({
+        sections: [
+          {
+            name: 'Invalid feedback items module',
+            modules: [
+              {
+                module_type: 'page',
+                name: 'Page with invalid feedback items',
+                feedback_items: []
+              }
+            ]
+          }
+        ]
+      })
+    }), 'apply_course_blueprint with feedback_items on a non-feedback module');
+
+    await assertInvalidRestCall(callRestFunction(restName('apply_course_blueprint'), {
+      course_id: created.sourceCourseId,
+      blueprint: JSON.stringify({
+        sections: [
+          {
+            name: 'Invalid feedback pagebreak',
+            modules: [
+              {
+                module_type: 'feedback',
+                name: 'Feedback with invalid first pagebreak',
+                feedback_items: [
+                  {
+                    type: 'pagebreak',
+                    definition: {}
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      })
+    }), 'apply_course_blueprint with first Feedback item as pagebreak');
+
+    await assertInvalidRestCall(callRestFunction(restName('apply_course_blueprint'), {
+      course_id: created.sourceCourseId,
+      blueprint: JSON.stringify({
+        sections: [
+          {
+            name: 'Invalid feedback dependency',
+            modules: [
+              {
+                module_type: 'feedback',
+                name: 'Feedback with invalid dependency',
+                feedback_items: [
+                  {
+                    source_item_id: 1,
+                    type: 'textfield',
+                    name: 'First item',
+                    definition: { size: 30, max_length: 80 }
+                  },
+                  {
+                    type: 'textarea',
+                    name: 'Broken dependency',
+                    definition: { width: 40, height: 5 },
+                    depend_source_item_id: 99
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      })
+    }), 'apply_course_blueprint with unresolved Feedback dependency');
 
     await assertInvalidRestCall(callRestFunction(restName('sync_course_enrolments'), {
       course_id: created.sourceCourseId,

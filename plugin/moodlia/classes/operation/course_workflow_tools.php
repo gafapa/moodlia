@@ -543,6 +543,12 @@ class course_workflow_tools {
             }
             self::validate_book_chapters($module['chapters'], $prefix . '.chapters');
         }
+        if (array_key_exists('feedback_items', $module)) {
+            if ($moduletype !== 'feedback') {
+                throw new \invalid_parameter_exception($prefix . '.feedback_items is only supported for module_type=feedback.');
+            }
+            self::validate_feedback_items($module['feedback_items'], $prefix . '.feedback_items');
+        }
     }
 
     /**
@@ -553,22 +559,32 @@ class course_workflow_tools {
      * @return array
      */
     private static function export_module_subelements(int $courseid, array $module): array {
-        if (($module['module_type'] ?? '') !== 'book') {
-            return [];
+        $moduletype = (string) ($module['module_type'] ?? '');
+        if ($moduletype === 'book') {
+            $chapters = get_book_chapters::execute($courseid, (int) ($module['module_id'] ?? 0), true, true);
+            return [
+                'chapters' => array_map(static function (array $chapter): array {
+                    return [
+                        'title' => $chapter['title'],
+                        'content' => $chapter['content'],
+                        'content_format' => $chapter['content_format'],
+                        'subchapter' => $chapter['subchapter'],
+                        'hidden' => $chapter['hidden'],
+                    ];
+                }, $chapters['chapters'] ?? []),
+            ];
         }
 
-        $chapters = get_book_chapters::execute($courseid, (int) ($module['module_id'] ?? 0), true, true);
-        return [
-            'chapters' => array_map(static function (array $chapter): array {
-                return [
-                    'title' => $chapter['title'],
-                    'content' => $chapter['content'],
-                    'content_format' => $chapter['content_format'],
-                    'subchapter' => $chapter['subchapter'],
-                    'hidden' => $chapter['hidden'],
-                ];
-            }, $chapters['chapters'] ?? []),
-        ];
+        if ($moduletype === 'feedback') {
+            $items = get_feedback_items::execute($courseid, (int) ($module['module_id'] ?? 0));
+            return [
+                'feedback_items' => array_map(static function (array $item): array {
+                    return self::feedback_item_to_blueprint($item);
+                }, $items['items'] ?? []),
+            ];
+        }
+
+        return [];
     }
 
     /**
@@ -581,6 +597,11 @@ class course_workflow_tools {
      */
     private static function apply_module_subelements(int $courseid, array $createdmodule, array $blueprintmodule): array {
         if (($createdmodule['module_type'] ?? '') !== 'book') {
+            if (($createdmodule['module_type'] ?? '') === 'feedback') {
+                $feedbackitems = self::apply_feedback_items($courseid, $createdmodule, $blueprintmodule);
+                return empty($feedbackitems) ? [] : ['feedback_items' => $feedbackitems];
+            }
+
             return [];
         }
 
@@ -610,6 +631,128 @@ class course_workflow_tools {
         }
 
         return ['chapters' => $createdchapters];
+    }
+
+    /**
+     * Convert a Feedback item response to a portable blueprint item.
+     *
+     * @param array $item Feedback item response.
+     * @return array
+     */
+    private static function feedback_item_to_blueprint(array $item): array {
+        $type = (string) ($item['type'] ?? '');
+        $blueprint = [
+            'source_item_id' => (int) ($item['item_id'] ?? 0),
+            'type' => $type,
+            'name' => (string) ($item['name'] ?? ''),
+            'definition' => self::feedback_item_definition($item),
+            'label' => (string) ($item['label'] ?? ''),
+            'required' => (bool) ($item['required'] ?? false),
+        ];
+
+        $dependitemid = (int) ($item['depend_item_id'] ?? 0);
+        if ($dependitemid > 0) {
+            $blueprint['depend_source_item_id'] = $dependitemid;
+            $blueprint['depend_value'] = (string) ($item['depend_value'] ?? '');
+        }
+
+        return $blueprint;
+    }
+
+    /**
+     * Return a portable definition object for a supported Feedback item.
+     *
+     * @param array $item Feedback item response.
+     * @return array
+     */
+    private static function feedback_item_definition(array $item): array {
+        $type = (string) ($item['type'] ?? '');
+        $presentation = (string) ($item['presentation'] ?? '');
+        switch ($type) {
+            case 'textfield':
+                [$size, $maxlength] = self::split_pair($presentation, '30', '255');
+                return ['size' => (int) $size, 'max_length' => (int) $maxlength];
+
+            case 'textarea':
+                [$width, $height] = self::split_pair($presentation, '30', '5');
+                return ['width' => (int) $width, 'height' => (int) $height];
+
+            case 'numeric':
+                [$rangefrom, $rangeto] = self::split_pair($presentation, '-', '-');
+                return [
+                    'range_from' => $rangefrom === '-' ? null : (float) $rangefrom,
+                    'range_to' => $rangeto === '-' ? null : (float) $rangeto,
+                ];
+
+            case 'multichoice':
+                return self::feedback_choice_definition($presentation, false, (string) ($item['options'] ?? ''));
+
+            case 'multichoicerated':
+                return self::feedback_choice_definition($presentation, true, (string) ($item['options'] ?? ''));
+
+            case 'label':
+                return ['content' => $presentation];
+
+            case 'info':
+                $modes = ['1' => 'response_time', '2' => 'course', '3' => 'category'];
+                return ['mode' => $modes[$presentation] ?? 'course'];
+
+            case 'pagebreak':
+                return [];
+        }
+
+        throw new \invalid_parameter_exception('Unsupported feedback item type in blueprint export.');
+    }
+
+    /**
+     * Apply Feedback item blueprints after a Feedback module shell is created.
+     *
+     * @param int $courseid Moodle course id.
+     * @param array $createdmodule Created Feedback module response.
+     * @param array $blueprintmodule Original blueprint module.
+     * @return array
+     */
+    private static function apply_feedback_items(int $courseid, array $createdmodule, array $blueprintmodule): array {
+        $items = self::list_or_empty($blueprintmodule['feedback_items'] ?? []);
+        if (empty($items)) {
+            return [];
+        }
+
+        $modulecontext = \context_module::instance((int) $createdmodule['module_id']);
+        require_capability('mod/feedback:edititems', $modulecontext);
+
+        $createditems = [];
+        $itemmap = [];
+        foreach ($items as $index => $item) {
+            $dependsourceid = (int) ($item['depend_source_item_id'] ?? 0);
+            $dependitemid = $dependsourceid > 0 ? ($itemmap[$dependsourceid] ?? 0) : 0;
+            if ($dependsourceid > 0 && $dependitemid === 0) {
+                throw new \invalid_parameter_exception(
+                    'feedback_items[' . $index . '].depend_source_item_id must reference an earlier item.'
+                );
+            }
+
+            $createditem = create_feedback_item::execute(
+                $courseid,
+                (int) $createdmodule['module_id'],
+                (string) $item['type'],
+                array_key_exists('name', $item) ? (string) $item['name'] : null,
+                self::encode_json(self::array_or_empty($item['definition'] ?? [])),
+                $index + 1,
+                array_key_exists('label', $item) ? (string) $item['label'] : null,
+                array_key_exists('required', $item) ? (bool) $item['required'] : null,
+                $dependitemid > 0 ? $dependitemid : null,
+                array_key_exists('depend_value', $item) ? (string) $item['depend_value'] : null
+            );
+
+            $sourceid = (int) ($item['source_item_id'] ?? 0);
+            if ($sourceid > 0) {
+                $itemmap[$sourceid] = (int) $createditem['item_id'];
+            }
+            $createditems[] = $createditem;
+        }
+
+        return $createditems;
     }
 
     /**
@@ -648,6 +791,339 @@ class course_workflow_tools {
             }
             if ($index === 0 && !empty($chapter['subchapter'])) {
                 throw new \invalid_parameter_exception($prefix . '[0].subchapter must be false.');
+            }
+        }
+    }
+
+    /**
+     * Validate Feedback item blueprints before course workflow side effects.
+     *
+     * @param mixed $items Feedback item list.
+     * @param string $prefix Error path prefix.
+     */
+    private static function validate_feedback_items($items, string $prefix): void {
+        if (!is_array($items) || !array_is_list($items)) {
+            throw new \invalid_parameter_exception($prefix . ' must be a JSON array.');
+        }
+
+        $supported = ['textfield', 'textarea', 'numeric', 'multichoice', 'multichoicerated', 'label', 'info', 'pagebreak'];
+        $seenids = [];
+        $previoustype = '';
+        foreach ($items as $index => $item) {
+            $itemprefix = $prefix . '[' . $index . ']';
+            if (!is_array($item) || array_is_list($item)) {
+                throw new \invalid_parameter_exception($itemprefix . ' must be a JSON object.');
+            }
+            $type = clean_param((string) ($item['type'] ?? ''), PARAM_ALPHANUMEXT);
+            if (!in_array($type, $supported, true)) {
+                throw new \invalid_parameter_exception($itemprefix . '.type is unsupported.');
+            }
+            if ($type !== 'pagebreak'
+                    && (!array_key_exists('name', $item) || !self::text_like_value($item['name'])
+                        || trim((string) $item['name']) === '')) {
+                throw new \invalid_parameter_exception($itemprefix . '.name is required.');
+            }
+            if ($type === 'pagebreak' && ($index === 0 || $previoustype === 'pagebreak')) {
+                throw new \invalid_parameter_exception($itemprefix . ' cannot be the first item or follow another pagebreak.');
+            }
+
+            if (array_key_exists('source_item_id', $item)) {
+                $sourceid = self::positive_integer_value($item['source_item_id']);
+                if ($sourceid === null) {
+                    throw new \invalid_parameter_exception($itemprefix . '.source_item_id must be a positive integer.');
+                }
+                if (isset($seenids[$sourceid])) {
+                    throw new \invalid_parameter_exception($itemprefix . '.source_item_id must be unique.');
+                }
+                $seenids[$sourceid] = true;
+            }
+
+            if (array_key_exists('depend_source_item_id', $item)) {
+                $dependsourceid = self::positive_integer_value($item['depend_source_item_id']);
+                if ($dependsourceid === null) {
+                    throw new \invalid_parameter_exception($itemprefix . '.depend_source_item_id must be a positive integer.');
+                }
+                if (!isset($seenids[$dependsourceid])) {
+                    throw new \invalid_parameter_exception(
+                        $itemprefix . '.depend_source_item_id must reference an earlier item.'
+                    );
+                }
+                if (array_key_exists('depend_value', $item) && !self::text_like_value($item['depend_value'])) {
+                    throw new \invalid_parameter_exception($itemprefix . '.depend_value must be a string.');
+                }
+            }
+            if (array_key_exists('label', $item) && !self::text_like_value($item['label'])) {
+                throw new \invalid_parameter_exception($itemprefix . '.label must be a string.');
+            }
+            if (array_key_exists('required', $item) && !self::boolean_like_value($item['required'])) {
+                throw new \invalid_parameter_exception($itemprefix . '.required must be a boolean.');
+            }
+
+            $definition = self::array_or_empty($item['definition'] ?? []);
+            if (array_key_exists('definition', $item)
+                    && (!is_array($item['definition']) || (!empty($item['definition']) && array_is_list($item['definition'])))) {
+                throw new \invalid_parameter_exception($itemprefix . '.definition must be a JSON object.');
+            }
+            self::validate_feedback_item_definition($type, $definition, $itemprefix . '.definition');
+            $previoustype = $type;
+        }
+    }
+
+    /**
+     * Validate a Feedback item definition.
+     *
+     * @param string $type Feedback item type.
+     * @param array $definition Definition object.
+     * @param string $prefix Error path prefix.
+     */
+    private static function validate_feedback_item_definition(string $type, array $definition, string $prefix): void {
+        switch ($type) {
+            case 'textfield':
+                self::validate_optional_int_range($definition, 'size', $prefix, 5, 255);
+                self::validate_optional_int_range($definition, 'max_length', $prefix, 1, 2000);
+                break;
+
+            case 'textarea':
+                self::validate_optional_int_range($definition, 'width', $prefix, 5, 255);
+                self::validate_optional_int_range($definition, 'height', $prefix, 1, 100);
+                break;
+
+            case 'numeric':
+                $rangefrom = self::nullable_numeric_value($definition['range_from'] ?? null, $prefix . '.range_from');
+                $rangeto = self::nullable_numeric_value($definition['range_to'] ?? null, $prefix . '.range_to');
+                if ($rangefrom !== null && $rangeto !== null && $rangefrom > $rangeto) {
+                    throw new \invalid_parameter_exception($prefix . '.range_from must not be greater than range_to.');
+                }
+                break;
+
+            case 'multichoice':
+                self::validate_feedback_choice_definition($definition, $prefix, true);
+                break;
+
+            case 'multichoicerated':
+                self::validate_feedback_rated_choice_definition($definition, $prefix);
+                break;
+
+            case 'label':
+                if (!array_key_exists('content', $definition) || !self::text_like_value($definition['content'])
+                        || trim((string) $definition['content']) === '') {
+                    throw new \invalid_parameter_exception($prefix . '.content must be non-empty.');
+                }
+                break;
+
+            case 'info':
+                $mode = (string) ($definition['mode'] ?? 'course');
+                if (!in_array($mode, ['response_time', 'responsetime', '1', 'course', '2', 'category', 'course_category', '3'], true)) {
+                    throw new \invalid_parameter_exception($prefix . '.mode is unsupported.');
+                }
+                break;
+        }
+    }
+
+    /**
+     * Split a pipe-delimited Feedback presentation pair.
+     *
+     * @param string $presentation Feedback item presentation.
+     * @param string $firstdefault First fallback.
+     * @param string $seconddefault Second fallback.
+     * @return array
+     */
+    private static function split_pair(string $presentation, string $firstdefault, string $seconddefault): array {
+        $parts = explode('|', $presentation, 2);
+        return [
+            $parts[0] ?? $firstdefault,
+            $parts[1] ?? $seconddefault,
+        ];
+    }
+
+    /**
+     * Convert a Feedback choice presentation string to a portable definition.
+     *
+     * @param string $presentation Feedback item presentation.
+     * @param bool $rated Whether choices include numeric ratings.
+     * @param string $options Feedback item options flags.
+     * @return array
+     */
+    private static function feedback_choice_definition(string $presentation, bool $rated, string $options): array {
+        $subtypecode = substr($presentation, 0, 1);
+        $subtypes = ['r' => 'radio', 'c' => 'checkbox', 'd' => 'dropdown'];
+        $definition = [
+            'subtype' => $subtypes[$subtypecode] ?? 'radio',
+        ];
+
+        $payload = substr($presentation, 1);
+        if (strpos($payload, '>>>>>') === 0) {
+            $payload = substr($payload, 5);
+        }
+        [$choices, $horizontal] = explode('<<<<<', $payload, 2) + ['', '0'];
+        $choiceparts = $choices === '' ? [] : explode('|', $choices);
+
+        if ($rated) {
+            $definition['choices'] = array_map(static function (string $choice): array {
+                [$value, $text] = explode('####', $choice, 2) + [0, ''];
+                return [
+                    'value' => (int) $value,
+                    'text' => $text,
+                ];
+            }, $choiceparts);
+        } else {
+            $definition['choices'] = $choiceparts;
+        }
+
+        if ($subtypecode !== 'd') {
+            $definition['horizontal'] = $horizontal === '1';
+        }
+        $definition['ignore_empty'] = strpos($options, 'i') !== false;
+        $definition['hide_no_select'] = strpos($options, 'h') !== false;
+
+        return $definition;
+    }
+
+    /**
+     * Validate an optional integer definition field.
+     *
+     * @param array $definition Definition object.
+     * @param string $key Definition key.
+     * @param string $prefix Error path prefix.
+     * @param int $min Minimum value.
+     * @param int $max Maximum value.
+     */
+    private static function validate_optional_int_range(
+        array $definition,
+        string $key,
+        string $prefix,
+        int $min,
+        int $max
+    ): void {
+        if (!array_key_exists($key, $definition)) {
+            return;
+        }
+        $value = self::non_negative_integer_value($definition[$key]);
+        if ($value === null || $value < $min || $value > $max) {
+            throw new \invalid_parameter_exception($prefix . '.' . $key . ' is outside the valid range.');
+        }
+    }
+
+    /**
+     * Return a nullable numeric definition value.
+     *
+     * @param mixed $value Input value.
+     * @param string $path Error path.
+     * @return float|null
+     */
+    private static function nullable_numeric_value($value, string $path): ?float {
+        if ($value === null || $value === '') {
+            return null;
+        }
+        if (!is_numeric($value)) {
+            throw new \invalid_parameter_exception($path . ' must be numeric.');
+        }
+
+        return (float) $value;
+    }
+
+    /**
+     * Validate a Feedback multichoice definition.
+     *
+     * @param array $definition Definition object.
+     * @param string $prefix Error path prefix.
+     * @param bool $allowcheckbox Whether checkbox subtype is allowed.
+     */
+    private static function validate_feedback_choice_definition(array $definition, string $prefix, bool $allowcheckbox): void {
+        $subtype = (string) ($definition['subtype'] ?? 'radio');
+        $allowed = $allowcheckbox
+            ? ['radio', 'checkbox', 'dropdown', 'r', 'c', 'd']
+            : ['radio', 'dropdown', 'r', 'd'];
+        if (!in_array($subtype, $allowed, true)) {
+            throw new \invalid_parameter_exception($prefix . '.subtype is unsupported.');
+        }
+        foreach (['horizontal', 'ignore_empty', 'hide_no_select'] as $flag) {
+            if (array_key_exists($flag, $definition) && !self::boolean_like_value($definition[$flag])) {
+                throw new \invalid_parameter_exception($prefix . '.' . $flag . ' must be a boolean.');
+            }
+        }
+
+        $choices = $definition['choices'] ?? null;
+        if (!is_array($choices) || !array_is_list($choices) || count($choices) < 2) {
+            throw new \invalid_parameter_exception($prefix . '.choices must contain at least two choices.');
+        }
+
+        $seen = [];
+        foreach ($choices as $index => $choice) {
+            if (!self::text_like_value($choice)) {
+                throw new \invalid_parameter_exception($prefix . '.choices[' . $index . '] must be a string.');
+            }
+            $text = trim((string) $choice);
+            if ($text === '') {
+                throw new \invalid_parameter_exception($prefix . '.choices[' . $index . '] must be non-empty.');
+            }
+            self::reject_feedback_separator($text, $prefix . '.choices[' . $index . ']');
+            $key = strtolower($text);
+            if (isset($seen[$key])) {
+                throw new \invalid_parameter_exception($prefix . '.choices must be unique.');
+            }
+            $seen[$key] = true;
+        }
+    }
+
+    /**
+     * Validate a Feedback rated-choice definition.
+     *
+     * @param array $definition Definition object.
+     * @param string $prefix Error path prefix.
+     */
+    private static function validate_feedback_rated_choice_definition(array $definition, string $prefix): void {
+        self::validate_feedback_choice_definition([
+            'subtype' => $definition['subtype'] ?? 'radio',
+            'choices' => ['placeholder one', 'placeholder two'],
+        ], $prefix, false);
+        foreach (['horizontal', 'ignore_empty', 'hide_no_select'] as $flag) {
+            if (array_key_exists($flag, $definition) && !self::boolean_like_value($definition[$flag])) {
+                throw new \invalid_parameter_exception($prefix . '.' . $flag . ' must be a boolean.');
+            }
+        }
+
+        $choices = $definition['choices'] ?? null;
+        if (!is_array($choices) || !array_is_list($choices) || count($choices) < 2) {
+            throw new \invalid_parameter_exception($prefix . '.choices must contain at least two rated choices.');
+        }
+
+        $seen = [];
+        foreach ($choices as $index => $choice) {
+            if (!is_array($choice) || array_is_list($choice)) {
+                throw new \invalid_parameter_exception($prefix . '.choices[' . $index . '] must be a JSON object.');
+            }
+            $text = $choice['text'] ?? $choice['label'] ?? null;
+            if (!self::text_like_value($text) || trim((string) $text) === '') {
+                throw new \invalid_parameter_exception($prefix . '.choices[' . $index . '].text is required.');
+            }
+            if (!array_key_exists('value', $choice) && !array_key_exists('weight', $choice)) {
+                throw new \invalid_parameter_exception($prefix . '.choices[' . $index . '].value is required.');
+            }
+            $value = $choice['value'] ?? $choice['weight'];
+            if (!is_numeric($value)) {
+                throw new \invalid_parameter_exception($prefix . '.choices[' . $index . '].value must be numeric.');
+            }
+            $text = trim((string) $text);
+            self::reject_feedback_separator($text, $prefix . '.choices[' . $index . '].text');
+            $key = strtolower($text);
+            if (isset($seen[$key])) {
+                throw new \invalid_parameter_exception($prefix . '.choices text values must be unique.');
+            }
+            $seen[$key] = true;
+        }
+    }
+
+    /**
+     * Reject Moodle Feedback presentation separators inside public text.
+     *
+     * @param string $text Text value.
+     * @param string $path Error path.
+     */
+    private static function reject_feedback_separator(string $text, string $path): void {
+        foreach (['|', '####', '>>>>>', '<<<<<'] as $separator) {
+            if (strpos($text, $separator) !== false) {
+                throw new \invalid_parameter_exception($path . ' contains unsupported separator characters.');
             }
         }
     }
