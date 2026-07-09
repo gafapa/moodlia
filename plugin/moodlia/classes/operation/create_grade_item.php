@@ -34,7 +34,15 @@ class create_grade_item {
      * @param bool|null $hidden Optional hidden state.
      * @return array
      */
-    public static function execute(int $courseid, string $name, float $grademax = 100.0, float $grademin = 0.0, ?float $gradepass = null, ?int $categoryid = null, ?bool $hidden = null): array {
+    public static function execute(
+        int $courseid,
+        string $name,
+        float $grademax = 100.0,
+        float $grademin = 0.0,
+        ?float $gradepass = null,
+        ?int $categoryid = null,
+        ?bool $hidden = null
+    ): array {
         gradebook_tools::require_gradebook_api();
 
         $course = course_tools::get_course($courseid);

@@ -57,7 +57,13 @@ class update_grade_category extends external_api {
         self::validate_context($coursecontext);
         require_capability('moodle/grade:manage', $coursecontext);
 
-        return update_grade_category_operation::execute((int) $courseid, (int) $categoryid, $categoryname, $categoryaggregation === null ? null : (int) $categoryaggregation, $categoryhidden);
+        return update_grade_category_operation::execute(
+            (int) $courseid,
+            (int) $categoryid,
+            $categoryname,
+            $categoryaggregation === null ? null : (int) $categoryaggregation,
+            $categoryhidden
+        );
     }
 
     public static function execute_returns() {

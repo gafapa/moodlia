@@ -36,7 +36,17 @@ class update_grade_item {
      * @param bool|null $locked Optional locked state.
      * @return array
      */
-    public static function execute(int $courseid, int $itemid, ?string $name = null, ?float $grademax = null, ?float $grademin = null, ?float $gradepass = null, ?int $categoryid = null, ?bool $hidden = null, ?bool $locked = null): array {
+    public static function execute(
+        int $courseid,
+        int $itemid,
+        ?string $name = null,
+        ?float $grademax = null,
+        ?float $grademin = null,
+        ?float $gradepass = null,
+        ?int $categoryid = null,
+        ?bool $hidden = null,
+        ?bool $locked = null
+    ): array {
         $course = course_tools::get_course($courseid);
         $item = gradebook_tools::get_grade_item((int) $course->id, $itemid);
         gradebook_tools::require_manual_grade_item($item);

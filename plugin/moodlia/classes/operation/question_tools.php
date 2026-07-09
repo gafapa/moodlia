@@ -444,9 +444,29 @@ class question_tools {
         self::require_question_api();
 
         $questiontype = self::to_moodle_question_type(clean_param($questiontype, PARAM_PLUGIN));
-        if (!in_array($questiontype, ['truefalse', 'shortanswer', 'multichoice', 'numerical', 'essay', 'match', 'description', 'randomsamatch', 'gapselect', 'ddwtos', 'ordering', 'multianswer', 'ddmarker', 'ddimageortext', 'calculatedsimple', 'calculated', 'calculatedmulti'], true)) {
+        $supportedtypes = [
+            'truefalse',
+            'shortanswer',
+            'multichoice',
+            'numerical',
+            'essay',
+            'match',
+            'description',
+            'randomsamatch',
+            'gapselect',
+            'ddwtos',
+            'ordering',
+            'multianswer',
+            'ddmarker',
+            'ddimageortext',
+            'calculatedsimple',
+            'calculated',
+            'calculatedmulti',
+        ];
+        if (!in_array($questiontype, $supportedtypes, true)) {
             throw new \invalid_parameter_exception(
-                'Only question_type=truefalse, question_type=shortanswer, question_type=multichoice, question_type=numerical, question_type=essay, question_type=matching, question_type=description, question_type=randomsamatch, question_type=gapselect, question_type=ddwtos, question_type=ordering, question_type=multianswer, question_type=ddmarker, question_type=ddimageortext, question_type=calculatedsimple, question_type=calculated, and question_type=calculatedmulti are currently supported.'
+                'Only these question_type values are currently supported: ' .
+                    implode(', ', $supportedtypes) . '.'
             );
         }
 
@@ -847,9 +867,18 @@ class question_tools {
                 $options['single'] = !empty($rawoptions->single);
                 $options['shuffle_answers'] = !empty($rawoptions->shuffleanswers);
                 $options['answer_numbering'] = (string) ($rawoptions->answernumbering ?? 'abc');
-                $options['correct_feedback'] = self::format_question_text((string) ($rawoptions->correctfeedback ?? ''), (int) ($rawoptions->correctfeedbackformat ?? FORMAT_HTML));
-                $options['partially_correct_feedback'] = self::format_question_text((string) ($rawoptions->partiallycorrectfeedback ?? ''), (int) ($rawoptions->partiallycorrectfeedbackformat ?? FORMAT_HTML));
-                $options['incorrect_feedback'] = self::format_question_text((string) ($rawoptions->incorrectfeedback ?? ''), (int) ($rawoptions->incorrectfeedbackformat ?? FORMAT_HTML));
+                $options['correct_feedback'] = self::format_question_text(
+                    (string) ($rawoptions->correctfeedback ?? ''),
+                    (int) ($rawoptions->correctfeedbackformat ?? FORMAT_HTML)
+                );
+                $options['partially_correct_feedback'] = self::format_question_text(
+                    (string) ($rawoptions->partiallycorrectfeedback ?? ''),
+                    (int) ($rawoptions->partiallycorrectfeedbackformat ?? FORMAT_HTML)
+                );
+                $options['incorrect_feedback'] = self::format_question_text(
+                    (string) ($rawoptions->incorrectfeedback ?? ''),
+                    (int) ($rawoptions->incorrectfeedbackformat ?? FORMAT_HTML)
+                );
             }
 
             return $options;
@@ -876,9 +905,18 @@ class question_tools {
             }
             $options['subquestions'] = $subquestions;
             $options['shuffle_answers'] = !empty($rawoptions->shuffleanswers);
-            $options['correct_feedback'] = self::format_question_text((string) ($rawoptions->correctfeedback ?? ''), (int) ($rawoptions->correctfeedbackformat ?? FORMAT_HTML));
-            $options['partially_correct_feedback'] = self::format_question_text((string) ($rawoptions->partiallycorrectfeedback ?? ''), (int) ($rawoptions->partiallycorrectfeedbackformat ?? FORMAT_HTML));
-            $options['incorrect_feedback'] = self::format_question_text((string) ($rawoptions->incorrectfeedback ?? ''), (int) ($rawoptions->incorrectfeedbackformat ?? FORMAT_HTML));
+            $options['correct_feedback'] = self::format_question_text(
+                (string) ($rawoptions->correctfeedback ?? ''),
+                (int) ($rawoptions->correctfeedbackformat ?? FORMAT_HTML)
+            );
+            $options['partially_correct_feedback'] = self::format_question_text(
+                (string) ($rawoptions->partiallycorrectfeedback ?? ''),
+                (int) ($rawoptions->partiallycorrectfeedbackformat ?? FORMAT_HTML)
+            );
+            $options['incorrect_feedback'] = self::format_question_text(
+                (string) ($rawoptions->incorrectfeedback ?? ''),
+                (int) ($rawoptions->incorrectfeedbackformat ?? FORMAT_HTML)
+            );
             return $options;
         }
 
@@ -2416,7 +2454,7 @@ class question_tools {
         ];
         if (!array_key_exists($value, $map)) {
             throw new \invalid_parameter_exception(
-                'grading must be one of: all_or_nothing, absolute_position, relative_next_exclude_last, relative_next_include_last, relative_one_previous_and_next, relative_all_previous_and_next, longest_ordered_subset, longest_contiguous_subset, relative_to_correct.'
+                'grading must be one of: ' . implode(', ', array_keys($map)) . '.'
             );
         }
 

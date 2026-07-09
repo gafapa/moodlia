@@ -127,7 +127,7 @@ test('PHP MCP manifest enum schemas match the canonical contract', async () => {
     assert.ok(toolMatch, `${operation.name} must be present in the PHP MCP manifest.`);
 
     for (const [parameterName, parameter] of enumParameters) {
-      const enumPattern = new RegExp(`'${parameterName}'\\s*=>\\s*\\[[^\\n]*'enum'\\s*=>\\s*\\[([^\\]]*)\\]`);
+      const enumPattern = new RegExp(`'${parameterName}'\\s*=>\\s*\\[[\\s\\S]*?'enum'\\s*=>\\s*\\[([^\\]]*)\\]`);
       const enumMatch = toolMatch[0].match(enumPattern);
       assert.ok(enumMatch, `${operation.name}.${parameterName} must declare an enum in the PHP MCP manifest.`);
       const actualEnum = [...enumMatch[1].matchAll(/'([^']+)'/g)].map((match) => match[1]);

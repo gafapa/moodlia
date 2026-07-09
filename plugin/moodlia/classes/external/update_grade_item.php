@@ -38,7 +38,17 @@ class update_grade_item extends external_api {
         ]);
     }
 
-    public static function execute(int $course_id, int $item_id, ?string $name = null, ?float $grade_max = null, ?float $grade_min = null, ?float $grade_pass = null, ?int $category_id = null, ?bool $hidden = null, ?bool $locked = null): array {
+    public static function execute(
+        int $course_id,
+        int $item_id,
+        ?string $name = null,
+        ?float $grade_max = null,
+        ?float $grade_min = null,
+        ?float $grade_pass = null,
+        ?int $category_id = null,
+        ?bool $hidden = null,
+        ?bool $locked = null
+    ): array {
         [
             'course_id' => $courseid,
             'item_id' => $itemid,

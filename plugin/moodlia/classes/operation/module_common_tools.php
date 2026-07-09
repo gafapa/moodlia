@@ -134,7 +134,7 @@ class module_common_tools {
         $unknown = array_diff(array_keys($options), $allowed);
         if ($unknown) {
             throw new \invalid_parameter_exception(
-                'update_module options currently supports only: visible, visible_on_course_page, id_number, group_mode, tags, download_content, completion_tracking, completion_view_required, completion_grade_item_number, completion_use_grade, completion_pass_grade, completion_expected, and reset_completion_states.'
+                'update_module options currently supports only: ' . implode(', ', $allowed) . '.'
             );
         }
 
@@ -167,7 +167,10 @@ class module_common_tools {
 
         if (self::has_completion_options($options)) {
             if (empty($options['reset_completion_states'])) {
-                throw new \invalid_parameter_exception('options.reset_completion_states=true is required when updating activity completion settings because Moodle may reset existing completion states.');
+                throw new \invalid_parameter_exception(
+                    'options.reset_completion_states=true is required when updating activity completion settings ' .
+                        'because Moodle may reset existing completion states.'
+                );
             }
 
             [, , , $moduleinfo] = get_moduleinfo_data($cm, $course);

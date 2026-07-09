@@ -39,13 +39,38 @@ class create_module {
         section_tools::get_section($course, null, $sectionnumber);
 
         $moduletype = clean_param($moduletype, PARAM_PLUGIN);
-        if (!in_array($moduletype, ['assign', 'book', 'choice', 'data', 'feedback', 'lesson', 'lti', 'page', 'folder', 'forum', 'glossary', 'label', 'qbank', 'quiz', 'resource', 'subsection', 'url', 'wiki', 'workshop'], true)) {
+        $supportedtypes = [
+            'assign',
+            'book',
+            'choice',
+            'data',
+            'feedback',
+            'lesson',
+            'lti',
+            'page',
+            'folder',
+            'forum',
+            'glossary',
+            'label',
+            'qbank',
+            'quiz',
+            'resource',
+            'subsection',
+            'url',
+            'wiki',
+            'workshop',
+        ];
+        if (!in_array($moduletype, $supportedtypes, true)) {
             throw new \invalid_parameter_exception(
-                'Only module_type=assign, module_type=book, module_type=choice, module_type=data, module_type=feedback, module_type=lesson, module_type=lti, module_type=page, module_type=folder, module_type=forum, module_type=glossary, module_type=label, module_type=qbank, module_type=quiz, module_type=resource, module_type=subsection, module_type=url, module_type=wiki, and module_type=workshop are currently supported.'
+                'Only these module_type values are currently supported: ' .
+                    implode(', ', $supportedtypes) . '.'
             );
         }
         if ($moduletype === 'qbank' && $sectionnumber !== 0) {
-            throw new \invalid_parameter_exception('module_type=qbank must be created in section_number=0 because Moodle does not display question bank modules as course-section activities.');
+            throw new \invalid_parameter_exception(
+                'module_type=qbank must be created in section_number=0 because Moodle does not display ' .
+                    'question bank modules as course-section activities.'
+            );
         }
 
         $name = trim($name);

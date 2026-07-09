@@ -36,7 +36,15 @@ class create_grade_item extends external_api {
         ]);
     }
 
-    public static function execute(int $course_id, string $name, float $grade_max = 100.0, float $grade_min = 0.0, ?float $grade_pass = null, ?int $category_id = null, ?bool $hidden = null): array {
+    public static function execute(
+        int $course_id,
+        string $name,
+        float $grade_max = 100.0,
+        float $grade_min = 0.0,
+        ?float $grade_pass = null,
+        ?int $category_id = null,
+        ?bool $hidden = null
+    ): array {
         [
             'course_id' => $courseid,
             'name' => $itemname,
@@ -63,7 +71,15 @@ class create_grade_item extends external_api {
         self::validate_context($coursecontext);
         require_capability('moodle/grade:manage', $coursecontext);
 
-        return create_grade_item_operation::execute((int) $courseid, (string) $itemname, (float) $grademax, (float) $grademin, $gradepass === null ? null : (float) $gradepass, $categoryid === null ? null : (int) $categoryid, $itemhidden);
+        return create_grade_item_operation::execute(
+            (int) $courseid,
+            (string) $itemname,
+            (float) $grademax,
+            (float) $grademin,
+            $gradepass === null ? null : (float) $gradepass,
+            $categoryid === null ? null : (int) $categoryid,
+            $itemhidden
+        );
     }
 
     public static function execute_returns() {

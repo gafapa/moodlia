@@ -42,7 +42,12 @@ class add_random_questions_to_quiz extends external_api {
             'number' => new external_value(PARAM_INT, 'Number of random question slots to add'),
             'slot' => new external_value(PARAM_INT, 'Requested quiz slot', VALUE_DEFAULT, null, NULL_ALLOWED),
             'include_subcategories' => new external_value(PARAM_BOOL, 'Include child question categories', VALUE_DEFAULT, false),
-            'bank_scope' => new external_value(PARAM_ALPHANUMEXT, 'Source question bank scope: course_shared or quiz_private', VALUE_DEFAULT, question_tools::BANK_SCOPE_COURSE_SHARED),
+            'bank_scope' => new external_value(
+                PARAM_ALPHANUMEXT,
+                'Source question bank scope: course_shared or quiz_private',
+                VALUE_DEFAULT,
+                question_tools::BANK_SCOPE_COURSE_SHARED
+            ),
             'question_bank_module_id' => new external_value(PARAM_INT, 'Source course question bank module id', VALUE_DEFAULT, null, NULL_ALLOWED),
         ]);
     }

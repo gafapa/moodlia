@@ -39,7 +39,12 @@ class move_question extends external_api {
             'course_id' => new external_value(PARAM_INT, 'Moodle course id'),
             'question_id' => new external_value(PARAM_INT, 'Question id'),
             'target_category_id' => new external_value(PARAM_INT, 'Destination question category id'),
-            'target_bank_scope' => new external_value(PARAM_ALPHANUMEXT, 'Destination question bank scope: course_shared or quiz_private', VALUE_DEFAULT, question_tools::BANK_SCOPE_COURSE_SHARED),
+            'target_bank_scope' => new external_value(
+                PARAM_ALPHANUMEXT,
+                'Destination question bank scope: course_shared or quiz_private',
+                VALUE_DEFAULT,
+                question_tools::BANK_SCOPE_COURSE_SHARED
+            ),
             'target_question_bank_module_id' => new external_value(PARAM_INT, 'Destination course question bank module id', VALUE_DEFAULT, null, NULL_ALLOWED),
             'target_quiz_module_id' => new external_value(PARAM_INT, 'Destination quiz module id for quiz_private scope', VALUE_DEFAULT, null, NULL_ALLOWED),
         ]);
