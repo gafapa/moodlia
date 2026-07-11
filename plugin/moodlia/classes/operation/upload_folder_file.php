@@ -32,6 +32,8 @@ class upload_folder_file {
      * @return array
      */
     public static function execute(int $courseid, int $moduleid, string $filename, string $uploadreference): array {
+        global $USER;
+
         module_tools::require_module_api();
 
         $course = course_tools::get_course($courseid);
@@ -54,19 +56,37 @@ class upload_folder_file {
         }
 
         $fs = get_file_storage();
-        $existing = $fs->get_file($context->id, 'mod_folder', 'content', 0, '/', $filename);
-        if ($existing && !$existing->is_directory()) {
-            $existing->delete();
-        }
-
-        $file = $fs->create_file_from_string([
+        $filerecord = [
             'contextid' => $context->id,
             'component' => 'mod_folder',
             'filearea' => 'content',
             'itemid' => 0,
             'filepath' => '/',
             'filename' => $filename,
-        ], $content);
+        ];
+        $existing = $fs->get_file($context->id, 'mod_folder', 'content', 0, '/', $filename);
+
+        if ($existing && !$existing->is_directory()) {
+            $draftitemid = file_get_unused_draft_itemid();
+            $draftfile = $fs->create_file_from_string([
+                'contextid' => \context_user::instance($USER->id)->id,
+                'component' => 'user',
+                'filearea' => 'draft',
+                'itemid' => $draftitemid,
+                'filepath' => '/',
+                'filename' => $filename,
+            ], $content);
+
+            try {
+                $existing->replace_file_with($draftfile);
+                $existing->set_timemodified(time());
+                $file = $existing;
+            } finally {
+                $draftfile->delete();
+            }
+        } else {
+            $file = $fs->create_file_from_string($filerecord, $content);
+        }
 
         rebuild_course_cache($course->id, true);
 

@@ -31,6 +31,6 @@ class get_quiz_attempt_review {
      * @return array
      */
     public static function execute(int $quizmoduleid, int $attemptid, int $page = -1): array {
-        return question_tools::get_quiz_attempt_review($quizmoduleid, $attemptid, $page);
+        return question_quiz_attempt_tools::get_quiz_attempt_review($quizmoduleid, $attemptid, $page);
     }
 }

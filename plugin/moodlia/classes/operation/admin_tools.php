@@ -98,7 +98,26 @@ class admin_tools {
             throw new \invalid_parameter_exception('cohort_id must be a positive integer.');
         }
 
-        return cohort_get_cohort($cohortid, '*', MUST_EXIST);
+        $contextid = \context_system::instance()->id;
+        $page = 0;
+        $perpage = 100;
+
+        do {
+            $result = cohort_get_cohorts($contextid, $page, $perpage, '', false);
+            $cohorts = $result['cohorts'] ?? [];
+            if (isset($cohorts[$cohortid])) {
+                return $cohorts[$cohortid];
+            }
+            foreach ($cohorts as $cohort) {
+                if ((int) $cohort->id === $cohortid) {
+                    return $cohort;
+                }
+            }
+            $page++;
+            $total = (int) ($result['totalcohorts'] ?? 0);
+        } while (($page * $perpage) < $total);
+
+        throw new \invalid_parameter_exception('Unknown cohort_id.');
     }
 
     /**

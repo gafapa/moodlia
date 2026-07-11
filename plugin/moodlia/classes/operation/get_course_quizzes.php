@@ -29,6 +29,6 @@ class get_course_quizzes {
      * @return array
      */
     public static function execute(array $courseids = []): array {
-        return question_tools::get_course_quizzes($courseids);
+        return question_quiz_attempt_tools::get_course_quizzes($courseids);
     }
 }

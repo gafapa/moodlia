@@ -30,6 +30,6 @@ class get_quiz_combined_review_options {
      * @return array
      */
     public static function execute(int $quizmoduleid, int $userid = 0): array {
-        return question_tools::get_quiz_combined_review_options($quizmoduleid, $userid);
+        return question_quiz_attempt_tools::get_quiz_combined_review_options($quizmoduleid, $userid);
     }
 }

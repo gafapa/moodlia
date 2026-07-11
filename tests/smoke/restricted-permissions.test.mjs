@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import test from 'node:test';
+import { resolveMoodleUrl } from '../../client/moodle-rest-client.mjs';
 import { loadContract, toRestFunctionName } from '../helpers/contract.mjs';
 import { getEnv, getTimeout, requireEnv, resolveCliCommand } from '../helpers/env.mjs';
 import { callMcpRaw } from '../helpers/mcp.mjs';
@@ -11,7 +12,7 @@ const execFileAsync = promisify(execFile);
 const hasRestrictedConfig = requireEnv(['MOODLE_BASE_URL', 'MOODLE_REST_TOKEN', 'MOODLE_RESTRICTED_REST_TOKEN']);
 
 async function callRestRaw(functionName, parameters = {}, token = getEnv('MOODLE_REST_TOKEN')) {
-  const endpoint = new URL('/webservice/rest/server.php', getEnv('MOODLE_BASE_URL'));
+  const endpoint = resolveMoodleUrl(getEnv('MOODLE_BASE_URL'), 'webservice/rest/server.php');
   const body = new URLSearchParams({
     wstoken: token,
     wsfunction: functionName,
@@ -31,6 +32,7 @@ async function callRestRaw(functionName, parameters = {}, token = getEnv('MOODLE
     const response = await fetch(endpoint, {
       method: 'POST',
       body,
+      redirect: 'error',
       signal: controller.signal
     });
     const text = await response.text();
@@ -219,7 +221,7 @@ test('restricted token can authenticate but cannot create course categories thro
   });
   assert.equal(mcpAllowed.response.status, 200);
   assert.ok(!mcpAllowed.body.error, 'restricted token must be valid for MCP read calls.');
-  assert.equal(typeof mcpAllowed.body.result?.username, 'string');
+  assert.equal(typeof mcpAllowed.body.result?.structuredContent?.username, 'string');
 
   const mcpDenied = await callMcpRaw({
     method: 'tools/call',

@@ -53,6 +53,8 @@ Configuration values:
 - `MOODLE_REST_TOKEN`: Moodle web service token authorised for MoodlIA.
 - `CLI_OUTPUT_FORMAT`: optional default output format. The default is `json`.
 
+`MOODLE_BASE_URL` must use HTTPS for remote hosts and may include a Moodle installation subdirectory such as `https://example.edu/learning`. Loopback HTTP is allowed for local development. REST requests do not follow redirects so that bearer tokens cannot be forwarded to an unexpected destination.
+
 ## Usage
 
 ```bash

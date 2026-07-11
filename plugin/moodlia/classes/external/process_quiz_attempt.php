@@ -23,7 +23,7 @@ use core_external\external_function_parameters;
 use core_external\external_single_structure;
 use core_external\external_value;
 use local_moodlia\operation\process_quiz_attempt as process_quiz_attempt_operation;
-use local_moodlia\operation\question_tools;
+use local_moodlia\operation\question_quiz_attempt_tools;
 
 /**
  * External API adapter for process_quiz_attempt.
@@ -69,10 +69,10 @@ class process_quiz_attempt extends external_api {
         return process_quiz_attempt_operation::execute(
             (int) $quizmoduleid,
             (int) $attemptid,
-            question_tools::decode_quiz_attempt_data((string) $attemptdata),
+            question_quiz_attempt_tools::decode_quiz_attempt_data((string) $attemptdata),
             (bool) $finishattempt,
             (bool) $timeup,
-            question_tools::decode_preflight_data((string) $preflightdata)
+            question_quiz_attempt_tools::decode_preflight_data((string) $preflightdata)
         );
     }
 

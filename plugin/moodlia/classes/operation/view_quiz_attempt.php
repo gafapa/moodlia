@@ -32,6 +32,6 @@ class view_quiz_attempt {
      * @return array
      */
     public static function execute(int $quizmoduleid, int $attemptid, int $page = 0, array $preflightdata = []): array {
-        return question_tools::view_quiz_attempt($quizmoduleid, $attemptid, $page, $preflightdata);
+        return question_quiz_attempt_tools::view_quiz_attempt($quizmoduleid, $attemptid, $page, $preflightdata);
     }
 }

@@ -1,4 +1,5 @@
 import { getEnv, getTimeout } from './env.mjs';
+import { resolveMoodleUrl } from '../../client/moodle-rest-client.mjs';
 
 let requestId = 1;
 
@@ -13,7 +14,7 @@ export async function callMcp(method, params = {}) {
     throw new Error(`MCP error for ${method}: ${JSON.stringify(payload.body.error)}`);
   }
 
-  return payload.body.result;
+  return payload.body.result?.structuredContent ?? payload.body.result;
 }
 
 export async function callMcpRaw({ method, params = {}, token = getEnv('MOODLE_REST_TOKEN'), includeAuthorization = true } = {}) {
@@ -34,14 +35,17 @@ export async function callMcpHttpRaw({
   body = '',
   token = getEnv('MOODLE_REST_TOKEN'),
   includeAuthorization = true,
-  contentType = 'application/json'
+  contentType = 'application/json',
+  origin = '',
+  protocolVersion = ''
 } = {}) {
   const configuredEndpoint = getEnv('MOODLE_MCP_ENDPOINT');
   const baseUrl = getEnv('MOODLE_BASE_URL');
-  const endpoint = normalizeEndpoint(configuredEndpoint || new URL('/local/moodlia/mcp.php', baseUrl).toString());
+  const endpoint = normalizeEndpoint(configuredEndpoint || resolveMoodleUrl(baseUrl, 'local/moodlia/mcp.php').toString());
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), getTimeout());
   const headers = {};
+  headers.Accept = 'application/json, text/event-stream';
 
   if (contentType) {
     headers['Content-Type'] = contentType;
@@ -50,12 +54,19 @@ export async function callMcpHttpRaw({
   if (includeAuthorization) {
     headers.Authorization = `Bearer ${token}`;
   }
+  if (origin) {
+    headers.Origin = origin;
+  }
+  if (protocolVersion) {
+    headers['MCP-Protocol-Version'] = protocolVersion;
+  }
 
   try {
     const response = await fetch(endpoint, {
       method,
       headers,
       body: method === 'GET' || method === 'HEAD' ? undefined : body,
+      redirect: 'error',
       signal: controller.signal
     });
 

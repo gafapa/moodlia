@@ -41,7 +41,7 @@ class process_quiz_attempt {
         bool $timeup = false,
         array $preflightdata = []
     ): array {
-        return question_tools::process_quiz_attempt(
+        return question_quiz_attempt_tools::process_quiz_attempt(
             $quizmoduleid,
             $attemptid,
             $data,

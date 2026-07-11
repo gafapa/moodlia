@@ -37,6 +37,6 @@ class save_quiz_attempt {
         array $data = [],
         array $preflightdata = []
     ): array {
-        return question_tools::save_quiz_attempt($quizmoduleid, $attemptid, $data, $preflightdata);
+        return question_quiz_attempt_tools::save_quiz_attempt($quizmoduleid, $attemptid, $data, $preflightdata);
     }
 }

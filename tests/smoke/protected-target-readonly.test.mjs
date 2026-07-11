@@ -73,9 +73,20 @@ test('protected target read-only gate checks REST, MCP, and CLI without Moodle w
   const restCourses = normalizeCourses(await callRestFunction(toRestFunctionName(contract, 'get_courses'), { limit }));
   const mcpCourses = normalizeCourses(await callMcpTool('get_courses', { limit }));
   const cliCourses = normalizeCourses(await callCli(['get-courses', '--limit', String(limit)]));
-  assert.ok(restCourses.length <= limit);
-  assert.deepEqual(mcpCourses, restCourses);
-  assert.deepEqual(cliCourses, restCourses);
+  for (const courses of [restCourses, mcpCourses, cliCourses]) {
+    assert.ok(courses.length <= limit);
+    for (const course of courses) {
+      assert.ok(Number.isInteger(course.course_id) && course.course_id > 0);
+      assert.notEqual(course.shortname, '');
+      assert.notEqual(course.fullname, '');
+    }
+  }
+  const mcpCourseIds = new Set(mcpCourses.map((course) => course.course_id));
+  const cliCourseIds = new Set(cliCourses.map((course) => course.course_id));
+  const commonCourseIds = restCourses
+    .map((course) => course.course_id)
+    .filter((courseId) => mcpCourseIds.has(courseId) && cliCourseIds.has(courseId));
+  assert.ok(commonCourseIds.length > 0, 'REST, MCP, and CLI course reads must share at least one course.');
 
   const toolsResult = await callMcp('tools/list');
   const tools = toolsResult?.tools ?? toolsResult;

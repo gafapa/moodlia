@@ -24,19 +24,31 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
-          node-version: '22'
+          node-version: '24'
           cache: npm
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@b604ade2a87db23f8871b7182e69ec5e75effb45 # v2
+        with:
+          php-version: '8.2'
+          coverage: none
 
       - name: Install dependencies
         run: npm ci
 
       - name: Check generated npm package mirror
         run: npm run npm:sync:check
+
+      - name: Require PHP syntax validation
+        run: npm run lint:php -- --required
+
+      - name: Audit npm dependencies
+        run: npm audit --audit-level=high
 
       - name: Run release preflight
         run: npm run release:check
@@ -49,7 +61,7 @@ jobs:
 
       - name: Upload Playwright reports
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: playwright-reports
           path: |

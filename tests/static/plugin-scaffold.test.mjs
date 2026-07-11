@@ -213,6 +213,7 @@ const requiredFiles = [
   'classes/operation/download_resource_file.php',
   'classes/operation/delete_folder_file.php',
   'classes/operation/question_tools.php',
+  'classes/operation/question_quiz_attempt_tools.php',
   'classes/operation/get_question_banks.php',
   'classes/operation/get_question_categories.php',
   'classes/operation/export_question_bank_blueprint.php',
@@ -1156,9 +1157,12 @@ test('course quiz and completion regressions stay covered in plugin externals', 
   assert.match(quizzesExternal, /'course_id'\s*=>\s*new external_value\(PARAM_INT/);
   assert.match(quizzesExternal, /array_unshift\(\$decodedcourseids,\s*\(int\) \$courseid\)/);
 
-  const questionTools = await fs.readFile(fromRoot('plugin/moodlia/classes/operation/question_tools.php'), 'utf8');
-  assert.match(questionTools, /preg_match\('\/\^\[0-9\]\+\(\?:\\s\*,\\s\*\[0-9\]\+\)\*\$\/'/);
-  assert.match(questionTools, /JSON array, comma-separated list, or single positive integer/);
+  const quizAttemptTools = await fs.readFile(
+    fromRoot('plugin/moodlia/classes/operation/question_quiz_attempt_tools.php'),
+    'utf8'
+  );
+  assert.match(quizAttemptTools, /preg_match\('\/\^\[0-9\]\+\(\?:\\s\*,\\s\*\[0-9\]\+\)\*\$\/'/);
+  assert.match(quizAttemptTools, /JSON array, comma-separated list, or single positive integer/);
 
   const courseContentsOperation = await fs.readFile(fromRoot('plugin/moodlia/classes/operation/get_course_contents.php'), 'utf8');
   const courseContentsExternal = await fs.readFile(fromRoot('plugin/moodlia/classes/external/get_course_contents.php'), 'utf8');
@@ -1253,6 +1257,7 @@ test('native Moodle backup and restore operations use backup controllers and str
   assert.match(backupTools, /\\restore_dbops::create_new_course/);
   assert.match(backupTools, /extract_to_pathname/);
   assert.match(backupTools, /create_file_from_string/);
+  assert.match(backupTools, /replace_file_with/);
   assert.match(backupTools, /get_area_files/);
   assert.match(backupTools, /\['backup', 'private'\]/);
   assert.match(backupTools, /delete_backup_file/);
@@ -1330,7 +1335,8 @@ test('site administration operations manage users, cohorts, and course role assi
   assert.match(adminTools, /cohort\/lib\.php/);
   assert.match(adminTools, /accesslib\.php/);
   assert.match(adminTools, /\\core_user::get_user/);
-  assert.match(adminTools, /cohort_get_cohort/);
+  assert.match(adminTools, /cohort_get_cohorts\(\$contextid,\s*\$page,\s*\$perpage,\s*['"]{2},\s*false\)/);
+  assert.doesNotMatch(adminTools, /cohort_get_cohort\(\$cohortid,\s*['"]\*['"],\s*MUST_EXIST\)/);
   assert.match(adminTools, /resolve_role_id/);
 
   assert.match(createUser, /user_create_user/);
@@ -1444,8 +1450,8 @@ test('protected target and restricted-permission gates cover production hardenin
 
   assert.equal(packageJson.scripts['release:protected'], 'node tools/protected-target-check.mjs');
   assert.equal(packageJson.scripts['release:protected:php'], 'node tools/protected-target-check.mjs --php-lint');
-  assert.match(releaseCheck, /tests\/smoke\/protected-target-readonly\.test\.mjs/);
-  assert.match(releaseCheck, /tools\/protected-target-check\.mjs/);
+  assert.match(releaseCheck, /npm', \['run', 'lint:js'\]/);
+  assert.match(releaseCheck, /npm', \['run', 'lint:php'\]/);
   assert.match(protectedCheck, /MOODLE_BASE_URL/);
   assert.match(protectedCheck, /MOODLE_REST_TOKEN/);
   assert.match(protectedCheck, /plugin:php:lint:server/);

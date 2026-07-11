@@ -82,6 +82,10 @@ responsibilities separated:
   strategy and submission windows, and LTI launch, privacy, and URL validation.
 - `module_file_tools` owns folder/resource file handling through the Moodle File API,
   including draft files, stored files, and pluginfile download URLs.
+- `question_tools` owns question-bank locations, question CRUD, question-type form
+  construction, quiz structure, and quiz question slots.
+- `question_quiz_attempt_tools` owns quiz attempts, access information, view events,
+  attempt payload decoding, and quiz result formatting.
 - `book_chapter_tools` owns the only approved Moodle-DML write boundary for Book
   chapters. Moodle Book does not expose a public chapter writer API, so this helper
   mirrors the owning component's own edit/delete/move behavior, validates Book
@@ -115,8 +119,12 @@ Direct section creation uses Moodle's section APIs. If a target Moodle course fo
 
 The Moodle-hosted MCP adapter is exposed at `/local/moodlia/mcp.php`. It exposes the same canonical operation names through:
 
+- `initialize` and `notifications/initialized`: negotiate a supported MCP protocol version.
+- `ping`: verify authenticated transport availability.
 - `tools/list`: returns tool schemas derived from the contract.
 - `tools/call`: dispatches a tool name and arguments through the existing Moodle REST external functions.
+
+The HTTP adapter is stateless and does not issue an MCP session id. It validates same-origin browser requests, requires JSON POST bodies, bounds request size, authenticates every call with the Moodle bearer token, and returns standard `CallToolResult` content with a canonical `structuredContent` payload.
 
 MCP tool names stay in `snake_case`:
 

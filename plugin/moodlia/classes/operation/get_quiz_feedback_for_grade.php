@@ -30,6 +30,6 @@ class get_quiz_feedback_for_grade {
      * @return array
      */
     public static function execute(int $quizmoduleid, float $grade): array {
-        return question_tools::get_quiz_feedback_for_grade($quizmoduleid, $grade);
+        return question_quiz_attempt_tools::get_quiz_feedback_for_grade($quizmoduleid, $grade);
     }
 }

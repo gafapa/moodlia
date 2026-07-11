@@ -1,4 +1,5 @@
 import fs from 'node:fs/promises';
+import { resolveMoodleUrl } from '../client/moodle-rest-client.mjs';
 import { getEnv, getTimeout, loadEnvFile } from '../tests/helpers/env.mjs';
 import { fromRoot } from '../tests/helpers/paths.mjs';
 
@@ -12,7 +13,7 @@ if (missing.length > 0) {
   process.exit(1);
 }
 
-const endpoint = new URL('/login/token.php', getEnv('MOODLE_BASE_URL'));
+const endpoint = resolveMoodleUrl(getEnv('MOODLE_BASE_URL'), 'login/token.php');
 const body = new URLSearchParams({
   username: getEnv('MOODLE_USERNAME'),
   password: getEnv('MOODLE_PASSWORD'),
@@ -26,6 +27,7 @@ try {
   const response = await fetch(endpoint, {
     method: 'POST',
     body,
+    redirect: 'error',
     signal: controller.signal
   });
 
@@ -39,12 +41,15 @@ try {
   }
 
   const envPath = fromRoot('.env.test');
-  const current = await fs.readFile(envPath, 'utf8');
+  const current = await fs.readFile(envPath, 'utf8').catch((error) =>
+    error.code === 'ENOENT' ? '' : Promise.reject(error)
+  );
   const next = current.includes('MOODLE_REST_TOKEN=')
     ? current.replace(/^MOODLE_REST_TOKEN=.*$/m, `MOODLE_REST_TOKEN=${payload.token}`)
     : `${current.replace(/\s*$/, '')}\nMOODLE_REST_TOKEN=${payload.token}\n`;
 
   await fs.writeFile(envPath, next, 'utf8');
+  await fs.chmod(envPath, 0o600).catch(() => {});
   console.log('MOODLE_REST_TOKEN refreshed in .env.test.');
 } finally {
   clearTimeout(timeout);

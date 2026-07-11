@@ -1,6 +1,6 @@
 option batch abort
 option confirm off
-open sftp://ubuntu@test.gallego.top:2276/ -privatekey="D:\Otros IA\otro_galleto_top\ssh- privada.ppk" -hostkey="ssh-ed25519 255 bSH+2gacG2o7kVw//yZ1KLDJIHosyKwOo778qDFncPk"
+open sftp://ubuntu@test.gallego.top:2276/ -privatekey="D:\Otros IA\gestion_gallego_top\ssh- privada.ppk" -hostkey="ssh-ed25519 255 bSH+2gacG2o7kVw//yZ1KLDJIHosyKwOo778qDFncPk"
 call sudo docker exec moodle sh -lc "sed -n '1,180p' /var/www/html/public/mod/book/delete.php"
 call sudo docker exec moodle sh -lc "sed -n '1,180p' /var/www/html/public/mod/book/move.php"
 call sudo docker exec moodle sh -lc "sed -n '1,140p' /var/www/html/public/mod/book/locallib.php"

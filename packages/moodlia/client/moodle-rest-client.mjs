@@ -64,6 +64,54 @@ export function normalizeClientError(error, fallbackCode = 'internal_error', det
   );
 }
 
+function isLoopbackHostname(hostname) {
+  return hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '[::1]';
+}
+
+function normaliseMoodleBaseUrl(baseUrl, { allowInsecure = false } = {}) {
+  let resolved;
+  try {
+    resolved = new URL(baseUrl);
+  } catch (error) {
+    throw new MoodleClientError('invalid_parameters', 'MOODLE_BASE_URL must be a valid URL.', {
+      parameter: 'MOODLE_BASE_URL'
+    }, error);
+  }
+
+  if (resolved.username || resolved.password) {
+    throw new MoodleClientError('invalid_parameters', 'MOODLE_BASE_URL must not contain credentials.', {
+      parameter: 'MOODLE_BASE_URL'
+    });
+  }
+
+  if (resolved.protocol !== 'https:' && !(resolved.protocol === 'http:' && (allowInsecure || isLoopbackHostname(resolved.hostname)))) {
+    throw new MoodleClientError(
+      'invalid_parameters',
+      'MOODLE_BASE_URL must use HTTPS. HTTP is allowed only for loopback hosts or when allowInsecure is explicitly enabled.',
+      { parameter: 'MOODLE_BASE_URL', protocol: resolved.protocol }
+    );
+  }
+
+  resolved.search = '';
+  resolved.hash = '';
+  if (!resolved.pathname.endsWith('/')) {
+    resolved.pathname += '/';
+  }
+
+  return resolved;
+}
+
+export function resolveMoodleUrl(baseUrl, relativePath, options = {}) {
+  const relative = String(relativePath ?? '').replace(/^\/+/, '');
+  if (!relative || /^[a-z][a-z\d+.-]*:/i.test(relative)) {
+    throw new MoodleClientError('invalid_parameters', 'Moodle URL paths must be non-empty relative paths.', {
+      parameter: 'relativePath'
+    });
+  }
+
+  return new URL(relative, normaliseMoodleBaseUrl(baseUrl, options));
+}
+
 function findOperation(contract, operationName) {
   return contract?.operations?.find((operation) => operation.name === operationName) ?? null;
 }
@@ -309,7 +357,8 @@ export class RestTransport {
     baseUrl,
     token,
     timeoutMs = 30000,
-    fetchImplementation = globalThis.fetch
+    fetchImplementation = globalThis.fetch,
+    allowInsecure = false
   } = {}) {
     if (!baseUrl || !token) {
       throw new MoodleClientError(
@@ -323,14 +372,23 @@ export class RestTransport {
       throw new MoodleClientError('invalid_parameters', 'A fetch implementation is required.');
     }
 
-    this.baseUrl = baseUrl;
+    if (!Number.isFinite(timeoutMs) || timeoutMs < 0) {
+      throw new MoodleClientError('invalid_parameters', 'timeoutMs must be a non-negative finite number.', {
+        parameter: 'timeoutMs'
+      });
+    }
+
+    this.baseUrl = normaliseMoodleBaseUrl(baseUrl, { allowInsecure }).toString();
     this.token = token;
     this.timeoutMs = timeoutMs;
     this.fetchImplementation = fetchImplementation;
+    this.allowInsecure = allowInsecure;
   }
 
   async callFunction(functionName, parameters = {}) {
-    const endpoint = new URL('/webservice/rest/server.php', this.baseUrl);
+    const endpoint = resolveMoodleUrl(this.baseUrl, 'webservice/rest/server.php', {
+      allowInsecure: this.allowInsecure
+    });
     const body = new URLSearchParams({
       wstoken: this.token,
       wsfunction: functionName,
@@ -352,6 +410,7 @@ export class RestTransport {
         response = await this.fetchImplementation(endpoint, {
           method: 'POST',
           body,
+          redirect: 'error',
           signal: controller.signal
         });
       } catch (error) {
@@ -479,6 +538,7 @@ export function createMoodleClient({
   contract,
   timeoutMs = 30000,
   fetchImplementation = globalThis.fetch,
+  allowInsecure = false,
   transport = null,
   validateResponses = true
 } = {}) {
@@ -486,7 +546,8 @@ export function createMoodleClient({
     baseUrl,
     token,
     timeoutMs,
-    fetchImplementation
+    fetchImplementation,
+    allowInsecure
   });
 
   return proxiedClient(new MoodleClient({

@@ -1,4 +1,5 @@
 import { loadEnvFile, getEnv } from '../tests/helpers/env.mjs';
+import { resolveMoodleUrl } from '../client/moodle-rest-client.mjs';
 
 loadEnvFile();
 
@@ -11,7 +12,7 @@ for (const argument of process.argv.slice(3)) {
   }
   parameters[argument.slice(0, separatorIndex)] = argument.slice(separatorIndex + 1);
 }
-const endpoint = new URL('/webservice/rest/server.php', getEnv('MOODLE_BASE_URL'));
+const endpoint = resolveMoodleUrl(getEnv('MOODLE_BASE_URL'), 'webservice/rest/server.php');
 const body = new URLSearchParams({
   wstoken: getEnv('MOODLE_REST_TOKEN'),
   wsfunction: functionName,
@@ -26,7 +27,8 @@ for (const [key, value] of Object.entries(parameters)) {
 
 const response = await fetch(endpoint, {
   method: 'POST',
-  body
+  body,
+  redirect: 'error'
 });
 
 console.log(`HTTP ${response.status}`);

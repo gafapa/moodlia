@@ -22,7 +22,7 @@ use core_external\external_api;
 use core_external\external_function_parameters;
 use core_external\external_single_structure;
 use core_external\external_value;
-use local_moodlia\operation\question_tools;
+use local_moodlia\operation\question_quiz_attempt_tools;
 use local_moodlia\operation\view_quiz_attempt as view_quiz_attempt_operation;
 
 /**
@@ -62,7 +62,7 @@ class view_quiz_attempt extends external_api {
             (int) $quizmoduleid,
             (int) $attemptid,
             (int) $attemptpage,
-            question_tools::decode_preflight_data((string) $preflightdata)
+            question_quiz_attempt_tools::decode_preflight_data((string) $preflightdata)
         );
     }
 

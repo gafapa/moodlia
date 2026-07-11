@@ -50,6 +50,8 @@ MOODLE_REST_TOKEN=your-token
 
 Do not commit `.env` files or tokens.
 
+`MOODLE_BASE_URL` must be the public HTTPS URL of the Moodle site, including any installation subdirectory such as `https://example.edu/learning`. The client preserves that path when resolving REST endpoints. Plain HTTP is rejected for remote hosts; loopback HTTP remains available for local development.
+
 ## Discover Commands
 
 Show all commands:

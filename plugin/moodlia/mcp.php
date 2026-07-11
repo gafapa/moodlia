@@ -18,7 +18,22 @@ define('NO_MOODLE_COOKIES', true);
 define('AJAX_SCRIPT', true);
 define('NO_DEBUG_DISPLAY', true);
 
+const LOCAL_MOODLIA_MCP_PROTOCOL_VERSIONS = [
+    '2025-11-25',
+    '2025-06-18',
+    '2025-03-26',
+];
+const LOCAL_MOODLIA_MCP_MAX_REQUEST_BYTES = 32 * 1024 * 1024;
+
 require_once(__DIR__ . '/../../config.php');
+
+/**
+ * Send common security and cache headers for MCP responses.
+ */
+function local_moodlia_mcp_response_headers(): void {
+    header('Cache-Control: no-store');
+    header('X-Content-Type-Options: nosniff');
+}
 
 /**
  * Send a JSON-RPC response.
@@ -28,6 +43,7 @@ require_once(__DIR__ . '/../../config.php');
  * @return never
  */
 function local_moodlia_mcp_result($id, $result): never {
+    local_moodlia_mcp_response_headers();
     header('Content-Type: application/json; charset=utf-8');
     echo json_encode([
         'jsonrpc' => '2.0',
@@ -57,6 +73,7 @@ function local_moodlia_mcp_error(
     array $details = []
 ): never {
     http_response_code($httpstatus);
+    local_moodlia_mcp_response_headers();
     header('Content-Type: application/json; charset=utf-8');
     echo json_encode([
         'jsonrpc' => '2.0',
@@ -71,6 +88,53 @@ function local_moodlia_mcp_error(
         ],
     ], JSON_UNESCAPED_SLASHES);
     exit;
+}
+
+/**
+ * Complete an MCP notification without returning a JSON-RPC response body.
+ */
+function local_moodlia_mcp_notification_accepted(): never {
+    http_response_code(202);
+    local_moodlia_mcp_response_headers();
+    exit;
+}
+
+/**
+ * Return the scheme and authority portion of a URL.
+ *
+ * @param string $url Absolute URL.
+ * @return string
+ */
+function local_moodlia_mcp_origin(string $url): string {
+    $parts = parse_url($url);
+    if (!is_array($parts) || empty($parts['scheme']) || empty($parts['host'])) {
+        return '';
+    }
+
+    $origin = strtolower($parts['scheme']) . '://' . strtolower($parts['host']);
+    if (isset($parts['port'])) {
+        $origin .= ':' . (int) $parts['port'];
+    }
+
+    return $origin;
+}
+
+/**
+ * Reject cross-origin browser requests to prevent DNS rebinding and token misuse.
+ */
+function local_moodlia_mcp_validate_origin(): void {
+    global $CFG;
+
+    $origin = trim((string) ($_SERVER['HTTP_ORIGIN'] ?? ''));
+    if ($origin === '') {
+        return;
+    }
+
+    if (hash_equals(local_moodlia_mcp_origin($CFG->wwwroot), local_moodlia_mcp_origin($origin))) {
+        return;
+    }
+
+    local_moodlia_mcp_error(null, -32003, 'Origin is not allowed.', 403, 'missing_capability');
 }
 
 /**
@@ -113,7 +177,12 @@ function local_moodlia_mcp_bearer_token(): string {
         local_moodlia_mcp_error(null, -32001, 'Missing bearer token.', 401, 'missing_capability');
     }
 
-    return trim($matches[1]);
+    $token = trim($matches[1]);
+    if ($token === '' || strlen($token) > 4096) {
+        local_moodlia_mcp_error(null, -32001, 'Invalid bearer token.', 401, 'missing_capability');
+    }
+
+    return $token;
 }
 
 /**
@@ -150,6 +219,30 @@ function local_moodlia_mcp_normalize_arguments($id, $arguments): array {
     }
 
     return $normalized;
+}
+
+/**
+ * Wrap an operation response in the MCP CallToolResult shape.
+ *
+ * @param mixed $payload Canonical operation response.
+ * @return array
+ */
+function local_moodlia_mcp_tool_result($payload): array {
+    $encoded = json_encode($payload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    if ($encoded === false) {
+        $encoded = 'null';
+    }
+
+    return [
+        'content' => [
+            [
+                'type' => 'text',
+                'text' => $encoded,
+            ],
+        ],
+        'structuredContent' => $payload,
+        'isError' => false,
+    ];
 }
 
 /**
@@ -190,7 +283,8 @@ function local_moodlia_mcp_call_rest(string $token, string $toolname, array $arg
     curl_close($curl);
 
     if ($raw === false) {
-        local_moodlia_mcp_error($id, -32002, 'REST transport failed: ' . $error, 200, 'transport_error');
+        debugging('MoodlIA MCP REST transport failed: ' . $error, DEBUG_DEVELOPER);
+        local_moodlia_mcp_error($id, -32002, 'Moodle REST transport failed.', 200, 'transport_error');
     }
 
     $payload = json_decode($raw, true);
@@ -205,8 +299,11 @@ function local_moodlia_mcp_call_rest(string $token, string $toolname, array $arg
     }
 
     if (is_array($payload) && (isset($payload['exception']) || isset($payload['errorcode']))) {
-        $message = $payload['message'] ?? $payload['errorcode'] ?? 'Moodle REST error.';
-        local_moodlia_mcp_error($id, -32005, $message, 200, local_moodlia_mcp_moodle_error_code($payload), [
+        $canonicalcode = local_moodlia_mcp_moodle_error_code($payload);
+        $message = $canonicalcode === 'internal_error'
+            ? 'Moodle could not complete the request.'
+            : ($payload['message'] ?? $payload['errorcode'] ?? 'Moodle REST error.');
+        local_moodlia_mcp_error($id, -32005, $message, 200, $canonicalcode, [
             'moodle_errorcode' => $payload['errorcode'] ?? null,
             'moodle_exception' => $payload['exception'] ?? null,
         ]);
@@ -219,8 +316,35 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     local_moodlia_mcp_error(null, -32600, 'Only POST requests are supported.', 405, 'invalid_parameters');
 }
 
+local_moodlia_mcp_validate_origin();
+
+$contenttype = strtolower(trim(explode(';', (string) ($_SERVER['CONTENT_TYPE'] ?? ''))[0]));
+if ($contenttype !== 'application/json') {
+    local_moodlia_mcp_error(null, -32600, 'Content-Type must be application/json.', 415, 'invalid_parameters');
+}
+
+$accept = strtolower((string) ($_SERVER['HTTP_ACCEPT'] ?? ''));
+if ($accept !== '' && !str_contains($accept, '*/*') && !str_contains($accept, 'application/json')) {
+    local_moodlia_mcp_error(null, -32600, 'Accept must allow application/json.', 406, 'invalid_parameters');
+}
+
+$protocolheader = trim((string) ($_SERVER['HTTP_MCP_PROTOCOL_VERSION'] ?? ''));
+if ($protocolheader !== '' && !in_array($protocolheader, LOCAL_MOODLIA_MCP_PROTOCOL_VERSIONS, true)) {
+    local_moodlia_mcp_error(null, -32602, 'Unsupported MCP protocol version.', 400, 'invalid_parameters', [
+        'supported' => LOCAL_MOODLIA_MCP_PROTOCOL_VERSIONS,
+    ]);
+}
+
+$contentlength = (int) ($_SERVER['CONTENT_LENGTH'] ?? 0);
+if ($contentlength > LOCAL_MOODLIA_MCP_MAX_REQUEST_BYTES) {
+    local_moodlia_mcp_error(null, -32600, 'MCP request body is too large.', 413, 'invalid_parameters');
+}
+
 $token = local_moodlia_mcp_bearer_token();
 $rawrequest = file_get_contents('php://input');
+if ($rawrequest !== false && strlen($rawrequest) > LOCAL_MOODLIA_MCP_MAX_REQUEST_BYTES) {
+    local_moodlia_mcp_error(null, -32600, 'MCP request body is too large.', 413, 'invalid_parameters');
+}
 $request = json_decode($rawrequest ?: '', true);
 
 if (!is_array($request)) {
@@ -230,9 +354,50 @@ if (!is_array($request)) {
 $id = $request['id'] ?? null;
 $method = $request['method'] ?? null;
 $params = $request['params'] ?? [];
+$isnotification = !array_key_exists('id', $request);
 
 if (($request['jsonrpc'] ?? null) !== '2.0' || !is_string($method)) {
     local_moodlia_mcp_error($id, -32600, 'Invalid JSON-RPC request.', 200, 'invalid_parameters');
+}
+
+if ($method === 'initialize') {
+    $requestedversion = is_array($params) ? (string) ($params['protocolVersion'] ?? '') : '';
+    if ($requestedversion === '') {
+        local_moodlia_mcp_error($id, -32602, 'initialize requires protocolVersion.', 200, 'invalid_parameters');
+    }
+    $protocolversion = in_array($requestedversion, LOCAL_MOODLIA_MCP_PROTOCOL_VERSIONS, true)
+        ? $requestedversion
+        : LOCAL_MOODLIA_MCP_PROTOCOL_VERSIONS[0];
+
+    local_moodlia_mcp_call_rest($token, 'get_current_user', [], $id);
+    local_moodlia_mcp_result($id, [
+        'protocolVersion' => $protocolversion,
+        'capabilities' => [
+            'tools' => [
+                'listChanged' => false,
+            ],
+        ],
+        'serverInfo' => [
+            'name' => 'MoodlIA',
+            'title' => 'MoodlIA Moodle MCP Server',
+            'version' => '0.1.186',
+        ],
+        'instructions' => 'Use MoodlIA tools to operate Moodle within the capabilities of the authenticated user.',
+    ]);
+}
+
+if ($method === 'notifications/initialized') {
+    local_moodlia_mcp_call_rest($token, 'get_current_user', [], $id);
+    local_moodlia_mcp_notification_accepted();
+}
+
+if ($isnotification) {
+    local_moodlia_mcp_notification_accepted();
+}
+
+if ($method === 'ping') {
+    local_moodlia_mcp_call_rest($token, 'get_current_user', [], $id);
+    local_moodlia_mcp_result($id, (object) []);
 }
 
 if ($method === 'tools/list') {
@@ -255,7 +420,8 @@ if ($method === 'tools/call') {
     }
 
     $arguments = local_moodlia_mcp_normalize_arguments($id, $params['arguments'] ?? []);
-    local_moodlia_mcp_result($id, local_moodlia_mcp_call_rest($token, $toolname, $arguments, $id));
+    $result = local_moodlia_mcp_call_rest($token, $toolname, $arguments, $id);
+    local_moodlia_mcp_result($id, local_moodlia_mcp_tool_result($result));
 }
 
 local_moodlia_mcp_error($id, -32601, 'Unknown method: ' . $method, 200, 'invalid_parameters', [

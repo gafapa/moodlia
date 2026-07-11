@@ -30,6 +30,6 @@ class start_quiz_attempt {
      * @return array
      */
     public static function execute(int $quizmoduleid, bool $forcenew = false): array {
-        return question_tools::start_quiz_attempt($quizmoduleid, $forcenew);
+        return question_quiz_attempt_tools::start_quiz_attempt($quizmoduleid, $forcenew);
     }
 }

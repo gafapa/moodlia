@@ -32,6 +32,6 @@ class get_quiz_attempt_data {
      * @return array
      */
     public static function execute(int $quizmoduleid, int $attemptid, int $page = 0, array $preflightdata = []): array {
-        return question_tools::get_quiz_attempt_data($quizmoduleid, $attemptid, $page, $preflightdata);
+        return question_quiz_attempt_tools::get_quiz_attempt_data($quizmoduleid, $attemptid, $page, $preflightdata);
     }
 }

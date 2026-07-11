@@ -7,6 +7,7 @@ import {
   createMoodleClient,
   createMoodleRestClient,
   normalizeClientError,
+  resolveMoodleUrl,
   toRestFunctionName,
   validateContractResponse
 } from '../../client/moodle-rest-client.mjs';
@@ -74,12 +75,36 @@ test('shared REST client calls canonical Moodle function names', async () => {
   assert.deepEqual(payload, { courses: [] });
   assert.equal(String(calls[0].url), 'https://moodle.example.test/webservice/rest/server.php');
   assert.equal(calls[0].options.method, 'POST');
+  assert.equal(calls[0].options.redirect, 'error');
   assert.equal(calls[0].options.body.get('wstoken'), 'test-token');
   assert.equal(calls[0].options.body.get('wsfunction'), 'local_moodlia_get_courses');
   assert.equal(calls[0].options.body.get('moodlewsrestformat'), 'json');
   assert.equal(calls[0].options.body.get('limit'), '5');
   assert.equal(calls[0].options.body.get('visible'), '0');
   assert.equal(calls[0].options.body.has('ignored_null'), false);
+});
+
+test('Moodle URLs preserve subdirectory installations and require secure transport', () => {
+  assert.equal(
+    resolveMoodleUrl('https://moodle.example.test/learning', '/webservice/rest/server.php').toString(),
+    'https://moodle.example.test/learning/webservice/rest/server.php'
+  );
+  assert.equal(
+    resolveMoodleUrl('http://localhost:8080/moodle', 'login/token.php').toString(),
+    'http://localhost:8080/moodle/login/token.php'
+  );
+  assert.throws(
+    () => resolveMoodleUrl('http://moodle.example.test', 'webservice/rest/server.php'),
+    /must use HTTPS/
+  );
+  assert.throws(
+    () => resolveMoodleUrl('https://user:secret@moodle.example.test', 'webservice/rest/server.php'),
+    /must not contain credentials/
+  );
+  assert.throws(
+    () => resolveMoodleUrl('https://moodle.example.test', 'https://attacker.example/path'),
+    /relative paths/
+  );
 });
 
 test('MoodleClient facade exposes only canonical snake_case operation methods', async () => {

@@ -54,7 +54,7 @@ The current implementation includes:
 
 - Moodle local plugin scaffold under `plugin/moodlia`.
 - REST external functions declared as `local_moodlia_*`.
-- Moodle-hosted MCP endpoint at `/local/moodlia/mcp.php` with `tools/list` and `tools/call`.
+- Moodle-hosted MCP endpoint at `/local/moodlia/mcp.php` with lifecycle initialization, `ping`, `tools/list`, and `tools/call`.
 - MCP token validation for `tools/list` and `tools/call` using the shared Moodle REST token.
 - A machine-readable operation contract under `contract/operations.json`.
 - Canonical enum constraints for supported enrolment role archetypes (`student`, `teacher`, `editingteacher`), module types (`assign`, `book`, `choice`, `data`, `feedback`, `lesson`, `lti`, `page`, `folder`, `forum`, `glossary`, `label`, `qbank`, `quiz`, `resource`, `subsection`, `url`, `wiki`, `workshop`), and question types (`truefalse`, `shortanswer`, `multichoice`, `numerical`, `essay`, `matching`, `description`, `randomsamatch`, `gapselect`, `ddwtos`, `ordering`, `multianswer`, `ddmarker`, `ddimageortext`, `calculatedsimple`, `calculated`, `calculatedmulti`).
@@ -77,7 +77,7 @@ The current implementation includes:
 - Generated public npm package at `packages/moodlia` with the `moodlia` binary, REST client, TypeScript declarations, filtered operation contract, README, and license.
 - High-level course workflow operations for portable course blueprints, blueprint restore/application, course-structure copy, manual enrolment synchronisation, publish-state transitions, and course readiness audit.
 
-REST, MCP, and the CLI use the same `MOODLE_REST_TOKEN`. The CLI does not call MCP; it uses `MOODLE_BASE_URL` and `MOODLE_REST_TOKEN`, then invokes Moodle's `/webservice/rest/server.php` endpoint with the matching `local_moodlia_*` function.
+REST, MCP, and the CLI use the same `MOODLE_REST_TOKEN`. The CLI does not call MCP; it uses `MOODLE_BASE_URL` and `MOODLE_REST_TOKEN`, then resolves `webservice/rest/server.php` below the configured Moodle URL, including any installation subdirectory, and invokes the matching `local_moodlia_*` function.
 
 Example CLI commands:
 
@@ -135,6 +135,8 @@ Run the local release preflight:
 ```text
 npm run release:check
 ```
+
+The preflight recursively checks JavaScript syntax and runs PHP syntax checks when PHP is available. CI installs the minimum supported PHP 8.2 runtime and makes PHP lint mandatory.
 
 GitHub Actions runs the local CI preflight on pushes and pull requests: npm package mirror drift, release checks, plugin packaging, and project website tests. Remote Moodle smoke/browser suites are intentionally not part of the default CI job because they need target-specific credentials and generate Moodle data.
 

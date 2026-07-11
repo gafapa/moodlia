@@ -29,6 +29,6 @@ class view_quiz {
      * @return array
      */
     public static function execute(int $quizmoduleid): array {
-        return question_tools::view_quiz($quizmoduleid);
+        return question_quiz_attempt_tools::view_quiz($quizmoduleid);
     }
 }

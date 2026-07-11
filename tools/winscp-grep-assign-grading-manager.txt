@@ -1,5 +1,5 @@
 option batch abort
 option confirm off
-open sftp://ubuntu@test.gallego.top:2276/ -privatekey="D:\Otros IA\otro_galleto_top\ssh- privada.ppk" -hostkey="ssh-ed25519 255 bSH+2gacG2o7kVw//yZ1KLDJIHosyKwOo778qDFncPk"
+open sftp://ubuntu@test.gallego.top:2276/ -privatekey="D:\Otros IA\gestion_gallego_top\ssh- privada.ppk" -hostkey="ssh-ed25519 255 bSH+2gacG2o7kVw//yZ1KLDJIHosyKwOo778qDFncPk"
 call sudo docker exec moodle sh -lc "cd /var/www/html/public && grep -R \"grading_manager\\|advanced grading\\|set_area\\|submissions\" -n mod/assign/locallib.php mod/assign/lib.php | head -120"
 exit

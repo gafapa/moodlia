@@ -1,6 +1,6 @@
 {
   "name": "moodle-mcp-api-cli-automation",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "private": true,
   "type": "module",
   "description": "Test automation foundation for the Moodle MCP/API/CLI shared interface.",
@@ -8,11 +8,13 @@
     "moodle-mcp": "cli/moodle-mcp.mjs"
   },
   "scripts": {
-    "test": "node --test tests/static/*.test.mjs tests/smoke/*.test.mjs",
+    "test": "node --test --test-concurrency=4 tests/static/*.test.mjs tests/smoke/*.test.mjs",
     "test:static": "node --test tests/static/*.test.mjs",
-    "test:smoke": "node --test tests/smoke/*.test.mjs",
+    "test:smoke": "node --test --test-concurrency=4 tests/smoke/*.test.mjs",
     "test:browser": "playwright test",
     "test:site": "playwright test --config=playwright.site.config.mjs",
+    "lint:js": "node tools/lint-javascript.mjs",
+    "lint:php": "node tools/lint-php.mjs",
     "check:contract": "node tools/check-contract.mjs",
     "types:generate": "node tools/generate-operation-types.mjs",
     "types:check": "node tools/generate-operation-types.mjs --check",
@@ -43,7 +45,7 @@
     "print:config": "node tools/print-test-config.mjs"
   },
   "devDependencies": {
-    "@playwright/test": "^1.52.0"
+    "@playwright/test": "^1.61.1"
   },
   "engines": {
     "node": ">=22"

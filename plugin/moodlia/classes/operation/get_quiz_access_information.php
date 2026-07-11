@@ -29,6 +29,6 @@ class get_quiz_access_information {
      * @return array
      */
     public static function execute(int $quizmoduleid): array {
-        return question_tools::get_quiz_access_information($quizmoduleid);
+        return question_quiz_attempt_tools::get_quiz_access_information($quizmoduleid);
     }
 }

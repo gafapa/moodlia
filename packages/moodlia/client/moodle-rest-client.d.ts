@@ -33,6 +33,7 @@ export interface RestTransportOptions {
   token?: string;
   timeoutMs?: number;
   fetchImplementation?: typeof fetch;
+  allowInsecure?: boolean;
 }
 
 export interface MoodleClientOptions {
@@ -97,6 +98,11 @@ export class MoodleClientError extends Error {
 export function loadEnvFile(filePath: string): void;
 export function loadContractFromFile(contractPath: string): MoodleOperationContract;
 export function toRestFunctionName(contract: MoodleOperationContract, operationName: string): string;
+export function resolveMoodleUrl(
+  baseUrl: string,
+  relativePath: string,
+  options?: { allowInsecure?: boolean }
+): URL;
 export function normalizeClientError(
   error: unknown,
   fallbackCode?: string,

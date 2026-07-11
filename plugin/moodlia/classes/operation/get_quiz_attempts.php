@@ -37,6 +37,6 @@ class get_quiz_attempts {
         string $status = 'all',
         bool $includepreviews = true
     ): array {
-        return question_tools::get_quiz_attempts($quizmoduleid, $userid, $status, $includepreviews);
+        return question_quiz_attempt_tools::get_quiz_attempts($quizmoduleid, $userid, $status, $includepreviews);
     }
 }

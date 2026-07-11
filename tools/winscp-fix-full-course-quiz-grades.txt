@@ -1,6 +1,6 @@
 option batch abort
 option confirm off
-open sftp://ubuntu@test.gallego.top:2276/ -privatekey="D:\Otros IA\otro_galleto_top\ssh- privada.ppk" -hostkey="ssh-ed25519 255 bSH+2gacG2o7kVw//yZ1KLDJIHosyKwOo778qDFncPk"
+open sftp://ubuntu@test.gallego.top:2276/ -privatekey="D:\Otros IA\gestion_gallego_top\ssh- privada.ppk" -hostkey="ssh-ed25519 255 bSH+2gacG2o7kVw//yZ1KLDJIHosyKwOo778qDFncPk"
 put "D:\ProyectosIA\mcpapiclimoodle\tools\fix_moodlia_quiz_slot_grades.php" /tmp/fix_moodlia_quiz_slot_grades.php
 call sudo docker cp /tmp/fix_moodlia_quiz_slot_grades.php moodle:/tmp/fix_moodlia_quiz_slot_grades.php
 call sudo docker exec -w /var/www/html/public moodle php /tmp/fix_moodlia_quiz_slot_grades.php --cmid=276 --maxmark=1

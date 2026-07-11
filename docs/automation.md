@@ -1,4 +1,4 @@
-﻿# Automation
+# Automation
 
 This document defines the deployment and verification model for the proposed `local_moodlia` Moodle plugin.
 
@@ -29,7 +29,7 @@ SFTP_HOST=test.gallego.top
 SFTP_PORT=2276
 SFTP_USER=ubuntu
 SFTP_AUTH_MODE=key
-SFTP_KEY_PATH=D:\Otros IA\otro_galleto_top\ssh- privada.ppk
+SFTP_KEY_PATH=D:\Otros IA\gestion_gallego_top\ssh- privada.ppk
 LOCAL_PLUGIN_SOURCE=plugin/moodlia
 LOCAL_PLUGIN_PACKAGE_PATH=D:\tmp\moodlia
 SFTP_REMOTE_UPLOAD_PATH=/tmp/moodlia
@@ -82,6 +82,8 @@ npm run test:smoke
 npm test
 ```
 
+The smoke command limits Node test-file concurrency to four workers so a remote Moodle target is not overwhelmed by connection bursts and independent data workflows remain isolated enough for reliable cleanup.
+
 Smoke tests are skipped automatically when their required environment variables are not set:
 
 | Test Group | Required Variables |
@@ -126,7 +128,7 @@ If the Moodle external service is enabled, request a REST token from username, p
 npm run token:rest
 ```
 
-The command prints the token as JSON. Add the returned token to `MOODLE_REST_TOKEN` in `.env.test` before running REST smoke tests.
+The command stores the token as `MOODLE_REST_TOKEN` in `.env.test` and restricts the file permissions where the operating system supports it. It does not print credentials by default. Use `npm run token:rest -- --show-token` only when explicit terminal output is required and the terminal is not being logged.
 
 To create or refresh the restricted permission-test user, role, service authorisation, and token through the Moodle admin UI:
 
@@ -180,7 +182,7 @@ npm run release:check
 npm run test:site
 ```
 
-The CI job runs on Windows because the local release packaging defaults and development workflow are Windows-friendly. It overrides `LOCAL_PLUGIN_PACKAGE_PATH` to a runner temp directory, then validates generated manifests, generated TypeScript operation types, static tests, selected syntax checks, plugin packaging, and project website tests.
+The CI job runs on Windows because the local release packaging defaults and development workflow are Windows-friendly. It overrides `LOCAL_PLUGIN_PACKAGE_PATH` to a runner temp directory, then validates all JavaScript syntax, all plugin PHP syntax on PHP 8.2, generated manifests, generated TypeScript operation types, static tests, dependency audit, plugin packaging, and project website tests.
 
 Remote Moodle smoke tests and browser verification are not in the default CI workflow. They require environment-specific secrets, a reachable Moodle instance, and permission to create generated test data.
 

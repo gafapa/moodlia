@@ -30,6 +30,6 @@ class get_quiz_attempt_access_information {
      * @return array
      */
     public static function execute(int $quizmoduleid, int $attemptid = 0): array {
-        return question_tools::get_quiz_attempt_access_information($quizmoduleid, $attemptid);
+        return question_quiz_attempt_tools::get_quiz_attempt_access_information($quizmoduleid, $attemptid);
     }
 }

@@ -1,7 +1,8 @@
+import { resolveMoodleUrl } from '../client/moodle-rest-client.mjs';
 import { getEnv } from '../tests/helpers/env.mjs';
 
 export async function loginAsConfiguredAdmin(page) {
-  await page.goto(new URL('/login/index.php', getEnv('MOODLE_BASE_URL')).toString());
+  await page.goto(resolveMoodleUrl(getEnv('MOODLE_BASE_URL'), 'login/index.php').toString());
   if (await page.locator('#username').isVisible().catch(() => false)) {
     await page.locator('#username').fill(getEnv('MOODLE_USERNAME'));
     await page.locator('#password').fill(getEnv('MOODLE_PASSWORD'));
@@ -10,8 +11,24 @@ export async function loginAsConfiguredAdmin(page) {
   }
 }
 
+export async function getAuthenticatedUser(page) {
+  const user = await page.evaluate(() => ({
+    id: Number(globalThis.M?.cfg?.userid ?? document.body?.dataset?.userid ?? 0),
+    displayName: document.querySelector('.usertext')?.textContent?.trim() ?? ''
+  }));
+
+  if (!Number.isInteger(user.id) || user.id <= 0) {
+    throw new Error('Could not resolve the authenticated Moodle user id.');
+  }
+
+  return {
+    id: user.id,
+    displayName: user.displayName || getEnv('MOODLE_USERNAME')
+  };
+}
+
 export async function findMoodliaServiceId(page) {
-  await page.goto(new URL('/admin/settings.php?section=externalservices', getEnv('MOODLE_BASE_URL')).toString());
+  await page.goto(resolveMoodleUrl(getEnv('MOODLE_BASE_URL'), 'admin/settings.php?section=externalservices').toString());
   await page.waitForLoadState('networkidle');
 
   const serviceId = await page.locator('body').evaluate((body) => {

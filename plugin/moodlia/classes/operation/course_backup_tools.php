@@ -232,19 +232,37 @@ class course_backup_tools {
 
         $context = \context_user::instance((int) $USER->id);
         $fs = get_file_storage();
-        $existing = $fs->get_file($context->id, 'user', 'private', 0, '/', $filename);
-        if ($existing && !$existing->is_directory()) {
-            $existing->delete();
-        }
-
-        $file = $fs->create_file_from_string([
+        $filerecord = [
             'contextid' => $context->id,
             'component' => 'user',
             'filearea' => 'private',
             'itemid' => 0,
             'filepath' => '/',
             'filename' => $filename,
-        ], $content);
+        ];
+        $existing = $fs->get_file($context->id, 'user', 'private', 0, '/', $filename);
+
+        if ($existing && !$existing->is_directory()) {
+            $draftitemid = file_get_unused_draft_itemid();
+            $draftfile = $fs->create_file_from_string([
+                'contextid' => $context->id,
+                'component' => 'user',
+                'filearea' => 'draft',
+                'itemid' => $draftitemid,
+                'filepath' => '/',
+                'filename' => $filename,
+            ], $content);
+
+            try {
+                $existing->replace_file_with($draftfile);
+                $existing->set_timemodified(time());
+                $file = $existing;
+            } finally {
+                $draftfile->delete();
+            }
+        } else {
+            $file = $fs->create_file_from_string($filerecord, $content);
+        }
 
         return self::backup_file_to_response($file, 0);
     }

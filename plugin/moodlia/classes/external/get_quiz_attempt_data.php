@@ -24,7 +24,7 @@ use core_external\external_multiple_structure;
 use core_external\external_single_structure;
 use core_external\external_value;
 use local_moodlia\operation\get_quiz_attempt_data as get_quiz_attempt_data_operation;
-use local_moodlia\operation\question_tools;
+use local_moodlia\operation\question_quiz_attempt_tools;
 
 /**
  * External API adapter for get_quiz_attempt_data.
@@ -63,7 +63,7 @@ class get_quiz_attempt_data extends external_api {
             (int) $quizmoduleid,
             (int) $attemptid,
             (int) $attemptpage,
-            question_tools::decode_preflight_data((string) $preflightdata)
+            question_quiz_attempt_tools::decode_preflight_data((string) $preflightdata)
         );
     }
 

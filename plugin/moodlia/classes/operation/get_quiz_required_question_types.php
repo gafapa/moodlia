@@ -29,6 +29,6 @@ class get_quiz_required_question_types {
      * @return array
      */
     public static function execute(int $quizmoduleid): array {
-        return question_tools::get_quiz_required_question_types($quizmoduleid);
+        return question_quiz_attempt_tools::get_quiz_required_question_types($quizmoduleid);
     }
 }

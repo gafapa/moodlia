@@ -30,6 +30,6 @@ class get_quiz_user_best_grade {
      * @return array
      */
     public static function execute(int $quizmoduleid, int $userid = 0): array {
-        return question_tools::get_quiz_user_best_grade($quizmoduleid, $userid);
+        return question_quiz_attempt_tools::get_quiz_user_best_grade($quizmoduleid, $userid);
     }
 }

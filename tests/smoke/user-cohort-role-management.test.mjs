@@ -97,7 +97,7 @@ test('user, cohort, and course role administration works through REST, MCP, and 
       cohort_id: created.cohortId,
       user_id: created.userId
     });
-    assert.equal(addedMember.added, true);
+    assert.equal(addedMember.member, true);
 
     const updatedCohort = await callCli([
       'update-cohort',
@@ -113,7 +113,7 @@ test('user, cohort, and course role administration works through REST, MCP, and 
       '--cohort-id', String(created.cohortId),
       '--user-id', String(created.userId)
     ]);
-    assert.equal(removedMember.removed, true);
+    assert.equal(removedMember.member, false);
 
     const category = await callRestFunction(restName('create_course_category'), {
       name: `MoodlIA Admin Category ${suffix}`,

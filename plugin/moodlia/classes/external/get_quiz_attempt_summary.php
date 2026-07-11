@@ -24,7 +24,7 @@ use core_external\external_multiple_structure;
 use core_external\external_single_structure;
 use core_external\external_value;
 use local_moodlia\operation\get_quiz_attempt_summary as get_quiz_attempt_summary_operation;
-use local_moodlia\operation\question_tools;
+use local_moodlia\operation\question_quiz_attempt_tools;
 
 /**
  * External API adapter for get_quiz_attempt_summary.
@@ -54,7 +54,7 @@ class get_quiz_attempt_summary extends external_api {
         return get_quiz_attempt_summary_operation::execute(
             (int) $quizmoduleid,
             (int) $attemptid,
-            question_tools::decode_preflight_data((string) $preflightdata)
+            question_quiz_attempt_tools::decode_preflight_data((string) $preflightdata)
         );
     }
 

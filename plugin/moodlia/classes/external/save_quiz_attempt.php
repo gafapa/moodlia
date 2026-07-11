@@ -22,7 +22,7 @@ use core_external\external_api;
 use core_external\external_function_parameters;
 use core_external\external_single_structure;
 use core_external\external_value;
-use local_moodlia\operation\question_tools;
+use local_moodlia\operation\question_quiz_attempt_tools;
 use local_moodlia\operation\save_quiz_attempt as save_quiz_attempt_operation;
 
 /**
@@ -61,8 +61,8 @@ class save_quiz_attempt extends external_api {
         return save_quiz_attempt_operation::execute(
             (int) $quizmoduleid,
             (int) $attemptid,
-            question_tools::decode_quiz_attempt_data((string) $attemptdata),
-            question_tools::decode_preflight_data((string) $preflightdata)
+            question_quiz_attempt_tools::decode_quiz_attempt_data((string) $attemptdata),
+            question_quiz_attempt_tools::decode_preflight_data((string) $preflightdata)
         );
     }
 

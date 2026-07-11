@@ -2,6 +2,10 @@
 
 This guide describes how to install, verify, and release MoodlIA in another Moodle instance.
 
+## Versioning Policy
+
+The Moodle plugin and public npm client use independent semantic release streams because they can be published separately. `plugin/moodlia/version.php` is authoritative for the Moodle plugin, while the root `package.json` is authoritative for the npm package and generated `packages/moodlia` mirror. Every change must bump each affected stream and `npm run npm:sync` must refresh the public package mirror.
+
 ## Release Scope
 
 MoodlIA is a Moodle local plugin with component `local_moodlia` and folder name `moodlia`.
@@ -77,7 +81,7 @@ npm install
 npm run release:check
 ```
 
-The release check validates generated manifests, generated TypeScript operation types, static parity, forbidden database-access patterns, key smoke-test syntax, browser-test syntax, and plugin packaging into a temporary directory.
+The release check validates all JavaScript syntax recursively, PHP syntax when a PHP runtime is available, generated manifests, generated TypeScript operation types, static parity, forbidden database-access patterns, and plugin packaging into a temporary directory. CI makes PHP syntax validation mandatory with PHP 8.2.
 
 The repository also includes a GitHub Actions workflow for checks that do not need a remote Moodle instance. It runs npm package mirror drift checks, the release preflight, plugin packaging, and project website tests on pushes and pull requests. Remote smoke and browser verification still run manually against a configured Moodle target.
 

@@ -30,6 +30,6 @@ class view_quiz_attempt_review {
      * @return array
      */
     public static function execute(int $quizmoduleid, int $attemptid): array {
-        return question_tools::view_quiz_attempt_review($quizmoduleid, $attemptid);
+        return question_quiz_attempt_tools::view_quiz_attempt_review($quizmoduleid, $attemptid);
     }
 }

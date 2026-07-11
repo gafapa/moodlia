@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
 import { chromium } from '@playwright/test';
+import { resolveMoodleUrl } from '../client/moodle-rest-client.mjs';
 import { loadEnvFile, getEnv } from '../tests/helpers/env.mjs';
 import { fromRoot } from '../tests/helpers/paths.mjs';
 import { findMoodliaServiceId, loginAsConfiguredAdmin } from './moodle-admin-ui.mjs';
@@ -38,7 +39,7 @@ async function ensureRestrictedRole(page) {
     return existing;
   }
 
-  await page.goto(new URL('/admin/roles/define.php?action=add', getEnv('MOODLE_BASE_URL')).toString());
+  await page.goto(resolveMoodleUrl(getEnv('MOODLE_BASE_URL'), 'admin/roles/define.php?action=add').toString());
   await page.waitForLoadState('networkidle');
   await page.locator('#id_submitbutton').click();
   await page.waitForLoadState('networkidle');
@@ -69,7 +70,7 @@ async function ensureRestrictedRole(page) {
 }
 
 async function findRoleId(page, shortname) {
-  await page.goto(new URL('/admin/roles/manage.php', getEnv('MOODLE_BASE_URL')).toString());
+  await page.goto(resolveMoodleUrl(getEnv('MOODLE_BASE_URL'), 'admin/roles/manage.php').toString());
   await page.waitForLoadState('networkidle');
 
   return page.locator('body').evaluate((body, expectedShortname) => {
@@ -98,7 +99,7 @@ async function ensureRestrictedUser(page) {
     return existing;
   }
 
-  await page.goto(new URL('/user/editadvanced.php?id=-1', getEnv('MOODLE_BASE_URL')).toString());
+  await page.goto(resolveMoodleUrl(getEnv('MOODLE_BASE_URL'), 'user/editadvanced.php?id=-1').toString());
   await page.waitForLoadState('networkidle');
 
   await page.locator('#id_username').fill(restrictedUsername);
@@ -137,7 +138,7 @@ async function ensureRestrictedUser(page) {
 }
 
 async function findUserId(page, username) {
-  await page.goto(new URL(`/admin/user.php?search=${encodeURIComponent(username)}`, getEnv('MOODLE_BASE_URL')).toString());
+  await page.goto(resolveMoodleUrl(getEnv('MOODLE_BASE_URL'), `admin/user.php?search=${encodeURIComponent(username)}`).toString());
   await page.waitForLoadState('networkidle');
 
   return page.locator('body').evaluate((body, expectedUsername) => {
@@ -161,7 +162,7 @@ async function findUserId(page, username) {
 }
 
 async function ensureSystemRoleAssignment(page, roleId, userId) {
-  await page.goto(new URL(`/admin/roles/assign.php?contextid=1&roleid=${roleId}`, getEnv('MOODLE_BASE_URL')).toString());
+  await page.goto(resolveMoodleUrl(getEnv('MOODLE_BASE_URL'), `admin/roles/assign.php?contextid=1&roleid=${roleId}`).toString());
   await page.waitForLoadState('networkidle');
 
   const alreadyAssigned = await page.locator('#removeselect').evaluate((select, expectedUserId) =>
@@ -181,7 +182,7 @@ async function ensureSystemRoleAssignment(page, roleId, userId) {
 }
 
 async function ensureServiceUser(page, serviceId, userId) {
-  await page.goto(new URL(`/admin/webservice/service_users.php?id=${serviceId}`, getEnv('MOODLE_BASE_URL')).toString());
+  await page.goto(resolveMoodleUrl(getEnv('MOODLE_BASE_URL'), `admin/webservice/service_users.php?id=${serviceId}`).toString());
   await page.waitForLoadState('networkidle');
 
   const alreadyAuthorized = await page.locator('#removeselect').evaluate((select, expectedUserId) =>
@@ -201,7 +202,7 @@ async function ensureServiceUser(page, serviceId, userId) {
 }
 
 async function createRestrictedToken(page, serviceId, userId) {
-  await page.goto(new URL('/admin/webservice/tokens.php', getEnv('MOODLE_BASE_URL')).toString());
+  await page.goto(resolveMoodleUrl(getEnv('MOODLE_BASE_URL'), 'admin/webservice/tokens.php').toString());
   await page.waitForLoadState('networkidle');
 
   const existingToken = await page.locator('body').evaluate((body, currentUsername) => {
@@ -222,7 +223,7 @@ async function createRestrictedToken(page, serviceId, userId) {
     return existingToken;
   }
 
-  await page.goto(new URL('/admin/webservice/tokens.php?action=create', getEnv('MOODLE_BASE_URL')).toString());
+  await page.goto(resolveMoodleUrl(getEnv('MOODLE_BASE_URL'), 'admin/webservice/tokens.php?action=create').toString());
   await page.waitForLoadState('networkidle');
 
   await page.locator('#id_name').fill('MoodlIA restricted permission smoke');
@@ -282,10 +283,13 @@ async function injectSelectOption(page, selector, value, label) {
 
 async function writeRestrictedToken(token) {
   const envPath = fromRoot('.env.test');
-  const current = await fs.readFile(envPath, 'utf8');
+  const current = await fs.readFile(envPath, 'utf8').catch((error) =>
+    error.code === 'ENOENT' ? '' : Promise.reject(error)
+  );
   const next = current.includes('MOODLE_RESTRICTED_REST_TOKEN=')
     ? current.replace(/^MOODLE_RESTRICTED_REST_TOKEN=.*$/m, `MOODLE_RESTRICTED_REST_TOKEN=${token}`)
     : `${current.replace(/\s*$/, '')}\nMOODLE_RESTRICTED_REST_TOKEN=${token}\n`;
 
   await fs.writeFile(envPath, next, 'utf8');
+  await fs.chmod(envPath, 0o600).catch(() => {});
 }

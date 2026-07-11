@@ -24,7 +24,7 @@ use core_external\external_multiple_structure;
 use core_external\external_single_structure;
 use core_external\external_value;
 use local_moodlia\operation\get_course_quizzes as get_course_quizzes_operation;
-use local_moodlia\operation\question_tools;
+use local_moodlia\operation\question_quiz_attempt_tools;
 
 /**
  * External API adapter for get_course_quizzes.
@@ -50,7 +50,7 @@ class get_course_quizzes extends external_api {
         self::validate_context($systemcontext);
         require_capability('local/moodlia:useapi', $systemcontext);
 
-        $decodedcourseids = question_tools::decode_id_list((string) $courseids);
+        $decodedcourseids = question_quiz_attempt_tools::decode_id_list((string) $courseids);
         if ((int) $courseid > 0) {
             array_unshift($decodedcourseids, (int) $courseid);
         }

@@ -12,6 +12,34 @@ async function callMcpTool(name, toolArguments = {}) {
   });
 }
 
+test('MCP lifecycle: initialize and ping negotiate a supported protocol', { skip: !hasMcpConfig }, async () => {
+  const initialized = await callMcp('initialize', {
+    protocolVersion: '2025-11-25',
+    capabilities: {},
+    clientInfo: {
+      name: 'moodlia-smoke-tests',
+      version: '1.0.0'
+    }
+  });
+
+  assert.equal(initialized.protocolVersion, '2025-11-25');
+  assert.equal(initialized.serverInfo?.name, 'MoodlIA');
+  assert.equal(initialized.capabilities?.tools?.listChanged, false);
+  assert.deepEqual(await callMcp('ping'), {});
+});
+
+test('MCP lifecycle: initialized notifications return no JSON-RPC body', { skip: !hasMcpConfig }, async () => {
+  const { response, body } = await callMcpHttpRaw({
+    body: JSON.stringify({
+      jsonrpc: '2.0',
+      method: 'notifications/initialized'
+    })
+  });
+
+  assert.equal(response.status, 202);
+  assert.equal(body, null);
+});
+
 test('MCP smoke: tools/list includes read operations', { skip: !hasMcpConfig }, async () => {
   const result = await callMcp('tools/list');
   const tools = result?.tools ?? result;
@@ -169,6 +197,22 @@ test('MCP validation: non-POST requests return JSON-RPC error', { skip: !hasMcpC
   assert.equal(body.error.code, -32600);
   assert.equal(body.error.data.code, 'invalid_parameters');
   assert.match(body.error.message, /Only POST requests are supported/);
+});
+
+test('MCP HTTP security: content type and browser origin are validated', { skip: !hasMcpConfig }, async () => {
+  const invalidContentType = await callMcpHttpRaw({
+    body: JSON.stringify({ jsonrpc: '2.0', id: 'invalid-content-type', method: 'ping' }),
+    contentType: 'text/plain'
+  });
+  assert.equal(invalidContentType.response.status, 415);
+  assert.match(invalidContentType.body.error.message, /Content-Type/);
+
+  const invalidOrigin = await callMcpHttpRaw({
+    body: JSON.stringify({ jsonrpc: '2.0', id: 'invalid-origin', method: 'ping' }),
+    origin: 'https://attacker.example'
+  });
+  assert.equal(invalidOrigin.response.status, 403);
+  assert.match(invalidOrigin.body.error.message, /Origin/);
 });
 
 test('MCP validation: malformed JSON returns JSON-RPC parse error', { skip: !hasMcpConfig }, async () => {

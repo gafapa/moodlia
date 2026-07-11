@@ -33,7 +33,7 @@ Both paths use the same canonical operation names and the same Moodle-side permi
 
 ## Requirements
 
-- Moodle 5.0 or newer.
+- Moodle 5.2 or newer.
 - Moodle web services enabled.
 - A Moodle REST token authorised for the MoodlIA external service.
 - Users calling the service must have `local/moodlia:useapi` and the Moodle capabilities required by each operation.
@@ -133,6 +133,8 @@ MCP clients should authenticate with a bearer token using a Moodle REST token au
 
 The endpoint supports the standard tool discovery and tool call flow used by MCP clients. It exposes the same operation contract as the REST and CLI surfaces, so tool names, parameter schemas, enum values, and permission expectations stay aligned across integrations.
 
+The server implements the Streamable HTTP MCP initialization lifecycle for protocol versions `2025-03-26`, `2025-06-18`, and `2025-11-25`. It supports `initialize`, `notifications/initialized`, `ping`, `tools/list`, and `tools/call`. Tool calls return standard text content plus `structuredContent`. Browser-originated requests are accepted only from the Moodle site's own origin; non-browser clients normally omit the `Origin` header.
+
 This is useful for LLM clients that can connect to an MCP server and need structured, permission-checked access to Moodle without screen scraping or browser-only automation.
 
 ## Capabilities
@@ -167,6 +169,26 @@ The CLI does not call MCP. It calls Moodle REST directly through `/webservice/re
 The MCP endpoint calls the same Moodle operation layer and uses the same REST token model. This keeps LLM tool calls, CLI commands, and direct REST calls aligned.
 
 ## Release Notes
+
+### 0.1.186
+
+- Loads complete system cohort records through the paginated Moodle cohort API so create, update, and delete responses retain all fields.
+
+### 0.1.185
+
+- Completes the Moodle 5.2 cohort lookup fix by performing visibility checks from the site course context.
+
+### 0.1.184
+
+- Fixes system cohort lookup on Moodle 5.2 by passing the required context object to the core cohort API.
+
+### 0.1.183
+
+- Implements the MCP initialization lifecycle and standard structured tool results.
+- Validates MCP origins, JSON content types, bearer token size, and request body size.
+- Preserves Moodle subdirectory paths in Node clients and automation tools.
+- Replaces existing folder and private backup files atomically through Moodle draft files.
+- Resolves token users from the authenticated Moodle session instead of assuming user id 2.
 
 ### 0.1.182
 
