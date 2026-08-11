@@ -263,29 +263,23 @@ function local_moodlia_mcp_call_rest(string $token, string $toolname, array $arg
         'moodlewsrestformat' => 'json',
     ], $arguments);
 
-    $curl = curl_init($CFG->wwwroot . '/webservice/rest/server.php');
-    if ($curl === false) {
-        local_moodlia_mcp_error($id, -32603, 'Unable to initialize REST transport.', 200, 'transport_error');
-    }
-
-    curl_setopt_array($curl, [
-        CURLOPT_POST => true,
-        CURLOPT_POSTFIELDS => http_build_query($body, '', '&'),
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_CONNECTTIMEOUT => 10,
-        CURLOPT_TIMEOUT => 60,
-        CURLOPT_HTTPHEADER => ['Content-Type: application/x-www-form-urlencoded'],
+    $client = new \core\http_client([
+        'connect_timeout' => 10,
+        'timeout' => 60,
+        'http_errors' => false,
     ]);
 
-    $raw = curl_exec($curl);
-    $error = curl_error($curl);
-    $status = (int) curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
-    curl_close($curl);
-
-    if ($raw === false) {
-        debugging('MoodlIA MCP REST transport failed: ' . $error, DEBUG_DEVELOPER);
+    try {
+        $response = $client->post($CFG->wwwroot . '/webservice/rest/server.php', [
+            'form_params' => $body,
+        ]);
+    } catch (\Throwable $exception) {
+        debugging('MoodlIA MCP REST transport failed: ' . $exception->getMessage(), DEBUG_DEVELOPER);
         local_moodlia_mcp_error($id, -32002, 'Moodle REST transport failed.', 200, 'transport_error');
     }
+
+    $raw = (string) $response->getBody();
+    $status = $response->getStatusCode();
 
     $payload = json_decode($raw, true);
     if ($payload === null && json_last_error() !== JSON_ERROR_NONE) {
