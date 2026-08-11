@@ -16,7 +16,6 @@ jobs:
     runs-on: windows-latest
 
     env:
-      LOCAL_PLUGIN_PACKAGE_PATH: ${{ runner.temp }}\moodlia
       DEPLOY_MODE: direct
       MOODLE_SERVER_ROOT: C:\moodle
       MOODLE_SERVER_PLUGIN_PATH: C:\moodle\local\moodlia
@@ -25,6 +24,10 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
+
+      - name: Configure runtime paths
+        shell: pwsh
+        run: '"LOCAL_PLUGIN_PACKAGE_PATH=$env:RUNNER_TEMP\moodlia" >> $env:GITHUB_ENV'
 
       - name: Set up Node.js
         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
