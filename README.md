@@ -24,6 +24,7 @@ Commands:
 npm install
 npm run dev
 npm run build
+npm run export:static
 npm test
 npm run check
 ```
@@ -33,3 +34,7 @@ Drizzle schema generation. CI also audits production and development
 dependencies for high-severity vulnerabilities.
 
 The site uses a Vinext and Cloudflare-compatible build. Hosting configuration lives in `.openai/hosting.json`.
+
+`npm run export:static` converts the validated production build into a static
+site under `.static-export/` for deployment to the shared Oracle-hosted Nginx
+service. Run `npm run build` first.
