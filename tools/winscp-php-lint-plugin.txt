@@ -1,5 +1,0 @@
-option batch abort
-option confirm off
-open sftp://ubuntu@test.gallego.top:2276/ -privatekey="D:\Otros IA\gestion_gallego_top\ssh- privada.ppk" -hostkey="ssh-ed25519 255 bSH+2gacG2o7kVw//yZ1KLDJIHosyKwOo778qDFncPk"
-call sudo docker exec moodle sh -lc "find /var/www/html/public/local/moodlia -name '*.php' -print0 | xargs -0 -n 1 php -l"
-exit

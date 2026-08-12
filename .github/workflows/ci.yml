@@ -2,73 +2,17 @@ name: CI
 
 on:
   push:
-    branches:
-      - main
   pull_request:
-  workflow_dispatch:
-
-permissions:
-  contents: read
 
 jobs:
-  local-checks:
-    name: Local checks
-    runs-on: windows-latest
-
-    env:
-      DEPLOY_MODE: direct
-      MOODLE_SERVER_ROOT: C:\moodle
-      MOODLE_SERVER_PLUGIN_PATH: C:\moodle\local\moodlia
-      MOODLE_SERVER_PHP: php
-
+  check:
+    runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
-        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
-
-      - name: Configure runtime paths
-        shell: pwsh
-        run: '"LOCAL_PLUGIN_PACKAGE_PATH=$env:RUNNER_TEMP\moodlia" >> $env:GITHUB_ENV'
-
-      - name: Set up Node.js
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '24'
           cache: npm
-
-      - name: Set up PHP
-        uses: shivammathur/setup-php@b604ade2a87db23f8871b7182e69ec5e75effb45 # v2
-        with:
-          php-version: '8.2'
-          coverage: none
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Check generated npm package mirror
-        run: npm run npm:sync:check
-
-      - name: Require PHP syntax validation
-        run: npm run lint:php -- --required
-
-      - name: Audit npm dependencies
-        run: npm audit --audit-level=high
-
-      - name: Run release preflight
-        run: npm run release:check
-
-      - name: Install Playwright browser
-        run: npx playwright install chromium
-
-      - name: Run project website tests
-        run: npm run test:site
-
-      - name: Upload Playwright reports
-        if: failure()
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
-        with:
-          name: playwright-reports
-          path: |
-            playwright-report/
-            playwright-report-site/
-            test-results/
-          if-no-files-found: ignore
+      - run: npm ci
+      - run: npm run check
+      - run: npm audit --audit-level=high

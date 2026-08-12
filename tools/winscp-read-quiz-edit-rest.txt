@@ -1,5 +1,0 @@
-option batch abort
-option confirm off
-open sftp://ubuntu@test.gallego.top:2276/ -privatekey="D:\Otros IA\gestion_gallego_top\ssh- privada.ppk" -hostkey="ssh-ed25519 255 bSH+2gacG2o7kVw//yZ1KLDJIHosyKwOo778qDFncPk"
-call sudo docker exec moodle sh -lc "sed -n '118,140p' /var/www/html/public/mod/quiz/edit_rest.php"
-exit
