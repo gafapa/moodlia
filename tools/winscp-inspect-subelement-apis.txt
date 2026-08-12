@@ -1,8 +1,0 @@
-option batch abort
-option confirm off
-open sftp://ubuntu@test.gallego.top:2276/ -privatekey="D:\Otros IA\gestion_gallego_top\ssh- privada.ppk" -hostkey="ssh-ed25519 255 bSH+2gacG2o7kVw//yZ1KLDJIHosyKwOo778qDFncPk"
-call sudo docker exec moodle sh -lc "grep -R \"function .*chapter\\|class .*chapter\" -n /var/www/html/public/mod/book | head -120"
-call sudo docker exec moodle sh -lc "grep -R \"function .*page\\|class .*page\" -n /var/www/html/public/mod/lesson | head -160"
-call sudo docker exec moodle sh -lc "grep -R \"function .*item\\|class .*item\" -n /var/www/html/public/mod/feedback | head -160"
-call sudo docker exec moodle sh -lc "grep -R \"function .*assessment\\|class .*assessment\\|function .*allocation\\|class .*allocator\" -n /var/www/html/public/mod/workshop | head -180"
-exit

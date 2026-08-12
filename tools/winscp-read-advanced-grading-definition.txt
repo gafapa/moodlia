@@ -1,5 +1,0 @@
-option batch abort
-option confirm off
-open sftp://ubuntu@test.gallego.top:2276/ -privatekey="D:\Otros IA\gestion_gallego_top\ssh- privada.ppk" -hostkey="ssh-ed25519 255 bSH+2gacG2o7kVw//yZ1KLDJIHosyKwOo778qDFncPk"
-call sudo docker exec moodle sh -lc "cd /var/www/html/public && printf '\n== grading manager active/controller ==\n' && sed -n '330,520p' grade/grading/lib.php && printf '\n== grading controller base update/get definition ==\n' && sed -n '220,330p' grade/grading/form/lib.php && printf '\n== grading controller statuses/options ==\n' && sed -n '1,120p' grade/grading/form/lib.php && printf '\n== rubric update/check ==\n' && sed -n '100,230p' grade/grading/form/rubric/lib.php && printf '\n== guide update/check ==\n' && sed -n '105,230p' grade/grading/form/guide/lib.php && printf '\n== core grading external form definitions ==\n' && grep -R \"function get_definitions\\|get_gradingform\" -n grade/grading | head -100"
-exit

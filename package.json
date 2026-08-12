@@ -1,53 +1,47 @@
 {
-  "name": "moodle-mcp-api-cli-automation",
-  "version": "0.1.17",
+  "name": "moodlia-website",
+  "version": "0.1.0",
   "private": true,
-  "type": "module",
-  "description": "Test automation foundation for the Moodle MCP/API/CLI shared interface.",
-  "bin": {
-    "moodle-mcp": "cli/moodle-mcp.mjs"
+  "engines": {
+    "node": ">=22.13.0"
   },
   "scripts": {
-    "test": "node --test --test-concurrency=4 tests/static/*.test.mjs tests/smoke/*.test.mjs",
-    "test:static": "node --test tests/static/*.test.mjs",
-    "test:smoke": "node --test --test-concurrency=4 tests/smoke/*.test.mjs",
-    "test:browser": "playwright test",
-    "test:site": "playwright test --config=playwright.site.config.mjs",
-    "lint:js": "node tools/lint-javascript.mjs",
-    "lint:php": "node tools/lint-php.mjs",
-    "check:contract": "node tools/check-contract.mjs",
-    "types:generate": "node tools/generate-operation-types.mjs",
-    "types:check": "node tools/generate-operation-types.mjs --check",
-    "manifests:generate": "node tools/generate-manifests.mjs",
-    "manifests:check": "node tools/generate-manifests.mjs --check",
-    "plugin:package": "node tools/package-plugin.mjs",
-    "deploy:commands": "node tools/print-deploy-commands.mjs",
-    "deploy:winscp:test": "node tools/run-winscp-script.mjs tools/winscp-connection-test.txt",
-    "deploy:winscp": "node tools/run-winscp-script.mjs tools/winscp-deploy-template.txt D:\\tmp\\mcpapiclimoodle-winscp-deploy.log",
-    "deploy:winscp:upgrade": "node tools/run-winscp-script.mjs tools/winscp-upgrade-only.txt D:\\tmp\\mcpapiclimoodle-winscp-upgrade.log",
-    "plugin:php:lint:server": "node tools/run-winscp-script.mjs tools/winscp-php-lint-plugin.txt D:\\tmp\\mcpapiclimoodle-php-lint.log",
-    "npm:sync": "node tools/sync-npm-package.mjs",
-    "npm:sync:check": "node tools/sync-npm-package.mjs --check",
-    "npm:pack:dry-run": "node tools/pack-npm-package.mjs --dry-run",
-    "release:check": "node tools/release-check.mjs",
-    "release:protected": "node tools/protected-target-check.mjs",
-    "release:protected:php": "node tools/protected-target-check.mjs --php-lint",
-    "moodle:create-demo-course": "node tools/reset-and-create-full-course.mjs",
-    "moodle:reset-full-course": "node tools/reset-and-create-full-course.mjs --reset-courses",
-    "moodle:reset-and-create-demo-course": "node tools/reset-and-create-full-course.mjs --reset-courses",
-    "moodle:cleanup-generated": "node tools/cleanup-generated-test-data.mjs",
-    "moodle:cleanup-generated:execute": "node tools/cleanup-generated-test-data.mjs --execute",
-    "moodle:add-question-bank-map": "node tools/add-question-bank-map-page.mjs",
-    "moodle:inspect-question-banks": "node tools/inspect-question-bank-ui.mjs",
-    "token:restricted": "node tools/create-restricted-moodlia-token-ui.mjs",
-    "token:rest": "node tools/request-rest-token.mjs",
-    "token:rest:refresh": "node tools/refresh-rest-token.mjs",
-    "print:config": "node tools/print-test-config.mjs"
+    "dev": "vinext dev",
+    "build": "vinext build",
+    "start": "vinext start",
+    "test": "npm run build && node --test tests/rendered-html.test.mjs",
+    "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
+    "db:generate": "drizzle-kit generate",
+    "check": "npm run lint && npm test && npm run db:generate"
+  },
+  "dependencies": {
+    "drizzle-orm": "0.45.2",
+    "next": "16.3.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
   },
   "devDependencies": {
-    "@playwright/test": "^1.61.1"
+    "@cloudflare/vite-plugin": "1.51.3",
+    "@tailwindcss/postcss": "4.2.1",
+    "@types/node": "22.19.19",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "6.0.2",
+    "@vitejs/plugin-rsc": "0.5.26",
+    "drizzle-kit": "0.31.10",
+    "eslint": "9.39.4",
+    "eslint-config-next": "16.3.0",
+    "react-server-dom-webpack": "19.2.8",
+    "tailwindcss": "4.2.1",
+    "typescript": "5.9.3",
+    "vinext": "0.0.45",
+    "vite": "8.2.1",
+    "wrangler": "4.121.0"
   },
-  "engines": {
-    "node": ">=22"
-  }
+  "overrides": {
+    "@esbuild-kit/core-utils": {
+      "esbuild": "0.25.12"
+    }
+  },
+  "type": "module"
 }

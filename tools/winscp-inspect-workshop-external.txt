@@ -1,8 +1,0 @@
-option batch abort
-option confirm off
-open sftp://ubuntu@test.gallego.top:2276/ -privatekey="D:\Otros IA\gestion_gallego_top\ssh- privada.ppk" -hostkey="ssh-ed25519 255 bSH+2gacG2o7kVw//yZ1KLDJIHosyKwOo778qDFncPk"
-call sudo docker exec moodle sh -lc "grep -n \"public static function get_.*assessment\\|public static function update_assessment\\|public static function evaluate_assessment\\|public static function get_reviewer_assessments\" /var/www/html/public/mod/workshop/classes/external.php"
-call sudo docker exec moodle sh -lc "sed -n '520,760p' /var/www/html/public/mod/workshop/classes/external.php"
-call sudo docker exec moodle sh -lc "sed -n '760,980p' /var/www/html/public/mod/workshop/classes/external.php"
-call sudo docker exec moodle sh -lc "sed -n '980,1220p' /var/www/html/public/mod/workshop/classes/external.php"
-exit
