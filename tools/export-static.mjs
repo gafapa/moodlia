@@ -14,26 +14,36 @@ const workerUrl = pathToFileURL(serverEntry);
 workerUrl.searchParams.set("static-export", `${process.pid}-${Date.now()}`);
 const { default: worker } = await import(workerUrl.href);
 
-const response = await worker.fetch(
-  new Request("https://moodlia.com/", {
-    headers: { accept: "text/html" },
-  }),
-  {
-    ASSETS: {
-      fetch: async () => new Response("Not found", { status: 404 }),
+async function renderPath(pathname, accept) {
+  const response = await worker.fetch(
+    new Request(new URL(pathname, "https://moodlia.com/"), {
+      headers: { accept },
+    }),
+    {
+      ASSETS: {
+        fetch: async () => new Response("Not found", { status: 404 }),
+      },
     },
-  },
-  {
-    waitUntil() {},
-    passThroughOnException() {},
-  },
-);
+    {
+      waitUntil() {},
+      passThroughOnException() {},
+    },
+  );
 
-assert.equal(response.status, 200, "The home page did not render successfully.");
-const html = await response.text();
-assert.match(html, /<title>MoodlIA — Three ways to improve Moodle<\/title>/i);
+  assert.equal(response.status, 200, `${pathname} did not render successfully.`);
+  return response.text();
+}
+
+const [html, robotsText, sitemapXml] = await Promise.all([
+  renderPath("/", "text/html"),
+  renderPath("/robots.txt", "text/plain"),
+  renderPath("/sitemap.xml", "application/xml"),
+]);
+assert.match(html, /<title>MoodlIA — Open-source AI tools for Moodle<\/title>/i);
 assert.match(html, /https:\/\/moodlia\.com\/og-ecosystem\.png/i);
 assert.doesNotMatch(html, /localhost|127\.0\.0\.1|codex-preview/i);
+assert.match(robotsText, /Sitemap: https:\/\/moodlia\.com\/sitemap\.xml/i);
+assert.match(sitemapXml, /<loc>https:\/\/moodlia\.com\/<\/loc>/i);
 
 await rm(outputRoot, { recursive: true, force: true });
 await mkdir(outputRoot, { recursive: true });
@@ -43,6 +53,10 @@ await Promise.all([
   rm(resolve(outputRoot, ".assetsignore"), { force: true }),
   rm(resolve(outputRoot, "_headers"), { force: true }),
 ]);
-await writeFile(resolve(outputRoot, "index.html"), html, "utf8");
+await Promise.all([
+  writeFile(resolve(outputRoot, "index.html"), html, "utf8"),
+  writeFile(resolve(outputRoot, "robots.txt"), robotsText, "utf8"),
+  writeFile(resolve(outputRoot, "sitemap.xml"), sitemapXml, "utf8"),
+]);
 
 console.log(`Exported static site to ${outputRoot}`);

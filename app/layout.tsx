@@ -14,23 +14,42 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://moodlia.com"),
-  title: "MoodlIA — Three ways to improve Moodle",
+  title: "MoodlIA — Open-source AI tools for Moodle",
   description:
-    "Connect Moodle to AI, make daily teaching lighter, and turn learning activity into clear insight.",
+    "Open-source AI tools for Moodle: MCP and CLI integration, browser tools for rubrics and grading, plus dashboards and learning analytics.",
+  keywords: [
+    "Moodle AI",
+    "Moodle MCP",
+    "Moodle CLI",
+    "Moodle grading",
+    "Moodle rubrics",
+    "Moodle analytics",
+    "open-source Moodle tools",
+  ],
+  alternates: { canonical: "/" },
+  category: "education technology",
+  creator: "MoodlIA",
+  publisher: "MoodlIA",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large" },
+  },
   openGraph: {
-    title: "MoodlIA — Three ways to improve Moodle",
+    title: "MoodlIA — Open-source AI tools for Moodle",
     description:
-      "Connect Moodle to AI, make daily teaching lighter, and turn learning activity into clear insight.",
+      "Connect Moodle to AI, support daily teaching, and turn learning activity into clear insight.",
     url: "https://moodlia.com",
     siteName: "MoodlIA",
-    images: [{ url: "/og-ecosystem.png", width: 1536, height: 1024, alt: "MoodlIA — Three ways to improve Moodle" }],
+    locale: "en_US",
+    images: [{ url: "/og-ecosystem.png", width: 1536, height: 1024, alt: "MoodlIA AI tools for Moodle" }],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "MoodlIA — Three ways to improve Moodle",
+    title: "MoodlIA — Open-source AI tools for Moodle",
     description:
-      "Connect Moodle to AI, make daily teaching lighter, and turn learning activity into clear insight.",
+      "Connect Moodle to AI, support daily teaching, and turn learning activity into clear insight.",
     images: ["/og-ecosystem.png"],
   },
 };
