@@ -31,8 +31,8 @@ const response = await worker.fetch(
 
 assert.equal(response.status, 200, "The home page did not render successfully.");
 const html = await response.text();
-assert.match(html, /<title>MoodlIA — Open tools for Moodle<\/title>/i);
-assert.match(html, /https:\/\/moodlia\.com\/og\.png/i);
+assert.match(html, /<title>MoodlIA — Three ways to improve Moodle<\/title>/i);
+assert.match(html, /https:\/\/moodlia\.com\/og-ecosystem\.png/i);
 assert.doesNotMatch(html, /localhost|127\.0\.0\.1|codex-preview/i);
 
 await rm(outputRoot, { recursive: true, force: true });
