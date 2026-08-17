@@ -1,149 +1,102 @@
-const products = [
+const areas = [
   {
-    eyebrow: "Automation",
-    name: "MoodlIA Plugin",
+    id: "ai-integration",
+    number: "01",
+    label: "AI integration",
+    title: "Connect Moodle to AI",
     description:
-      "A permission-aware Moodle plugin that exposes one operation model through REST and MCP.",
-    detail: "Courses · activities · questions · grading · backups",
+      "Give assistants and agents a secure, understandable way to work with Moodle through MCP and command-line tools.",
+    projects: ["MoodlIA Moodle Plugin", "MoodlIA CLI", "Moodle Core CLI", "MoodlIA Skills"],
+    note: "MCP · CLI · shared operation model",
   },
   {
-    eyebrow: "Terminal",
-    name: "Moodle Core CLI",
+    id: "teaching-tools",
+    number: "02",
+    label: "Teaching tools",
+    title: "Make daily teaching lighter",
     description:
-      "A safe Node.js client and command-line interface for standard Moodle web services. No plugin required.",
-    detail: "Moodle 5.x · typed operations · read-only defaults",
+      "Practical browser tools for creating rubrics, reviewing evidence, and keeping teachers in control of every correction.",
+    projects: ["MoodlIA Rubrics", "MoodlIA Corrector", "Chrome extensions"],
+    note: "Rubrics · correction · human review",
   },
   {
-    eyebrow: "Assessment",
-    name: "MoodlIA Rubrics",
+    id: "analytics",
+    number: "03",
+    label: "Analysis and insight",
+    title: "See where to act",
     description:
-      "Import complete Moodle rubrics from CSV without rebuilding every criterion and level by hand.",
-    detail: "Chrome extension · CSV import · multilingual",
-  },
-  {
-    eyebrow: "Grading",
-    name: "MoodlIA Corrector",
-    description:
-      "Review assignment evidence and apply teacher-approved AI correction suggestions to Moodle grading forms.",
-    detail: "Human review · rubric-aware · browser extension",
-  },
-  {
-    eyebrow: "Teaching",
-    name: "Teacher Dashboard",
-    description:
-      "Bring courses, deadlines, resources, and the next useful teaching actions into one focused workspace.",
-    detail: "Frontend-only · Moodle REST · local settings",
-  },
-  {
-    eyebrow: "Insights",
-    name: "MoodlIA Analyzer",
-    description:
-      "Understand participation, assessment trends, and students who may benefit from timely support.",
-    detail: "Web and desktop · adaptive metrics · reports",
+      "Turn Moodle activity into a focused view of courses, progress, assessment trends, and students who may need support.",
+    projects: ["Teacher Dashboard", "MoodlIA Analyzer Web", "MoodlIA Analyzer Desktop"],
+    note: "Dashboard · indicators · reports",
   },
 ];
 
 export default function Home() {
   return (
-    <main>
+    <main id="top">
       <header className="site-header">
         <a className="wordmark" href="#top" aria-label="MoodlIA home">
           Moodl<span>IA</span>
         </a>
         <nav aria-label="Main navigation">
-          <a href="#products">Products</a>
-          <a href="#principles">Principles</a>
-          <a href="#studio">Studio</a>
+          <a href="#ai-integration">Integrate</a>
+          <a href="#teaching-tools">Teach</a>
+          <a href="#analytics">Understand</a>
         </nav>
       </header>
 
-      <section className="hero" id="top">
-        <div className="hero-copy">
-          <p className="kicker">Open tools for Moodle</p>
-          <h1>Build better courses. Automate careful work. See where to act.</h1>
-          <p className="hero-lede">
-            MoodlIA is a family of focused tools for teachers, course designers,
-            developers, and learning teams working with Moodle.
+      <section className="hero" aria-labelledby="hero-title">
+        <p className="kicker">Open tools for Moodle</p>
+        <h1 id="hero-title">One project.<br />Three ways to improve Moodle.</h1>
+        <div className="hero-footer">
+          <p>
+            MoodlIA is a family of independent tools that connect Moodle to AI,
+            help teachers with everyday work, and make learning activity easier
+            to understand.
           </p>
-          <div className="hero-actions">
-            <a className="primary-action" href="#products">Explore the projects</a>
-            <a className="secondary-action" href="#principles">How MoodlIA works</a>
-          </div>
+          <a className="primary-action" href="#areas">Discover MoodlIA</a>
         </div>
-        <aside className="hero-panel" aria-label="MoodlIA capabilities">
-          <p className="panel-label">One Moodle ecosystem</p>
-          <ol>
-            <li><span>01</span> Create and manage</li>
-            <li><span>02</span> Grade with oversight</li>
-            <li><span>03</span> Analyze and intervene</li>
-          </ol>
-          <p className="panel-note">Moodle remains the source of truth.</p>
-        </aside>
       </section>
 
-      <section className="product-section" id="products">
-        <div className="section-heading">
-          <p className="kicker">Products</p>
-          <h2>Small tools with clear boundaries.</h2>
-          <p>Use one project on its own or combine them around the same Moodle site.</p>
+      <section className="areas" id="areas" aria-labelledby="areas-title">
+        <div className="section-intro">
+          <p className="kicker">The MoodlIA ecosystem</p>
+          <h2 id="areas-title">Start with what you need.</h2>
+          <p>Each area works on its own. Together, they form a clearer way to build, teach, and decide in Moodle.</p>
         </div>
-        <div className="product-grid">
-          {products.map((product, index) => (
-            <article className="product-card" key={product.name}>
-              <div className="card-topline">
-                <span>{product.eyebrow}</span>
-                <span>{String(index + 1).padStart(2, "0")}</span>
+
+        <div className="area-grid">
+          {areas.map((area) => (
+            <article className="area-card" id={area.id} key={area.id}>
+              <div className="area-heading">
+                <span className="area-number" aria-hidden="true">{area.number}</span>
+                <p>{area.label}</p>
               </div>
-              <h3>{product.name}</h3>
-              <p>{product.description}</p>
-              <small>{product.detail}</small>
+              <h3>{area.title}</h3>
+              <p className="area-description">{area.description}</p>
+              <ul aria-label={`${area.label} projects`}>
+                {area.projects.map((project) => <li key={project}>{project}</li>)}
+              </ul>
+              <p className="area-note">{area.note}</p>
             </article>
           ))}
         </div>
       </section>
 
-      <section className="principles" id="principles">
-        <div>
-          <p className="kicker">Principles</p>
-          <h2>Automation should remain understandable.</h2>
-        </div>
-        <div className="principle-list">
-          <article>
-            <strong>Permission-aware</strong>
-            <p>Respect Moodle capabilities, contexts, and the authority of the connected user.</p>
-          </article>
-          <article>
-            <strong>Reviewable</strong>
-            <p>Keep writes, destructive actions, and AI-assisted changes explicit and inspectable.</p>
-          </article>
-          <article>
-            <strong>Portable</strong>
-            <p>Prefer content and workflows that survive normal Moodle backup, restore, and reuse.</p>
-          </article>
-          <article>
-            <strong>Independent</strong>
-            <p>Release focused projects separately while keeping their interfaces compatible.</p>
-          </article>
-        </div>
-      </section>
-
-      <section className="studio" id="studio">
-        <div className="studio-status">Concept</div>
-        <div>
-          <p className="kicker">MoodlIA Studio</p>
-          <h2>A visual course workspace, when the workflow is ready.</h2>
-          <p>
-            Studio is currently an idea, not an implementation. It may become a guided
-            interface for course structure, question banks, grading designs, previews,
-            and publication checks over the existing MoodlIA operation model.
-          </p>
-        </div>
+      <section className="closing" aria-labelledby="closing-title">
+        <p className="kicker">Built in the open</p>
+        <h2 id="closing-title">Focused tools.<br />Shared foundations.</h2>
+        <p>
+          Every MoodlIA project has a clear purpose and can evolve independently,
+          while remaining compatible with the rest of the ecosystem.
+        </p>
+        <a href="https://github.com/gafapa" target="_blank" rel="noreferrer">View the projects on GitHub <span aria-hidden="true">↗</span></a>
       </section>
 
       <footer>
         <div className="wordmark">Moodl<span>IA</span></div>
-        <p>Open tools for creating, automating, and understanding Moodle courses.</p>
-        <p className="copyright">moodlia.com · Project workspace</p>
+        <p>Open tools for a more connected, practical, and understandable Moodle.</p>
+        <p className="copyright">moodlia.com · 2026</p>
       </footer>
     </main>
   );

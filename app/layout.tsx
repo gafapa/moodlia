@@ -14,24 +14,24 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://moodlia.com"),
-  title: "MoodlIA — Open tools for Moodle",
+  title: "MoodlIA — Three ways to improve Moodle",
   description:
-    "Open tools for building, automating, grading, and understanding Moodle courses.",
+    "Connect Moodle to AI, make daily teaching lighter, and turn learning activity into clear insight.",
   openGraph: {
-    title: "MoodlIA — Open tools for Moodle",
+    title: "MoodlIA — Three ways to improve Moodle",
     description:
-      "Open tools for building, automating, grading, and understanding Moodle courses.",
+      "Connect Moodle to AI, make daily teaching lighter, and turn learning activity into clear insight.",
     url: "https://moodlia.com",
     siteName: "MoodlIA",
-    images: [{ url: "/og.png", width: 1731, height: 909, alt: "MoodlIA — Open tools for Moodle" }],
+    images: [{ url: "/og-ecosystem.png", width: 1536, height: 1024, alt: "MoodlIA — Three ways to improve Moodle" }],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "MoodlIA — Open tools for Moodle",
+    title: "MoodlIA — Three ways to improve Moodle",
     description:
-      "Open tools for building, automating, grading, and understanding Moodle courses.",
-    images: ["/og.png"],
+      "Connect Moodle to AI, make daily teaching lighter, and turn learning activity into clear insight.",
+    images: ["/og-ecosystem.png"],
   },
 };
 
