@@ -39,8 +39,8 @@ const [html, robotsText, sitemapXml] = await Promise.all([
   renderPath("/robots.txt", "text/plain"),
   renderPath("/sitemap.xml", "application/xml"),
 ]);
-assert.match(html, /<title>MoodlIA — Open-source AI tools for Moodle<\/title>/i);
-assert.match(html, /https:\/\/moodlia\.com\/og-ecosystem\.png/i);
+assert.match(html, /<title>MoodlIA — Three ways to make Moodle work better<\/title>/i);
+assert.match(html, /https:\/\/moodlia\.com\/og-three\.png/i);
 assert.doesNotMatch(html, /localhost|127\.0\.0\.1|codex-preview/i);
 assert.match(robotsText, /Sitemap: https:\/\/moodlia\.com\/sitemap\.xml/i);
 assert.match(sitemapXml, /<loc>https:\/\/moodlia\.com\/<\/loc>/i);

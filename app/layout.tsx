@@ -14,13 +14,13 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://moodlia.com"),
-  title: "MoodlIA — Open-source AI tools for Moodle",
+  title: "MoodlIA — Three ways to make Moodle work better",
   description:
-    "Open-source AI tools for Moodle: MCP and CLI integration, browser tools for rubrics and grading, plus dashboards and learning analytics.",
+    "MoodlIA brings AI, practical teaching tools, and clear learning insights to Moodle. Explore three open project areas and get direct help when you need it.",
   keywords: [
     "Moodle AI",
-    "Moodle MCP",
-    "Moodle CLI",
+    "AI tools for Moodle",
+    "Moodle teaching tools",
     "Moodle grading",
     "Moodle rubrics",
     "Moodle analytics",
@@ -36,21 +36,21 @@ export const metadata: Metadata = {
     googleBot: { index: true, follow: true, "max-image-preview": "large" },
   },
   openGraph: {
-    title: "MoodlIA — Open-source AI tools for Moodle",
+    title: "MoodlIA — Three ways to make Moodle work better",
     description:
-      "Connect Moodle to AI, support daily teaching, and turn learning activity into clear insight.",
+      "Connect with AI, teach with confidence, and see what matters—with direct help whenever you need it.",
     url: "https://moodlia.com",
     siteName: "MoodlIA",
     locale: "en_US",
-    images: [{ url: "/og-ecosystem.png", width: 1536, height: 1024, alt: "MoodlIA AI tools for Moodle" }],
+    images: [{ url: "/og-three.png", width: 1536, height: 1024, alt: "Three ways MoodlIA makes Moodle work better" }],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "MoodlIA — Open-source AI tools for Moodle",
+    title: "MoodlIA — Three ways to make Moodle work better",
     description:
-      "Connect Moodle to AI, support daily teaching, and turn learning activity into clear insight.",
-    images: ["/og-ecosystem.png"],
+      "Connect with AI, teach with confidence, and see what matters—with direct help whenever you need it.",
+    images: ["/og-three.png"],
   },
 };
 
