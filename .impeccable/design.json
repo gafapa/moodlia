@@ -1,0 +1,197 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-19T23:44:51.6804887Z",
+  "title": "Design System: MoodlIA The Helpful Selection",
+  "extensions": {
+    "colorMeta": {
+      "canvas": {
+        "role": "neutral",
+        "displayName": "Warm Canvas",
+        "canonical": "#f7f2e8",
+        "tonalRamp": ["oklch(15% 0.014 82)", "oklch(28% 0.016 82)", "oklch(41% 0.018 82)", "oklch(54% 0.02 82)", "oklch(67% 0.018 82)", "oklch(79% 0.015 82)", "oklch(89% 0.011 82)", "oklch(95% 0.008 82)"]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Clean Paper",
+        "canonical": "#fffdf7",
+        "tonalRamp": ["oklch(15% 0.009 88)", "oklch(28% 0.011 88)", "oklch(41% 0.013 88)", "oklch(54% 0.014 88)", "oklch(67% 0.013 88)", "oklch(79% 0.011 88)", "oklch(89% 0.008 88)", "oklch(97% 0.005 88)"]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Warm Ink",
+        "canonical": "#202733",
+        "tonalRamp": ["oklch(15% 0.018 255)", "oklch(28% 0.022 255)", "oklch(41% 0.025 255)", "oklch(54% 0.026 255)", "oklch(67% 0.022 255)", "oklch(79% 0.016 255)", "oklch(89% 0.01 255)", "oklch(95% 0.006 255)"]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Soft Ink",
+        "canonical": "#626875",
+        "tonalRamp": ["oklch(15% 0.014 255)", "oklch(28% 0.018 255)", "oklch(41% 0.021 255)", "oklch(54% 0.022 255)", "oklch(67% 0.019 255)", "oklch(79% 0.014 255)", "oklch(89% 0.009 255)", "oklch(95% 0.005 255)"]
+      },
+      "ballpoint-blue": {
+        "role": "primary",
+        "displayName": "Ballpoint Blue",
+        "canonical": "#315b9a",
+        "tonalRamp": ["oklch(15% 0.055 257)", "oklch(28% 0.082 257)", "oklch(41% 0.105 257)", "oklch(54% 0.112 257)", "oklch(67% 0.094 257)", "oklch(79% 0.067 257)", "oklch(89% 0.038 257)", "oklch(95% 0.016 257)"]
+      },
+      "deep-blue": {
+        "role": "primary",
+        "displayName": "Deep Blue",
+        "canonical": "#18375f",
+        "tonalRamp": ["oklch(15% 0.045 256)", "oklch(28% 0.068 256)", "oklch(41% 0.087 256)", "oklch(54% 0.092 256)", "oklch(67% 0.078 256)", "oklch(79% 0.056 256)", "oklch(89% 0.032 256)", "oklch(95% 0.014 256)"]
+      },
+      "active-coral": {
+        "role": "secondary",
+        "displayName": "Active Coral",
+        "canonical": "#e65d4f",
+        "tonalRamp": ["oklch(15% 0.075 29)", "oklch(28% 0.112 29)", "oklch(41% 0.15 29)", "oklch(54% 0.176 29)", "oklch(67% 0.155 29)", "oklch(79% 0.11 29)", "oklch(89% 0.062 29)", "oklch(95% 0.026 29)"]
+      },
+      "pressed-coral": {
+        "role": "secondary",
+        "displayName": "Pressed Coral",
+        "canonical": "#b73f37",
+        "tonalRamp": ["oklch(15% 0.07 28)", "oklch(28% 0.105 28)", "oklch(41% 0.14 28)", "oklch(54% 0.158 28)", "oklch(67% 0.137 28)", "oklch(79% 0.098 28)", "oklch(89% 0.055 28)", "oklch(95% 0.023 28)"]
+      },
+      "marker-yellow": {
+        "role": "tertiary",
+        "displayName": "Marker Yellow",
+        "canonical": "#f2c451",
+        "tonalRamp": ["oklch(15% 0.05 88)", "oklch(28% 0.075 88)", "oklch(41% 0.1 88)", "oklch(54% 0.126 88)", "oklch(67% 0.14 88)", "oklch(79% 0.116 88)", "oklch(89% 0.068 88)", "oklch(95% 0.029 88)"]
+      },
+      "quiet-mint": {
+        "role": "tertiary",
+        "displayName": "Quiet Mint",
+        "canonical": "#a8c7b7",
+        "tonalRamp": ["oklch(15% 0.022 160)", "oklch(28% 0.033 160)", "oklch(41% 0.044 160)", "oklch(54% 0.052 160)", "oklch(67% 0.05 160)", "oklch(79% 0.041 160)", "oklch(89% 0.026 160)", "oklch(95% 0.012 160)"]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Paper Rule",
+        "canonical": "#d8d2c6",
+        "tonalRamp": ["oklch(15% 0.01 78)", "oklch(28% 0.013 78)", "oklch(41% 0.016 78)", "oklch(54% 0.018 78)", "oklch(67% 0.017 78)", "oklch(79% 0.014 78)", "oklch(89% 0.01 78)", "oklch(95% 0.006 78)"]
+      },
+      "focus": {
+        "role": "tertiary",
+        "displayName": "Blueprint Focus",
+        "canonical": "#0d5bd7",
+        "tonalRamp": ["oklch(15% 0.075 258)", "oklch(28% 0.115 258)", "oklch(41% 0.16 258)", "oklch(54% 0.205 258)", "oklch(67% 0.174 258)", "oklch(79% 0.122 258)", "oklch(89% 0.068 258)", "oklch(95% 0.029 258)"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Concise homepage and detail-page hero statements." },
+      "headline": { "displayName": "Headline", "purpose": "Major section transitions and help invitations." },
+      "title": { "displayName": "Title", "purpose": "Project and tracklist titles." },
+      "body": { "displayName": "Body", "purpose": "Bilingual explanation and practical product detail." },
+      "label": { "displayName": "Label", "purpose": "Navigation, buttons, sequence numbers, captions, and metadata." }
+    },
+    "shadows": [
+      { "name": "paper-mount", "value": "0 1.5rem 4rem rgba(62, 54, 43, .13), 0 .2rem .7rem rgba(62, 54, 43, .1)", "purpose": "Canonical close shadow for mounted educator photography." },
+      { "name": "paper-hover", "value": "0 2.2rem 5rem rgba(62, 54, 43, .18)", "purpose": "Deeper hover lift for large route photographs." },
+      { "name": "coral-action", "value": "0 .7rem 1.5rem rgba(183, 63, 55, .24)", "purpose": "Compact colored depth for the primary action." }
+    ],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(.22, 1, .36, 1)", "purpose": "Paper entrances, arrows, and small hover transforms." },
+      { "name": "hero-photo-entry", "value": "900ms with 50ms, 160ms, and 270ms delays", "purpose": "One three-beat entrance for the overlapping homepage photographs." },
+      { "name": "sequence-playhead", "value": "5000ms after a 1000ms delay", "purpose": "One traversal of the three-track route rail after load." },
+      { "name": "page-sheet-replacement", "value": "140ms exit and 320ms entrance", "purpose": "Keeps the header stable while one editorial paper page replaces another, using native View Transitions with a static-site fallback." },
+      { "name": "reduced-motion", "value": "0.01ms", "purpose": "Effectively disables animation and transition while preserving final state." }
+    ],
+    "breakpoints": [
+      { "name": "compact-header", "value": "1000px" },
+      { "name": "stacked-layout", "value": "820px" },
+      { "name": "mobile", "value": "620px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Action",
+      "kind": "button",
+      "refersTo": "primary-action",
+      "description": "The coral action used for the clearest next step.",
+      "html": "<a class=\"ds-primary-action\" href=\"#\">Find your way</a>",
+      "css": ".ds-primary-action { min-height: 48px; padding: .8rem 1.2rem; display: inline-flex; align-items: center; justify-content: center; border-radius: .35rem; background: var(--coral, #e65d4f); color: #fff; box-shadow: 0 .7rem 1.5rem rgba(183,63,55,.24); font: 800 .82rem/1.2 var(--font-body, 'DM Sans', Arial, sans-serif); text-decoration: none; transition: background .2s ease, box-shadow .2s ease, transform .2s cubic-bezier(.22,1,.36,1); } .ds-primary-action:hover { background: var(--coral-dark, #b73f37); box-shadow: 0 .42rem 1rem rgba(133,49,44,.22); transform: translateY(1px); } .ds-primary-action:focus-visible { outline: 3px solid var(--focus, #0d5bd7); outline-offset: 4px; } .ds-primary-action:active { background: #85312c; }"
+    },
+    {
+      "name": "Underlined Text Action",
+      "kind": "button",
+      "refersTo": "text-action",
+      "description": "The quieter blue action for help and secondary navigation.",
+      "html": "<a class=\"ds-text-action\" href=\"#\">Ask us anything</a>",
+      "css": ".ds-text-action { min-height: 48px; display: inline-flex; align-items: center; border-bottom: 2px solid currentColor; color: var(--blue, #315b9a); font: 800 .82rem/1.2 var(--font-body, 'DM Sans', Arial, sans-serif); text-decoration: none; } .ds-text-action:hover { color: var(--blue-dark, #18375f); } .ds-text-action:focus-visible { outline: 3px solid var(--focus, #0d5bd7); outline-offset: 4px; } .ds-text-action:active { color: var(--blue-dark, #18375f); }"
+    },
+    {
+      "name": "Site Navigation",
+      "kind": "nav",
+      "description": "The quiet header navigation with an authored coral hover underline.",
+      "html": "<nav class=\"ds-site-nav\" aria-label=\"Preview navigation\"><a href=\"#\">Three ways</a><a href=\"#\">Get help</a></nav>",
+      "css": ".ds-site-nav { display: flex; align-items: center; gap: 1.8rem; font-family: var(--font-body, 'DM Sans', Arial, sans-serif); } .ds-site-nav a { position: relative; min-height: 44px; display: inline-flex; align-items: center; color: var(--ink, #202733); font-size: .82rem; font-weight: 720; text-decoration: none; } .ds-site-nav a::after { content: ''; position: absolute; right: 0; bottom: .45rem; left: 0; height: 2px; background: var(--coral, #e65d4f); transform: scaleX(0); transform-origin: left; transition: transform .25s cubic-bezier(.22,1,.36,1); } .ds-site-nav a:hover::after { transform: scaleX(1); } .ds-site-nav a:focus-visible { outline: 3px solid var(--focus, #0d5bd7); outline-offset: 4px; }"
+    },
+    {
+      "name": "Language Switcher",
+      "kind": "custom",
+      "description": "A compact bilingual control whose filled segment identifies the current language.",
+      "html": "<div class=\"ds-language\" role=\"group\" aria-label=\"Language\"><a href=\"#\">EN</a><a class=\"ds-language-current\" href=\"#\" aria-current=\"page\">ES</a></div>",
+      "css": ".ds-language { display: inline-flex; overflow: hidden; border: 1px solid rgba(32,39,51,.25); border-radius: .35rem; font-family: var(--font-body, 'DM Sans', Arial, sans-serif); } .ds-language a { min-width: 40px; min-height: 38px; display: grid; place-items: center; color: var(--ink-soft, #626875); font-size: .68rem; font-weight: 800; text-decoration: none; } .ds-language .ds-language-current { background: var(--ink, #202733); color: var(--paper, #fffdf7); } .ds-language a:hover { color: var(--blue, #315b9a); } .ds-language a:focus-visible { outline: 3px solid var(--focus, #0d5bd7); outline-offset: -3px; }"
+    },
+    {
+      "name": "Mounted Educator Photograph",
+      "kind": "card",
+      "description": "A captioned 4:5 educator photograph mounted on paper over a softly rotated route-color backing.",
+      "html": "<figure class=\"ds-photo\"><img src=\"/moodlia-ai-companion-v2.jpg\" alt=\"An educator planning a course with lesson notes and a laptop\"><figcaption>AI that supports the way you already teach</figcaption><span aria-hidden=\"true\">01</span></figure>",
+      "css": ".ds-photo { position: relative; width: min(100%,320px); margin: 1.5rem; padding: .55rem .55rem 2.7rem; background: var(--paper, #fffdf7); box-shadow: 0 1.5rem 4rem rgba(62,54,43,.13), 0 .2rem .7rem rgba(62,54,43,.1); transform: rotate(-2deg); } .ds-photo::before { content: ''; position: absolute; z-index: -1; inset: 4% -3% -3% 4%; border-radius: .65rem; background: var(--mint, #a8c7b7); transform: rotate(-2.3deg); } .ds-photo img { width: 100%; aspect-ratio: 4/5; display: block; object-fit: cover; } .ds-photo figcaption { position: absolute; right: 2.5rem; bottom: .85rem; left: .8rem; overflow: hidden; color: var(--ink-soft, #626875); font: 720 .66rem/1.2 var(--font-body, 'DM Sans', Arial, sans-serif); text-overflow: ellipsis; white-space: nowrap; } .ds-photo>span { position: absolute; right: .7rem; bottom: .62rem; width: 1.55rem; height: 1.55rem; display: grid; place-items: center; border-radius: 50%; background: var(--blue, #315b9a); color: #fff; font: 850 .56rem/1 var(--font-body, 'DM Sans', Arial, sans-serif); }"
+    },
+    {
+      "name": "Three-Track Rail",
+      "kind": "nav",
+      "description": "The numbered route selector that explains the ecosystem and navigates to each selection.",
+      "html": "<nav class=\"ds-track-rail\" aria-label=\"Three ways\"><a href=\"#\"><span>01</span><strong>AI integration</strong></a><a href=\"#\"><span>02</span><strong>Teaching tools</strong></a><a href=\"#\"><span>03</span><strong>Learning insights</strong></a></nav>",
+      "css": ".ds-track-rail { display: grid; grid-template-columns: repeat(3,1fr); border-top: 2px solid var(--ink, #202733); border-bottom: 1px solid var(--rule, #d8d2c6); font-family: var(--font-body, 'DM Sans', Arial, sans-serif); } .ds-track-rail a { min-height: 106px; padding: 1.35rem 1.5rem; display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 1rem; border-right: 1px solid var(--rule, #d8d2c6); color: var(--ink, #202733); text-decoration: none; } .ds-track-rail a:last-child { border-right: 0; } .ds-track-rail span { width: 2.2rem; height: 2.2rem; display: grid; place-items: center; border: 2px solid currentColor; border-radius: 50%; color: var(--blue, #315b9a); font-size: .64rem; font-weight: 850; } .ds-track-rail a:nth-child(2) span { color: var(--coral, #e65d4f); } .ds-track-rail a:nth-child(3) span { color: #8a6500; } .ds-track-rail strong { font-family: var(--font-display, 'Bricolage Grotesque', Arial, sans-serif); font-size: 1.15rem; line-height: 1.1; } .ds-track-rail a:hover { background: rgba(49,91,154,.09); } .ds-track-rail a:focus-visible { outline: 3px solid var(--focus, #0d5bd7); outline-offset: -3px; }"
+    },
+    {
+      "name": "Direct Help Panel",
+      "kind": "custom",
+      "refersTo": "help-panel",
+      "description": "The high-contrast human support invitation that closes home and detail pages.",
+      "html": "<section class=\"ds-help\"><strong>3</strong><div><h2>We can help you put it together.</h2><p>Tell us what is getting in the way.</p><a href=\"mailto:contact@moodlia.com\">contact@moodlia.com</a></div></section>",
+      "css": ".ds-help { position: relative; padding: 3rem; display: grid; grid-template-columns: .45fr 1fr; align-items: center; gap: 2rem; overflow: hidden; border-radius: 1.2rem; background: var(--blue-dark, #18375f); color: var(--paper, #fffdf7); font-family: var(--font-body, 'DM Sans', Arial, sans-serif); } .ds-help::before { content: ''; position: absolute; inset: 1.1rem; border: 1px solid rgba(255,255,255,.22); border-radius: .75rem; pointer-events: none; } .ds-help>strong { position: relative; color: var(--yellow, #f2c451); font: 760 9rem/.65 var(--font-display, 'Bricolage Grotesque', Arial, sans-serif); transform: rotate(-6deg); } .ds-help h2 { position: relative; margin: 0; font: 720 3rem/.95 var(--font-display, 'Bricolage Grotesque', Arial, sans-serif); letter-spacing: -.04em; } .ds-help p { position: relative; color: rgba(255,255,255,.72); } .ds-help a { position: relative; min-height: 48px; display: inline-flex; align-items: center; border-bottom: 2px solid var(--yellow, #f2c451); color: var(--yellow, #f2c451); font-weight: 800; text-decoration: none; } .ds-help a:focus-visible { outline: 3px solid var(--focus, #0d5bd7); outline-offset: 4px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Helpful Selection",
+    "overview": "MoodlIA should feel like a concise selection assembled by an experienced educator: personal, useful, and ready for the teaching moment at hand. Warm ruled paper, ballpoint-blue structure, colored track markers, short handwritten-style annotations, and layered photographs create the care of a prepared editorial insert without drawing a literal cassette or leaning on nostalgia.\n\nThe interface is education-first and deliberately nontechnical. People and teaching decisions lead; product mechanics appear only after a visitor chooses a way forward. The homepage's three overlapping educator photographs and three-track rail make the ecosystem memorable, while way and product pages reuse the same paper, sequencing, and direct-help language without repeating the whole composition.",
+    "keyCharacteristics": [
+      "Warm cream paper with quiet blue ruled lines.",
+      "Three numbered routes with stable blue, coral, and yellow accents.",
+      "Real educator photography mounted as overlapping paper prints.",
+      "Large authored display type paired with compact, readable sans-serif copy.",
+      "Ruled lists, captions, tabs, and modest rotations instead of generic card grids.",
+      "Direct human help throughout; GitHub appears only as a product-page action."
+    ],
+    "rules": [
+      { "name": "The Three-Track Rule", "body": "AI integration is blue, teaching tools are coral, and learning insights are yellow with dark ink. Number, label, and position must repeat the distinction so color never carries meaning alone.", "section": "colors" },
+      { "name": "The Paper Leads Rule", "body": "Accent colors identify routes and actions; they do not replace the warm paper field as the dominant surface.", "section": "colors" },
+      { "name": "The Two-Voice Rule", "body": "Bricolage Grotesque declares; DM Sans explains and enables action. Do not introduce another display or decorative typeface.", "section": "typography" },
+      { "name": "The Short Statement Rule", "body": "Large type earns its scale through concise copy. Long technical explanations belong below the hero and on product pages.", "section": "typography" },
+      { "name": "The Sequence Survives Rule", "body": "Responsive layouts may stack, but route numbers, ruled continuity, captions, and the order one–two–three remain visible.", "section": "layout" },
+      { "name": "The Paper Contact Rule", "body": "Shadows describe one sheet or photograph resting above another. Do not use ambient elevation to make ordinary paragraphs look like application cards.", "section": "elevation" },
+      { "name": "The Useful Shape Rule", "body": "A circle marks sequence or action; a line connects or separates; a rotated rectangle reads as paper. Do not add geometry without one of those jobs.", "section": "shapes" }
+    ],
+    "dos": [
+      "Do lead with real educators, teaching moments, and clear outcomes before implementation detail.",
+      "Do preserve the three numbered routes and their blue, coral, and yellow assignments.",
+      "Do use ruled paper, captions, modest rotation, and close shadows as one coherent editorial material vocabulary.",
+      "Do keep English and Spanish structurally equivalent, concise, and page-preserving.",
+      "Do make direct help visible and keep GitHub actions on individual product pages only.",
+      "Do retain the skip link, visible focus, 44px targets, meaningful alternative text, reduced motion, and forced-colors fallbacks."
+    ],
+    "donts": [
+      "Don't turn the experience into a generic SaaS hero, rounded feature-card grid, or technical dashboard aesthetic.",
+      "Don't use robots, holograms, dark technology imagery, abstract AI symbols, or fabricated product screenshots in place of human education photography.",
+      "Don't add gradients that imply technology, glassmorphism, neon, or unrelated accent colors.",
+      "Don't use Unicode glyphs as a substitute for authored or library icons.",
+      "Don't expose GitHub in global navigation, way pages, or the homepage.",
+      "Don't add testimonials, logos, metrics, or claims without approved evidence.",
+      "Don't canonize the legacy kraft-board, brass-pin, stencil-type, or hand-crank “Learning Automata” vocabulary; it is not present in the shipped interface."
+    ]
+  }
+}

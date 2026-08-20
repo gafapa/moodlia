@@ -1,0 +1,187 @@
+{
+  "title": "Choose the new MoodlIA visual world",
+  "question": "Impeccable has selected a direction. Keep it, choose an alternate, or ask for a new hand.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "The MoodlIA Workbench",
+      "kicker": "THE ROLL",
+      "lineage": "precision teaching instruments and modular workshop boards",
+      "thesis": "Three distinct instruments share one calibrated work surface, making the ecosystem tangible before it is explained.",
+      "palette": ["#132C27", "#F4F0E7", "#FF5C35", "#DFFF5B"],
+      "materials": ["dark green enamel", "anodized rails", "translucent instrument glass", "tactile labels"],
+      "viewport": "A full-height work surface is divided by a monumental 3 into three live image bays; the promise and primary action sit on a compact calibration plate.",
+      "risk": "The industrial vocabulary must stay warm and educational rather than becoming a developer console.",
+      "raised": [
+        {"from": "starship terminal", "raise": "Every label and state now has operational precision without inheriting science-fiction styling."},
+        {"from": "street-fair flyer", "raise": "Color commits to whole project zones instead of appearing as small decorative accents."},
+        {"from": "curved-crease shell", "raise": "One continuous structural gesture carries the complete page rather than a stack of unrelated sections."},
+        {"from": "seven-segment instruments", "raise": "Inactive and active project states are both deliberately designed."}
+      ],
+      "comp": ".impeccable/mocks/decision/assigned.webp",
+      "wireframe": {
+        "cols": 12,
+        "rows": 10,
+        "regions": [
+          {"label": "brand rail", "x": 0, "y": 0, "w": 12, "h": 1, "accent": false},
+          {"label": "promise plate", "x": 0, "y": 1, "w": 4, "h": 8, "accent": true},
+          {"label": "three instrument bays", "x": 4, "y": 1, "w": 8, "h": 8, "accent": true},
+          {"label": "route selector", "x": 0, "y": 9, "w": 12, "h": 1, "accent": false}
+        ]
+      }
+    },
+    {
+      "id": "model-pick",
+      "label": "Campus Wayfinding",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "university wayfinding systems and screenprinted campus maps",
+      "thesis": "MoodlIA becomes a place with three unmistakable routes and one welcoming help desk.",
+      "palette": ["#F7F4EA", "#1A3D8F", "#FFD447", "#EA5B3A"],
+      "materials": ["vitreous enamel signs", "printed map paper", "painted route lines"],
+      "viewport": "A giant route map starts at MoodlIA and splits into three color-coded destinations around concise copy and a single departure action.",
+      "risk": "It is highly legible but more familiar and potentially more institutional than the assigned direction.",
+      "comp": ".impeccable/mocks/decision/model-pick.webp",
+      "wireframe": {
+        "cols": 12,
+        "rows": 10,
+        "regions": [
+          {"label": "station header", "x": 0, "y": 0, "w": 12, "h": 1, "accent": false},
+          {"label": "route statement", "x": 0, "y": 1, "w": 5, "h": 4, "accent": true},
+          {"label": "three-way map", "x": 4, "y": 1, "w": 8, "h": 8, "accent": true},
+          {"label": "destinations", "x": 0, "y": 6, "w": 4, "h": 3, "accent": false}
+        ]
+      }
+    },
+    {
+      "id": "challenger-paper-automata",
+      "label": "Learning Automata",
+      "verdict": "competitive",
+      "lineage": "hand-cranked paper teaching models",
+      "thesis": "The three project families unfold as a coordinated paper mechanism driven by one shared crank.",
+      "palette": ["#F6F0E3", "#2A2925", "#C62D36", "#D5B98A"],
+      "materials": ["cut paper", "kraft board", "pinned joints", "cast shadows"],
+      "viewport": "Three paper figures open in sequence around a large central crank while short labels explain the value of each movement.",
+      "case": "Strong educator recognition and memorable motion; product scanning is slower than the workbench.",
+      "risk": "The tactile charm could feel child-focused if the typography and mechanics lack precision.",
+      "comp": ".impeccable/mocks/decision/challenger-paper-automata.webp",
+      "hero": "https://impeccable.style/worlds/cards/kinetic-sculpture-automata-crank-paper-menagerie-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/kinetic-sculpture-automata-crank-paper-menagerie.webp",
+      "wireframe": {
+        "cols": 12,
+        "rows": 10,
+        "regions": [
+          {"label": "title strip", "x": 0, "y": 0, "w": 12, "h": 2, "accent": false},
+          {"label": "linked figures", "x": 0, "y": 2, "w": 12, "h": 6, "accent": true},
+          {"label": "crank control", "x": 4, "y": 8, "w": 4, "h": 2, "accent": true}
+        ]
+      }
+    },
+    {
+      "id": "challenger-one-bit",
+      "label": "One-bit Learning Desktop",
+      "verdict": "competitive",
+      "lineage": "early monochrome education desktops",
+      "thesis": "Each MoodlIA way opens as a crisp tool window on one shared black-and-white desktop.",
+      "palette": ["#FAFAF7", "#111111"],
+      "materials": ["one-pixel chrome", "ordered dithers", "marching selections", "pixel icons"],
+      "viewport": "Three overlapping windows reveal AI integration, teaching tools, and insights with a persistent help menu.",
+      "case": "Excellent product clarity and open-source character; weaker identification for non-technical educators.",
+      "risk": "The interface can read as retro novelty unless every pixel and interaction is disciplined.",
+      "comp": ".impeccable/mocks/decision/challenger-one-bit.webp",
+      "hero": "https://impeccable.style/worlds/cards/medium-native-one-bit-desktop-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/medium-native-one-bit-desktop.webp",
+      "wireframe": {
+        "cols": 12,
+        "rows": 10,
+        "regions": [
+          {"label": "desktop menu", "x": 0, "y": 0, "w": 12, "h": 1, "accent": false},
+          {"label": "intro window", "x": 0, "y": 1, "w": 5, "h": 5, "accent": true},
+          {"label": "project windows", "x": 4, "y": 2, "w": 8, "h": 7, "accent": false}
+        ]
+      }
+    },
+    {
+      "id": "challenger-starship",
+      "label": "Operations Terminal",
+      "verdict": "declined",
+      "lineage": "used-future starship crew terminals",
+      "thesis": "MoodlIA behaves like a mission terminal with three operational commands.",
+      "palette": ["#07110D", "#70FF9A", "#FFB340", "#DED8C8"],
+      "materials": ["curved CRT glass", "stenciled plates", "phosphor readouts"],
+      "viewport": "A single command line reveals the three ways as typed operational pages.",
+      "case": "Strong operational grammar but directly conflicts with the non-technical audience.",
+      "kept": "Operational precision for labels, state, and feedback.",
+      "risk": "It would position MoodlIA as a developer tool rather than an educator ecosystem.",
+      "comp": ".impeccable/mocks/decision/challenger-starship.webp",
+      "hero": "https://impeccable.style/worlds/cards/pop-culture-shelf-industrial-starship-terminal-hero.webp"
+    },
+    {
+      "id": "challenger-street-fair",
+      "label": "Open Learning Fair",
+      "verdict": "declined",
+      "lineage": "screenprinted street-fair flyers",
+      "thesis": "The ecosystem becomes a vivid public event where every project has a loud invitation.",
+      "palette": ["#F3EDE0", "#111111", "#FF6A00", "#7B57F0"],
+      "materials": ["riso grain", "gouache flats", "torn paper", "stickers"],
+      "viewport": "A full-bleed collage carries one enormous multicolor word and one calm white project finder.",
+      "case": "High attention but insufficient calm and clarity for choosing practical Moodle tools.",
+      "kept": "Color must own full regions instead of appearing as timid accent decoration.",
+      "risk": "The promotional energy could obscure the three-way model.",
+      "comp": ".impeccable/mocks/decision/challenger-street-fair.webp",
+      "hero": "https://impeccable.style/worlds/cards/fly-posted-festival-hoarding-built-hero.webp"
+    },
+    {
+      "id": "challenger-curved-crease",
+      "label": "Folded Learning Map",
+      "verdict": "declined",
+      "lineage": "curved-crease paper structures",
+      "thesis": "One continuous fold raises three useful surfaces from a single MoodlIA sheet.",
+      "palette": ["#F2E9D7", "#282724", "#D35B3F"],
+      "materials": ["cotton paper", "graphite shadows", "compass arcs"],
+      "viewport": "A monumental paper disc bends into three labeled planes around a restrained introduction.",
+      "case": "Beautiful ecosystem metaphor but slow to explain concrete projects.",
+      "kept": "One structural gesture should organize the complete experience.",
+      "risk": "The sculptural abstraction could hide the product offer.",
+      "comp": ".impeccable/mocks/decision/challenger-curved-crease.webp",
+      "hero": "https://impeccable.style/worlds/cards/paper-folds-pleats-deployable-curved-crease-shell-hero.webp"
+    },
+    {
+      "id": "challenger-seven-segment",
+      "label": "Three Signals",
+      "verdict": "declined",
+      "lineage": "seven-segment instrument displays",
+      "thesis": "The ecosystem is reduced to three synchronized signals that switch from waiting to useful.",
+      "palette": ["#111413", "#FF3D2E", "#F0A52B", "#44D779"],
+      "materials": ["matte instrument glass", "LED segments", "ghost cells"],
+      "viewport": "A fixed mask shows a giant 3 and three product readings whose segments ignite as visitors move through them.",
+      "case": "Memorable states but too numerical for a broad teaching audience.",
+      "kept": "Inactive states receive as much design attention as active ones.",
+      "risk": "The signal language would reduce nuanced project differences to a gimmick.",
+      "comp": ".impeccable/mocks/decision/challenger-seven-segment.webp",
+      "hero": "https://impeccable.style/worlds/cards/signals-instruments-seven-segment-alarm-clock-hero.webp"
+    }
+  ],
+  "reroll": {"registers": ["safer", "bolder"]},
+  "buildPath": {"value": "code", "toggle": true},
+  "canon": true,
+  "canonCard": {
+    "label": "The category standard",
+    "thesis": "A polished education-technology landing page with a conventional hero and three product cards.",
+    "palette": ["#FFFFFF", "#17233A", "#3157D8"],
+    "materials": ["clean grid", "rounded cards", "product imagery"],
+    "viewport": "A left-aligned promise, an image mosaic, and three familiar solution cards below it.",
+    "risk": "Clear and dependable, but intentionally difficult to distinguish from other software suites.",
+    "comp": ".impeccable/mocks/decision/canon.webp",
+    "wireframe": {
+      "cols": 12,
+      "rows": 10,
+      "regions": [
+        {"label": "navigation", "x": 0, "y": 0, "w": 12, "h": 1, "accent": false},
+        {"label": "hero copy", "x": 0, "y": 1, "w": 5, "h": 5, "accent": true},
+        {"label": "hero image", "x": 5, "y": 1, "w": 7, "h": 5, "accent": false},
+        {"label": "three cards", "x": 0, "y": 7, "w": 12, "h": 3, "accent": false}
+      ]
+    }
+  },
+  "steer": true
+}
