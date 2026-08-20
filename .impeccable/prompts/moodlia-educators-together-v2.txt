@@ -1,0 +1,12 @@
+Use case: ads-marketing
+Asset type: wide editorial hero photograph and social preview background for the MoodlIA education website
+Primary request: create one cohesive, human-centered scene that shows Moodle becoming easier through three connected moments: planning with a helpful laptop, reviewing work with a rubric, and understanding learning progress with a simple printed overview; these should feel like one carefully curated teaching day, not three separate product demos
+Scene/backdrop: a bright modern learning commons with one long shared table, daylight, books, plants, and subtle background activity
+Subject: three adult educators of varied appearance collaborating naturally across the table, each focused on a different real teaching task; paper and conversation lead, technology stays secondary
+Style/medium: premium contemporary editorial photography, candid and tactile, warm education campaign, not corporate stock photography
+Composition/framing: wide 3:2 landscape, three natural zones connected by a loose line of colored index cards across the table; keep generous calm negative space in the upper left for website headline overlay; no literal cassette, but the arrangement can subtly evoke a thoughtfully sequenced personal selection
+Lighting/mood: optimistic natural daylight, warm, calm, helpful, approachable
+Color palette: warm cream, ballpoint blue, muted coral red, soft golden yellow, charcoal accents
+Materials/textures: uncoated paper, card stock, linen, wood, matte laptop
+Constraints: no readable text, no logos, no legible computer UI, no student names, no holograms, no robots, no watermark
+Avoid: dark technology imagery, floating dashboards, exaggerated AI visuals, staged corporate poses, childish classroom clichés

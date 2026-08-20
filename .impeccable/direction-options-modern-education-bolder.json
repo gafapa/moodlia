@@ -1,0 +1,117 @@
+{
+  "title": "Una dirección más valiente para MoodlIA",
+  "question": "Seis mundos visuales poco convencionales, todos centrados en hacer que enseñar resulte más fácil. Elige el que mejor debería representar a MoodlIA.",
+  "options": [
+    {
+      "id": "challenger-ribbon",
+      "label": "El hilo que ayuda",
+      "kicker": "LA NUEVA PROPUESTA",
+      "verdict": "assigned",
+      "lineage": "Una cinta continua de aprendizaje que conecta cada necesidad con una solución",
+      "thesis": "MoodlIA se cuenta como un recorrido humano: aparece una dificultad, la ayuda la atraviesa y el resultado queda visible.",
+      "palette": ["#FFF8E9", "#EF4A3C", "#24495B", "#88B79B"],
+      "materials": ["una cinta ilustrada", "fotografía educativa cálida", "grandes hitos narrativos"],
+      "viewport": "Una cinta roja entra por la portada, rodea una escena real de aprendizaje y se divide en tres recorridos claros antes de reunirse en una invitación a pedir ayuda.",
+      "case": "Es la idea más propia de MoodlIA: explica que todos los productos forman una ayuda continua sin parecer una plataforma técnica.",
+      "risk": "La metáfora necesita una composición muy precisa para que la cinta guíe y no se convierta en simple decoración.",
+      "comp": ".impeccable/mocks/decision/helping-thread.webp",
+      "hero": "https://impeccable.style/worlds/cards/exhibition-museum-curation-provenance-ribbon-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/exhibition-museum-curation-provenance-ribbon.webp"
+    },
+    {
+      "id": "challenger-comic",
+      "label": "La aventura de enseñar",
+      "kicker": "LA ALTERNATIVA MÁS FUERTE",
+      "verdict": "competitive",
+      "lineage": "Álbum ilustrado de línea clara convertido en una historia educativa contemporánea",
+      "thesis": "Cada producto es un capítulo breve donde una persona encuentra una forma más sencilla de enseñar, corregir o comprender.",
+      "palette": ["#FFFDF3", "#112D42", "#57A9D8", "#F15A4A", "#F3C94C"],
+      "materials": ["ilustración de línea clara", "colores planos", "escenas humanas en viñetas"],
+      "viewport": "Una gran escena de aula abre la portada; al desplazarse, tres capítulos visuales muestran la dificultad, la ayuda y el alivio sin jerga.",
+      "case": "Supera a la cinta en identificación inmediata y empatía; además permite explicar productos distintos con muy poco texto.",
+      "risk": "Debe sentirse editorial y adulto, no infantil ni como una web de entretenimiento.",
+      "comp": ".impeccable/mocks/decision/teaching-adventure.webp",
+      "hero": "https://impeccable.style/worlds/cards/pop-culture-shelf-ligne-claire-album-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/pop-culture-shelf-ligne-claire-album.webp"
+    },
+    {
+      "id": "challenger-weave",
+      "label": "Ideas que se entrelazan",
+      "verdict": "competitive",
+      "lineage": "Un telar Jacquard donde pequeñas ayudas forman una imagen educativa completa",
+      "thesis": "MoodlIA convierte muchas tareas dispersas en un tejido coherente que acompaña el trabajo diario.",
+      "palette": ["#10283D", "#F1C75B", "#FFF4D8", "#E85A4F"],
+      "materials": ["tramas tejidas", "detalles dorados", "patrones que se completan al explorar"],
+      "viewport": "Tres bandas de color se entrelazan lentamente y revelan una gran imagen central sobre aprender con menos esfuerzo.",
+      "case": "Es visualmente excepcional y representa bien un ecosistema de productos conectados, aunque necesita más interpretación que la aventura ilustrada.",
+      "risk": "La referencia al telar puede sentirse artesanal o compleja si las instrucciones perforadas ganan protagonismo.",
+      "comp": ".impeccable/mocks/decision/interwoven-ideas.webp",
+      "hero": "https://impeccable.style/worlds/cards/textiles-weave-drape-fashion-jacquard-punched-brocade-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/textiles-weave-drape-fashion-jacquard-punched-brocade.webp"
+    },
+    {
+      "id": "challenger-rhythm",
+      "label": "Tu ritmo de enseñar",
+      "verdict": "competitive",
+      "lineage": "Una secuencia de pasos vivos donde cada acción hace avanzar el día",
+      "thesis": "MoodlIA no impone una forma de trabajar: se adapta al ritmo de cada docente y deja que active solo la ayuda que necesita.",
+      "palette": ["#262B32", "#F05A4F", "#F29D49", "#F2D45C", "#F7F3E9"],
+      "materials": ["franjas de pasos", "pulsos de color", "microinteracciones táctiles"],
+      "viewport": "Una secuencia de tres grandes pasos se activa con el desplazamiento: preparar, acompañar y comprender; cada uno abre sus productos con una respuesta inmediata.",
+      "case": "Tiene la experiencia más dinámica y hace tangible la idea de avanzar, pero el origen musical requiere una traducción educativa muy cuidada.",
+      "risk": "Una estética demasiado oscura o instrumental haría que MoodlIA volviera a parecer un producto técnico.",
+      "comp": ".impeccable/mocks/decision/teaching-rhythm.webp",
+      "hero": "https://impeccable.style/worlds/cards/signals-instruments-drum-machine-step-row-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/signals-instruments-drum-machine-step-row.webp"
+    },
+    {
+      "id": "challenger-mixtape",
+      "label": "La selección que acompaña",
+      "verdict": "competitive",
+      "lineage": "Una recopilación personal, organizada para cada momento de la enseñanza",
+      "thesis": "Como una selección hecha con cuidado, MoodlIA reúne la ayuda adecuada para planificar, evaluar y entender lo que ocurre.",
+      "palette": ["#FFFDF7", "#2357A6", "#EF564D", "#F1C34D", "#242424"],
+      "materials": ["anotaciones humanas", "grandes etiquetas", "una composición plegable"],
+      "viewport": "La portada parece una selección personal preparada para el visitante; al abrirse, aparecen tres lados visuales con productos y resultados concretos.",
+      "case": "Es cálida, cercana y memorable, pero su nostalgia puede competir con la sensación de futuro que necesita la marca.",
+      "risk": "Debe evitar cualquier copia literal del casete y conservar solo su carácter personal y cuidadosamente seleccionado.",
+      "comp": ".impeccable/mocks/decision/learning-selection.webp",
+      "hero": "https://impeccable.style/worlds/cards/vernacular-ephemera-cassette-j-card-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/vernacular-ephemera-cassette-j-card.webp"
+    },
+    {
+      "id": "challenger-jackfield",
+      "label": "El mapa de conexiones",
+      "verdict": "declined",
+      "lineage": "Líneas que muestran de forma honesta qué ayuda está conectada a cada necesidad",
+      "thesis": "Nada se oculta: cada producto mantiene visible a quién ayuda y qué cambia.",
+      "palette": ["#111417", "#F0A33A", "#FFF7E8"],
+      "materials": ["líneas de conexión", "carriles numerados", "estados dibujados"],
+      "viewport": "Tres conexiones atraviesan una superficie oscura y llevan de cada necesidad a un resultado.",
+      "case": "La claridad del sistema es útil, pero su lenguaje visual sigue siendo demasiado técnico para la promesa de MoodlIA.",
+      "kept": "Cada producto debe dejar claro qué necesidad atiende y cuál es el siguiente paso.",
+      "risk": "La superficie negra y los carriles recuerdan a infraestructura y configuración.",
+      "comp": ".impeccable/mocks/decision/connection-map.webp",
+      "hero": "https://impeccable.style/worlds/cards/operate-b-normalled-jackfield-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/operate-b-normalled-jackfield.webp"
+    }
+  ],
+  "reroll": {
+    "registers": ["safer", "bolder"]
+  },
+  "buildPath": {
+    "value": "code",
+    "toggle": true
+  },
+  "canon": true,
+  "canonCard": {
+    "label": "Una plataforma educativa moderna",
+    "thesis": "Una portada clara con fotografía de aula, beneficios directos y tres accesos ordenados.",
+    "palette": ["#FFFFFF", "#17324D", "#2F6FED", "#F3F7FB"],
+    "materials": ["retícula limpia", "fotografía educativa", "tarjetas suaves"],
+    "viewport": "Una promesa principal, una fotografía cercana y tres rutas de producto convencionales.",
+    "risk": "Funciona, pero se confundiría con muchas otras webs educativas.",
+    "comp": ".impeccable/mocks/decision/canon-education-bolder.webp"
+  },
+  "steer": true
+}

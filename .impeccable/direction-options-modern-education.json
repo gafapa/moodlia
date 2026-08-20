@@ -1,0 +1,156 @@
+{
+  "title": "Choose MoodlIA's new visual world",
+  "question": "The current paper machine is gone. Choose the modern educational world that should replace it.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "The Learning Commons",
+      "kicker": "THE NEW DIRECTION",
+      "lineage": "Contemporary public libraries, university learning commons, and cultural wayfinding",
+      "thesis": "MoodlIA becomes a bright place where every educator immediately finds an easier way forward.",
+      "palette": ["#F7F5EE", "#17324D", "#E85D4A", "#79A86B", "#F1C75B"],
+      "materials": ["daylight photography", "editorial typography", "large wayfinding bands"],
+      "viewport": "A generous learning-space photograph carries one plain promise while three coloured routes open directly inside the scene.",
+      "risk": "It needs excellent photography and disciplined typography to avoid feeling like a generic university website.",
+      "raised": [
+        {
+          "from": "Sequential learning stories",
+          "raise": "The scroll now changes pace deliberately, with one memorable reveal instead of a uniform stack of sections."
+        },
+        {
+          "from": "Transparent guide",
+          "raise": "Every route keeps a visible colour and label across navigation, detail pages, and mobile."
+        },
+        {
+          "from": "Living ink",
+          "raise": "Motion feels calm and responsive, following the visitor rather than performing at them."
+        }
+      ],
+      "comp": ".impeccable/mocks/decision/learning-commons.webp"
+    },
+    {
+      "id": "model-pick",
+      "label": "The Living Workbook",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "The best contemporary school workbooks and independent education magazines",
+      "thesis": "MoodlIA feels like the beautifully edited guide a teacher actually keeps open beside Moodle.",
+      "palette": ["#FFFDF7", "#1E3A5F", "#FF6B57", "#A8D7C2", "#FFD66B"],
+      "materials": ["bold editorial spreads", "real classroom photography", "useful annotations"],
+      "viewport": "A strong magazine cover composition pairs a human classroom moment with one large sentence and three clear chapter markers.",
+      "risk": "Editorial education is familiar territory, so it must be composed with unusual confidence to remain distinctive.",
+      "comp": ".impeccable/mocks/decision/living-workbook.webp"
+    },
+    {
+      "id": "challenger-manga",
+      "label": "Sequential Learning Stories",
+      "verdict": "competitive",
+      "lineage": "Weekly manga pacing translated into educational storytelling",
+      "thesis": "Each MoodlIA path unfolds as a short visual story in which the educator is always the protagonist.",
+      "palette": ["#FFFEF8", "#161616", "#EF5B47"],
+      "materials": ["high-contrast panels", "expressive crops", "decisive page turns"],
+      "viewport": "Three asymmetrical scenes show the problem, the easier action, and the calmer outcome without technical explanation.",
+      "case": "Excellent narrative clarity and a radical identity, but some educators may read the manga grammar as entertainment before support.",
+      "risk": "The visual language can overpower trust if illustration quality or restraint slips.",
+      "comp": ".impeccable/mocks/decision/sequential-learning.webp",
+      "hero": "https://impeccable.style/worlds/cards/pop-culture-shelf-manga-screentone-page-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/pop-culture-shelf-manga-screentone-page.webp"
+    },
+    {
+      "id": "challenger-manual",
+      "label": "The Transparent Guide",
+      "verdict": "competitive",
+      "lineage": "Tabbed reference guides rebuilt as a friendly education service",
+      "thesis": "Information appears only when it helps, layered over a simple route that never loses the visitor.",
+      "palette": ["#FFF9ED", "#164E63", "#F59E5B", "#78B7A4", "#B7A6D9"],
+      "materials": ["translucent colour fields", "oversized tabs", "quiet reading pages"],
+      "viewport": "One welcoming sentence sits beside three broad tabs whose translucent layers preview what each route makes easier.",
+      "case": "It has the strongest information architecture, but its reference-manual origin risks feeling technical if the copy becomes procedural.",
+      "risk": "Too many layers would recreate the complexity MoodlIA promises to remove.",
+      "comp": ".impeccable/mocks/decision/transparent-guide.webp",
+      "hero": "https://impeccable.style/worlds/cards/rw-manual-acetate-tab-board-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/rw-manual-acetate-tab-board.webp"
+    },
+    {
+      "id": "challenger-ink",
+      "label": "Living Ink",
+      "verdict": "declined",
+      "lineage": "Suminagashi marbling as a calm responsive learning surface",
+      "thesis": "Three gentle currents join around each educator's intention and make the next step visible.",
+      "palette": ["#FCFBF5", "#244A63", "#6DAA9A", "#E77A62"],
+      "materials": ["fluid colour", "quiet margins", "organic movement"],
+      "viewport": "A calm white field lets three coloured currents gather around one human promise.",
+      "case": "Emotionally warm but too abstract to explain a family of real products quickly.",
+      "kept": "Motion should respond gently to the visitor instead of playing automatically.",
+      "risk": "The fluid effect can become decoration rather than useful guidance.",
+      "comp": ".impeccable/mocks/decision/living-ink.webp",
+      "hero": "https://impeccable.style/worlds/cards/medium-native-fluid-ink-basin-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/medium-native-fluid-ink-basin.webp"
+    },
+    {
+      "id": "challenger-calendar",
+      "label": "The Learning Shelf",
+      "verdict": "declined",
+      "lineage": "Seasonal classroom collections and visible learning progress",
+      "thesis": "MoodlIA's projects become useful resources arranged by the moment a teacher needs them.",
+      "palette": ["#FFF8E8", "#355E4B", "#D95D52", "#E7B854"],
+      "materials": ["labelled collections", "seasonal colour", "visible progression"],
+      "viewport": "A bright teaching shelf groups the three routes as resources ready for today's need.",
+      "case": "The sense of useful progression is strong, but the storage metaphor is too literal for digital services.",
+      "kept": "Show progress and outcomes as visible states, not abstract claims.",
+      "risk": "It could become quaint instead of modern.",
+      "comp": ".impeccable/mocks/decision/learning-shelf.webp",
+      "hero": "https://impeccable.style/worlds/cards/food-fermentation-culinary-theater-pickling-brine-calendar-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/food-fermentation-culinary-theater-pickling-brine-calendar.webp"
+    },
+    {
+      "id": "challenger-light",
+      "label": "Paths of Light",
+      "verdict": "declined",
+      "lineage": "Bioluminescent trails translated into immediate guidance",
+      "thesis": "Every choice lights only the next useful step and lets everything else stay quiet.",
+      "palette": ["#102F3A", "#68D9D0", "#F7D36A", "#F7FBF7"],
+      "materials": ["luminous trails", "deep quiet fields", "responsive traces"],
+      "viewport": "Three light paths answer the visitor's pointer and converge on a simple invitation to begin.",
+      "case": "Memorable interaction, but the dark digital atmosphere contradicts the requested educational warmth.",
+      "kept": "Interaction should reveal relationships immediately and then recede.",
+      "risk": "It reads as technology before it reads as help.",
+      "comp": ".impeccable/mocks/decision/paths-of-light.webp",
+      "hero": "https://impeccable.style/worlds/cards/reefs-bioluminescent-nocturnal-plankton-wake-stars-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/reefs-bioluminescent-nocturnal-plankton-wake-stars.webp"
+    },
+    {
+      "id": "challenger-detector",
+      "label": "Learning Orbit",
+      "verdict": "declined",
+      "lineage": "Concentric event displays translated into three connected services",
+      "thesis": "Every MoodlIA product orbits one clear centre: helping people teach more easily.",
+      "palette": ["#F7F5EE", "#183A4A", "#F2C14E", "#5AA9A1"],
+      "materials": ["concentric maps", "precise paths", "focused selection"],
+      "viewport": "Three routes circle one human goal and expand into products when selected.",
+      "case": "The relationship is clear, but the scientific display is exactly the technical signal the redesign must leave behind.",
+      "kept": "Keep one visible centre so the ecosystem never feels fragmented.",
+      "risk": "Even softened, it still looks analytical and specialist.",
+      "comp": ".impeccable/mocks/decision/learning-orbit.webp",
+      "hero": "https://impeccable.style/worlds/cards/scientific-notation-particle-detector-event-display-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/scientific-notation-particle-detector-event-display.webp"
+    }
+  ],
+  "reroll": {
+    "registers": ["safer", "bolder"]
+  },
+  "buildPath": {
+    "value": "code",
+    "toggle": true
+  },
+  "canon": true,
+  "canonCard": {
+    "label": "The polished education standard",
+    "thesis": "A clean modern education landing page with campus photography and familiar product navigation.",
+    "palette": ["#FFFFFF", "#17324D", "#2F6FED", "#F3F7FB"],
+    "materials": ["clean grid", "campus photography", "soft interface surfaces"],
+    "viewport": "A conventional benefit-led hero, one education photograph, and three equal routes below it.",
+    "risk": "Easy to understand, but intentionally indistinguishable from many education platforms.",
+    "comp": ".impeccable/mocks/decision/canon-education.webp"
+  },
+  "steer": true
+}

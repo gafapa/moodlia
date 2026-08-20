@@ -1,170 +1,200 @@
 import Image from "next/image";
+import type { WaySlug } from "./catalog";
+import {
+  getLocalizedWayProducts,
+  getLocalizedWays,
+  interfaceCopy,
+  localizePath,
+  type Locale,
+} from "./localization";
+import { SiteFooter, SiteHeader } from "./site-chrome";
 
-const paths = [
-  {
-    id: "work-with-ai",
-    number: "01",
-    label: "Connect",
-    title: "Work with AI",
-    description: "Bring the AI tools you already use closer to Moodle and turn ideas into action faster.",
-    products: ["MoodlIA Moodle Plugin", "MoodlIA CLI", "Moodle Core CLI", "MoodlIA Skills"],
-    image: "/moodlia-ai-integration.jpg",
-    imageAlt: "A connected network representing AI working together with Moodle",
-  },
-  {
-    id: "teach-with-confidence",
-    number: "02",
-    label: "Teach",
-    title: "Teach with confidence",
-    description: "Create rubrics, review work, and make thoughtful corrections with less repetitive effort.",
-    products: ["MoodlIA Rubrics", "MoodlIA Corrector", "Chrome extensions"],
-    image: "/moodlia-teaching-tools.jpg",
-    imageAlt: "A teacher reviewing rubric and assessment cards with confidence",
-  },
-  {
-    id: "understand-what-matters",
-    number: "03",
-    label: "Understand",
-    title: "See what matters",
-    description: "Turn course activity into clear priorities, useful signals, and better-timed support.",
-    products: ["MoodlIA Teacher Dashboard", "MoodlIA Analyzer Web", "MoodlIA Analyzer Desktop"],
-    image: "/moodlia-learning-analytics.jpg",
-    imageAlt: "Clear learning progress and course insights emerging from Moodle data",
-  },
-];
-
-const structuredData = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Organization",
-      "@id": "https://moodlia.com/#organization",
-      name: "MoodlIA",
-      url: "https://moodlia.com/",
-      email: "mailto:contact@moodlia.com",
-      sameAs: ["https://github.com/gafapa"],
-      contactPoint: {
-        "@type": "ContactPoint",
-        email: "contact@moodlia.com",
-        contactType: "customer support",
-      },
-      knowsAbout: ["Moodle", "Artificial intelligence", "Teaching tools", "Learning analytics"],
-    },
-    {
-      "@type": "WebSite",
-      "@id": "https://moodlia.com/#website",
-      url: "https://moodlia.com/",
-      name: "MoodlIA",
-      description: "Three open project areas that make Moodle easier to connect, teach with, and understand.",
-      publisher: { "@id": "https://moodlia.com/#organization" },
-      inLanguage: "en",
-    },
-    {
-      "@type": "ItemList",
-      name: "Three ways MoodlIA improves Moodle",
-      itemListElement: paths.map((path, index) => ({
-        "@type": "ListItem",
-        position: index + 1,
-        item: { "@type": "Thing", name: path.title, description: path.description },
-      })),
-    },
-  ],
+const homeAnchors: Record<WaySlug, string> = {
+  "ai-integration": "work-with-ai",
+  "teaching-tools": "teach-with-confidence",
+  "learning-insights": "understand-what-matters",
 };
 
 export default function Home() {
+  return <MoodliaHome locale="en" />;
+}
+
+export function MoodliaHome({ locale }: { locale: Locale }) {
+  const copy = interfaceCopy[locale];
+  const homeCopy = copy.homePage;
+  const paths = getLocalizedWays(locale).map((way) => ({
+    ...way,
+    id: homeAnchors[way.slug],
+    products: getLocalizedWayProducts(way.slug, locale),
+  }));
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://moodlia.com/#organization",
+        name: "MoodlIA",
+        url: "https://moodlia.com/",
+        email: "mailto:contact@moodlia.com",
+        contactPoint: {
+          "@type": "ContactPoint",
+          email: "contact@moodlia.com",
+          contactType: locale === "es" ? "atención al usuario" : "customer support",
+        },
+        knowsAbout: [
+          "Moodle",
+          locale === "es" ? "Inteligencia artificial" : "Artificial intelligence",
+          locale === "es" ? "Herramientas docentes" : "Teaching tools",
+          locale === "es" ? "Analítica del aprendizaje" : "Learning analytics",
+        ],
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://moodlia.com/#website",
+        url: `https://moodlia.com${localizePath(locale, "/")}`,
+        name: "MoodlIA",
+        description: locale === "es"
+          ? "Tres formas conectadas de trabajar con Moodle, enseñar con más facilidad y comprender lo importante."
+          : "Three connected ways to make Moodle easier to connect, teach with, and understand.",
+        publisher: { "@id": "https://moodlia.com/#organization" },
+        inLanguage: locale,
+      },
+      {
+        "@type": "ItemList",
+        name: locale === "es" ? "Tres formas en las que MoodlIA facilita Moodle" : "Three ways MoodlIA makes Moodle easier",
+        itemListElement: paths.map((path, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          item: {
+            "@type": "Thing",
+            name: path.title,
+            description: path.description,
+            hasPart: path.products.map((product) => ({
+              "@type": "SoftwareApplication",
+              name: product.name,
+              description: product.description,
+              applicationCategory: "EducationalApplication",
+            })),
+          },
+        })),
+      },
+    ],
+  };
+
   return (
-    <main id="top">
+    <>
+      <a className="skip-link" href="#main-content" lang={locale}>{copy.skip}</a>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }}
       />
+      <SiteHeader locale={locale} currentPath="/" />
 
-      <header className="site-header">
-        <a className="wordmark" href="#top" aria-label="MoodlIA home">
-          Moodl<span>IA</span>
-        </a>
-        <nav aria-label="Main navigation">
-          <a href="#three-ways">Three ways</a>
-          <a href="#help">Get help</a>
-        </nav>
-        <a className="header-contact" href="mailto:contact@moodlia.com">Contact us</a>
-      </header>
-
-      <section className="hero" aria-labelledby="hero-title">
-        <div className="hero-copy">
-          <p className="eyebrow">One open family of Moodle tools</p>
-          <h1 id="hero-title">Three ways to make Moodle work better for you.</h1>
-          <p className="hero-lede">Less repetitive work. More confident teaching. Clearer decisions.</p>
-          <div className="hero-actions">
-            <a className="primary-action" href="#three-ways">Find your way <span aria-hidden="true">↓</span></a>
-            <a className="text-action" href="mailto:contact@moodlia.com">Ask us anything <span aria-hidden="true">↗</span></a>
-          </div>
-        </div>
-
-        <div className="three-stage" aria-hidden="true">
-          <span className="three-number">3</span>
-          {paths.map((path, index) => (
-            <div className={`three-image three-image-${index + 1}`} key={path.id}>
-              <Image src={path.image} alt="" width={512} height={1024} unoptimized priority />
-              <span>{path.number}</span>
+      <main id="main-content" lang={locale}>
+        <section className="selection-hero" aria-labelledby="hero-title">
+          <div className="hero-grid">
+            <div className="hero-copy">
+              <h1 id="hero-title">
+                {homeCopy.title.map((line, index) => (
+                  <span className={index === 2 ? "hero-third-line" : undefined} key={line}>{line}</span>
+                ))}
+              </h1>
+              <p className="hero-intro">{homeCopy.intro}</p>
+              <div className="hero-actions">
+                <a className="primary-action" href="#projects">{homeCopy.explore}</a>
+                <a className="text-action" href="mailto:contact@moodlia.com">{homeCopy.ask}<span aria-hidden="true">↗</span></a>
+              </div>
+              <p className="hero-proof"><span aria-hidden="true">●</span>{homeCopy.note}</p>
+              <p className="margin-note" aria-hidden="true">{locale === "es" ? "hecho para personas" : "made for people"}</p>
             </div>
-          ))}
-        </div>
-      </section>
 
-      <section className="three-ways" id="three-ways" aria-labelledby="three-ways-title">
-        <div className="section-heading">
-          <p className="eyebrow">The power of three</p>
-          <h2 id="three-ways-title">Choose what you need today.</h2>
-        </div>
+            <div className="hero-photo-stack" role="group" aria-label={locale === "es" ? "Tres momentos docentes en los que MoodlIA puede ayudar" : "Three teaching moments where MoodlIA can help"}>
+              {paths.map((path, index) => (
+                <figure className={`hero-photo hero-photo-${index + 1}`} key={path.slug}>
+                  <Image
+                    src={path.image}
+                    alt={path.imageAlt}
+                    width={1120}
+                    height={1400}
+                    sizes="(max-width: 820px) 42vw, 23vw"
+                    priority
+                    unoptimized
+                  />
+                  <figcaption>{path.shortTitle}</figcaption>
+                  <span className="hero-photo-number" aria-hidden="true">{path.number.padStart(2, "0")}</span>
+                </figure>
+              ))}
+            </div>
+          </div>
 
-        <div className="path-list">
-          {paths.map((path) => (
-            <article className="path-card" id={path.id} key={path.id}>
-              <div className="path-image">
-                <Image
-                  src={path.image}
-                  alt={path.imageAlt}
-                  width={512}
-                  height={1024}
-                  sizes="(max-width: 760px) 100vw, 38vw"
-                  unoptimized
-                />
-              </div>
-              <div className="path-copy">
-                <div className="path-meta">
-                  <span>{path.number}</span>
-                  <p>{path.label}</p>
+          <nav className="sequence-nav" aria-label={locale === "es" ? "Las tres formas en que MoodlIA puede ayudarte" : "The three ways MoodlIA can help"}>
+            <span className="sequence-playhead" aria-hidden="true" />
+            {paths.map((path) => (
+              <a href={`#${path.id}`} key={path.slug}>
+                <span>{path.number.padStart(2, "0")}</span>
+                <strong>{path.shortTitle}</strong>
+                <i aria-hidden="true">→</i>
+              </a>
+            ))}
+          </nav>
+        </section>
+
+        <section className="selections" id="projects" aria-labelledby="projects-title">
+          <header className="selections-heading">
+            <h2 id="projects-title">{homeCopy.movementsTitle}</h2>
+            <p>{homeCopy.movementsBody}</p>
+          </header>
+
+          <div className="selection-list">
+            {paths.map((path, index) => (
+              <article className={`selection-item selection-item-${index + 1}`} id={path.id} aria-labelledby={`${path.id}-title`} key={path.slug}>
+                <figure className="selection-image">
+                  <Image
+                    src={path.image}
+                    alt={path.imageAlt}
+                    width={1120}
+                    height={1400}
+                    sizes="(max-width: 820px) 94vw, 46vw"
+                    loading={index === 0 ? "eager" : "lazy"}
+                    unoptimized
+                  />
+                  <figcaption>{path.imageCaption}</figcaption>
+                  <span aria-hidden="true">{path.number.padStart(2, "0")}</span>
+                </figure>
+
+                <div className="selection-copy">
+                  <h3 id={`${path.id}-title`}>{path.title}</h3>
+                  <p>{path.description}</p>
+                  <ol className="product-tracklist" aria-label={`${path.title} projects`}>
+                    {path.products.map((product, productIndex) => (
+                      <li key={product.slug}>
+                        <a href={localizePath(locale, `/products/${product.slug}`)}>
+                          <span>{String(productIndex + 1).padStart(2, "0")}</span>
+                          <strong>{product.name}</strong>
+                          <i aria-hidden="true">↗</i>
+                        </a>
+                      </li>
+                    ))}
+                  </ol>
+                  <a className="open-selection" href={localizePath(locale, `/ways/${path.slug}`)}>{homeCopy.exploreWay}<span aria-hidden="true">→</span></a>
                 </div>
-                <h3>{path.title}</h3>
-                <p className="path-description">{path.description}</p>
-                <ul aria-label={`${path.title} projects`}>
-                  {path.products.map((product) => <li key={product}>{product}</li>)}
-                </ul>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
+              </article>
+            ))}
+          </div>
+        </section>
 
-      <section className="help" id="help" aria-labelledby="help-title">
-        <div className="help-number" aria-hidden="true">?</div>
-        <div className="help-copy">
-          <p className="eyebrow">Here when you need us</p>
-          <h2 id="help-title">Tell us what you want to do.</h2>
-          <p>
-            We help anyone who needs it with anything related to MoodlIA—from choosing a tool
-            and getting started to solving a problem or shaping a new idea.
-          </p>
-          <a href="mailto:contact@moodlia.com">contact@moodlia.com <span aria-hidden="true">↗</span></a>
-        </div>
-      </section>
+        <section className="help-selection" id="help" aria-labelledby="help-title">
+          <div className="help-number" aria-hidden="true">3</div>
+          <div className="help-copy">
+            <h2 id="help-title">{homeCopy.helpTitle}</h2>
+            <p>{homeCopy.helpBody}</p>
+            <a href="mailto:contact@moodlia.com">contact@moodlia.com<span aria-hidden="true">↗</span></a>
+          </div>
+          <p className="help-note">{homeCopy.helpMechanism}</p>
+        </section>
+      </main>
 
-      <footer>
-        <div className="wordmark">Moodl<span>IA</span></div>
-        <p>Connect · Teach · Understand</p>
-        <a href="mailto:contact@moodlia.com">contact@moodlia.com</a>
-      </footer>
-    </main>
+      <SiteFooter locale={locale} />
+    </>
   );
 }
