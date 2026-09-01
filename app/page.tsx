@@ -15,6 +15,23 @@ const homeAnchors: Record<WaySlug, string> = {
   "learning-insights": "understand-what-matters",
 };
 
+function ArrowIcon({ diagonal = false }: { diagonal?: boolean }) {
+  return (
+    <svg
+      className="arrow-icon"
+      viewBox="0 0 16 16"
+      aria-hidden="true"
+      focusable="false"
+    >
+      {diagonal ? (
+        <path d="M4 12 12 4m-6 0h6v6" />
+      ) : (
+        <path d="M2.5 8h11m-4-4 4 4-4 4" />
+      )}
+    </svg>
+  );
+}
+
 export default function Home() {
   return <MoodliaHome locale="en" />;
 }
@@ -54,14 +71,14 @@ export function MoodliaHome({ locale }: { locale: Locale }) {
         url: `https://moodlia.com${localizePath(locale, "/")}`,
         name: "MoodlIA",
         description: locale === "es"
-          ? "Tres formas conectadas de trabajar con Moodle, enseñar con más facilidad y comprender lo importante."
-          : "Three connected ways to make Moodle easier to connect, teach with, and understand.",
+          ? "Herramientas prácticas para planificar el aprendizaje, enseñar con más tiempo y saber dónde ayudar después en Moodle."
+          : "Practical tools to plan learning, teach with more time, and know where to help next in Moodle.",
         publisher: { "@id": "https://moodlia.com/#organization" },
         inLanguage: locale,
       },
       {
         "@type": "ItemList",
-        name: locale === "es" ? "Tres formas en las que MoodlIA facilita Moodle" : "Three ways MoodlIA makes Moodle easier",
+        name: locale === "es" ? "Tres formas en las que MoodlIA facilita el trabajo con Moodle" : "Three ways MoodlIA makes Moodle work easier",
         itemListElement: paths.map((path, index) => ({
           "@type": "ListItem",
           position: index + 1,
@@ -88,7 +105,7 @@ export function MoodliaHome({ locale }: { locale: Locale }) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }}
       />
-      <SiteHeader locale={locale} currentPath="/" />
+      <SiteHeader locale={locale} currentPath={localizePath(locale, "/")} alternatePath={locale === "es" ? "/" : "/es"} />
 
       <main id="main-content" lang={locale}>
         <section className="selection-hero" aria-labelledby="hero-title">
@@ -101,10 +118,10 @@ export function MoodliaHome({ locale }: { locale: Locale }) {
               </h1>
               <p className="hero-intro">{homeCopy.intro}</p>
               <div className="hero-actions">
-                <a className="primary-action" href="#projects">{homeCopy.explore}</a>
-                <a className="text-action" href="mailto:contact@moodlia.com">{homeCopy.ask}<span aria-hidden="true">↗</span></a>
+                <a className="primary-action" href={locale === "es" ? "/es/empezar" : "/start"}>{homeCopy.explore}</a>
+                <a className="text-action" href="#projects">{homeCopy.exploreWays}<ArrowIcon /></a>
               </div>
-              <p className="hero-proof"><span aria-hidden="true">●</span>{homeCopy.note}</p>
+              <p className="hero-proof"><span className="proof-dot" aria-hidden="true" />{homeCopy.note}</p>
               <p className="margin-note" aria-hidden="true">{locale === "es" ? "hecho para personas" : "made for people"}</p>
             </div>
 
@@ -128,12 +145,11 @@ export function MoodliaHome({ locale }: { locale: Locale }) {
           </div>
 
           <nav className="sequence-nav" aria-label={locale === "es" ? "Las tres formas en que MoodlIA puede ayudarte" : "The three ways MoodlIA can help"}>
-            <span className="sequence-playhead" aria-hidden="true" />
             {paths.map((path) => (
               <a href={`#${path.id}`} key={path.slug}>
                 <span>{path.number.padStart(2, "0")}</span>
                 <strong>{path.shortTitle}</strong>
-                <i aria-hidden="true">→</i>
+                <ArrowIcon />
               </a>
             ))}
           </nav>
@@ -165,18 +181,24 @@ export function MoodliaHome({ locale }: { locale: Locale }) {
                 <div className="selection-copy">
                   <h3 id={`${path.id}-title`}>{path.title}</h3>
                   <p>{path.description}</p>
-                  <ol className="product-tracklist" aria-label={`${path.title} projects`}>
-                    {path.products.map((product, productIndex) => (
-                      <li key={product.slug}>
-                        <a href={localizePath(locale, `/products/${product.slug}`)}>
-                          <span>{String(productIndex + 1).padStart(2, "0")}</span>
-                          <strong>{product.name}</strong>
-                          <i aria-hidden="true">↗</i>
-                        </a>
-                      </li>
-                    ))}
-                  </ol>
-                  <a className="open-selection" href={localizePath(locale, `/ways/${path.slug}`)}>{homeCopy.exploreWay}<span aria-hidden="true">→</span></a>
+                  <a className="open-selection" href={localizePath(locale, `/ways/${path.slug}`)}>{homeCopy.exploreWay}<ArrowIcon /></a>
+                  <details className="project-disclosure">
+                    <summary>
+                      {homeCopy.projectsToggle}
+                      <span className="disclosure-mark" aria-hidden="true" />
+                    </summary>
+                    <ol className="product-tracklist" aria-label={`${path.title} projects`}>
+                      {path.products.map((product, productIndex) => (
+                        <li key={product.slug}>
+                          <a href={localizePath(locale, `/products/${product.slug}`)}>
+                            <span>{String(productIndex + 1).padStart(2, "0")}</span>
+                            <strong>{product.name}</strong>
+                            <ArrowIcon diagonal />
+                          </a>
+                        </li>
+                      ))}
+                    </ol>
+                  </details>
                 </div>
               </article>
             ))}
@@ -188,7 +210,7 @@ export function MoodliaHome({ locale }: { locale: Locale }) {
           <div className="help-copy">
             <h2 id="help-title">{homeCopy.helpTitle}</h2>
             <p>{homeCopy.helpBody}</p>
-            <a href="mailto:contact@moodlia.com">contact@moodlia.com<span aria-hidden="true">↗</span></a>
+            <a href="mailto:contact@moodlia.com">contact@moodlia.com<ArrowIcon diagonal /></a>
           </div>
           <p className="help-note">{homeCopy.helpMechanism}</p>
         </section>

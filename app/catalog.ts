@@ -25,6 +25,11 @@ export interface MoodliaProduct {
   highlights: string[];
   bestFor: string[];
   requirements: string[];
+  startGuide: {
+    install: string[];
+    firstUse: string[];
+    adminNote: string;
+  };
   sourceUrl: string;
   sourceLabel: string;
   secondaryUrl?: string;
@@ -35,54 +40,54 @@ export const ways: MoodliaWay[] = [
   {
     slug: "ai-integration",
     number: "1",
-    title: "Bring AI into Moodle",
-    shortTitle: "AI integration",
-    description: "Connect the AI tools you already use and turn ideas into Moodle actions faster.",
+    title: "Turn ideas into Moodle learning",
+    shortTitle: "Plan with AI",
+    description: "Shape a course, activity, or improvement with AI support—then decide what reaches Moodle.",
     introduction:
-      "A connected set of tools for working with Moodle through AI assistants, terminals, scripts, and standard Moodle services—while Moodle remains in control.",
+      "Practical ways to turn a teaching idea into Moodle content, with your Moodle site, permissions, and professional judgement staying in charge.",
     image: "/moodlia-ai-companion-v2.jpg",
     imageAlt: "An educator planning a course with lesson notes and a laptop in a bright learning space",
     imageCaption: "AI that supports the way you already teach",
     outcomes: [
-      "Create and maintain Moodle content through explicit, permission-aware actions.",
-      "Choose between the MoodlIA plugin or Moodle's standard web services.",
-      "Give AI assistants reusable guidance for safe, portable Moodle work.",
+      "Prepare and improve Moodle content without starting every task from a blank page.",
+      "Use the AI assistant or workflow that fits your school and your way of working.",
+      "Review each proposed change before it becomes part of a live course.",
     ],
     productSlugs: ["moodle-plugin", "cli", "moodle-core-cli", "skills"],
   },
   {
     slug: "teaching-tools",
     number: "2",
-    title: "Make teaching flow",
-    shortTitle: "Teaching tools",
-    description: "Create rubrics, review work, and give thoughtful feedback with less repetitive effort.",
+    title: "Spend more time teaching",
+    shortTitle: "Teach with ease",
+    description: "Prepare rubrics, review work, and give useful feedback with less repetitive effort.",
     introduction:
-      "Focused browser tools that meet teachers inside the Moodle pages they already use, reducing repetitive setup and review without removing teacher judgement.",
+      "Focused tools that help with the parts of Moodle teaching that take the most time, while every teaching and grading decision remains yours.",
     image: "/moodlia-teaching-flow-v2.jpg",
     imageAlt: "An educator calmly reviewing student work and feedback cards",
     imageCaption: "More time for thoughtful teaching",
     outcomes: [
-      "Move complete rubrics from a simple CSV file into Moodle.",
-      "Review AI-assisted correction suggestions before anything reaches Moodle.",
-      "Keep each extension focused on the Moodle pages where it is useful.",
+      "Bring a complete rubric into Moodle instead of entering every level by hand.",
+      "Use feedback suggestions as a starting point, then approve only what you mean.",
+      "Move a course backup to an older Moodle site without sending it to a server.",
     ],
-    productSlugs: ["rubrics", "corrector", "chrome-extensions"],
+    productSlugs: ["rubrics", "corrector", "backup-converter", "chrome-extensions"],
   },
   {
     slug: "learning-insights",
     number: "3",
-    title: "See what needs attention",
-    shortTitle: "Learning insights",
-    description: "Turn course activity into clear priorities, useful signals, and better-timed support.",
+    title: "Know where to help next",
+    shortTitle: "See what matters",
+    description: "Turn course activity into clear priorities so support arrives at the right time.",
     introduction:
-      "Browser and desktop tools that organise Moodle activity, deadlines, engagement, grade trends, and risk into views teachers can act on.",
+      "Clear course views that bring together activity, deadlines, participation, and progress, so the next helpful conversation is easier to spot.",
     image: "/moodlia-learning-clarity-v2.jpg",
     imageAlt: "An educator reviewing a simple learning overview and three priority markers",
     imageCaption: "Clarity for the next helpful decision",
     outcomes: [
-      "See courses, deadlines, resources, and direct actions in one teacher view.",
-      "Identify participation trends and students who may need timely support.",
-      "Choose a browser-based or standalone analysis workflow.",
+      "See the courses, deadlines, and resources that need attention in one place.",
+      "Notice participation and progress patterns worth following up with care.",
+      "Choose the simple overview or a deeper analysis when you need it.",
     ],
     productSlugs: ["teacher-dashboard", "analyzer-web", "analyzer-desktop"],
   },
@@ -113,6 +118,19 @@ export const products: MoodliaProduct[] = [
       "An authorised Moodle service user and token",
       "Only the permissions required by the intended workflow",
     ],
+    startGuide: {
+      install: [
+        "Ask the person who manages your Moodle site to install this plugin once for the site.",
+        "Ask them to create a separate, limited MoodlIA service account and token for the work you need.",
+        "Keep the Moodle address and token private; do not share an administrator password.",
+      ],
+      firstUse: [
+        "Start with a small task in a copied or test course.",
+        "Use it through a companion tool such as MoodlIA CLI or an approved AI assistant.",
+        "Review each proposed Moodle change before confirming it.",
+      ],
+      adminNote: "This is the foundation installed by a Moodle administrator. Teachers normally use it through another MoodlIA tool.",
+    },
     sourceUrl: "https://github.com/gafapa/moodle-local_moodlia",
     sourceLabel: "View the plugin on GitHub",
     secondaryUrl: "https://github.com/gafapa/moodle-local_moodlia/issues",
@@ -142,6 +160,19 @@ export const products: MoodliaProduct[] = [
       "A Moodle site with the MoodlIA plugin installed",
       "A REST token enabled for the MoodlIA service",
     ],
+    startGuide: {
+      install: [
+        "Ask a colleague who is comfortable with command-line tools to install MoodlIA CLI on the computer you will use.",
+        "Give them the Moodle address and a dedicated MoodlIA REST token supplied by your Moodle administrator.",
+        "Keep that token private and use a test course for your first connection.",
+      ],
+      firstUse: [
+        "Open the command tool and check that it can read your Moodle site.",
+        "Try one small, reversible task, such as listing a course or creating a draft item.",
+        "Check the result in Moodle before repeating the workflow.",
+      ],
+      adminNote: "This is a terminal tool. You do not need to learn it alone: your Moodle or IT colleague can complete the one-time setup with you.",
+    },
     sourceUrl: "https://github.com/gafapa/moodlia-cli",
     sourceLabel: "View the CLI on GitHub",
     secondaryUrl: "https://www.npmjs.com/package/moodlia",
@@ -171,6 +202,19 @@ export const products: MoodliaProduct[] = [
       "Moodle 5.0 or later with REST web services enabled",
       "A token whose service exposes each required Moodle function",
     ],
+    startGuide: {
+      install: [
+        "Ask your Moodle administrator to enable the standard REST services needed for your task.",
+        "Ask a colleague who uses command-line tools to install Moodle Core CLI on your computer.",
+        "Use a dedicated token with only the Moodle functions you need.",
+      ],
+      firstUse: [
+        "First confirm that the tool can read your Moodle site.",
+        "Try a small task in a test course before changing a live course.",
+        "Review the Moodle result after every new workflow.",
+      ],
+      adminNote: "This option is useful when your Moodle site cannot install the MoodlIA plugin. It still needs a Moodle administrator to prepare access safely.",
+    },
     sourceUrl: "https://github.com/gafapa/moodle-core-cli",
     sourceLabel: "View Moodle Core CLI on GitHub",
     secondaryUrl: "https://www.npmjs.com/package/moodle-core-cli",
@@ -199,6 +243,19 @@ export const products: MoodliaProduct[] = [
       "Codex or a compatible environment that can load reusable skills",
       "Public MoodlIA interfaces for Moodle operations",
     ],
+    startGuide: {
+      install: [
+        "Choose an AI workspace that can use reusable skills, such as Codex.",
+        "Ask the person who manages that workspace to add the MoodlIA Skills collection.",
+        "Connect the workspace to Moodle only through an approved MoodlIA or Moodle Core setup.",
+      ],
+      firstUse: [
+        "Tell the assistant what you want to prepare in plain language.",
+        "Start with a single page, section, or activity rather than a whole course.",
+        "Read the proposed content and approve it before it is published in Moodle.",
+      ],
+      adminNote: "Skills guide an AI assistant; they do not give it access on their own. Moodle access remains controlled by the connection you choose.",
+    },
     sourceUrl: "https://github.com/gafapa/moodlia-skills",
     sourceLabel: "View the skills on GitHub",
   },
@@ -226,6 +283,19 @@ export const products: MoodliaProduct[] = [
       "Access to a Moodle rubric editing page",
       "A correctly structured CSV rubric file",
     ],
+    startGuide: {
+      install: [
+        "Use Chrome or another Chromium-based browser.",
+        "Ask a colleague to add the MoodlIA Rubrics extension to the browser profile you use for Moodle.",
+        "Prepare your rubric in the simple CSV template before opening Moodle.",
+      ],
+      firstUse: [
+        "Open the rubric editing page in Moodle.",
+        "Choose your CSV file and let the extension fill in the draft rubric.",
+        "Read and adjust the criteria in Moodle before saving the rubric.",
+      ],
+      adminNote: "The extension works inside the browser and does not replace Moodle's rubric editor. You remain in control of the final rubric.",
+    },
     sourceUrl: "https://github.com/gafapa/moodlia-rubrics",
     sourceLabel: "View MoodlIA Rubrics on GitHub",
   },
@@ -249,12 +319,67 @@ export const products: MoodliaProduct[] = [
       "Educators who want AI assistance without automatic grading decisions",
     ],
     requirements: [
-      "Google Chrome",
-      "Access to a Moodle assignment grading page",
-      "A configured external AI Runtime connection",
+      "Google Chrome 116 or later",
+      "Access to an HTTPS Moodle assignment grading page",
+      "A local Ollama service or an OpenAI-compatible provider approved by your school or team",
     ],
+    startGuide: {
+      install: [
+        "Install MoodlIA Corrector from the Chrome Web Store in your own Chrome profile.",
+        "Open the extension options and choose local Ollama or the OpenAI-compatible provider approved by your school or team.",
+        "Open Moodle normally with your own teacher account.",
+      ],
+      firstUse: [
+        "Open one assignment submission in Moodle's grading page.",
+        "Ask for a suggestion and read it alongside the student's work and your rubric.",
+        "Only apply the parts you agree with, then save the grade in Moodle yourself.",
+      ],
+      adminNote: "Corrector suggests feedback; it does not make grading decisions for you. Nothing is applied until you approve it.",
+    },
     sourceUrl: "https://github.com/gafapa/moodlia-corrector",
     sourceLabel: "View MoodlIA Corrector on GitHub",
+  },
+  {
+    slug: "backup-converter",
+    name: "MoodlIA Backup Converter",
+    waySlug: "teaching-tools",
+    kind: "Browser application",
+    status: "Open-source project",
+    description: "Adapts newer Moodle backups for selected older releases without uploading them.",
+    introduction:
+      "A local-first migration workbench for teachers and Moodle coordinators who need to reuse course material on an older site. It inspects a local .mbz file, explains compatibility risks, asks before removing unsupported activities, and prepares a converted backup entirely in the browser.",
+    highlights: [
+      "Targets Moodle 4.5, 4.1, and 3.11 with explicit compatibility profiles",
+      "Keeps the source backup in the browser and never uploads it",
+      "Downloads both the converted .mbz file and an auditable JSON report",
+    ],
+    bestFor: [
+      "Teachers moving courses between Moodle sites on different releases",
+      "Moodle coordinators preparing a working copy for a legacy site",
+      "Checking known incompatibilities before attempting a restore",
+    ],
+    requirements: [
+      "A modern browser with enough memory for the expanded backup",
+      "A local Moodle .mbz backup no larger than 768 MB",
+      "A test course on the destination Moodle site for the first restore",
+    ],
+    startGuide: {
+      install: [
+        "Open the static Backup Converter address provided by your school or team; there is nothing to install and no account to create.",
+        "Keep the original .mbz backup unchanged and work with a copy.",
+        "For a large backup, close other memory-intensive browser tabs before starting.",
+      ],
+      firstUse: [
+        "Choose the local .mbz backup and the older Moodle release you need.",
+        "Read every blocker and approve removal only when you understand which activities will be omitted.",
+        "Download the converted backup and JSON report, then restore first into an empty test course.",
+      ],
+      adminNote: "Conversion is conservative and auditable, but it cannot guarantee that every Moodle plugin or newer question-bank structure will restore on an older site. Always test the result before relying on it.",
+    },
+    sourceUrl: "https://github.com/gafapa/moodlia-backup-converter",
+    sourceLabel: "View Backup Converter on GitHub",
+    secondaryUrl: "/tools/backup-converter/",
+    secondaryLabel: "Open Backup Converter",
   },
   {
     slug: "chrome-extensions",
@@ -280,6 +405,19 @@ export const products: MoodliaProduct[] = [
       "Permission to install the chosen extension",
       "Access to the relevant Moodle editing or grading page",
     ],
+    startGuide: {
+      install: [
+        "Choose the one browser tool that matches your task: Rubrics for setup or Corrector for feedback.",
+        "Use Chrome or another supported Chromium-based browser.",
+        "Ask a colleague to add the chosen extension to your browser profile.",
+      ],
+      firstUse: [
+        "Open the Moodle page where you normally prepare or grade work.",
+        "Use the extension for one small task first.",
+        "Check the result in Moodle before saving or applying it.",
+      ],
+      adminNote: "Each extension stays focused on one Moodle task. You can ask us which one fits your workflow before installing anything.",
+    },
     sourceUrl: "https://github.com/gafapa",
     sourceLabel: "Explore MoodlIA projects on GitHub",
   },
@@ -307,6 +445,19 @@ export const products: MoodliaProduct[] = [
       "A token with the required course and calendar functions",
       "A Moodle site whose CORS policy allows browser requests",
     ],
+    startGuide: {
+      install: [
+        "Ask your Moodle administrator to prepare a REST token with course and calendar access.",
+        "Open the dashboard address provided by your school or team in a modern browser.",
+        "Enter the Moodle address and token on your own device; the dashboard keeps its settings locally.",
+      ],
+      firstUse: [
+        "Check that your courses and deadlines appear correctly.",
+        "Open one course and use its direct Moodle links as you normally would.",
+        "Make the dashboard part of a short daily or weekly check-in.",
+      ],
+      adminNote: "The dashboard connects from your browser directly to Moodle. Your Moodle site must allow that connection before it can synchronise.",
+    },
     sourceUrl: "https://github.com/gafapa/moodlia-teacher-dashboard",
     sourceLabel: "View the dashboard on GitHub",
   },
@@ -334,6 +485,19 @@ export const products: MoodliaProduct[] = [
       "Moodle REST access and a suitable token",
       "Optional browser bridge when Moodle blocks direct cross-site requests",
     ],
+    startGuide: {
+      install: [
+        "Ask your Moodle administrator for a suitable REST token.",
+        "Open the Analyzer Web address provided by your school or team in a modern browser.",
+        "If the connection is blocked, ask a colleague to add the optional browser bridge.",
+      ],
+      firstUse: [
+        "Connect to one course and wait for the analysis to finish.",
+        "Start with the course overview and the suggested priorities.",
+        "Open a student view only when you are ready to decide on a helpful follow-up.",
+      ],
+      adminNote: "Analyzer Web is for finding questions worth looking at, not for making automatic decisions about students.",
+    },
     sourceUrl: "https://github.com/gafapa/moodlia-analyzer-web",
     sourceLabel: "View Analyzer Web on GitHub",
   },
@@ -361,6 +525,19 @@ export const products: MoodliaProduct[] = [
       "Access to Moodle REST web services",
       "A token or credentials used to request one for the session",
     ],
+    startGuide: {
+      install: [
+        "Choose the Windows or Apple Silicon Mac version that matches your computer.",
+        "Download the approved desktop build or ask your school or team to install it for you.",
+        "Ask your Moodle administrator for the connection method approved by your site.",
+      ],
+      firstUse: [
+        "Open the app and connect to Moodle for the current session.",
+        "Choose one course and begin with its overview rather than individual student details.",
+        "Use the analysis to guide a conversation or follow-up, then return to Moodle for the next action.",
+      ],
+      adminNote: "The desktop app keeps passwords only in memory for the active session. Use the connection method your Moodle site approves.",
+    },
     sourceUrl: "https://github.com/gafapa/moodlia-analyzer-desktop",
     sourceLabel: "View Analyzer Desktop on GitHub",
     secondaryUrl: "https://github.com/gafapa/moodlia-analyzer-desktop/actions",

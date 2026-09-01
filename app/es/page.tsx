@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { MoodliaHome } from "../page";
 
 export const metadata: Metadata = {
-  title: "MoodlIA — Un solo Moodle. Tres formas de avanzar.",
+  title: "MoodlIA — Haz que Moodle trabaje contigo.",
   description:
-    "MoodlIA acerca la IA, herramientas docentes prácticas e información clara del aprendizaje a Moodle. Descubre tres formas de avanzar y recibe ayuda directa cuando la necesites.",
+    "MoodlIA ayuda a planificar el aprendizaje, enseñar con más tiempo y saber dónde ayudar después en Moodle. Herramientas gratuitas, abiertas y ayuda humana directa.",
   keywords: [
     "IA para Moodle",
     "herramientas de IA para Moodle",
@@ -19,9 +19,9 @@ export const metadata: Metadata = {
     languages: { en: "/", es: "/es", "x-default": "/" },
   },
   openGraph: {
-    title: "MoodlIA — Un solo Moodle. Tres formas de avanzar.",
+    title: "MoodlIA — Haz que Moodle trabaje contigo.",
     description:
-      "Conecta la IA, enseña con confianza y comprende lo importante, con ayuda directa cuando la necesites.",
+      "Planifica el aprendizaje, enseña con más tiempo y sabe dónde ayudar después con herramientas MoodlIA y ayuda humana directa.",
     url: "https://moodlia.com/es",
     siteName: "MoodlIA",
     locale: "es_ES",
@@ -35,9 +35,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "MoodlIA — Un solo Moodle. Tres formas de avanzar.",
+    title: "MoodlIA — Haz que Moodle trabaje contigo.",
     description:
-      "Conecta la IA, enseña con confianza y comprende lo importante, con ayuda directa cuando la necesites.",
+      "Planifica el aprendizaje, enseña con más tiempo y sabe dónde ayudar después con herramientas MoodlIA y ayuda humana directa.",
     images: ["/moodlia-educators-together-v2.jpg"],
   },
 };

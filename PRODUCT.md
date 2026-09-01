@@ -26,7 +26,7 @@ Visitors may be evaluating tools before installation, looking for a specific tea
 
 - The ecosystem is organized around three ways to move forward: work with AI, teach with confidence, and understand what matters.
 - AI integration includes the MoodlIA Moodle plugin, MoodlIA CLI, Moodle Core CLI, and MoodlIA Skills.
-- Teaching tools include MoodlIA Rubrics, MoodlIA Corrector, and related Chrome extensions.
+- Teaching tools include MoodlIA Rubrics, MoodlIA Corrector, MoodlIA Backup Converter, and related Chrome extensions.
 - Insights include the MoodlIA Teacher Dashboard and MoodlIA Analyzer applications.
 - The home page introduces the three ways. Each way and product has a dedicated page.
 - Every public page is available in English and Spanish through equivalent localized routes.

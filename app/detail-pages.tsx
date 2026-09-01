@@ -5,6 +5,7 @@ import {
   getLocalizedRelatedProducts,
   getLocalizedWay,
   getLocalizedWayProducts,
+  getPracticalGuide,
   interfaceCopy,
   localizePath,
   type Locale,
@@ -109,7 +110,7 @@ export function WayDetailPage({ way, locale }: { way: MoodliaWay; locale: Locale
     <>
       <a className="skip-link" href="#main-content" lang={locale}>{copy.skip}</a>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
-      <SiteHeader locale={locale} currentPath={currentPath} />
+      <SiteHeader locale={locale} currentPath={localizePath(locale, currentPath)} alternatePath={locale === "es" ? currentPath : localizePath("es", currentPath)} />
       <main id="main-content" className="detail-main" lang={locale}>
         <section className={`detail-hero way-detail-hero route-${way.number}`} aria-labelledby="detail-title">
           <div className="detail-hero-copy">
@@ -161,6 +162,7 @@ export function ProductDetailPage({ product, locale }: { product: MoodliaProduct
   const way = getLocalizedWay(product.waySlug, locale);
   if (!way) throw new Error(`Missing way for ${product.slug}`);
   const relatedProducts = getLocalizedRelatedProducts(product, locale);
+  const practicalGuide = getPracticalGuide(product.slug, locale);
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
@@ -176,7 +178,7 @@ export function ProductDetailPage({ product, locale }: { product: MoodliaProduct
     <>
       <a className="skip-link" href="#main-content" lang={locale}>{copy.skip}</a>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
-      <SiteHeader locale={locale} currentPath={currentPath} />
+      <SiteHeader locale={locale} currentPath={localizePath(locale, currentPath)} alternatePath={locale === "es" ? currentPath : localizePath("es", currentPath)} />
       <main id="main-content" className="detail-main" lang={locale}>
         <section className={`detail-hero product-detail-hero route-${way.number}`} aria-labelledby="detail-title">
           <div className="detail-hero-copy">
@@ -185,6 +187,7 @@ export function ProductDetailPage({ product, locale }: { product: MoodliaProduct
             <p className="product-lede">{product.description}</p>
             <div className="detail-actions">
               <a className="primary-action" href={product.sourceUrl}>{product.sourceLabel}</a>
+              <a className="text-action" href="#how-to-start">{copy.seeHowToStart}</a>
               <a className="text-action" href="mailto:contact@moodlia.com">{copy.askAboutProject}<span aria-hidden="true">↗</span></a>
             </div>
             <p className="detail-meta">{product.kind}<span aria-hidden="true">·</span>{product.status}</p>
@@ -209,6 +212,52 @@ export function ProductDetailPage({ product, locale }: { product: MoodliaProduct
             <section aria-labelledby="requirements-title"><p>03</p><h3 id="requirements-title">{copy.requirementsTitle}</h3><ul>{product.requirements.map((item) => <li key={item}>{item}</li>)}</ul></section>
           </div>
         </section>
+
+        <section className="product-start" id="how-to-start" aria-labelledby="product-start-title">
+          <header>
+            <h2 id="product-start-title">{copy.startHereTitle}</h2>
+            <p>{product.startGuide.adminNote}</p>
+          </header>
+          <div className="product-start-steps">
+            <section aria-labelledby="install-title">
+              <h3 id="install-title">{copy.installTitle}</h3>
+              <ol>{product.startGuide.install.map((step) => <li key={step}>{step}</li>)}</ol>
+            </section>
+            <section aria-labelledby="first-use-title">
+              <h3 id="first-use-title">{copy.firstUseTitle}</h3>
+              <ol>{product.startGuide.firstUse.map((step) => <li key={step}>{step}</li>)}</ol>
+            </section>
+          </div>
+          <a className="open-selection" href="mailto:contact@moodlia.com">{copy.startHereLink}<span aria-hidden="true">↗</span></a>
+        </section>
+
+        {practicalGuide ? (
+          <section className="practical-guide" aria-labelledby="practical-guide-title">
+            <header>
+              <p>{locale === "es" ? "PASOS CONCRETOS" : "CONCRETE STEPS"}</p>
+              <h2 id="practical-guide-title">{practicalGuide.title}</h2>
+              <span>{practicalGuide.introduction}</span>
+            </header>
+            {practicalGuide.availability ? (
+              <aside className="practical-guide-availability" aria-label={practicalGuide.availability.title}>
+                <strong>{practicalGuide.availability.title}</strong>
+                <p>{practicalGuide.availability.description}</p>
+              </aside>
+            ) : null}
+            <ol>
+              {practicalGuide.steps.map((step) => (
+                <li key={step.title}>
+                  <div>
+                    <h3>{step.title}</h3>
+                    <p>{step.description}</p>
+                    {step.command ? <pre><code>{step.command}</code></pre> : null}
+                    {step.action ? <a className="text-action" href={step.action.href}>{step.action.label}<span aria-hidden="true">↗</span></a> : null}
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </section>
+        ) : null}
 
         {relatedProducts.length ? (
           <section className="related-products" aria-labelledby="related-products-title">

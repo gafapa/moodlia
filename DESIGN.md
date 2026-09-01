@@ -8,8 +8,8 @@ colors:
   ink-soft: "#626875"
   ballpoint-blue: "#315b9a"
   deep-blue: "#18375f"
-  active-coral: "#e65d4f"
-  pressed-coral: "#b73f37"
+  active-coral: "#b5443b"
+  pressed-coral: "#8f302a"
   marker-yellow: "#f2c451"
   quiet-mint: "#a8c7b7"
   rule: "#d8d2c6"
@@ -187,8 +187,8 @@ Fold-like offsets, ruled borders, caption strips, and slight rotations create ma
 ### Site Navigation and Language Switcher
 
 - Desktop navigation is centered between the wordmark and actions; its coral underline grows from the left on hover.
-- The EN/ES switch is a compact bordered pair. The current language uses Warm Ink on Clean Paper contrast and exposes `aria-current="page"`.
-- The header contact action is direct and blue on desktop. It is removed below 620px because equivalent help actions remain in the content.
+- The EN/ES switch is a compact bordered pair with 44px targets. The current language uses Warm Ink on Clean Paper contrast and exposes `aria-current="page"`.
+- The header contact action is direct and blue. It remains visible as a compact help action on mobile so human support is never buried below the full page.
 - The language switch preserves the equivalent page path.
 
 ### Mounted Educator Photography
@@ -199,7 +199,7 @@ Photography uses a 4:5 crop, a Clean Paper mount, a printed caption, a numbered 
 
 The three-track rail doubles as navigation and ecosystem explanation. It uses numbered circular markers, ruled divisions, text labels, and route-specific hover washes. Product and outcome lists reuse the same numbered ruled rhythm without becoming cards.
 
-The rail playhead runs once for five seconds after a one-second delay. Hero photographs enter in a staggered 0.9-second sequence. Hover movement is limited to a few pixels. `prefers-reduced-motion` reduces animations and transitions to effectively instant, disables smooth scrolling, and removes decorative transforms from selected elements.
+The rail is a stable three-route navigation element and does not imitate progress or loading. Hero photographs provide the one authored entrance in a staggered 0.9-second sequence. Hover movement is limited to interactive elements. `prefers-reduced-motion` reduces animations and transitions to effectively instant, disables smooth scrolling, and removes decorative transforms from selected elements.
 
 Page navigation treats the content as one paper sheet replacing another while the header remains visually stable. Native cross-document View Transitions handle this when available; the static-site fallback gives the current sheet a 140ms exit and the arriving sheet a 320ms reveal. Same-page anchors keep their normal scroll behavior, modified clicks remain native, and reduced-motion preferences bypass the replacement animation entirely.
 

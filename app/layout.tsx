@@ -23,9 +23,9 @@ const designContract = {
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://moodlia.com"),
-  title: "MoodlIA — One Moodle. Three ways forward.",
+  title: "MoodlIA — Make Moodle work for you.",
   description:
-    "MoodlIA brings AI, practical teaching tools, and clear learning insights to Moodle. Explore three connected ways to move forward and get direct help when you need it.",
+    "MoodlIA helps educators plan learning, teach with more time, and know where to help next in Moodle. Free, open tools and direct human help.",
   keywords: [
     "Moodle AI",
     "AI tools for Moodle",
@@ -49,9 +49,9 @@ export const metadata: Metadata = {
     googleBot: { index: true, follow: true, "max-image-preview": "large" },
   },
   openGraph: {
-    title: "MoodlIA — One Moodle. Three ways forward.",
+    title: "MoodlIA — Make Moodle work for you.",
     description:
-      "Connect with AI, teach with confidence, and see what matters—with direct help whenever you need it.",
+      "Plan learning, teach with more time, and know where to help next—with practical MoodlIA tools and direct human help.",
     url: "https://moodlia.com",
     siteName: "MoodlIA",
     locale: "en_US",
@@ -60,9 +60,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "MoodlIA — One Moodle. Three ways forward.",
+    title: "MoodlIA — Make Moodle work for you.",
     description:
-      "Connect with AI, teach with confidence, and see what matters—with direct help whenever you need it.",
+      "Plan learning, teach with more time, and know where to help next—with practical MoodlIA tools and direct human help.",
     images: ["/moodlia-educators-together-v2.jpg"],
   },
 };
@@ -77,18 +77,6 @@ export default function RootLayout({
       <body
         className={`${bodyFont.variable} ${displayFont.variable} antialiased`}
       >
-        <script
-          id="moodlia-page-arrival"
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{if(sessionStorage.getItem("moodlia-page-transition")==="entering"){sessionStorage.removeItem("moodlia-page-transition");document.documentElement.dataset.pageTransition="entering";setTimeout(function(){delete document.documentElement.dataset.pageTransition},360)}}catch(error){}})();`,
-          }}
-        />
-        <script
-          id="moodlia-page-navigation"
-          dangerouslySetInnerHTML={{
-            __html: `(function(){var duration=140;var storageKey="moodlia-page-transition";function supportsNativeTransition(){return typeof document.startViewTransition==="function"}function shouldHandle(event,anchor){if(event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return false;if(anchor.target&&anchor.target!=="_self"||anchor.hasAttribute("download"))return false;var destination=new URL(anchor.href,window.location.href);if(destination.origin!==window.location.origin)return false;return destination.pathname!==window.location.pathname||destination.search!==window.location.search}function handleNavigation(event){var target=event.target;if(!(target instanceof Element))return;var anchor=target.closest("a");if(!(anchor instanceof HTMLAnchorElement)||!shouldHandle(event,anchor))return;if(supportsNativeTransition()||window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;event.preventDefault();if(document.documentElement.dataset.pageTransition==="leaving")return;try{sessionStorage.setItem(storageKey,"entering")}catch(error){}document.documentElement.dataset.pageTransition="leaving";setTimeout(function(){window.location.assign(anchor.href)},duration)}document.addEventListener("click",handleNavigation)})();`,
-          }}
-        />
         <script
           id="impeccable-design-contract"
           type="application/json"

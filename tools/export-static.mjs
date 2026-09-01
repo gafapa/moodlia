@@ -10,6 +10,10 @@ const outputRoot = resolve(projectRoot, ".static-export");
 const fontSourcePrefix = `${projectRoot.replaceAll("\\", "/")}/.vinext/fonts/`;
 const englishPageRoutes = [
   "/",
+  "/start",
+  "/legal-notice",
+  "/privacy",
+  "/cookies",
   "/ways/ai-integration",
   "/ways/teaching-tools",
   "/ways/learning-insights",
@@ -19,6 +23,7 @@ const englishPageRoutes = [
   "/products/skills",
   "/products/rubrics",
   "/products/corrector",
+  "/products/backup-converter",
   "/products/chrome-extensions",
   "/products/teacher-dashboard",
   "/products/analyzer-web",
@@ -26,7 +31,12 @@ const englishPageRoutes = [
 ];
 const pageRoutes = [
   ...englishPageRoutes,
-  ...englishPageRoutes.map((route) => route === "/" ? "/es" : `/es${route}`),
+  "/es",
+  "/es/empezar",
+  "/es/aviso-legal",
+  "/es/privacy",
+  "/es/cookies",
+  ...englishPageRoutes.filter((route) => route !== "/" && !["/start", "/legal-notice", "/privacy", "/cookies"].includes(route)).map((route) => `/es${route}`),
 ];
 
 await readFile(serverEntry);
@@ -69,15 +79,21 @@ const [renderedPages, robotsText, sitemapXml] = await Promise.all([
   renderPath("/sitemap.xml", "application/xml"),
 ]);
 const html = renderedPages[0].html;
-assert.match(html, /<title>MoodlIA — One Moodle\. Three ways forward\.<\/title>/i);
+assert.match(html, /<title>MoodlIA — Make Moodle work for you\.<\/title>/i);
 assert.match(html, /https:\/\/moodlia\.com\/moodlia-educators-together-v2\.jpg/i);
 assert.doesNotMatch(html, /localhost|127\.0\.0\.1|codex-preview/i);
 assert.match(robotsText, /Sitemap: https:\/\/moodlia\.com\/sitemap\.xml/i);
 assert.match(sitemapXml, /<loc>https:\/\/moodlia\.com\/<\/loc>/i);
 assert.match(sitemapXml, /<loc>https:\/\/moodlia\.com\/ways\/ai-integration<\/loc>/i);
+assert.match(sitemapXml, /<loc>https:\/\/moodlia\.com\/start<\/loc>/i);
+assert.match(sitemapXml, /<loc>https:\/\/moodlia\.com\/es\/empezar<\/loc>/i);
 assert.match(sitemapXml, /<loc>https:\/\/moodlia\.com\/es\/ways\/ai-integration<\/loc>/i);
 assert.match(sitemapXml, /<loc>https:\/\/moodlia\.com\/products\/analyzer-desktop<\/loc>/i);
 assert.match(sitemapXml, /<loc>https:\/\/moodlia\.com\/es\/products\/analyzer-desktop<\/loc>/i);
+assert.match(sitemapXml, /<loc>https:\/\/moodlia\.com\/products\/backup-converter<\/loc>/i);
+assert.match(sitemapXml, /<loc>https:\/\/moodlia\.com\/es\/products\/backup-converter<\/loc>/i);
+assert.match(sitemapXml, /<loc>https:\/\/moodlia\.com\/legal-notice<\/loc>/i);
+assert.match(sitemapXml, /<loc>https:\/\/moodlia\.com\/es\/aviso-legal<\/loc>/i);
 
 for (const page of renderedPages) {
   page.html = page.html.replaceAll(fontSourcePrefix, "/assets/_vinext_fonts/");
@@ -110,5 +126,9 @@ await Promise.all([
   writeFile(resolve(outputRoot, "robots.txt"), robotsText, "utf8"),
   writeFile(resolve(outputRoot, "sitemap.xml"), sitemapXml, "utf8"),
 ]);
+
+const converterHtml = await readFile(resolve(outputRoot, "tools", "backup-converter", "index.html"), "utf8");
+assert.match(converterHtml, /\/tools\/backup-converter\/assets\/index-[^\"']+\.js/i);
+assert.match(converterHtml, /<title>MoodlIA Backup Converter<\/title>/i);
 
 console.log(`Exported static site to ${outputRoot}`);
