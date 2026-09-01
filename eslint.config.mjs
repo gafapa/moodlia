@@ -13,6 +13,7 @@ const eslintConfig = defineConfig([
     "dist/**",
     "out/**",
     "build/**",
+    "public/tools/backup-converter/**",
     "next-env.d.ts",
   ]),
 ]);
