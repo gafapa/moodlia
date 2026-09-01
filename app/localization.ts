@@ -317,7 +317,7 @@ const spanishProducts: Record<string, ProductCopy> = {
     introduction:
       "Una mesa de migración local para docentes y coordinadores de Moodle que necesitan reutilizar material de un curso en un sitio anterior. Inspecciona un archivo .mbz local, explica los riesgos de compatibilidad, pide permiso antes de eliminar actividades no admitidas y prepara la copia convertida íntegramente en el navegador.",
     highlights: [
-      "Perfiles explícitos para Moodle 4.5, 4.1 y 3.11",
+      "Nueve ramas de destino explícitas entre Moodle 5.1 y 3.11, con los perfiles nuevos marcados como experimentales",
       "Mantiene la copia de origen en el navegador y nunca la sube",
       "Descarga el archivo .mbz convertido y un informe JSON auditable",
     ],
@@ -338,7 +338,7 @@ const spanishProducts: Record<string, ProductCopy> = {
         "Si la copia es grande, cierra otras pestañas del navegador que consuman mucha memoria.",
       ],
       firstUse: [
-        "Elige la copia .mbz local y la versión anterior de Moodle que necesitas.",
+        "Elige la copia .mbz local y una de las nueve ramas de Moodle disponibles como destino.",
         "Lee cada bloqueo y aprueba una eliminación únicamente cuando entiendas qué actividades se omitirán.",
         "Descarga la copia convertida y el informe JSON, y restáurala primero en un curso de prueba vacío.",
       ],
@@ -723,7 +723,7 @@ const practicalGuides: Record<Locale, Record<string, PracticalGuide>> = {
       availability: { title: "Static web application", description: "Your school or team provides the web address. All inspection and conversion work stays in the browser." },
       steps: [
         { title: "Protect the original", description: "Make a copy of the original .mbz backup and keep the untouched file somewhere safe." },
-        { title: "Choose the destination", description: "Open Backup Converter, select the working copy, and choose Moodle 4.5, 4.1, or 3.11.", action: { href: "/tools/backup-converter/", label: "Open Backup Converter" } },
+        { title: "Choose the destination", description: "Open Backup Converter, select the working copy, and choose 5.1, 5.0, 4.5, 4.4, 4.3, 4.2, 4.1, 4.0, or 3.11. Experimental profiles must be tested before real use.", action: { href: "/tools/backup-converter/", label: "Open Backup Converter" } },
         { title: "Review compatibility decisions", description: "Read the inspection report. Approve removal only for activities you accept losing from the converted copy." },
         { title: "Download and test", description: "Keep the converted .mbz and its JSON report together, then restore first into an empty test course on the destination site." },
       ],
@@ -842,7 +842,7 @@ const practicalGuides: Record<Locale, Record<string, PracticalGuide>> = {
       availability: { title: "Aplicación web estática", description: "Tu centro o equipo proporciona la dirección web. Toda la inspección y la conversión permanecen en el navegador." },
       steps: [
         { title: "Protege el original", description: "Haz un duplicado de la copia .mbz original y conserva intacto el archivo de origen en un lugar seguro." },
-        { title: "Elige el destino", description: "Abre Backup Converter, selecciona el duplicado y elige Moodle 4.5, 4.1 o 3.11.", action: { href: "/tools/backup-converter/", label: "Abrir Backup Converter" } },
+        { title: "Elige el destino", description: "Abre Backup Converter, selecciona el duplicado y elige 5.1, 5.0, 4.5, 4.4, 4.3, 4.2, 4.1, 4.0 o 3.11. Prueba los perfiles experimentales antes de utilizarlos con un curso real.", action: { href: "/tools/backup-converter/", label: "Abrir Backup Converter" } },
         { title: "Revisa las decisiones de compatibilidad", description: "Lee el informe de inspección. Aprueba una eliminación solo para actividades que aceptes perder en la copia convertida." },
         { title: "Descarga y prueba", description: "Conserva juntos el .mbz convertido y su informe JSON, y restaura primero en un curso de prueba vacío del sitio de destino." },
       ],

@@ -349,7 +349,7 @@ export const products: MoodliaProduct[] = [
     introduction:
       "A local-first migration workbench for teachers and Moodle coordinators who need to reuse course material on an older site. It inspects a local .mbz file, explains compatibility risks, asks before removing unsupported activities, and prepares a converted backup entirely in the browser.",
     highlights: [
-      "Targets Moodle 4.5, 4.1, and 3.11 with explicit compatibility profiles",
+      "Offers nine explicit target branches from Moodle 5.1 to 3.11, with new profiles clearly marked experimental",
       "Keeps the source backup in the browser and never uploads it",
       "Downloads both the converted .mbz file and an auditable JSON report",
     ],
@@ -370,7 +370,7 @@ export const products: MoodliaProduct[] = [
         "For a large backup, close other memory-intensive browser tabs before starting.",
       ],
       firstUse: [
-        "Choose the local .mbz backup and the older Moodle release you need.",
+        "Choose the local .mbz backup and one of the nine Moodle target branches.",
         "Read every blocker and approve removal only when you understand which activities will be omitted.",
         "Download the converted backup and JSON report, then restore first into an empty test course.",
       ],
