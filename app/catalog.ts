@@ -242,7 +242,7 @@ export const products: MoodliaProduct[] = [
       "Mixed Moodle versions or sites where only one endpoint has MoodlIA",
     ],
     requirements: [
-      "Node.js 22.5 or later",
+      "Node.js 22.13 or later",
       "Explicit profile, course/category, direction, and effect allowlists",
       "Separate limited REST credentials for every Moodle endpoint",
     ],
