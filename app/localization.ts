@@ -205,6 +205,42 @@ const spanishProducts: Record<string, ProductCopy> = {
     sourceLabel: "Ver Moodle Core CLI en GitHub",
     secondaryLabel: "Abrir el paquete npm",
   },
+  "sync-mcp": {
+    kind: "Coordinador MCP entre sitios",
+    status: "Vista previa para desarrollo",
+    description: "Coordina planes revisados de contenido entre distintos sitios Moodle.",
+    introduction:
+      "Un servidor MCP separado para sincronización unidireccional sin copias de seguridad entre sitios Moodle 4.5 y posteriores. Cada extremo puede usar MoodlIA, servicios de Moodle Core o ambos, mientras la política y la aprobación exacta permanecen fuera del modelo.",
+    highlights: [
+      "Usa el mismo motor adaptativo de planificación y recuperación que la CLI",
+      "Mantiene tokens de Moodle y archivos binarios fuera de argumentos y resultados MCP",
+      "Ofrece estado durable, cancelación, reconciliación, conflictos, verificación e historial",
+    ],
+    bestFor: [
+      "Administradores que coordinan contenido seleccionado entre sitios Moodle separados",
+      "Clientes MCP que necesitan un flujo entre sitios limitado por política",
+      "Versiones Moodle distintas o sitios donde solo un extremo tiene MoodlIA",
+    ],
+    requirements: [
+      "Node.js 22.5 o posterior",
+      "Listas explícitas de perfiles, cursos o categorías, dirección y efectos autorizados",
+      "Credenciales REST limitadas y separadas para cada extremo Moodle",
+    ],
+    startGuide: {
+      install: [
+        "Pide a un administrador que defina los perfiles de sitio y la política de pares autorizados.",
+        "Ejecuta el coordinador localmente por stdio o coloca su listener HTTP tras TLS autenticado.",
+        "Guarda los tokens Moodle en variables de entorno, nunca en argumentos de herramientas MCP.",
+      ],
+      firstUse: [
+        "Descubre ambos extremos y crea un plan de sincronización de solo lectura.",
+        "Revisa cada acción, carencia, conflicto, proveedor, efecto y estimación de bytes.",
+        "Aprueba el digest exacto fuera del cliente de IA y verifica el trabajo mediante una nueva lectura.",
+      ],
+      adminNote: "Es un coordinador, no otro plugin de Moodle. El endpoint MCP del plugin MoodlIA sigue operando un único sitio Moodle.",
+    },
+    sourceLabel: "Ver el coordinador en GitHub",
+  },
   skills: {
     kind: "Skills reutilizables para agentes de IA",
     status: "Proyecto de código abierto",
@@ -687,6 +723,17 @@ const practicalGuides: Record<Locale, Record<string, PracticalGuide>> = {
         { title: "Make changes deliberately", description: "Reading is the default. Any write operation must explicitly include --allow-write, so start by checking courses first." },
       ],
     },
+    "sync-mcp": {
+      title: "Run the MoodlIA Sync MCP coordinator",
+      introduction: "Use this developer preview only after an administrator has defined the exact site, course, category, direction, and effect policy.",
+      availability: { title: "Developer preview", description: "The coordinator source and setup reference are available on GitHub; no hosted public coordinator is provided." },
+      steps: [
+        { title: "Review the coordinator", description: "Read its security, profile, policy, and recovery model before connecting Moodle credentials.", action: { href: "https://github.com/gafapa/moodlia-sync-mcp", label: "Open MoodlIA Sync MCP on GitHub" } },
+        { title: "Choose a protected transport", description: "Prefer local stdio. For remote MCP, use a strong Bearer credential, an allowed-host list, and authenticated TLS in front of the loopback service." },
+        { title: "Create a read-only plan", description: "Discover both Moodle sites and inspect the immutable plan, unsupported changes, conflicts, selected providers, and estimated transfer." },
+        { title: "Approve and verify", description: "Approve the exact digest outside the MCP model, monitor the durable job, and finish with a fresh Moodle readback." },
+      ],
+    },
     skills: {
       title: "Add MoodlIA Skills to an AI workspace",
       introduction: "Skills are guidance files for an approved AI workspace; they do not create Moodle access by themselves.",
@@ -804,6 +851,17 @@ const practicalGuides: Record<Locale, Record<string, PracticalGuide>> = {
         { title: "Define la conexión", description: "En PowerShell, sustituye los dos valores de ejemplo por la dirección de Moodle y el token que te hayan dado.", command: "$env:MOODLE_BASE_URL = \"https://tu-moodle.example\"\n$env:MOODLE_TOKEN = \"tu-token\"" },
         { title: "Ejecuta la primera comprobación", description: "npx descarga y ejecuta el paquete sin una instalación global independiente.", command: "npx moodle-core-cli get-courses", action: { href: "https://www.npmjs.com/package/moodle-core-cli", label: "Abrir Moodle Core CLI en npm" } },
         { title: "Haz cambios de forma deliberada", description: "La lectura es el modo predeterminado. Cualquier operación de escritura exige incluir --allow-write, así que empieza comprobando los cursos." },
+      ],
+    },
+    "sync-mcp": {
+      title: "Ejecuta el coordinador MoodlIA Sync MCP",
+      introduction: "Usa esta vista previa solo después de que un administrador defina la política exacta de sitios, cursos, categorías, dirección y efectos.",
+      availability: { title: "Vista previa para desarrollo", description: "El código y la referencia de configuración están en GitHub; no se proporciona un coordinador público alojado." },
+      steps: [
+        { title: "Revisa el coordinador", description: "Lee su modelo de seguridad, perfiles, política y recuperación antes de conectar credenciales Moodle.", action: { href: "https://github.com/gafapa/moodlia-sync-mcp", label: "Abrir MoodlIA Sync MCP en GitHub" } },
+        { title: "Elige un transporte protegido", description: "Prefiere stdio local. Para MCP remoto, usa una credencial Bearer fuerte, hosts permitidos y TLS autenticado delante del servicio local." },
+        { title: "Crea un plan de solo lectura", description: "Descubre ambos sitios Moodle y revisa el plan inmutable, cambios no compatibles, conflictos, proveedores y transferencia estimada." },
+        { title: "Aprueba y verifica", description: "Aprueba el digest exacto fuera del modelo MCP, supervisa el trabajo durable y termina con una nueva lectura de Moodle." },
       ],
     },
     skills: {

@@ -53,7 +53,7 @@ export const ways: MoodliaWay[] = [
       "Use the AI assistant or workflow that fits your school and your way of working.",
       "Review each proposed change before it becomes part of a live course.",
     ],
-    productSlugs: ["moodle-plugin", "cli", "moodle-core-cli", "skills"],
+    productSlugs: ["moodle-plugin", "cli", "moodle-core-cli", "sync-mcp", "skills"],
   },
   {
     slug: "teaching-tools",
@@ -221,6 +221,46 @@ export const products: MoodliaProduct[] = [
     sourceLabel: "View Moodle Core CLI on GitHub",
     secondaryUrl: "https://www.npmjs.com/package/moodle-core-cli",
     secondaryLabel: "Open the npm package",
+  },
+  {
+    slug: "sync-mcp",
+    name: "MoodlIA Sync MCP",
+    waySlug: "ai-integration",
+    kind: "Cross-site MCP coordinator",
+    status: "Developer preview",
+    description: "Coordinates reviewed course-content plans between different Moodle sites.",
+    introduction:
+      "A separate MCP server for one-way, no-backup synchronization across Moodle 4.5 and later sites. Each endpoint may use MoodlIA, Moodle Core services, or both, while policy and exact plan approval remain outside the model.",
+    highlights: [
+      "Uses the same adaptive planning and recovery engine as the CLI",
+      "Keeps Moodle tokens and binary assets outside MCP arguments and results",
+      "Supports durable status, cancellation, reconciliation, conflicts, verification, and history",
+    ],
+    bestFor: [
+      "Administrators coordinating selected content between separate Moodle sites",
+      "MCP clients that need a policy-bound cross-site workflow",
+      "Mixed Moodle versions or sites where only one endpoint has MoodlIA",
+    ],
+    requirements: [
+      "Node.js 22.5 or later",
+      "Explicit profile, course/category, direction, and effect allowlists",
+      "Separate limited REST credentials for every Moodle endpoint",
+    ],
+    startGuide: {
+      install: [
+        "Ask an administrator to define the authorized site profiles and pair policy.",
+        "Run the coordinator locally over stdio, or place its HTTP listener behind authenticated TLS.",
+        "Keep Moodle tokens in environment variables and never in MCP tool arguments.",
+      ],
+      firstUse: [
+        "Discover both endpoints and create a read-only synchronization plan.",
+        "Review every action, gap, conflict, provider, effect, and byte estimate.",
+        "Approve the exact plan digest outside the AI client, then verify the completed job by live readback.",
+      ],
+      adminNote: "This is a coordinator, not another Moodle plugin. The MCP endpoint inside the MoodlIA plugin continues to operate one Moodle site.",
+    },
+    sourceUrl: "https://github.com/gafapa/moodlia-sync-mcp",
+    sourceLabel: "View the coordinator on GitHub",
   },
   {
     slug: "skills",
