@@ -144,9 +144,10 @@ export const products: MoodliaProduct[] = [
     status: "Published npm package",
     description: "Runs Moodle tasks from a terminal or repeatable workflow.",
     introduction:
-      "The public command-line tool and reusable Node client for the MoodlIA Moodle Plugin. It brings the same operation contract to developer machines, scripts, and automation workers.",
+      "The adaptive command-line tool and reusable Node client for Moodle 4.5 and later. It uses verified MoodlIA capabilities when the plugin is available and falls back to exact Moodle Core services when it is not.",
     highlights: [
-      "Connects directly to MoodlIA through REST",
+      "Adapts per capability across MoodlIA and Moodle Core",
+      "Plans one-way course synchronization between different Moodle sites without backup files",
       "Available as a global command or project dependency",
       "Includes a reusable client and generated TypeScript declarations",
     ],
@@ -157,8 +158,8 @@ export const products: MoodliaProduct[] = [
     ],
     requirements: [
       "Node.js 22 or later",
-      "A Moodle site with the MoodlIA plugin installed",
-      "A REST token enabled for the MoodlIA service",
+      "Moodle 4.5 or later with REST web services enabled",
+      "A limited Core or MoodlIA REST token for each configured site",
     ],
     startGuide: {
       install: [
@@ -186,11 +187,12 @@ export const products: MoodliaProduct[] = [
     status: "Published npm package",
     description: "Works with Moodle's standard web services without installing a plugin.",
     introduction:
-      "A friendly client and command-line interface for Moodle 5.0 and later core web services. It turns complex REST details into stable operations without requiring the MoodlIA plugin.",
+      "A friendly client, synchronization foundation, and command-line interface for Moodle 4.5 and later core web services. It turns complex REST details into stable operations without requiring the MoodlIA plugin.",
     highlights: [
       "Uses Moodle core web services only",
       "Handles nested parameters, version checks, and response normalisation",
       "Exposes friendly operations instead of arbitrary remote calls",
+      "Provides the Core-only engine used by adaptive cross-site synchronization",
     ],
     bestFor: [
       "Moodle sites that cannot install an additional plugin",
@@ -199,7 +201,7 @@ export const products: MoodliaProduct[] = [
     ],
     requirements: [
       "Node.js 22 or later",
-      "Moodle 5.0 or later with REST web services enabled",
+      "Moodle 4.5 or later with REST web services enabled",
       "A token whose service exposes each required Moodle function",
     ],
     startGuide: {

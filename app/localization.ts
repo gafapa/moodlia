@@ -134,9 +134,10 @@ const spanishProducts: Record<string, ProductCopy> = {
     status: "Paquete npm publicado",
     description: "Ejecuta tareas de Moodle desde una terminal o un flujo repetible.",
     introduction:
-      "La herramienta pública de línea de comandos y el cliente Node reutilizable para el plugin de MoodlIA. Lleva el mismo contrato de operaciones a equipos de desarrollo, scripts y procesos de automatización.",
+      "La herramienta adaptativa de línea de comandos y el cliente Node reutilizable para Moodle 4.5 y posteriores. Usa capacidades verificadas de MoodlIA cuando el plugin está disponible y recurre a servicios exactos de Moodle Core cuando no lo está.",
     highlights: [
-      "Se conecta directamente con MoodlIA mediante REST",
+      "Se adapta por capacidad entre MoodlIA y Moodle Core",
+      "Planifica sincronización unidireccional entre sitios Moodle sin usar copias de seguridad",
       "Disponible como comando global o dependencia de proyecto",
       "Incluye un cliente reutilizable y declaraciones TypeScript generadas",
     ],
@@ -147,8 +148,8 @@ const spanishProducts: Record<string, ProductCopy> = {
     ],
     requirements: [
       "Node.js 22 o posterior",
-      "Un sitio Moodle con el plugin de MoodlIA instalado",
-      "Un token REST habilitado para el servicio de MoodlIA",
+      "Moodle 4.5 o posterior con servicios web REST habilitados",
+      "Un token REST limitado de Core o MoodlIA para cada sitio configurado",
     ],
     startGuide: {
       install: [
@@ -171,11 +172,12 @@ const spanishProducts: Record<string, ProductCopy> = {
     status: "Paquete npm publicado",
     description: "Trabaja con los servicios web estándar de Moodle sin instalar un plugin.",
     introduction:
-      "Un cliente y una interfaz de línea de comandos accesibles para los servicios web del núcleo de Moodle 5.0 y posteriores. Convierte los detalles complejos de REST en operaciones estables sin requerir el plugin de MoodlIA.",
+      "Un cliente, base de sincronización e interfaz de línea de comandos para los servicios web del núcleo de Moodle 4.5 y posteriores. Convierte los detalles complejos de REST en operaciones estables sin requerir el plugin de MoodlIA.",
     highlights: [
       "Utiliza únicamente los servicios web del núcleo de Moodle",
       "Gestiona parámetros anidados, comprobaciones de versión y normalización de respuestas",
       "Expone operaciones claras en lugar de llamadas remotas arbitrarias",
+      "Aporta el motor solo-Core usado por la sincronización adaptativa entre sitios",
     ],
     bestFor: [
       "Sitios Moodle donde no se puede instalar un plugin adicional",
@@ -184,7 +186,7 @@ const spanishProducts: Record<string, ProductCopy> = {
     ],
     requirements: [
       "Node.js 22 o posterior",
-      "Moodle 5.0 o posterior con los servicios web REST habilitados",
+      "Moodle 4.5 o posterior con los servicios web REST habilitados",
       "Un token cuyo servicio exponga cada función de Moodle necesaria",
     ],
     startGuide: {
