@@ -138,6 +138,7 @@ const spanishProducts: Record<string, ProductCopy> = {
     highlights: [
       "Se adapta por capacidad entre MoodlIA y Moodle Core",
       "Planifica sincronización unidireccional entre sitios Moodle sin usar copias de seguridad",
+      "Ofrece espacios explícitos para Core y plugin, ciclo de sincronización durable y códigos de resultado procesables",
       "Disponible como comando global o dependencia de proyecto",
       "Incluye un cliente reutilizable y declaraciones TypeScript generadas",
     ],
@@ -147,7 +148,7 @@ const spanishProducts: Record<string, ProductCopy> = {
       "Procesos de automatización que necesitan el cliente público de MoodlIA",
     ],
     requirements: [
-      "Node.js 22 o posterior",
+      "Node.js 22.13 o posterior",
       "Moodle 4.5 o posterior con servicios web REST habilitados",
       "Un token REST limitado de Core o MoodlIA para cada sitio configurado",
     ],
@@ -178,6 +179,7 @@ const spanishProducts: Record<string, ProductCopy> = {
       "Gestiona parámetros anidados, comprobaciones de versión y normalización de respuestas",
       "Expone operaciones claras en lugar de llamadas remotas arbitrarias",
       "Aporta el motor solo-Core usado por la sincronización adaptativa entre sitios",
+      "Expone las carencias de configuración de finalización en vez de simular reparaciones no compatibles",
     ],
     bestFor: [
       "Sitios Moodle donde no se puede instalar un plugin adicional",
@@ -185,7 +187,7 @@ const spanishProducts: Record<string, ProductCopy> = {
       "Automatizaciones controladas basadas en las capacidades estándar de Moodle",
     ],
     requirements: [
-      "Node.js 22 o posterior",
+      "Node.js 22.13 o posterior",
       "Moodle 4.5 o posterior con los servicios web REST habilitados",
       "Un token cuyo servicio exponga cada función de Moodle necesaria",
     ],
@@ -222,7 +224,7 @@ const spanishProducts: Record<string, ProductCopy> = {
       "Versiones Moodle distintas o sitios donde solo un extremo tiene MoodlIA",
     ],
     requirements: [
-      "Node.js 22.5 o posterior",
+      "Node.js 22.13 o posterior",
       "Listas explícitas de perfiles, cursos o categorías, dirección y efectos autorizados",
       "Credenciales REST limitadas y separadas para cada extremo Moodle",
     ],
@@ -706,7 +708,7 @@ const practicalGuides: Record<Locale, Record<string, PracticalGuide>> = {
       introduction: "Use this when you want repeatable Moodle tasks from a terminal. It connects through REST only; there is no MCP setting in the CLI.",
       availability: { title: "npm", description: "MoodlIA CLI is available as the published npm package moodlia." },
       steps: [
-        { title: "Install it", description: "Install Node.js 22 or later, then run this once in PowerShell or Terminal.", command: "npm install -g moodlia", action: { href: "https://www.npmjs.com/package/moodlia", label: "Open MoodlIA CLI on npm" } },
+        { title: "Install it", description: "Install Node.js 22.13 or later, then run this once in PowerShell or Terminal.", command: "npm install -g moodlia", action: { href: "https://www.npmjs.com/package/moodlia", label: "Open MoodlIA CLI on npm" } },
         { title: "Add your Moodle connection", description: "Your Moodle administrator provides a limited MoodlIA REST token. Paste these values into the same PowerShell window; replace the example values.", command: "$env:MOODLE_BASE_URL = \"https://your-moodle.example\"\n$env:MOODLE_REST_TOKEN = \"your-token\"" },
         { title: "Check the connection", description: "This read-only command confirms that the CLI can reach Moodle with your account.", command: "moodlia get-current-user" },
         { title: "Try a small task", description: "Ask the command for its options, then begin in a test course. Check every result in Moodle.", command: "moodlia --help\nmoodlia get-courses --limit 10" },
@@ -836,7 +838,7 @@ const practicalGuides: Record<Locale, Record<string, PracticalGuide>> = {
       introduction: "Úsala si quieres realizar tareas repetibles de Moodle desde una terminal. Se conecta solo por REST; la CLI no necesita ni configura MCP.",
       availability: { title: "npm", description: "MoodlIA CLI está disponible como paquete npm publicado con el nombre moodlia." },
       steps: [
-        { title: "Instálala", description: "Instala Node.js 22 o posterior y ejecuta esto una vez en PowerShell o Terminal.", command: "npm install -g moodlia", action: { href: "https://www.npmjs.com/package/moodlia", label: "Abrir MoodlIA CLI en npm" } },
+        { title: "Instálala", description: "Instala Node.js 22.13 o posterior y ejecuta esto una vez en PowerShell o Terminal.", command: "npm install -g moodlia", action: { href: "https://www.npmjs.com/package/moodlia", label: "Abrir MoodlIA CLI en npm" } },
         { title: "Añade la conexión de Moodle", description: "Tu administrador proporciona un token REST limitado de MoodlIA. Pega estos valores en la misma ventana de PowerShell y sustituye los ejemplos.", command: "$env:MOODLE_BASE_URL = \"https://tu-moodle.example\"\n$env:MOODLE_REST_TOKEN = \"tu-token\"" },
         { title: "Comprueba la conexión", description: "Este comando de solo lectura confirma que la CLI puede llegar a Moodle con tu cuenta.", command: "moodlia get-current-user" },
         { title: "Prueba una tarea pequeña", description: "Pide las opciones del comando y empieza en un curso de prueba. Comprueba cada resultado dentro de Moodle.", command: "moodlia --help\nmoodlia get-courses --limit 10" },

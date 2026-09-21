@@ -148,6 +148,7 @@ export const products: MoodliaProduct[] = [
     highlights: [
       "Adapts per capability across MoodlIA and Moodle Core",
       "Plans one-way course synchronization between different Moodle sites without backup files",
+      "Offers explicit Core and plugin namespaces, durable sync lifecycle commands, and machine-readable outcome codes",
       "Available as a global command or project dependency",
       "Includes a reusable client and generated TypeScript declarations",
     ],
@@ -157,7 +158,7 @@ export const products: MoodliaProduct[] = [
       "Automation workers that need the public MoodlIA client",
     ],
     requirements: [
-      "Node.js 22 or later",
+      "Node.js 22.13 or later",
       "Moodle 4.5 or later with REST web services enabled",
       "A limited Core or MoodlIA REST token for each configured site",
     ],
@@ -193,6 +194,7 @@ export const products: MoodliaProduct[] = [
       "Handles nested parameters, version checks, and response normalisation",
       "Exposes friendly operations instead of arbitrary remote calls",
       "Provides the Core-only engine used by adaptive cross-site synchronization",
+      "Reports completion-authoring gaps explicitly instead of fabricating unsupported repairs",
     ],
     bestFor: [
       "Moodle sites that cannot install an additional plugin",
@@ -200,7 +202,7 @@ export const products: MoodliaProduct[] = [
       "Controlled automation using standard Moodle capabilities",
     ],
     requirements: [
-      "Node.js 22 or later",
+      "Node.js 22.13 or later",
       "Moodle 4.5 or later with REST web services enabled",
       "A token whose service exposes each required Moodle function",
     ],
