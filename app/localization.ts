@@ -127,7 +127,7 @@ const spanishProducts: Record<string, ProductCopy> = {
       adminNote: "Esta es la base que instala un administrador de Moodle. El profesorado normalmente la utiliza desde otra herramienta MoodlIA.",
     },
     sourceLabel: "Ver el plugin en GitHub",
-    secondaryLabel: "Consultar o comunicar una incidencia",
+    secondaryLabel: "Instalar desde el Marketplace de Moodle",
   },
   cli: {
     kind: "Cliente de línea de comandos y Node",

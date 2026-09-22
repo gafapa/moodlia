@@ -133,8 +133,8 @@ export const products: MoodliaProduct[] = [
     },
     sourceUrl: "https://github.com/gafapa/moodle-local_moodlia",
     sourceLabel: "View the plugin on GitHub",
-    secondaryUrl: "https://github.com/gafapa/moodle-local_moodlia/issues",
-    secondaryLabel: "Report or follow an issue",
+    secondaryUrl: "https://marketplace.moodle.com/plugins/local_moodlia",
+    secondaryLabel: "Install from the Moodle Marketplace",
   },
   {
     slug: "cli",
