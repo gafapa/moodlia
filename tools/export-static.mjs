@@ -20,7 +20,7 @@ const englishPageRoutes = [
   "/products/moodle-plugin",
   "/products/cli",
   "/products/moodle-core-cli",
-  "/products/sync-mcp",
+  "/products/sync",
   "/products/skills",
   "/products/rubrics",
   "/products/corrector",
@@ -89,7 +89,7 @@ assert.match(sitemapXml, /<loc>https:\/\/moodlia\.com\/ways\/ai-integration<\/lo
 assert.match(sitemapXml, /<loc>https:\/\/moodlia\.com\/start<\/loc>/i);
 assert.match(sitemapXml, /<loc>https:\/\/moodlia\.com\/es\/empezar<\/loc>/i);
 assert.match(sitemapXml, /<loc>https:\/\/moodlia\.com\/es\/ways\/ai-integration<\/loc>/i);
-assert.match(sitemapXml, /<loc>https:\/\/moodlia\.com\/products\/sync-mcp<\/loc>/i);
+assert.match(sitemapXml, /<loc>https:\/\/moodlia\.com\/products\/sync<\/loc>/i);
 assert.match(sitemapXml, /<loc>https:\/\/moodlia\.com\/products\/analyzer-desktop<\/loc>/i);
 assert.match(sitemapXml, /<loc>https:\/\/moodlia\.com\/es\/products\/analyzer-desktop<\/loc>/i);
 assert.match(sitemapXml, /<loc>https:\/\/moodlia\.com\/products\/backup-converter<\/loc>/i);

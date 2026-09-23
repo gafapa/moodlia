@@ -137,8 +137,8 @@ const spanishProducts: Record<string, ProductCopy> = {
       "La herramienta adaptativa de línea de comandos y el cliente Node reutilizable para Moodle 4.5 y posteriores. Usa capacidades verificadas de MoodlIA cuando el plugin está disponible y recurre a servicios exactos de Moodle Core cuando no lo está.",
     highlights: [
       "Se adapta por capacidad entre MoodlIA y Moodle Core",
-      "Planifica sincronización unidireccional entre sitios Moodle sin usar copias de seguridad",
-      "Ofrece espacios explícitos para Core y plugin, ciclo de sincronización durable y códigos de resultado procesables",
+      "Ofrece espacios explícitos para Core y plugin y códigos de resultado procesables",
+      "Lee HTML largo desde archivos UTF-8 en cada campo de texto y transmite archivos grandes",
       "Disponible como comando global o dependencia de proyecto",
       "Incluye un cliente reutilizable y declaraciones TypeScript generadas",
     ],
@@ -173,12 +173,12 @@ const spanishProducts: Record<string, ProductCopy> = {
     status: "Paquete npm publicado",
     description: "Trabaja con los servicios web estándar de Moodle sin instalar un plugin.",
     introduction:
-      "Un cliente, base de sincronización e interfaz de línea de comandos para los servicios web del núcleo de Moodle 4.5 y posteriores. Convierte los detalles complejos de REST en operaciones estables sin requerir el plugin de MoodlIA.",
+      "Un cliente e interfaz de línea de comandos para los servicios web del núcleo de Moodle 4.5 y posteriores. Convierte los detalles complejos de REST en operaciones estables sin requerir el plugin de MoodlIA.",
     highlights: [
       "Utiliza únicamente los servicios web del núcleo de Moodle",
       "Gestiona parámetros anidados, comprobaciones de versión y normalización de respuestas",
       "Expone operaciones claras en lugar de llamadas remotas arbitrarias",
-      "Aporta el motor solo-Core usado por la sincronización adaptativa entre sitios",
+      "Se instala sin módulos nativos ni otras dependencias de ejecución",
       "Expone las carencias de configuración de finalización en vez de simular reparaciones no compatibles",
     ],
     bestFor: [
@@ -207,42 +207,44 @@ const spanishProducts: Record<string, ProductCopy> = {
     sourceLabel: "Ver Moodle Core CLI en GitHub",
     secondaryLabel: "Abrir el paquete npm",
   },
-  "sync-mcp": {
-    kind: "Coordinador MCP entre sitios",
+  sync: {
+    kind: "CLI de sincronización entre sitios",
     status: "Vista previa para desarrollo",
-    description: "Coordina planes revisados de contenido entre distintos sitios Moodle.",
+    description: "Copia contenido de curso revisado entre distintos sitios Moodle sin copias de seguridad.",
     introduction:
-      "Un servidor MCP separado para sincronización unidireccional sin copias de seguridad entre sitios Moodle 4.5 y posteriores. Cada extremo puede usar MoodlIA, servicios de Moodle Core o ambos, mientras la política y la aprobación exacta permanecen fuera del modelo.",
+      "Una herramienta de línea de comandos para sincronizar cursos en un sentido, sin copias de seguridad, entre sitios Moodle 4.5 y posteriores. Cada sitio puede usar MoodlIA, servicios de Moodle Core o ambos. No se escribe nada hasta que una persona aprueba el plan exacto.",
     highlights: [
-      "Usa el mismo motor adaptativo de planificación y recuperación que la CLI",
-      "Mantiene tokens de Moodle y archivos binarios fuera de argumentos y resultados MCP",
+      "Planifica en solo lectura y aplica únicamente un plan aprobado con el mismo digest",
+      "Elige MoodlIA o Moodle Core por capacidad en cada sitio",
       "Ofrece estado durable, cancelación, reconciliación, conflictos, verificación e historial",
     ],
     bestFor: [
-      "Administradores que coordinan contenido seleccionado entre sitios Moodle separados",
-      "Clientes MCP que necesitan un flujo entre sitios limitado por política",
+      "Administradores que mantienen un curso maestro al día con copias en otros sitios",
+      "Pasar un curso de un Moodle de pruebas a producción",
       "Versiones Moodle distintas o sitios donde solo un extremo tiene MoodlIA",
     ],
     requirements: [
       "Node.js 22.13 o posterior",
-      "Listas explícitas de perfiles, cursos o categorías, dirección y efectos autorizados",
-      "Credenciales REST limitadas y separadas para cada extremo Moodle",
+      "Credenciales REST limitadas y separadas para cada sitio Moodle",
+      "Permiso para compilar el módulo better-sqlite3 cuando npm lo pida",
     ],
     startGuide: {
       install: [
-        "Pide a un administrador que defina los perfiles de sitio y la política de pares autorizados.",
-        "Ejecuta el coordinador localmente por stdio o coloca su listener HTTP tras TLS autenticado.",
-        "Guarda los tokens Moodle en variables de entorno, nunca en argumentos de herramientas MCP.",
+        "Pide a un compañero que use herramientas de línea de comandos que instale MoodlIA Sync.",
+        "Describe cada sitio Moodle en un archivo de perfiles; guarda los tokens en variables de entorno.",
+        "Usa un curso de prueba como destino en la primera ejecución.",
       ],
       firstUse: [
-        "Descubre ambos extremos y crea un plan de sincronización de solo lectura.",
-        "Revisa cada acción, carencia, conflicto, proveedor, efecto y estimación de bytes.",
-        "Aprueba el digest exacto fuera del cliente de IA y verifica el trabajo mediante una nueva lectura.",
+        "Crea un plan de solo lectura entre los dos cursos.",
+        "Revisa cada acción, carencia y conflicto del plan.",
+        "Aprueba ese plan exacto, aplícalo y comprueba el curso de destino en Moodle.",
       ],
-      adminNote: "Es un coordinador, no otro plugin de Moodle. El endpoint MCP del plugin MoodlIA sigue operando un único sitio Moodle.",
+      adminNote: "MoodlIA Sync nunca usa copias de seguridad de Moodle y nunca copia entregas, calificaciones otorgadas ni registros.",
     },
-    sourceLabel: "Ver el coordinador en GitHub",
+    sourceLabel: "Ver MoodlIA Sync en GitHub",
+    secondaryLabel: "Abrir el paquete npm",
   },
+
   skills: {
     kind: "Skills reutilizables para agentes de IA",
     status: "Proyecto de código abierto",
@@ -725,15 +727,15 @@ const practicalGuides: Record<Locale, Record<string, PracticalGuide>> = {
         { title: "Make changes deliberately", description: "Reading is the default. Any write operation must explicitly include --allow-write, so start by checking courses first." },
       ],
     },
-    "sync-mcp": {
-      title: "Run the MoodlIA Sync MCP coordinator",
-      introduction: "Use this developer preview only after an administrator has defined the exact site, course, category, direction, and effect policy.",
-      availability: { title: "Developer preview", description: "The coordinator source and setup reference are available on GitHub; no hosted public coordinator is provided." },
+    sync: {
+      title: "Install MoodlIA Sync",
+      introduction: "Use this developer preview between a source course and a target course you are allowed to change.",
+      availability: { title: "Developer preview", description: "MoodlIA Sync is an npm package that runs on your own computer; no hosted service is provided." },
       steps: [
-        { title: "Review the coordinator", description: "Read its security, profile, policy, and recovery model before connecting Moodle credentials.", action: { href: "https://github.com/gafapa/moodlia-sync-mcp", label: "Open MoodlIA Sync MCP on GitHub" } },
-        { title: "Choose a protected transport", description: "Prefer local stdio. For remote MCP, use a strong Bearer credential, an allowed-host list, and authenticated TLS in front of the loopback service." },
-        { title: "Create a read-only plan", description: "Discover both Moodle sites and inspect the immutable plan, unsupported changes, conflicts, selected providers, and estimated transfer." },
-        { title: "Approve and verify", description: "Approve the exact digest outside the MCP model, monitor the durable job, and finish with a fresh Moodle readback." },
+        { title: "Install the command", description: "npm may ask you to approve the native SQLite module the first time.", command: "npm install -g moodlia-sync\nnpm approve-scripts better-sqlite3", action: { href: "https://www.npmjs.com/package/moodlia-sync", label: "Open MoodlIA Sync on npm" } },
+        { title: "Create a read-only plan", description: "Describe both sites in .moodle-profiles.json, then plan. Nothing is written.", command: "moodlia-sync plan --source-profile school_a --source-course-id 42 --target-profile school_b --target-course-id 81 --plan-file plan.json" },
+        { title: "Approve and apply", description: "After reviewing plan.json, approve that exact plan and apply it with the digest it printed.", command: "moodlia-sync approve plan.json --yes\nmoodlia-sync apply plan.json --plan-digest sha256:... --allow-write" },
+        { title: "Verify", description: "Check the target by live readback; planning again should report no actions.", command: "moodlia-sync verify --plan-id <plan_id>" },
       ],
     },
     skills: {
@@ -855,15 +857,15 @@ const practicalGuides: Record<Locale, Record<string, PracticalGuide>> = {
         { title: "Haz cambios de forma deliberada", description: "La lectura es el modo predeterminado. Cualquier operación de escritura exige incluir --allow-write, así que empieza comprobando los cursos." },
       ],
     },
-    "sync-mcp": {
-      title: "Ejecuta el coordinador MoodlIA Sync MCP",
-      introduction: "Usa esta vista previa solo después de que un administrador defina la política exacta de sitios, cursos, categorías, dirección y efectos.",
-      availability: { title: "Vista previa para desarrollo", description: "El código y la referencia de configuración están en GitHub; no se proporciona un coordinador público alojado." },
+    sync: {
+      title: "Instala MoodlIA Sync",
+      introduction: "Usa esta vista previa entre un curso de origen y un curso de destino que tengas permiso para cambiar.",
+      availability: { title: "Vista previa para desarrollo", description: "MoodlIA Sync es un paquete npm que se ejecuta en tu propio ordenador; no se ofrece un servicio alojado." },
       steps: [
-        { title: "Revisa el coordinador", description: "Lee su modelo de seguridad, perfiles, política y recuperación antes de conectar credenciales Moodle.", action: { href: "https://github.com/gafapa/moodlia-sync-mcp", label: "Abrir MoodlIA Sync MCP en GitHub" } },
-        { title: "Elige un transporte protegido", description: "Prefiere stdio local. Para MCP remoto, usa una credencial Bearer fuerte, hosts permitidos y TLS autenticado delante del servicio local." },
-        { title: "Crea un plan de solo lectura", description: "Descubre ambos sitios Moodle y revisa el plan inmutable, cambios no compatibles, conflictos, proveedores y transferencia estimada." },
-        { title: "Aprueba y verifica", description: "Aprueba el digest exacto fuera del modelo MCP, supervisa el trabajo durable y termina con una nueva lectura de Moodle." },
+        { title: "Instala el comando", description: "La primera vez, npm puede pedirte que apruebes el módulo nativo de SQLite.", command: "npm install -g moodlia-sync\nnpm approve-scripts better-sqlite3", action: { href: "https://www.npmjs.com/package/moodlia-sync", label: "Abrir MoodlIA Sync en npm" } },
+        { title: "Crea un plan de solo lectura", description: "Describe ambos sitios en .moodle-profiles.json y planifica. No se escribe nada.", command: "moodlia-sync plan --source-profile school_a --source-course-id 42 --target-profile school_b --target-course-id 81 --plan-file plan.json" },
+        { title: "Aprueba y aplica", description: "Tras revisar plan.json, aprueba ese plan exacto y aplícalo con el digest que mostró.", command: "moodlia-sync approve plan.json --yes\nmoodlia-sync apply plan.json --plan-digest sha256:... --allow-write" },
+        { title: "Verifica", description: "Comprueba el destino con una nueva lectura; volver a planificar no debería mostrar acciones.", command: "moodlia-sync verify --plan-id <plan_id>" },
       ],
     },
     skills: {
