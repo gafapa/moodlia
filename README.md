@@ -38,3 +38,9 @@ The site uses a Vinext and Cloudflare-compatible build. Hosting configuration li
 `npm run export:static` converts the validated production build into a static
 site under `.static-export/` for deployment to the shared Oracle-hosted Nginx
 service. Run `npm run build` first.
+
+## License
+
+Copyright (C) 2026 Pablo Gallego.
+
+This project is free software released under the GNU General Public License version 3 or later. See `LICENSE`.

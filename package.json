@@ -44,5 +44,6 @@
       "esbuild": "0.25.12"
     }
   },
-  "type": "module"
+  "type": "module",
+  "license": "GPL-3.0-or-later"
 }
