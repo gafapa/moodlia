@@ -129,6 +129,25 @@ await Promise.all([
   writeFile(resolve(outputRoot, "sitemap.xml"), sitemapXml, "utf8"),
 ]);
 
+// Retired routes keep working as redirects, because static hosting has no server-side rewrites.
+const legacyRedirects = {
+  "/products/sync-mcp": "/products/sync",
+  "/es/products/sync-mcp": "/es/products/sync",
+};
+await Promise.all(Object.entries(legacyRedirects).map(async ([from, to]) => {
+  const target = `https://moodlia.com${to}`;
+  const htmlPath = resolve(outputRoot, from.slice(1), "index.html");
+  await mkdir(dirname(htmlPath), { recursive: true });
+  await writeFile(
+    htmlPath,
+    `<!doctype html><html><head><meta charset="utf-8"><title>Moved</title>` +
+      `<link rel="canonical" href="${target}"><meta name="robots" content="noindex">` +
+      `<meta http-equiv="refresh" content="0; url=${to}"></head>` +
+      `<body><a href="${to}">${target}</a></body></html>`,
+    "utf8",
+  );
+}));
+
 const converterHtml = await readFile(resolve(outputRoot, "tools", "backup-converter", "index.html"), "utf8");
 assert.match(converterHtml, /\/tools\/backup-converter\/assets\/index-[^\"']+\.js/i);
 assert.match(converterHtml, /<title>MoodlIA Backup Converter<\/title>/i);
