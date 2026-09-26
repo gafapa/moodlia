@@ -288,7 +288,7 @@ const spanishProducts: Record<string, ProductCopy> = {
       "Una extensión de navegador específica que convierte una rúbrica CSV en el editor de rúbricas de Moodle, evitando la introducción manual repetitiva y permitiendo revisarla y editarla con normalidad.",
     highlights: [
       "Importa criterios y niveles de rúbrica desde CSV",
-      "Se ejecuta únicamente en sitios Moodle compatibles o aprobados expresamente",
+      "Funciona en cualquier Moodle con un clic y no pide acceso a ningún sitio al instalarla; solo se activa sola en los sitios que apruebes",
       "Utiliza un analizador CSV nativo sin dependencias externas en tiempo de ejecución",
     ],
     bestFor: [

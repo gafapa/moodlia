@@ -316,7 +316,7 @@ export const products: MoodliaProduct[] = [
       "A focused browser extension that turns a CSV rubric into Moodle's rubric editor, avoiding repetitive manual entry while leaving the rubric available for normal review and editing.",
     highlights: [
       "Imports rubric criteria and levels from CSV",
-      "Runs only on supported or explicitly approved Moodle hosts",
+      "Works on any Moodle with one click and asks for no site access when installed; stays active only on sites you approve",
       "Uses a native CSV parser with no third-party runtime dependency",
     ],
     bestFor: [
