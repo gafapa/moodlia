@@ -4,12 +4,34 @@ Public website and documentation entry point for the MoodlIA ecosystem at `moodl
 
 ## Current Scope
 
-- Present the active MoodlIA products with clear boundaries.
-- Explain the shared safety and portability principles.
-- Mark MoodlIA Studio accurately as a concept rather than an available product.
-- Provide a foundation for future documentation, downloads, release notes, and integrations.
+- Explain what MoodlIA is and what each app does, for teachers, Moodle
+  administrators, and developers.
+- Give every app real installation steps: store and registry links, Moodle
+  menu paths, and exact commands.
+- List only apps with a public release; Corrector, Analyzer Desktop, and Studio
+  are not shown.
+- Host MoodlIA Backup Converter at `/tools/backup-converter/`.
 
-The first version is intentionally static and does not store user data, Moodle credentials, or analytics data.
+The site is static and does not store user data, Moodle credentials, or
+analytics data. See `PRODUCT.md` for structure and content rules and
+`DESIGN.md` for the visual system.
+
+## Content
+
+Every product fact is in `app/content.ts`, in English and Spanish: summary,
+description, requirements, installation and first-use steps, limitations,
+documentation links, version, and license. Update it when an app changes or a
+release is published. Interface text and page routes are in `app/i18n.ts`.
+
+| Page | English | Spanish |
+| --- | --- | --- |
+| Home | `/` | `/es` |
+| Apps | `/apps`, `/apps/<slug>` | `/es/apps`, `/es/apps/<slug>` |
+| Installation guide | `/install` | `/es/instalar` |
+| How it works | `/how-it-works` | `/es/como-funciona` |
+
+Routes of the previous site (`/start`, `/ways/*`, `/products/*`) are exported
+as redirects by `tools/export-static.mjs`.
 
 ## Development
 

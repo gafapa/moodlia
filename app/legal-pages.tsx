@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { SiteFooter, SiteHeader } from "./site-chrome";
-import type { Locale } from "./localization";
+import type { Locale } from "./content";
+import { PageShell } from "./ui-kit";
 
 type LegalPageKind = "legal" | "privacy" | "cookies";
 
@@ -121,29 +121,27 @@ export function LegalPage({ kind, locale }: { kind: LegalPageKind; locale: Local
   const page = copy[locale][kind];
   const home = locale === "es" ? "/es" : "/";
   const homeLabel = locale === "es" ? "Inicio" : "Home";
-  const skip = locale === "es" ? "Saltar al contenido principal" : "Skip to main content";
   const breadcrumb = locale === "es" ? "Migas de pan" : "Breadcrumb";
 
-  return <>
-    <a className="skip-link" href="#main-content" lang={locale}>{skip}</a>
-    <SiteHeader locale={locale} currentPath={page.path} alternatePath={page.alternatePath} />
-    <main id="main-content" className="legal-main" lang={locale}>
-      <header className="legal-header">
-        <nav className="breadcrumb" aria-label={breadcrumb}>
-          <a href={home}>{homeLabel}</a><span className="breadcrumb-item"><i aria-hidden="true">/</i><span>{page.title}</span></span>
-        </nav>
-        <h1>{page.title}</h1>
-        <p>{page.description}</p>
-      </header>
-      <div className="legal-body">
+  return (
+    <PageShell locale={locale} alternate={{ en: copy.en[kind].path, es: copy.es[kind].path }}>
+      <section className="page-head">
+        <div className="container narrow">
+          <nav className="breadcrumb" aria-label={breadcrumb}>
+            <a href={home}>{homeLabel}</a> <span aria-hidden="true">/</span> <span>{page.title}</span>
+          </nav>
+          <h1>{page.title}</h1>
+          <p className="lead">{page.description}</p>
+        </div>
+      </section>
+      <div className="container narrow legal-body">
         {page.sections.map((section) => <section key={section.title} aria-labelledby={`legal-${section.title}`}>
           <h2 id={`legal-${section.title}`}>{section.title}</h2>
           {section.content}
         </section>)}
       </div>
-    </main>
-    <SiteFooter locale={locale} />
-  </>;
+    </PageShell>
+  );
 }
 
 export const legalPaths = {

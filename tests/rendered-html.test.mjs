@@ -8,314 +8,167 @@ async function render(pathname = "/") {
   const { default: worker } = await import(workerUrl.href);
 
   return worker.fetch(
-    new Request(new URL(pathname, "http://localhost/"), {
-      headers: { accept: "text/html" },
-    }),
-    {
-      ASSETS: {
-        fetch: async () => new Response("Not found", { status: 404 }),
-      },
-    },
-    {
-      waitUntil() {},
-      passThroughOnException() {},
-    },
+    new Request(new URL(pathname, "http://localhost/"), { headers: { accept: "text/html" } }),
+    { ASSETS: { fetch: async () => new Response("Not found", { status: 404 }) } },
+    { waitUntil() {}, passThroughOnException() {} },
   );
 }
 
-test("server-renders the MoodlIA ecosystem page", async () => {
-  const response = await render();
-  assert.equal(response.status, 200);
+async function html(pathname) {
+  const response = await render(pathname);
+  assert.equal(response.status, 200, `${pathname} returned ${response.status}`);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
+  return response.text();
+}
 
-  const html = await response.text();
-  assert.match(html, /<title>MoodlIA — Make Moodle work for you\.<\/title>/i);
-  assert.match(html, /Make Moodle/i);
-  assert.match(html, /work for you\./i);
-  assert.match(html, /Three ways\./i);
-  assert.match(html, /MoodlIA Moodle Plugin/);
-  assert.match(html, /Moodle Core CLI/);
-  assert.match(html, /MoodlIA Rubrics/);
-  assert.match(html, /MoodlIA Corrector/);
-  assert.match(html, /MoodlIA Backup Converter/);
-  assert.match(html, /Teacher Dashboard/);
-  assert.match(html, /MoodlIA Analyzer Web/);
-  assert.match(html, /controlled access to Moodle actions and content/i);
-  assert.match(html, /teacher-approved corrections/i);
-  assert.match(html, /participation trends, student risk, and priorities/i);
-  assert.match(html, /application\/ld\+json/);
-  assert.match(html, /contact@moodlia\.com/);
-  assert.match(html, /href="\/start"[^>]*>Find your starting point</i);
-  assert.match(html, /Tell us what you want to make easier\./i);
-  assert.match(html, /https:\/\/moodlia\.com\/moodlia-educators-together-v2\.jpg/);
-  assert.match(html, /href="\/es"[^>]*hrefLang="es"/i);
-  assert.doesNotMatch(html, /github\.com/i);
-  assert.doesNotMatch(html, /codex-preview|loading skeleton|Your site is taking shape/i);
+const appSlugs = [
+  "rubrics",
+  "backup-converter",
+  "edx-converter",
+  "teacher-dashboard",
+  "analyzer-web",
+  "moodle-plugin",
+  "cli",
+  "moodle-core-cli",
+  "sync",
+  "skills",
+];
+const appNames = [
+  "MoodlIA Rubrics",
+  "MoodlIA Backup Converter",
+  "MoodlIA edX Converter",
+  "MoodlIA Teacher Dashboard",
+  "MoodlIA Analyzer Web",
+  "MoodlIA Moodle Plugin",
+  "MoodlIA CLI",
+  "Moodle Core CLI",
+  "MoodlIA Sync",
+  "MoodlIA Skills",
+];
+
+// English route, Spanish route.
+const pagePairs = [
+  ["/", "/es"],
+  ["/apps", "/es/apps"],
+  ["/install", "/es/instalar"],
+  ["/how-it-works", "/es/como-funciona"],
+  ["/legal-notice", "/es/aviso-legal"],
+  ["/privacy", "/es/privacy"],
+  ["/cookies", "/es/cookies"],
+  ...appSlugs.map((slug) => [`/apps/${slug}`, `/es/apps/${slug}`]),
+];
+
+test("home explains MoodlIA and lists every app", async () => {
+  const page = await html("/");
+  assert.match(page, /<title>MoodlIA — Open-source tools for Moodle<\/title>/);
+  assert.match(page, /<h1[^>]*>Tools that make Moodle easier, for teachers and for administrators\.<\/h1>/);
+  for (const name of appNames) assert.ok(page.includes(name), `home is missing ${name}`);
+  assert.match(page, /href="\/install"/);
+  assert.match(page, /What do you want to do\?/);
+  assert.match(page, /"@type":"FAQPage"/);
+  assert.match(page, /contact@moodlia\.com/);
 });
 
-test("keeps the product source free from starter preview code", async () => {
-  const [page, catalog, layout, packageJson] = await Promise.all([
-    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
-    readFile(new URL("../app/catalog.ts", import.meta.url), "utf8"),
-    readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
-    readFile(new URL("../package.json", import.meta.url), "utf8"),
-  ]);
-
-  assert.match(page, /const paths = getLocalizedWays\(locale\)\.map/);
-  assert.match(catalog, /Turn ideas into Moodle learning/);
-  assert.match(catalog, /Spend more time teaching/);
-  assert.match(catalog, /Know where to help next/);
-  assert.match(layout, /metadataBase: new URL\("https:\/\/moodlia\.com"\)/);
-  assert.doesNotMatch(page, /SkeletonPreview|codex-preview/);
-  assert.doesNotMatch(packageJson, /react-loading-skeleton/);
-  await access(new URL("../public/moodlia-educators-together-v2.jpg", import.meta.url));
-  await Promise.all([
-    access(new URL("../public/moodlia-ai-companion-v2.jpg", import.meta.url)),
-    access(new URL("../public/moodlia-teaching-flow-v2.jpg", import.meta.url)),
-    access(new URL("../public/moodlia-learning-clarity-v2.jpg", import.meta.url)),
-    access(new URL("../public/moodlia-start-here-brand.png", import.meta.url)),
-    access(new URL("../app/getting-started.tsx", import.meta.url)),
-    access(new URL("../app/robots.ts", import.meta.url)),
-    access(new URL("../app/sitemap.ts", import.meta.url)),
-  ]);
+test("apps without a public release are not shown", async () => {
+  for (const pathname of ["/", "/apps", "/install", "/es", "/es/apps", "/es/instalar"]) {
+    const page = await html(pathname);
+    assert.doesNotMatch(page, /Corrector|Analyzer Desktop|MoodlIA Studio/, pathname);
+  }
 });
 
-test("renders an accessible landmark and heading structure", async () => {
-  const response = await render();
-  const html = await response.text();
-
-  assert.match(html, /<html[^>]*lang="en"/i);
-  assert.equal((html.match(/<main\b/gi) ?? []).length, 1);
-  assert.equal((html.match(/<h1\b/gi) ?? []).length, 1);
-  assert.match(html, /<a[^>]*class="skip-link"[^>]*href="#main-content"/i);
-  assert.match(html, /<main[^>]*id="main-content"/i);
-  assert.match(html, /<nav[^>]*aria-label="Main navigation"/i);
-  assert.match(html, /<section[^>]*class="selections"[^>]*id="projects"[^>]*aria-labelledby="projects-title"/i);
-  assert.equal((html.match(/class="selection-item selection-item-[123]"/g) ?? []).length, 3);
-  assert.equal((html.match(/class="selection-image"/g) ?? []).length, 3);
-  assert.match(html, /<nav[^>]*class="sequence-nav"/i);
-  assert.match(html, /2852ad08/);
-  assert.equal((html.match(/<article[^>]*tabindex=/gi) ?? []).length, 0);
-  assert.equal((html.match(/<article\b/gi) ?? []).length, 3);
+test("every page has its own title, canonical, hreflang pair, and one h1", async () => {
+  const titles = { en: new Set(), es: new Set() };
+  for (const [en, es] of pagePairs) {
+    for (const [pathname, lang] of [[en, "en"], [es, "es"]]) {
+      const page = await html(pathname);
+      const title = page.match(/<title>([^<]+)<\/title>/)?.[1];
+      assert.ok(title, `${pathname} has no title`);
+      assert.ok(!titles[lang].has(title), `${pathname} repeats the title “${title}”`);
+      titles[lang].add(title);
+      assert.match(page, new RegExp(`<link rel="canonical" href="https://moodlia\\.com${pathname === "/" ? "/?" : pathname}"`), `${pathname} canonical`);
+      assert.match(page, new RegExp(`hrefLang="en" href="https://moodlia\\.com${en === "/" ? "/?" : en}"`), `${pathname} hreflang en`);
+      assert.match(page, new RegExp(`hrefLang="es" href="https://moodlia\\.com${es}"`), `${pathname} hreflang es`);
+      assert.equal(page.match(/<h1[\s>]/g)?.length, 1, `${pathname} must have exactly one h1`);
+      assert.match(page, new RegExp(`<main id="main" lang="${lang}"`), `${pathname} main landmark`);
+      assert.match(page, /class="skip-link" href="#main"/, `${pathname} skip link`);
+      assert.match(page, new RegExp(`<a href="${en === "/" ? "/" : en}" hrefLang="en"`), `${pathname} language switch to English`);
+      assert.match(page, new RegExp(`<a href="${es}" hrefLang="es"`), `${pathname} language switch to Spanish`);
+    }
+  }
 });
 
-test("preserves accessible motion, focus, and touch behavior", async () => {
+test("every app page has real installation steps and a way to get the app", async () => {
+  for (const slug of appSlugs) {
+    for (const pathname of [`/apps/${slug}`, `/es/apps/${slug}`]) {
+      const page = await html(pathname);
+      assert.match(page, /<section id="install"/, `${pathname} install section`);
+      assert.match(page, /<ol class="steps"/, `${pathname} steps`);
+      assert.match(page, /class="button button-accent" href="(?:https:\/\/|\/tools\/)/, `${pathname} get link`);
+      assert.match(page, /"@type":"SoftwareApplication"/, `${pathname} structured data`);
+    }
+  }
+});
+
+test("installation instructions name the real distribution channels and commands", async () => {
+  const install = await html("/install");
+  for (const slug of appSlugs) assert.match(install, new RegExp(`id="${slug}"`), `install page anchor ${slug}`);
+  assert.match(install, /chromewebstore\.google\.com\/detail\/rubricando-para-moodle/);
+  assert.match(install, /marketplace\.moodle\.com\/plugins\/local_moodlia/);
+  assert.match(install, /npm install -g moodlia</);
+  assert.match(install, /npm install -g moodlia-sync/);
+  assert.match(install, /href="\/tools\/backup-converter\/"/);
+
+  const plugin = await html("/apps/moodle-plugin");
+  assert.match(plugin, /local\/moodlia\/mcp\.php/);
+  assert.match(plugin, /local\/moodlia:useapi/);
+  assert.match(plugin, /docs\/web-installation\.md/);
+
+  const pluginEs = await html("/es/apps/moodle-plugin");
+  assert.match(pluginEs, /Instalar complementos/);
+  assert.match(pluginEs, /Administrar fichas \(tokens\)/);
+});
+
+test("code blocks carry a copy button and the layout wires it", async () => {
+  const page = await html("/apps/cli");
+  assert.match(page, /<div class="code-block"><pre><code>npm install -g moodlia<\/code><\/pre><button type="button" class="copy-button" data-copy="true" data-copied-label="Copied">Copy<\/button>/);
+  assert.match(page, /navigator\.clipboard\.writeText/);
+  const spanish = await html("/es/apps/cli");
+  assert.match(spanish, /data-copied-label="Copiado">Copiar</);
+});
+
+test("in-page links point at existing targets", async () => {
+  for (const pathname of ["/", "/install", "/apps/moodle-plugin", "/es/instalar"]) {
+    const page = await html(pathname);
+    const ids = new Set([...page.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]));
+    for (const [, target] of page.matchAll(/href="#([^"]+)"/g)) {
+      assert.ok(ids.has(target), `${pathname} links to missing #${target}`);
+    }
+  }
+});
+
+test("Spanish pages are written in Spanish", async () => {
+  const home = await html("/es");
+  assert.match(home, /¿Qué quieres hacer\?/);
+  assert.doesNotMatch(home, /What do you want to do\?/);
+  const rubrics = await html("/es/apps/rubrics");
+  assert.match(rubrics, /Añadir desde la Chrome Web Store/);
+  assert.doesNotMatch(rubrics, /Add from the Chrome Web Store/);
+});
+
+test("publishes social metadata without development URLs", async () => {
+  await access(new URL("../public/og-moodlia.png", import.meta.url));
+  for (const pathname of ["/", "/es/apps/sync"]) {
+    const page = await html(pathname);
+    assert.match(page, /<meta property="og:image" content="https:\/\/moodlia\.com\/og-moodlia\.png"/);
+    assert.match(page, /<meta name="twitter:card" content="summary_large_image"/);
+    assert.doesNotMatch(page, /(?:href|src)="https?:\/\/(?:localhost|127\.0\.0\.1)/);
+  }
+});
+
+test("keeps focus, reduced-motion, and dark-mode styles", async () => {
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
-  const response = await render();
-  const html = await response.text();
-
-  assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
-  assert.doesNotMatch(css, /view-transition|paper-page-out|paper-page-in/);
-  assert.doesNotMatch(html, /sessionStorage|moodlia-page-transition/);
-  assert.match(css, /\.skip-link:focus-visible\s*\{[^}]*transform: translateY\(0\)/s);
-  assert.match(css, /a:focus-visible,\s*button:focus-visible\s*\{[^}]*outline:/s);
-  assert.match(css, /\.site-header nav a,\s*\.header-contact\s*\{[^}]*min-height: 44px/s);
-  assert.match(css, /\.primary-action, \.text-action, \.open-selection, \.detail-help > a\s*\{[^}]*min-height: 48px/s);
-  assert.match(css, /--ease-out:\s*cubic-bezier\(/);
-  assert.match(css, /@media \(max-width: 620px\)/);
-});
-
-test("renders legal information in English and Spanish with persistent footer links", async () => {
-  const routes = [
-    ["/legal-notice", "Legal notice", "Website operator", "https://moodlia.com/legal-notice"],
-    ["/privacy", "Privacy", "Who is responsible", "https://moodlia.com/privacy"],
-    ["/cookies", "Cookies", "Current use", "https://moodlia.com/cookies"],
-    ["/es/aviso-legal", "Aviso legal", "Titular del sitio web", "https://moodlia.com/es/aviso-legal"],
-    ["/es/privacy", "Privacidad", "Quién es responsable", "https://moodlia.com/es/privacy"],
-    ["/es/cookies", "Cookies", "Uso actual", "https://moodlia.com/es/cookies"],
-  ];
-
-  for (const [route, title, proof, canonical] of routes) {
-    const response = await render(route);
-    assert.equal(response.status, 200, `${route} did not render`);
-    const html = await response.text();
-    assert.match(html, new RegExp(`<title>${title} \\| MoodlIA<\\/title>`, "i"));
-    assert.match(html, new RegExp(proof, "i"));
-    assert.match(html, new RegExp(`rel="canonical"[^>]*href="${canonical}"`, "i"));
-    assert.match(html, /href="\/(legal-notice|es\/aviso-legal)"/i);
-    assert.match(html, /href="\/(privacy|es\/privacy)"/i);
-    assert.match(html, /href="\/(cookies|es\/cookies)"/i);
-  }
-});
-
-test("gives non-technical visitors a localized first step", async () => {
-  const routes = [
-    ["/start", "Start with MoodlIA", "You do not need to be technical", "https://moodlia.com/start", "href=\"/es/empezar\""],
-    ["/es/empezar", "Empieza con MoodlIA", "No necesitas saber de tecnología", "https://moodlia.com/es/empezar", "href=\"/start\""],
-  ];
-
-  for (const [route, title, proof, canonical, alternate] of routes) {
-    const response = await render(route);
-    assert.equal(response.status, 200, `${route} did not render`);
-    const html = await response.text();
-    assert.match(html, new RegExp(`<title>${title} \\| MoodlIA<\\/title>`, "i"));
-    assert.match(html, new RegExp(proof, "i"));
-    assert.match(html, /moodlia-start-here-brand\.png/i);
-    assert.match(html, /src="\/favicon\.svg"/i);
-    assert.match(html, /How each tool is installed and used\.|Cómo se instala y se utiliza cada herramienta\./i);
-    assert.match(html, new RegExp(`rel="canonical"[^>]*href="${canonical}"`, "i"));
-    assert.match(html, new RegExp(alternate, "i"));
-    assert.doesNotMatch(html, /github\.com/i);
-    assert.equal((html.match(/<h1\b/gi) ?? []).length, 1);
-  }
-});
-
-test("keeps every in-page navigation link backed by a target", async () => {
-  const response = await render();
-  const html = await response.text();
-  const targetIds = new Set([...html.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]));
-  const fragments = [...html.matchAll(/\bhref="#([^"]+)"/g)].map((match) => match[1]);
-
-  assert.ok(fragments.length >= 1);
-  for (const fragment of fragments) {
-    assert.ok(targetIds.has(fragment), `Missing target for #${fragment}`);
-  }
-});
-
-test("renders every way and product page with route-specific metadata", async () => {
-  const detailRoutes = [
-    ["/ways/ai-integration", "Plan with AI", "MoodlIA Moodle Plugin", "moodlia-ai-companion-v2.jpg"],
-    ["/ways/teaching-tools", "Teach with ease", "MoodlIA Corrector", "moodlia-teaching-flow-v2.jpg"],
-    ["/ways/learning-insights", "See what matters", "MoodlIA Analyzer Web", "moodlia-learning-clarity-v2.jpg"],
-    ["/products/moodle-plugin", "MoodlIA Moodle Plugin", "permission-aware workflows", "moodlia-ai-companion-v2.jpg"],
-    ["/products/cli", "MoodlIA CLI", "Published npm package", "moodlia-ai-companion-v2.jpg"],
-    ["/products/moodle-core-cli", "Moodle Core CLI", "Moodle 4.5 or later", "moodlia-ai-companion-v2.jpg"],
-    ["/products/sync", "MoodlIA Sync", "approves the exact plan", "moodlia-ai-companion-v2.jpg"],
-    ["/products/skills", "MoodlIA Skills", "Portable HTML", "moodlia-ai-companion-v2.jpg"],
-    ["/products/rubrics", "MoodlIA Rubrics", "CSV rubric", "moodlia-teaching-flow-v2.jpg"],
-    ["/products/corrector", "MoodlIA Corrector", "teacher control", "moodlia-teaching-flow-v2.jpg"],
-    ["/products/backup-converter", "MoodlIA Backup Converter", "never uploads it", "moodlia-teaching-flow-v2.jpg"],
-    ["/products/chrome-extensions", "MoodlIA Chrome Extensions", "Browser-tool family", "moodlia-teaching-flow-v2.jpg"],
-    ["/products/teacher-dashboard", "MoodlIA Teacher Dashboard", "backend-free dashboard", "moodlia-learning-clarity-v2.jpg"],
-    ["/products/analyzer-web", "MoodlIA Analyzer Web", "intervention queues", "moodlia-learning-clarity-v2.jpg"],
-    ["/products/analyzer-desktop", "MoodlIA Analyzer Desktop", "passwords kept only in memory", "moodlia-learning-clarity-v2.jpg"],
-  ];
-
-  for (const [route, title, proof, image] of detailRoutes) {
-    const response = await render(route);
-    assert.equal(response.status, 200, `${route} did not render`);
-    const html = await response.text();
-    assert.match(html, new RegExp(`<title>${title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")} \\| MoodlIA<\\/title>`, "i"));
-    assert.match(html, new RegExp(proof, "i"));
-    if (route.startsWith("/products/")) {
-      assert.match(html, /How installation and use work\./i);
-      assert.match(html, /Set it up once/i);
-      assert.match(html, /Try one small thing/i);
-      assert.match(html, /href="#how-to-start"[^>]*>See installation and first-use steps/i);
-    }
-    assert.match(html, new RegExp(`property="og:image"[^>]*content="https:\\/\\/moodlia\\.com\\/${image}"`, "i"));
-    assert.match(html, new RegExp(`rel="canonical"[^>]*href="https:\\/\\/moodlia\\.com${route}"`, "i"));
-    assert.doesNotMatch(html, /og-paper-automata\.png/i);
-    assert.equal((html.match(/<h1\b/gi) ?? []).length, 1);
-  }
-});
-
-test("renders complete Spanish routes with localized copy and SEO metadata", async () => {
-  const spanishRoutes = [
-    ["/es/ways/ai-integration", "Planifica con IA", "Convierte ideas en aprendizaje en Moodle"],
-    ["/es/ways/teaching-tools", "Enseña con facilidad", "Dedica más tiempo a enseñar"],
-    ["/es/ways/learning-insights", "Ve lo importante", "Sabe dónde ayudar después"],
-    ["/es/products/moodle-plugin", "MoodlIA Moodle Plugin", "acceso controlado"],
-    ["/es/products/cli", "MoodlIA CLI", "Paquete npm publicado"],
-    ["/es/products/moodle-core-cli", "Moodle Core CLI", "Moodle 4.5 o posterior"],
-    ["/es/products/sync", "MoodlIA Sync", "aprueba el plan exacto"],
-    ["/es/products/skills", "MoodlIA Skills", "HTML portable"],
-    ["/es/products/rubrics", "MoodlIA Rubrics", "archivo CSV"],
-    ["/es/products/corrector", "MoodlIA Corrector", "control del docente"],
-    ["/es/products/backup-converter", "MoodlIA Backup Converter", "nunca la sube"],
-    ["/es/products/chrome-extensions", "MoodlIA Chrome Extensions", "Familia de herramientas"],
-    ["/es/products/teacher-dashboard", "MoodlIA Teacher Dashboard", "panel sin backend"],
-    ["/es/products/analyzer-web", "MoodlIA Analyzer Web", "colas de intervención"],
-    ["/es/products/analyzer-desktop", "MoodlIA Analyzer Desktop", "únicamente en memoria"],
-  ];
-
-  const homeResponse = await render("/es");
-  assert.equal(homeResponse.status, 200);
-  const homeHtml = await homeResponse.text();
-  assert.match(homeHtml, /<title>MoodlIA — Haz que Moodle trabaje contigo\.<\/title>/i);
-  assert.match(homeHtml, /Tres formas/i);
-  assert.match(homeHtml, /<main[^>]*lang="es"/i);
-  assert.match(homeHtml, /rel="canonical"[^>]*href="https:\/\/moodlia\.com\/es"/i);
-  assert.match(homeHtml, /hrefLang="en"/i);
-  assert.doesNotMatch(homeHtml, /github\.com/i);
-
-  for (const [route, title, proof] of spanishRoutes) {
-    const response = await render(route);
-    assert.equal(response.status, 200, `${route} did not render`);
-    const html = await response.text();
-    assert.match(html, new RegExp(`<title>${title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")} \\| MoodlIA<\\/title>`, "i"));
-    assert.match(html, new RegExp(proof, "i"));
-    if (route.startsWith("/es/products/")) {
-      assert.match(html, /Cómo se instala y se utiliza\./i);
-      assert.match(html, /Configúralo una vez/i);
-      assert.match(html, /Prueba una cosa pequeña/i);
-      assert.match(html, /href="#how-to-start"[^>]*>Ver cómo instalarla y utilizarla/i);
-    }
-    assert.match(html, /<main[^>]*lang="es"/i);
-    assert.match(html, new RegExp(`rel="canonical"[^>]*href="https:\\/\\/moodlia\\.com${route}"`, "i"));
-    assert.match(html, /hrefLang="en"/i);
-  }
-});
-
-test("mentions GitHub only on individual product pages", async () => {
-  const [homeResponse, wayResponse, productResponse] = await Promise.all([
-    render("/"),
-    render("/ways/ai-integration"),
-    render("/products/moodle-plugin"),
-  ]);
-  const [homeHtml, wayHtml, productHtml] = await Promise.all([
-    homeResponse.text(),
-    wayResponse.text(),
-    productResponse.text(),
-  ]);
-
-  assert.doesNotMatch(homeHtml, /github\.com/i);
-  assert.doesNotMatch(wayHtml, /github\.com/i);
-  assert.match(productHtml, /github\.com\/gafapa\/moodle-local_moodlia/i);
-});
-
-test("gives each product an actionable installation guide", async () => {
-  const routes = [
-    ["/products/moodle-plugin", "Install MoodlIA in Moodle", "local/moodlia", "mcp\.php"],
-    ["/products/cli", "Install and run MoodlIA CLI", "npm install -g moodlia", "moodlia get-current-user"],
-    ["/products/moodle-core-cli", "Install and run Moodle Core CLI", "npx moodle-core-cli get-courses", "--allow-write"],
-    ["/products/sync", "Install MoodlIA Sync", "approve-scripts better-sqlite3", "exact plan"],
-    ["/products/rubrics", "Install MoodlIA Rubrics in Chrome", "chrome://extensions", "Chrome Web Store"],
-    ["/products/corrector", "Install MoodlIA Corrector in Chrome", "chromewebstore\.google\.com", "Ollama"],
-    ["/products/backup-converter", "Convert a Moodle backup in your browser", "Protect the original", "empty test course"],
-    ["/es/products/moodle-plugin", "Instala MoodlIA en Moodle", "local/moodlia", "mcp\.php"],
-    ["/es/products/cli", "Instala y ejecuta MoodlIA CLI", "npm install -g moodlia", "moodlia get-current-user"],
-    ["/es/products/sync", "Instala MoodlIA Sync", "approve-scripts better-sqlite3", "plan exacto"],
-    ["/es/products/rubrics", "Instala MoodlIA Rubrics en Chrome", "chrome://extensions", "Chrome Web Store"],
-    ["/es/products/backup-converter", "Convierte una copia de Moodle en tu navegador", "Protege el original", "curso de prueba vacío"],
-  ];
-
-  for (const [route, heading, firstProof, secondProof] of routes) {
-    const response = await render(route);
-    assert.equal(response.status, 200, `${route} did not render`);
-    const html = await response.text();
-    assert.match(html, new RegExp(heading, "i"));
-    assert.match(html, new RegExp(firstProof, "i"));
-    assert.match(html, new RegExp(secondProof, "i"));
-  }
-});
-
-test("links the backup converter product to the hosted browser application", async () => {
-  for (const route of ["/products/backup-converter", "/es/products/backup-converter"]) {
-    const response = await render(route);
-    assert.equal(response.status, 200, `${route} did not render`);
-    const html = await response.text();
-    assert.match(html, /href="\/tools\/backup-converter\/"/i);
-    assert.match(html, /github\.com\/gafapa\/moodlia-backup-converter/i);
-  }
-});
-
-test("publishes complete social metadata without leaking preview URLs", async () => {
-  const response = await render();
-  const html = await response.text();
-
-  assert.match(html, /property="og:title"[^>]*content="MoodlIA — Make Moodle work for you\."/i);
-  assert.match(html, /property="og:image"[^>]*content="https:\/\/moodlia\.com\/moodlia-educators-together-v2\.jpg"/i);
-  assert.match(html, /name="twitter:card"[^>]*content="summary_large_image"/i);
-  assert.doesNotMatch(html, /localhost|127\.0\.0\.1|codex-preview/i);
+  assert.match(css, /:focus-visible\s*{/);
+  assert.match(css, /prefers-reduced-motion: reduce/);
+  assert.match(css, /prefers-color-scheme: dark/);
+  assert.match(css, /\.skip-link:focus/);
 });

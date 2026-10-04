@@ -8,36 +8,35 @@ const clientRoot = resolve(projectRoot, "dist", "client");
 const serverEntry = resolve(projectRoot, "dist", "server", "index.js");
 const outputRoot = resolve(projectRoot, ".static-export");
 const fontSourcePrefix = `${projectRoot.replaceAll("\\", "/")}/.vinext/fonts/`;
-const englishPageRoutes = [
+const appSlugs = [
+  "rubrics",
+  "backup-converter",
+  "edx-converter",
+  "teacher-dashboard",
+  "analyzer-web",
+  "moodle-plugin",
+  "cli",
+  "moodle-core-cli",
+  "sync",
+  "skills",
+];
+const pageRoutes = [
   "/",
-  "/start",
+  "/apps",
+  "/install",
+  "/how-it-works",
   "/legal-notice",
   "/privacy",
   "/cookies",
-  "/ways/ai-integration",
-  "/ways/teaching-tools",
-  "/ways/learning-insights",
-  "/products/moodle-plugin",
-  "/products/cli",
-  "/products/moodle-core-cli",
-  "/products/sync",
-  "/products/skills",
-  "/products/rubrics",
-  "/products/corrector",
-  "/products/backup-converter",
-  "/products/chrome-extensions",
-  "/products/teacher-dashboard",
-  "/products/analyzer-web",
-  "/products/analyzer-desktop",
-];
-const pageRoutes = [
-  ...englishPageRoutes,
+  ...appSlugs.map((slug) => `/apps/${slug}`),
   "/es",
-  "/es/empezar",
+  "/es/apps",
+  "/es/instalar",
+  "/es/como-funciona",
   "/es/aviso-legal",
   "/es/privacy",
   "/es/cookies",
-  ...englishPageRoutes.filter((route) => route !== "/" && !["/start", "/legal-notice", "/privacy", "/cookies"].includes(route)).map((route) => `/es${route}`),
+  ...appSlugs.map((slug) => `/es/apps/${slug}`),
 ];
 
 await readFile(serverEntry);
@@ -80,22 +79,14 @@ const [renderedPages, robotsText, sitemapXml] = await Promise.all([
   renderPath("/sitemap.xml", "application/xml"),
 ]);
 const html = renderedPages[0].html;
-assert.match(html, /<title>MoodlIA — Make Moodle work for you\.<\/title>/i);
-assert.match(html, /https:\/\/moodlia\.com\/moodlia-educators-together-v2\.jpg/i);
-assert.doesNotMatch(html, /localhost|127\.0\.0\.1|codex-preview/i);
+assert.match(html, /<title>MoodlIA — Open-source tools for Moodle<\/title>/i);
+assert.match(html, /https:\/\/moodlia\.com\/og-moodlia\.png/i);
+assert.doesNotMatch(html, /(?:href|src)="https?:\/\/(?:localhost|127\.0\.0\.1)|codex-preview/i);
 assert.match(robotsText, /Sitemap: https:\/\/moodlia\.com\/sitemap\.xml/i);
-assert.match(sitemapXml, /<loc>https:\/\/moodlia\.com\/<\/loc>/i);
-assert.match(sitemapXml, /<loc>https:\/\/moodlia\.com\/ways\/ai-integration<\/loc>/i);
-assert.match(sitemapXml, /<loc>https:\/\/moodlia\.com\/start<\/loc>/i);
-assert.match(sitemapXml, /<loc>https:\/\/moodlia\.com\/es\/empezar<\/loc>/i);
-assert.match(sitemapXml, /<loc>https:\/\/moodlia\.com\/es\/ways\/ai-integration<\/loc>/i);
-assert.match(sitemapXml, /<loc>https:\/\/moodlia\.com\/products\/sync<\/loc>/i);
-assert.match(sitemapXml, /<loc>https:\/\/moodlia\.com\/products\/analyzer-desktop<\/loc>/i);
-assert.match(sitemapXml, /<loc>https:\/\/moodlia\.com\/es\/products\/analyzer-desktop<\/loc>/i);
-assert.match(sitemapXml, /<loc>https:\/\/moodlia\.com\/products\/backup-converter<\/loc>/i);
-assert.match(sitemapXml, /<loc>https:\/\/moodlia\.com\/es\/products\/backup-converter<\/loc>/i);
-assert.match(sitemapXml, /<loc>https:\/\/moodlia\.com\/legal-notice<\/loc>/i);
-assert.match(sitemapXml, /<loc>https:\/\/moodlia\.com\/es\/aviso-legal<\/loc>/i);
+for (const route of pageRoutes) {
+  const location = route === "/" ? "https://moodlia.com/" : `https://moodlia.com${route}`;
+  assert.ok(sitemapXml.includes(`<loc>${location}</loc>`), `${route} is missing from the sitemap.`);
+}
 
 for (const page of renderedPages) {
   page.html = page.html.replaceAll(fontSourcePrefix, "/assets/_vinext_fonts/");
@@ -130,9 +121,22 @@ await Promise.all([
 ]);
 
 // Retired routes keep working as redirects, because static hosting has no server-side rewrites.
+// Routes of the previous site, which other pages and search engines still link to.
+const retiredProducts = { corrector: null, "chrome-extensions": null, "analyzer-desktop": null, "sync-mcp": "sync" };
 const legacyRedirects = {
-  "/products/sync-mcp": "/products/sync",
-  "/es/products/sync-mcp": "/es/products/sync",
+  "/start": "/install",
+  "/es/empezar": "/es/instalar",
+  ...Object.fromEntries(["ai-integration", "teaching-tools", "learning-insights"].flatMap((way) => [
+    [`/ways/${way}`, "/apps"],
+    [`/es/ways/${way}`, "/es/apps"],
+  ])),
+  ...Object.fromEntries([...appSlugs.filter((slug) => slug !== "edx-converter"), ...Object.keys(retiredProducts)].flatMap((slug) => {
+    const target = slug in retiredProducts ? retiredProducts[slug] : slug;
+    return [
+      [`/products/${slug}`, target ? `/apps/${target}` : "/apps"],
+      [`/es/products/${slug}`, target ? `/es/apps/${target}` : "/es/apps"],
+    ];
+  })),
 };
 await Promise.all(Object.entries(legacyRedirects).map(async ([from, to]) => {
   const target = `https://moodlia.com${to}`;
