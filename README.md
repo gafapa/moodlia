@@ -52,8 +52,9 @@ npm run check
 ```
 
 `npm run check` runs linting, the production build, rendered HTML tests, and
-Drizzle schema generation. CI also audits production and development
-dependencies for high-severity vulnerabilities.
+Drizzle schema generation. CI also fails on high-severity advisories in
+production dependencies and on critical advisories in any dependency; build
+tools such as ESLint and Vite never reach the published static site.
 
 The site uses a Vinext and Cloudflare-compatible build. Hosting configuration lives in `.openai/hosting.json`.
 

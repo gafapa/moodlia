@@ -18,4 +18,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run check
-      - run: npm audit --audit-level=high
+      # The published site is static; build tools never reach it. Fail on high advisories in
+      # production dependencies and on critical advisories anywhere.
+      - run: npm audit --omit=dev --audit-level=high
+      - run: npm audit --audit-level=critical
