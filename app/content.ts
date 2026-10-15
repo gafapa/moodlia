@@ -314,7 +314,7 @@ export const apps: MoodliaApp[] = [
     place: "moodle",
     level: "technical",
     status: "stable",
-    version: "0.1.215",
+    version: "0.1.219",
     summary: t(
       "Let AI assistants and scripts work with Moodle safely, within Moodle's own permissions.",
       "Permite que asistentes de IA y scripts trabajen con Moodle de forma segura, dentro de los permisos del propio Moodle.",
