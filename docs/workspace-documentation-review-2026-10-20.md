@@ -2,7 +2,7 @@
 
 ## Scope and method
 
-Reviewed the documentation inventory of all 18 independent Git repositories in `D:\Proyectos\moodlia`: 138 Markdown documents before this review record was added. Local Markdown link targets and README `npm run` commands were checked against each repository. Current entry-point documentation was compared with package metadata, published-file declarations, CLI routing, operation contracts, browser/module entry points, storage boundaries, workflow definitions and existing dated evidence. No missing local Markdown targets or undefined README npm-script names were found.
+Reviewed the documentation inventory of all 18 independent Git repositories in `D:\Proyectos\moodlia`: 138 Markdown documents at the initial inventory; 141 tracked Markdown documents after the migration guide, this review and the Corrector 0.1.66 follow-up report. Local Markdown link targets and README `npm run` commands were checked against each repository. Current entry-point documentation was compared with package metadata, published-file declarations, CLI routing, operation contracts, browser/module entry points, storage boundaries, workflow definitions and existing dated evidence. No missing local Markdown targets or undefined README npm-script names were found.
 
 This review updates current usage instructions; historical release notes, archived plans and dated qualification reports retain their original evidence and versions. The active Core and MoodlIA contracts contain 788 and 250 operations respectively. Checking documentation is not a new live Moodle qualification, native-platform certification, registry publication or Chrome Web Store approval.
 
@@ -13,10 +13,10 @@ This review updates current usage instructions; historical release notes, archiv
 | `mcpapiclimoodle` | Archived migration source remains explicitly historical; active project ownership and existing documentation links are consistent. No changes. |
 | `moodle-core-cli` | Corrected a write example that reused a read-only client. Clarified that the recorded Moodle 5.3 beta source qualification does not automatically cover later stable snapshots. |
 | `moodlia-analyzer-desktop` | Checked Python entry/build files, local credential and language documentation, and existing platform boundaries. No discrepancies requiring changes. |
-| `moodlia-analyzer-web` | Corrected the local Vite base URL and identified stack versions as declared dependency ranges, with the lockfile authoritative for resolved versions. |
+| `moodlia-analyzer-web` | Corrected the local Vite base URL and identified stack versions as declared dependency ranges, with the lockfile authoritative for resolved versions. A compatible lockfile refresh fixes the CI audit findings; local checks and the new remote CI run pass. |
 | `moodlia-backup-converter` | Target profiles, experimental/established distinction, 768 MiB input and 2 GiB expansion bounds, worker-only processing and local build commands match source. No changes. |
 | `moodlia-cli` | Added the current 0.5.1 entry-point scope, identified old synchronization scope as historical, and documented the actual package directories including optional WebMCP, Core, adaptive and adapter exports. |
-| `moodlia-corrector` | Updated current provider/HTTP/privacy behavior, editable Moodle-form semantics, eight-locale checks, submission-page reproduction, hosted permanent policy URLs, and generated-output exclusions. Existing per-version reports remain historical. |
+| `moodlia-corrector` | Updated current provider/HTTP/privacy behavior, editable Moodle-form semantics, eight-locale checks, submission-page reproduction, hosted permanent policy URLs, and generated-output exclusions. Existing per-version reports remain historical. CI also exposed a locale reset on repeated activation; version 0.1.66 fixes it, with 49 unit tests and 72 browser checks passing locally. |
 | `moodlia-edx` | Browser-only conversion scope, supported source types, Spanish UI limitation and npm commands are consistent with the current entry points. No changes. |
 | `moodlia-moodle-plugin` | Version 0.1.220, component name, 250-operation contract, REST/MCP/WebMCP boundaries, deployment evidence and historical release notes are consistent. No changes. |
 | `moodlia-portable` | Package/runtime lock metadata and documentation distinguish Windows synthetic execution from unqualified native combinations, signing and other platforms. No changes; no installer or live workspace was run. |
@@ -38,3 +38,5 @@ The Corrector and Rubrics public policies returned HTTP 200 and matched `moodlia
 Corrector has zero dependency-audit findings. The website's compatible dependency fixes remove all production findings. Eight high development-tool findings remain through the upstream `braces` dependency chain; no compatible patched version was available in the checked registry. No forced framework downgrade or weakened audit policy was applied. The unchanged gates require no high production findings and no critical findings anywhere.
 
 Fresh code/build verification and remote commit IDs are recorded with the repository pushes. Existing dated deployment and platform evidence is not relabeled as newly executed by this documentation review.
+
+During final verification, new uncommitted `moodlia-portable` license/README edits appeared outside this review. They were inspected and preserved without staging or publishing them; the clean-worktree claim applies only to this review's own changes.
