@@ -1,7 +1,9 @@
 import { getApp, type AppSlug, type Locale } from "./content";
-import { alternates, appPath, ui } from "./i18n";
+import { alternates, appPath } from "./i18n";
 import { pageMetadata } from "./seo";
+import { ArrowIcon } from "./icons";
 import { HelpBox, PageShell } from "./ui-kit";
+import { EditorialArt } from "./editorial-art";
 
 type Lane = { title: Record<Locale, string>; body: Record<Locale, string>; apps: AppSlug[] };
 
@@ -9,16 +11,16 @@ const lanes: Lane[] = [
   {
     title: { en: "No connection to Moodle", es: "Sin conexión a Moodle" },
     body: {
-      en: "They work inside a Moodle page you already have open, or on files you then restore in Moodle.",
-      es: "Funcionan dentro de una página de Moodle que ya tienes abierta, o con archivos que después restauras en Moodle.",
+      en: "Work in an open Moodle page, convert course files, or prepare portable learning content locally.",
+      es: "Trabaja en una página de Moodle abierta, convierte archivos de cursos o prepara contenido educativo portable de forma local.",
     },
-    apps: ["rubrics", "backup-converter", "edx-converter"],
+    apps: ["rubrics", "backup-converter", "edx-converter", "skills"],
   },
   {
     title: { en: "Moodle's standard web services", es: "Servicios web estándar de Moodle" },
     body: {
-      en: "Nothing to install on Moodle. An administrator enables web services and creates a token.",
-      es: "No se instala nada en Moodle. Un administrador activa los servicios web y crea un token.",
+      en: "Nothing to install on Moodle. Enable web services and create a token.",
+      es: "No se instala nada en Moodle. Activa los servicios web y crea un token.",
     },
     apps: ["teacher-dashboard", "analyzer-web", "moodle-core-cli", "sync"],
   },
@@ -28,7 +30,7 @@ const lanes: Lane[] = [
       en: "Installed once on the site. Adds about 250 operations over REST and MCP, the route for AI assistants.",
       es: "Se instala una vez en el sitio. Añade unas 250 operaciones por REST y MCP, la vía para los asistentes de IA.",
     },
-    apps: ["moodle-plugin", "cli", "sync", "skills"],
+    apps: ["moodle-plugin", "cli", "sync"],
   },
 ];
 
@@ -59,7 +61,7 @@ const content = {
     connect: [
       {
         title: "Standard web services",
-        body: "Moodle already has a web service API. Moodle Core CLI, Teacher Dashboard, and Analyzer Web use it, so nothing is installed on the site. It is limited to the functions Moodle offers and the administrator adds to the service.",
+        body: "Moodle already has a web service API. Moodle Core CLI, Teacher Dashboard, and Analyzer Web use it, so nothing is installed on the site. It is limited to the functions Moodle offers and the service has enabled.",
       },
       {
         title: "The MoodlIA plugin",
@@ -77,9 +79,9 @@ const content = {
     safetyTitle: "Rules every app follows",
     safety: [
       ["Moodle decides", "Every request runs as a Moodle user and is limited by that user's permissions. MoodlIA never bypasses them."],
-      ["One account, one token", "Use a dedicated Moodle account with the minimum permissions and a token you can revoke, never an administrator's login."],
+      ["One account, one token", "Use a dedicated Moodle service account with the minimum permissions and a token you can revoke, separate from personal accounts."],
       ["Look before you change", "Moodle Core CLI is read-only until you add --allow-write, and MoodlIA Sync writes nothing until you approve its plan. Start every tool with read-only commands and a test course."],
-      ["Your data stays with you", "Browser tools process files and Moodle data on your computer. No app sends them to a MoodlIA server."],
+      ["Know the destination", "Converters process files in your browser. AI-assisted work sends the necessary evidence to your chosen provider. A local provider is an option where the tool supports it; there is no MoodlIA AI server."],
     ],
     codeTitle: "Open source",
     codeBody: "Every app has its own repository on GitHub, with its documentation, changelog, and issue tracker. Report problems or propose improvements there, or write to us.",
@@ -91,7 +93,7 @@ const content = {
     connect: [
       {
         title: "Servicios web estándar",
-        body: "Moodle ya tiene una API de servicios web. Moodle Core CLI, Teacher Dashboard y Analyzer Web la usan, así que no se instala nada en el sitio. Está limitada a las funciones que ofrece Moodle y que el administrador añade al servicio.",
+        body: "Moodle ya tiene una API de servicios web. Moodle Core CLI, Teacher Dashboard y Analyzer Web la usan, así que no se instala nada en el sitio. Está limitada a las funciones que ofrece Moodle y que están habilitadas en el servicio.",
       },
       {
         title: "El plugin MoodlIA",
@@ -109,9 +111,9 @@ const content = {
     safetyTitle: "Reglas que siguen todas las apps",
     safety: [
       ["Moodle decide", "Cada petición se ejecuta como un usuario de Moodle y está limitada por sus permisos. MoodlIA nunca se los salta."],
-      ["Una cuenta, un token", "Usa una cuenta de Moodle dedicada con los permisos mínimos y un token que puedas revocar, nunca el acceso de un administrador."],
+      ["Una cuenta, un token", "Usa una cuenta de servicio de Moodle dedicada con los permisos mínimos y un token que puedas revocar, separada de las cuentas personales."],
       ["Mirar antes de cambiar", "Moodle Core CLI solo lee hasta que añades --allow-write, y MoodlIA Sync no escribe nada hasta que apruebas su plan. Empieza siempre con comandos de solo lectura y un curso de prueba."],
-      ["Tus datos se quedan contigo", "Las herramientas de navegador procesan los archivos y los datos de Moodle en tu ordenador. Ninguna app los envía a un servidor de MoodlIA."],
+      ["Conoce el destino", "Los conversores procesan los archivos en tu navegador. El trabajo con IA envía las evidencias necesarias al proveedor elegido. Un proveedor local es una opción cuando la herramienta lo admite; no hay un servidor de IA de MoodlIA."],
     ],
     codeTitle: "Código abierto",
     codeBody: "Cada app tiene su propio repositorio en GitHub, con su documentación, su registro de cambios y su gestor de incidencias. Comunica allí los problemas o propón mejoras, o escríbenos.",
@@ -123,23 +125,23 @@ export function howMetadata(locale: Locale) {
 }
 
 export function HowPage({ locale }: { locale: Locale }) {
-  const copy = ui[locale].how;
   const text = content[locale];
   return (
     <PageShell locale={locale} current="how" alternate={alternates("how")}>
       <section className="page-head">
-        <div className="container narrow">
-          <h1>{copy.title}</h1>
-          <p className="lead">{copy.intro}</p>
+        <div className="container editorial-hero">
+          <div className="editorial-hero-copy"><h1>{locale === "es" ? "Conecta las piezas." : "Connect the pieces."}</h1><p className="lead">{locale === "es" ? "Herramientas independientes que trabajan con Moodle de formas distintas. Descubre qué conexión necesita cada una y adónde van los datos." : "Independent tools, different ways to work with Moodle. See which connection each one needs and where your data goes."}</p><a className="button button-accent" href="#connect-title">{locale === "es" ? "Ver las conexiones" : "Explore the connections"}<ArrowIcon /></a></div>
+          <EditorialArt kind="reuse" eager />
         </div>
       </section>
 
       <section className="section" aria-labelledby="connect-title">
         <div className="container">
           <h2 id="connect-title">{text.connectTitle}</h2>
-          <div className="two-up">
-            {text.connect.map((item) => (
+          <div className="two-up connection-paths">
+            {text.connect.map((item, index) => (
               <article className="panel" key={item.title}>
+                <div className="connection-map" aria-hidden="true"><span>{locale === "es" ? "Tu herramienta" : "Your tool"}</span><svg viewBox="0 0 60 20"><path d="M0 10h55m-8-8 9 8-9 8" fill="none" stroke="currentColor" strokeWidth="2"/></svg><span>{index === 0 ? "Core" : "MoodlIA"}</span><svg viewBox="0 0 60 20"><path d="M0 10h55m-8-8 9 8-9 8" fill="none" stroke="currentColor" strokeWidth="2"/></svg><span>Moodle</span></div>
                 <h3>{item.title}</h3>
                 <p>{item.body}</p>
               </article>
@@ -185,7 +187,7 @@ export function HowPage({ locale }: { locale: Locale }) {
         <div className="container narrow">
           <h2 id="code-title">{text.codeTitle}</h2>
           <p>{text.codeBody}</p>
-          <p><a href="https://github.com/gafapa">github.com/gafapa →</a></p>
+          <p><a href="https://github.com/gafapa">github.com/gafapa <ArrowIcon /></a></p>
         </div>
       </section>
 

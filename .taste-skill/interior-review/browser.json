@@ -1,0 +1,338 @@
+[
+  {
+    "locale": "es",
+    "width": 1440,
+    "path": "/es/apps/",
+    "passed": true
+  },
+  {
+    "locale": "es",
+    "width": 1440,
+    "path": "/es/apps/corrector/",
+    "passed": true
+  },
+  {
+    "locale": "es",
+    "width": 1440,
+    "path": "/es/apps/rubrics/",
+    "passed": true
+  },
+  {
+    "locale": "es",
+    "width": 1440,
+    "path": "/es/apps/backup-converter/",
+    "passed": true
+  },
+  {
+    "locale": "es",
+    "width": 1440,
+    "path": "/es/apps/edx-converter/",
+    "passed": true
+  },
+  {
+    "locale": "es",
+    "width": 1440,
+    "path": "/es/apps/teacher-dashboard/",
+    "passed": true
+  },
+  {
+    "locale": "es",
+    "width": 1440,
+    "path": "/es/apps/analyzer-web/",
+    "passed": true
+  },
+  {
+    "locale": "es",
+    "width": 1440,
+    "path": "/es/apps/moodle-plugin/",
+    "passed": true
+  },
+  {
+    "locale": "es",
+    "width": 1440,
+    "path": "/es/apps/cli/",
+    "passed": true
+  },
+  {
+    "locale": "es",
+    "width": 1440,
+    "path": "/es/apps/moodle-core-cli/",
+    "passed": true
+  },
+  {
+    "locale": "es",
+    "width": 1440,
+    "path": "/es/apps/sync/",
+    "passed": true
+  },
+  {
+    "locale": "es",
+    "width": 1440,
+    "path": "/es/apps/skills/",
+    "passed": true
+  },
+  {
+    "locale": "es",
+    "width": 1440,
+    "path": "/es/instalar/",
+    "passed": true
+  },
+  {
+    "locale": "es",
+    "width": 1440,
+    "path": "/es/como-funciona/",
+    "passed": true
+  },
+  {
+    "locale": "es",
+    "width": 390,
+    "path": "/es/apps/",
+    "passed": true
+  },
+  {
+    "locale": "es",
+    "width": 390,
+    "path": "/es/apps/corrector/",
+    "passed": true
+  },
+  {
+    "locale": "es",
+    "width": 390,
+    "path": "/es/apps/rubrics/",
+    "passed": true
+  },
+  {
+    "locale": "es",
+    "width": 390,
+    "path": "/es/apps/backup-converter/",
+    "passed": true
+  },
+  {
+    "locale": "es",
+    "width": 390,
+    "path": "/es/apps/edx-converter/",
+    "passed": true
+  },
+  {
+    "locale": "es",
+    "width": 390,
+    "path": "/es/apps/teacher-dashboard/",
+    "passed": true
+  },
+  {
+    "locale": "es",
+    "width": 390,
+    "path": "/es/apps/analyzer-web/",
+    "passed": true
+  },
+  {
+    "locale": "es",
+    "width": 390,
+    "path": "/es/apps/moodle-plugin/",
+    "passed": true
+  },
+  {
+    "locale": "es",
+    "width": 390,
+    "path": "/es/apps/cli/",
+    "passed": true
+  },
+  {
+    "locale": "es",
+    "width": 390,
+    "path": "/es/apps/moodle-core-cli/",
+    "passed": true
+  },
+  {
+    "locale": "es",
+    "width": 390,
+    "path": "/es/apps/sync/",
+    "passed": true
+  },
+  {
+    "locale": "es",
+    "width": 390,
+    "path": "/es/apps/skills/",
+    "passed": true
+  },
+  {
+    "locale": "es",
+    "width": 390,
+    "path": "/es/instalar/",
+    "passed": true
+  },
+  {
+    "locale": "es",
+    "width": 390,
+    "path": "/es/como-funciona/",
+    "passed": true
+  },
+  {
+    "locale": "en",
+    "width": 1440,
+    "path": "/apps/",
+    "passed": true
+  },
+  {
+    "locale": "en",
+    "width": 1440,
+    "path": "/apps/corrector/",
+    "passed": true
+  },
+  {
+    "locale": "en",
+    "width": 1440,
+    "path": "/apps/rubrics/",
+    "passed": true
+  },
+  {
+    "locale": "en",
+    "width": 1440,
+    "path": "/apps/backup-converter/",
+    "passed": true
+  },
+  {
+    "locale": "en",
+    "width": 1440,
+    "path": "/apps/edx-converter/",
+    "passed": true
+  },
+  {
+    "locale": "en",
+    "width": 1440,
+    "path": "/apps/teacher-dashboard/",
+    "passed": true
+  },
+  {
+    "locale": "en",
+    "width": 1440,
+    "path": "/apps/analyzer-web/",
+    "passed": true
+  },
+  {
+    "locale": "en",
+    "width": 1440,
+    "path": "/apps/moodle-plugin/",
+    "passed": true
+  },
+  {
+    "locale": "en",
+    "width": 1440,
+    "path": "/apps/cli/",
+    "passed": true
+  },
+  {
+    "locale": "en",
+    "width": 1440,
+    "path": "/apps/moodle-core-cli/",
+    "passed": true
+  },
+  {
+    "locale": "en",
+    "width": 1440,
+    "path": "/apps/sync/",
+    "passed": true
+  },
+  {
+    "locale": "en",
+    "width": 1440,
+    "path": "/apps/skills/",
+    "passed": true
+  },
+  {
+    "locale": "en",
+    "width": 1440,
+    "path": "/install/",
+    "passed": true
+  },
+  {
+    "locale": "en",
+    "width": 1440,
+    "path": "/how-it-works/",
+    "passed": true
+  },
+  {
+    "locale": "en",
+    "width": 390,
+    "path": "/apps/",
+    "passed": true
+  },
+  {
+    "locale": "en",
+    "width": 390,
+    "path": "/apps/corrector/",
+    "passed": true
+  },
+  {
+    "locale": "en",
+    "width": 390,
+    "path": "/apps/rubrics/",
+    "passed": true
+  },
+  {
+    "locale": "en",
+    "width": 390,
+    "path": "/apps/backup-converter/",
+    "passed": true
+  },
+  {
+    "locale": "en",
+    "width": 390,
+    "path": "/apps/edx-converter/",
+    "passed": true
+  },
+  {
+    "locale": "en",
+    "width": 390,
+    "path": "/apps/teacher-dashboard/",
+    "passed": true
+  },
+  {
+    "locale": "en",
+    "width": 390,
+    "path": "/apps/analyzer-web/",
+    "passed": true
+  },
+  {
+    "locale": "en",
+    "width": 390,
+    "path": "/apps/moodle-plugin/",
+    "passed": true
+  },
+  {
+    "locale": "en",
+    "width": 390,
+    "path": "/apps/cli/",
+    "passed": true
+  },
+  {
+    "locale": "en",
+    "width": 390,
+    "path": "/apps/moodle-core-cli/",
+    "passed": true
+  },
+  {
+    "locale": "en",
+    "width": 390,
+    "path": "/apps/sync/",
+    "passed": true
+  },
+  {
+    "locale": "en",
+    "width": 390,
+    "path": "/apps/skills/",
+    "passed": true
+  },
+  {
+    "locale": "en",
+    "width": 390,
+    "path": "/install/",
+    "passed": true
+  },
+  {
+    "locale": "en",
+    "width": 390,
+    "path": "/how-it-works/",
+    "passed": true
+  }
+]

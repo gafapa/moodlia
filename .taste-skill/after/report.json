@@ -1,0 +1,2661 @@
+{
+ "url": "http://127.0.0.1:3101/es/",
+ "at": "2026-10-19T22:09:28.636Z",
+ "allow": [],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 12,
+   "filled": [
+    0.89,
+    0.57,
+    0.89,
+    0.93,
+    1,
+    1,
+    1,
+    0.65,
+    1,
+    0.88,
+    0.53,
+    0.89
+   ],
+   "motion": {
+    "elements": 63,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 63,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 10512,
+     "screens": 11.7,
+     "words": 761,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 23,
+     "sections": 9,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "De idea a Moodle.",
+     "words": 4,
+     "chars": 17,
+     "lines": 2,
+     "size": 190.1,
+     "vw": 13.2,
+     "font": "Roundo",
+     "weight": 600,
+     "tracking": -0.07,
+     "leading": 0.85,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.96,
+     "top": 124,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "De idea a Moodle.",
+     "words": 4,
+     "lines": 2,
+     "size": 190.1,
+     "font": "Roundo"
+    },
+    "headings": [
+     {
+      "text": "De idea a Moodle.",
+      "words": 4,
+      "chars": 17,
+      "lines": 2,
+      "size": 190.1,
+      "vw": 13.2,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.07,
+      "leading": 0.85,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.96,
+      "top": 124,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "¿Cómo consume energía nuestra aula?",
+      "words": 5,
+      "chars": 35,
+      "lines": 2,
+      "size": 40.3,
+      "vw": 2.8,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.04,
+      "leading": 1.13,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.4,
+      "top": 781,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Una idea docente. Muchas formas de llevarla más lejos.",
+      "words": 9,
+      "chars": 54,
+      "lines": 3,
+      "size": 33.1,
+      "vw": 2.3,
+      "font": "Roundo",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.5,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.29,
+      "top": 820,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "La idea es tuya. El trabajo repetitivo puede dejar de serlo.",
+      "words": 11,
+      "chars": 60,
+      "lines": 3,
+      "size": 60.5,
+      "vw": 4.2,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.48,
+      "top": 1236,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Dale forma.",
+      "words": 2,
+      "chars": 11,
+      "lines": 1,
+      "size": 89.3,
+      "vw": 6.2,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.41,
+      "top": 1859,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Una clase sobre energía",
+      "words": 4,
+      "chars": 23,
+      "lines": 1,
+      "size": 33.1,
+      "vw": 2.3,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.04,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.35,
+      "top": 1929,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Haz que avance.",
+      "words": 3,
+      "chars": 15,
+      "lines": 2,
+      "size": 89.3,
+      "vw": 6.2,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.41,
+      "top": 2714,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Mira el conjunto.",
+      "words": 3,
+      "chars": 17,
+      "lines": 2,
+      "size": 89.3,
+      "vw": 6.2,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.41,
+      "top": 2714,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Vuelve a partir de aquí.",
+      "words": 5,
+      "chars": 24,
+      "lines": 2,
+      "size": 89.3,
+      "vw": 6.2,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.41,
+      "top": 2714,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Pon el criterio.",
+      "words": 3,
+      "chars": 16,
+      "lines": 1,
+      "size": 89.3,
+      "vw": 6.2,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.41,
+      "top": 2759,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Una actividad no cuenta todo.",
+      "words": 5,
+      "chars": 29,
+      "lines": 2,
+      "size": 33.1,
+      "vw": 2.3,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.04,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.26,
+      "top": 2772,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Una clase sobre energía",
+      "words": 4,
+      "chars": 23,
+      "lines": 1,
+      "size": 33.1,
+      "vw": 2.3,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.25,
+      "top": 2836,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Proyecto · Una clase con menos consumo",
+      "words": 7,
+      "chars": 38,
+      "lines": 1,
+      "size": 33.1,
+      "vw": 2.3,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.04,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.39,
+      "top": 2838,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Una clase sobre energía",
+      "words": 4,
+      "chars": 23,
+      "lines": 1,
+      "size": 33.1,
+      "vw": 2.3,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.25,
+      "top": 2947,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Cada herramienta tiene su puerta.",
+      "words": 5,
+      "chars": 33,
+      "lines": 2,
+      "size": 72,
+      "vw": 5,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.43,
+      "top": 6921,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Empieza por lo que necesitas.",
+      "words": 5,
+      "chars": 29,
+      "lines": 1,
+      "size": 72,
+      "vw": 5,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.64,
+      "top": 7298,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Instala la extensión e importa tu CSV o Excel. Es el inicio más directo, sin configurar IA.",
+      "words": 17,
+      "chars": 91,
+      "lines": 3,
+      "size": 33.1,
+      "vw": 2.3,
+      "font": "Roundo",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.5,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.44,
+      "top": 7489,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "La decisión sigue siendo tuya.",
+      "words": 5,
+      "chars": 30,
+      "lines": 1,
+      "size": 72,
+      "vw": 5,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.64,
+      "top": 7985,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Tu proveedor",
+      "words": 2,
+      "chars": 12,
+      "lines": 1,
+      "size": 33.1,
+      "vw": 2.3,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.03,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.27,
+      "top": 8128,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Tus permisos",
+      "words": 2,
+      "chars": 12,
+      "lines": 1,
+      "size": 33.1,
+      "vw": 2.3,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.03,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.27,
+      "top": 8128,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Tu revisión",
+      "words": 2,
+      "chars": 11,
+      "lines": 1,
+      "size": 33.1,
+      "vw": 2.3,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.03,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.27,
+      "top": 8128,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Más caminos para tu curso.",
+      "words": 5,
+      "chars": 26,
+      "lines": 2,
+      "size": 72,
+      "vw": 5,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.43,
+      "top": 8639,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Antes de empezar.",
+      "words": 3,
+      "chars": 17,
+      "lines": 2,
+      "size": 72,
+      "vw": 5,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.38,
+      "top": 9281,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Tu próxima idea.",
+      "words": 3,
+      "chars": 16,
+      "lines": 1,
+      "size": 151.2,
+      "vw": 10.5,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.96,
+      "top": 9961,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 24,
+     "maxLines": 3,
+     "over2Lines": 1,
+     "statements": 8,
+     "centered": 0,
+     "medianWords": 4,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Roundo",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      13,
+      15,
+      17,
+      20,
+      24,
+      25,
+      33,
+      40,
+      61,
+      72,
+      89,
+      151,
+      190
+     ],
+     "sizeCount": 13,
+     "notLoaded": [],
+     "body": {
+      "font": "Roundo",
+      "size": 20,
+      "leading": 1.5,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 18.1
+     },
+     "measureChars": 67,
+     "max": {
+      "size": 190.1,
+      "vw": 13.2,
+      "font": "Roundo",
+      "text": "De idea"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.01,
+     "smallText": 0
+    },
+    "eyebrows": [
+     {
+      "text": "Saltar al contenido",
+      "above": "De idea a Moodle.",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 17,
+      "top": -60
+     },
+     {
+      "text": "¿Y si empezamos con una pregunta?",
+      "above": "¿Cómo consume energía nuestra aula?",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 15,
+      "top": 733
+     },
+     {
+      "text": "Moodle",
+      "above": "Una clase sobre energía",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 15,
+      "top": 1891
+     },
+     {
+      "text": "Tu curso de hoy",
+      "above": "Una clase sobre energía",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 15,
+      "top": 2811
+     },
+     {
+      "text": "Tu curso de hoy",
+      "above": "Proyecto · Una clase con menos consumo",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 15,
+      "top": 2811
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#ffffff",
+     "bodyBgHsl": {
+      "h": 0,
+      "s": 0,
+      "l": 1
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#ffffff",
+       "top": 86,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 1
+       }
+      },
+      {
+       "color": "#a7ff9c",
+       "top": 86,
+       "hsl": {
+        "h": 113,
+        "s": 1,
+        "l": 0.81
+       }
+      },
+      {
+       "color": "#e5e8e1",
+       "top": 1561,
+       "hsl": {
+        "h": 86,
+        "s": 0.13,
+        "l": 0.9
+       }
+      },
+      {
+       "color": "#121713",
+       "top": 2461,
+       "hsl": {
+        "h": 132,
+        "s": 0.12,
+        "l": 0.08
+       }
+      },
+      {
+       "color": "#ff6831",
+       "top": 2461,
+       "hsl": {
+        "h": 16,
+        "s": 1,
+        "l": 0.6
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#121713",
+       "share": 0.81
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.18
+      },
+      {
+       "color": "#a7ff9c",
+       "share": 0.01
+      }
+     ],
+     "button": {
+      "bg": "#ffffff",
+      "hsl": {
+       "h": 0,
+       "s": 0,
+       "l": 1
+      },
+      "fg": "#121713"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 10,
+     "inHero": 2,
+     "radius": 0,
+     "height": 76,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Saltar al contenido",
+      "Recorre la historia"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 7,
+     "fixed": false,
+     "height": 86,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "roundo"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 10512,
+    "margins": {
+     "left": 32,
+     "right": 35
+    },
+    "sections": [
+     {
+      "sel": "main#main",
+      "tag": "main",
+      "top": 86,
+      "height": 10225,
+      "words": 941,
+      "media": 2,
+      "middle": 0,
+      "heading": {
+       "text": "De idea",
+       "size": 190,
+       "tag": "h1"
+      },
+      "left": 32,
+      "right": 32,
+      "textLeft": 32,
+      "textRight": 32,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": true
+     },
+     {
+      "sel": "footer.site-footer",
+      "tag": "footer",
+      "top": 10311,
+      "height": 200,
+      "words": 26,
+      "media": 0,
+      "middle": 474,
+      "heading": null,
+      "left": 32,
+      "right": 73,
+      "textLeft": 32,
+      "textRight": 73,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "De idea a Moodle.",
+      "size": 190,
+      "top": 124,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 32,
+      "n": 27
+     },
+     {
+      "x": 716,
+      "n": 5
+     },
+     {
+      "x": 523,
+      "n": 2
+     },
+     {
+      "x": 772,
+      "n": 2
+     },
+     {
+      "x": 1014,
+      "n": 2
+     },
+     {
+      "x": 789,
+      "n": 1
+     },
+     {
+      "x": 858,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 40,
+    "bodySize": 20,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0.08,
+    "voidBox": {
+     "x": 600,
+     "y": 120,
+     "w": 840,
+     "h": 120
+    }
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 9,
+   "filled": [
+    0.84,
+    0.8,
+    0.89,
+    0.97,
+    0.86,
+    0.93,
+    0.75,
+    0.72,
+    0.82
+   ],
+   "motion": {
+    "elements": 12,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 12,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 8375,
+     "screens": 8.2,
+     "words": 756,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 23,
+     "sections": 9,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "De idea a Moodle.",
+     "words": 4,
+     "chars": 17,
+     "lines": 2,
+     "size": 115.2,
+     "vw": 15,
+     "font": "Roundo",
+     "weight": 600,
+     "tracking": -0.07,
+     "leading": 0.85,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.95,
+     "top": 124,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "De idea a Moodle.",
+     "words": 4,
+     "lines": 2,
+     "size": 115.2,
+     "font": "Roundo"
+    },
+    "headings": [
+     {
+      "text": "De idea a Moodle.",
+      "words": 4,
+      "chars": 17,
+      "lines": 2,
+      "size": 115.2,
+      "vw": 15,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.07,
+      "leading": 0.85,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.95,
+      "top": 124,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "La idea es tuya. El trabajo repetitivo puede dejar de serlo.",
+      "words": 11,
+      "chars": 60,
+      "lines": 3,
+      "size": 38,
+      "vw": 4.9,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.5,
+      "top": 962,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Dale forma.",
+      "words": 2,
+      "chars": 11,
+      "lines": 1,
+      "size": 50,
+      "vw": 6.5,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 1361,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Pon el criterio.",
+      "words": 3,
+      "chars": 16,
+      "lines": 1,
+      "size": 50,
+      "vw": 6.5,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 2124,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Haz que avance.",
+      "words": 3,
+      "chars": 15,
+      "lines": 1,
+      "size": 50,
+      "vw": 6.5,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 2850,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Mira el conjunto.",
+      "words": 3,
+      "chars": 17,
+      "lines": 2,
+      "size": 50,
+      "vw": 6.5,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 3561,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Vuelve a partir de aquí.",
+      "words": 5,
+      "chars": 24,
+      "lines": 2,
+      "size": 50,
+      "vw": 6.5,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 4325,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Cada herramienta tiene su puerta.",
+      "words": 5,
+      "chars": 33,
+      "lines": 2,
+      "size": 38.4,
+      "vw": 5,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 5032,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Empieza por lo que necesitas.",
+      "words": 5,
+      "chars": 29,
+      "lines": 1,
+      "size": 38.4,
+      "vw": 5,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.64,
+      "top": 5290,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "La decisión sigue siendo tuya.",
+      "words": 5,
+      "chars": 30,
+      "lines": 1,
+      "size": 38.4,
+      "vw": 5,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.64,
+      "top": 5919,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Más caminos para tu curso.",
+      "words": 5,
+      "chars": 26,
+      "lines": 2,
+      "size": 38.4,
+      "vw": 5,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 6526,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Antes de empezar.",
+      "words": 3,
+      "chars": 17,
+      "lines": 2,
+      "size": 38.4,
+      "vw": 5,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.38,
+      "top": 7144,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Tu próxima idea.",
+      "words": 3,
+      "chars": 16,
+      "lines": 1,
+      "size": 80.6,
+      "vw": 10.5,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.95,
+      "top": 7822,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 13,
+     "maxLines": 3,
+     "over2Lines": 1,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 5,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Roundo",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      12,
+      13,
+      15,
+      16,
+      17,
+      22,
+      24,
+      38,
+      50,
+      81,
+      115
+     ],
+     "sizeCount": 11,
+     "notLoaded": [],
+     "body": {
+      "font": "Roundo",
+      "size": 17,
+      "leading": 1.5,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 15.1
+     },
+     "measureChars": 39,
+     "max": {
+      "size": 115.2,
+      "vw": 15,
+      "font": "Roundo",
+      "text": "De idea"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.01,
+     "smallText": 1
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#ffffff",
+     "bodyBgHsl": {
+      "h": 0,
+      "s": 0,
+      "l": 1
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#ffffff",
+       "top": 86,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 1
+       }
+      },
+      {
+       "color": "#a7ff9c",
+       "top": 86,
+       "hsl": {
+        "h": 113,
+        "s": 1,
+        "l": 0.81
+       }
+      },
+      {
+       "color": "#e5e8e1",
+       "top": 1168,
+       "hsl": {
+        "h": 86,
+        "s": 0.13,
+        "l": 0.9
+       }
+      },
+      {
+       "color": "#121713",
+       "top": 2668,
+       "hsl": {
+        "h": 132,
+        "s": 0.12,
+        "l": 0.08
+       }
+      },
+      {
+       "color": "#ff6831",
+       "top": 3418,
+       "hsl": {
+        "h": 16,
+        "s": 1,
+        "l": 0.6
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#121713",
+       "share": 0.81
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.18
+      },
+      {
+       "color": "#a7ff9c",
+       "share": 0.01
+      }
+     ],
+     "button": {
+      "bg": "#ffffff",
+      "hsl": {
+       "h": 0,
+       "s": 0,
+       "l": 1
+      },
+      "fg": "#121713"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 10,
+     "inHero": 2,
+     "radius": 0,
+     "height": 71,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Saltar al contenido",
+      "Recorre la historia"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "svg",
+      "ratio": 0.09
+     }
+    ],
+    "nav": {
+     "links": 7,
+     "fixed": false,
+     "height": 86,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "roundo"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 8375,
+    "margins": {
+     "left": 20,
+     "right": 20
+    },
+    "sections": [
+     {
+      "sel": "main#main",
+      "tag": "main",
+      "top": 86,
+      "height": 8010,
+      "words": 936,
+      "media": 2,
+      "middle": 0,
+      "heading": {
+       "text": "De idea",
+       "size": 115,
+       "tag": "h1"
+      },
+      "left": 20,
+      "right": 20,
+      "textLeft": 20,
+      "textRight": 20,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "footer.site-footer",
+      "tag": "footer",
+      "top": 8096,
+      "height": 280,
+      "words": 26,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "MoodlIA",
+       "size": 24,
+       "tag": "span"
+      },
+      "left": 20,
+      "right": 269,
+      "textLeft": 20,
+      "textRight": 269,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "De idea a Moodle.",
+      "size": 115,
+      "top": 124,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 20,
+      "n": 27
+     },
+     {
+      "x": 393,
+      "n": 6
+     },
+     {
+      "x": 272,
+      "n": 2
+     },
+     {
+      "x": 413,
+      "n": 2
+     },
+     {
+      "x": 525,
+      "n": 2
+     },
+     {
+      "x": 441,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 40,
+    "bodySize": 17,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 12,
+   "filled": [
+    0.87,
+    0.82,
+    0.79,
+    0.77,
+    1,
+    0.94,
+    0.95,
+    0.79,
+    1,
+    0.91,
+    0.62,
+    0.98
+   ],
+   "motion": {
+    "elements": 12,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 12,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 10137,
+     "screens": 12,
+     "words": 756,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 23,
+     "sections": 9,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "De idea a Moodle.",
+     "words": 4,
+     "chars": 17,
+     "lines": 2,
+     "size": 70.2,
+     "vw": 18,
+     "font": "Roundo",
+     "weight": 600,
+     "tracking": -0.07,
+     "leading": 0.92,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.9,
+     "top": 165,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "De idea a Moodle.",
+     "words": 4,
+     "lines": 2,
+     "size": 70.2,
+     "font": "Roundo"
+    },
+    "headings": [
+     {
+      "text": "MoodlIA",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.6,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.35,
+      "top": 19,
+      "tag": "a",
+      "kind": "heading"
+     },
+     {
+      "text": "De idea a Moodle.",
+      "words": 4,
+      "chars": 17,
+      "lines": 2,
+      "size": 70.2,
+      "vw": 18,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.07,
+      "leading": 0.92,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 165,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "¿Cómo consume energía nuestra aula?",
+      "words": 5,
+      "chars": 35,
+      "lines": 2,
+      "size": 27,
+      "vw": 6.9,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.04,
+      "leading": 1.13,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.77,
+      "top": 628,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "La idea es tuya. El trabajo repetitivo puede dejar de serlo.",
+      "words": 11,
+      "chars": 60,
+      "lines": 3,
+      "size": 36,
+      "vw": 9.2,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 1016,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Dale forma.",
+      "words": 2,
+      "chars": 11,
+      "lines": 1,
+      "size": 50,
+      "vw": 12.8,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 1376,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Una clase sobre energía",
+      "words": 4,
+      "chars": 23,
+      "lines": 1,
+      "size": 25,
+      "vw": 6.4,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.04,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 1820,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Pon el criterio.",
+      "words": 3,
+      "chars": 16,
+      "lines": 1,
+      "size": 50,
+      "vw": 12.8,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 2304,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Proyecto · Una clase con menos consumo",
+      "words": 7,
+      "chars": 38,
+      "lines": 2,
+      "size": 24,
+      "vw": 6.2,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.04,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.81,
+      "top": 2725,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Haz que avance.",
+      "words": 3,
+      "chars": 15,
+      "lines": 1,
+      "size": 50,
+      "vw": 12.8,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 3151,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Mira el conjunto.",
+      "words": 3,
+      "chars": 17,
+      "lines": 2,
+      "size": 50,
+      "vw": 12.8,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 4099,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Una actividad no cuenta todo.",
+      "words": 5,
+      "chars": 29,
+      "lines": 2,
+      "size": 27,
+      "vw": 6.9,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.04,
+      "leading": 1.15,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.88,
+      "top": 4581,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Vuelve a partir de aquí.",
+      "words": 5,
+      "chars": 24,
+      "lines": 2,
+      "size": 50,
+      "vw": 12.8,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 5080,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Una clase sobre energía",
+      "words": 4,
+      "chars": 23,
+      "lines": 2,
+      "size": 24,
+      "vw": 6.2,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.58,
+      "top": 5588,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Una clase sobre energía",
+      "words": 4,
+      "chars": 23,
+      "lines": 2,
+      "size": 24,
+      "vw": 6.2,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.57,
+      "top": 5712,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Cada herramienta tiene su puerta.",
+      "words": 5,
+      "chars": 33,
+      "lines": 2,
+      "size": 36,
+      "vw": 9.2,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 6086,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Empieza por lo que necesitas.",
+      "words": 5,
+      "chars": 29,
+      "lines": 2,
+      "size": 40,
+      "vw": 10.3,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 6417,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Instala la extensión e importa tu CSV o Excel. Es el inicio más directo, sin configurar IA.",
+      "words": 17,
+      "chars": 91,
+      "lines": 3,
+      "size": 24,
+      "vw": 6.2,
+      "font": "Roundo",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.5,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 6893,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "La decisión sigue siendo tuya.",
+      "words": 5,
+      "chars": 30,
+      "lines": 2,
+      "size": 40,
+      "vw": 10.3,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 7233,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Tu proveedor",
+      "words": 2,
+      "chars": 12,
+      "lines": 1,
+      "size": 27,
+      "vw": 6.9,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.03,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 7355,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Tus permisos",
+      "words": 2,
+      "chars": 12,
+      "lines": 1,
+      "size": 27,
+      "vw": 6.9,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.03,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 7510,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Tu revisión",
+      "words": 2,
+      "chars": 11,
+      "lines": 1,
+      "size": 27,
+      "vw": 6.9,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.03,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 7664,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Más caminos para tu curso.",
+      "words": 5,
+      "chars": 26,
+      "lines": 2,
+      "size": 40,
+      "vw": 10.3,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 7977,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Antes de empezar.",
+      "words": 3,
+      "chars": 17,
+      "lines": 1,
+      "size": 40,
+      "vw": 10.3,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 8839,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Tu próxima idea.",
+      "words": 3,
+      "chars": 16,
+      "lines": 2,
+      "size": 62.4,
+      "vw": 16,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 9524,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "MoodlIA",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.6,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.35,
+      "top": 9853,
+      "tag": "a",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 25,
+     "maxLines": 3,
+     "over2Lines": 1,
+     "statements": 7,
+     "centered": 0,
+     "medianWords": 4,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Roundo",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      24,
+      25,
+      27,
+      36,
+      40,
+      50,
+      62,
+      70
+     ],
+     "sizeCount": 15,
+     "notLoaded": [],
+     "body": {
+      "font": "Roundo",
+      "size": 17,
+      "leading": 1.5,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 18.1
+     },
+     "measureChars": 36,
+     "max": {
+      "size": 70.2,
+      "vw": 18,
+      "font": "Roundo",
+      "text": "De idea"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.01,
+     "smallText": 1
+    },
+    "eyebrows": [
+     {
+      "text": "¿Y si empezamos con una pregunta?",
+      "above": "¿Cómo consume energía nuestra aula?",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 13,
+      "top": 583
+     },
+     {
+      "text": "Moodle · Rubrics",
+      "above": "Haz que avance.",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 15,
+      "top": 3072
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#ffffff",
+     "bodyBgHsl": {
+      "h": 0,
+      "s": 0,
+      "l": 1
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#ffffff",
+       "top": 130,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 1
+       }
+      },
+      {
+       "color": "#a7ff9c",
+       "top": 130,
+       "hsl": {
+        "h": 113,
+        "s": 1,
+        "l": 0.81
+       }
+      },
+      {
+       "color": "#e5e8e1",
+       "top": 1318,
+       "hsl": {
+        "h": 86,
+        "s": 0.13,
+        "l": 0.9
+       }
+      },
+      {
+       "color": "#121713",
+       "top": 3093,
+       "hsl": {
+        "h": 132,
+        "s": 0.12,
+        "l": 0.08
+       }
+      },
+      {
+       "color": "#ff6831",
+       "top": 4041,
+       "hsl": {
+        "h": 16,
+        "s": 1,
+        "l": 0.6
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#121713",
+       "share": 0.81
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.18
+      },
+      {
+       "color": "#a7ff9c",
+       "share": 0.01
+      }
+     ],
+     "button": {
+      "bg": "#ffffff",
+      "hsl": {
+       "h": 0,
+       "s": 0,
+       "l": 1
+      },
+      "fg": "#121713"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 10,
+     "inHero": 2,
+     "radius": 0,
+     "height": 71,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Saltar al contenido",
+      "Recorre la historia"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "svg",
+      "ratio": 0.11
+     }
+    ],
+    "nav": {
+     "links": 7,
+     "fixed": false,
+     "height": 130,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "roundo"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 10137,
+    "margins": {
+     "left": 20,
+     "right": 20
+    },
+    "sections": [
+     {
+      "sel": "header.site-header",
+      "tag": "header",
+      "top": 0,
+      "height": 130,
+      "words": 8,
+      "media": 0,
+      "middle": 22,
+      "heading": {
+       "text": "MoodlIA",
+       "size": 24,
+       "tag": "span"
+      },
+      "left": 14,
+      "right": 33,
+      "textLeft": 14,
+      "textRight": 33,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "main#main",
+      "tag": "main",
+      "top": 130,
+      "height": 9672,
+      "words": 936,
+      "media": 2,
+      "middle": 0,
+      "heading": {
+       "text": "De idea",
+       "size": 70,
+       "tag": "h1"
+      },
+      "left": 20,
+      "right": 20,
+      "textLeft": 20,
+      "textRight": 20,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "footer.site-footer",
+      "tag": "footer",
+      "top": 9803,
+      "height": 334,
+      "words": 26,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "MoodlIA",
+       "size": 24,
+       "tag": "span"
+      },
+      "left": 20,
+      "right": 54,
+      "textLeft": 20,
+      "textRight": 54,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "De idea a Moodle.",
+      "size": 70,
+      "top": 165,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [
+     {
+      "text": "Herramientas",
+      "side": "left",
+      "px": 14
+     }
+    ],
+    "edges": [
+     {
+      "x": 20,
+      "n": 35
+     },
+     {
+      "x": 40,
+      "n": 6
+     }
+    ],
+    "leftBlocks": 41,
+    "bodySize": 17,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "FAIL",
+   "id": "headline-lines",
+   "width": 1440,
+   "message": "1 headline(s) wrap past two lines at 1440px: \"La idea es tuya. El trabajo repetitivo puede dej\" → 3 lines (11 words, 60.5px)",
+   "fix": "Cut words first (a headline is a title, not a sentence). Then give it a wider measure. Lower the size only as a last resort and never below the scale you chose. A real statement paragraph belongs in a <p> or <blockquote> at 36px or less."
+  },
+  {
+   "level": "FAIL",
+   "id": "eyebrow",
+   "width": 1440,
+   "message": "5 eyebrow/kicker label(s) above headings: \"Saltar al contenido\" above \"De idea a Moodle.\"; \"¿Y si empezamos con una pregunta?\" above \"¿Cómo consume energía nuestra aula?\"; \"Moodle\" above \"Una clase sobre energía\"; \"Tu curso de hoy\" above \"Una clase sobre energía\"; \"Tu curso de hoy\" above \"Proyecto · Una clase con menos consumo\"",
+   "fix": "Delete them. If the label carried real information, fold it into the headline or the supporting sentence.",
+   "alsoAt": [
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "size-count",
+   "width": 1440,
+   "message": "13 different font sizes (13, 15, 17, 20, 24, 25, 33, 40, 61, 72, 89, 151, 190).",
+   "fix": "A page needs about five: display, heading, lead, body, small.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "few-pictures",
+   "width": 1440,
+   "message": "Only 0 picture(s) on the page (0 photographs, footage or raster images, 0 interface fragments). Drawings in SVG do not count.",
+   "fix": "Find real pictures of the subject's world with scripts/assets.mjs (photographs, archival images, maps, engravings, footage), download them to assets/ and give them room: a hero picture, one per section that has a subject, a full-width band. At least four, usually six to twelve."
+  },
+  {
+   "level": "WARN",
+   "id": "no-footage",
+   "width": 1440,
+   "message": "No video anywhere on the page.",
+   "fix": "Look for one honest clip with scripts/assets.mjs --video (the place, the material, the process) and use it as a muted loop with a poster frame. Defend its absence only if no clip fits the subject."
+  },
+  {
+   "level": "FAIL",
+   "id": "covered-text",
+   "width": 1440,
+   "message": "Large text lies under another element at some scroll position: \"Dale forma.\" (screen 7, 100% hidden); \"Una clase sobre energía\" (screen 7, 100% hidden); \"Pon el criterio.\" (screen 7, 100% hidden); \"Proyecto · Una clase con menos consumo\" (screen 7, 100% hidden)",
+   "fix": "Nothing may sit on top of a headline or statement. Move the picture, shorten the pinned run, or raise the text above it (z-index) and give it a ground."
+  },
+  {
+   "level": "FAIL",
+   "id": "headline-lines",
+   "width": 768,
+   "message": "1 headline(s) wrap past two lines at 768px: \"La idea es tuya. El trabajo repetitivo puede dej\" → 3 lines (11 words, 38px)",
+   "fix": "Cut words first (a headline is a title, not a sentence). Then give it a wider measure. Lower the size only as a last resort and never below the scale you chose. A real statement paragraph belongs in a <p> or <blockquote> at 32px or less."
+  },
+  {
+   "level": "WARN",
+   "id": "small-text",
+   "width": 768,
+   "message": "1 text block(s) under 13px.",
+   "fix": "Nothing meant to be read goes below 13px.",
+   "alsoAt": [
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "headline-lines",
+   "width": 390,
+   "message": "1 headline(s) wrap past two lines at 390px: \"La idea es tuya. El trabajo repetitivo puede dej\" → 3 lines (11 words, 36px)",
+   "fix": "Cut words first (a headline is a title, not a sentence). Then give it a wider measure. Lower the size only as a last resort and never below the scale you chose. A real statement paragraph belongs in a <p> or <blockquote> at 24px or less."
+  },
+  {
+   "level": "WARN",
+   "id": "edge-text",
+   "width": 390,
+   "message": "1 text block(s) sit 12–15px from the phone's edge: \"Herramientas\" (14px)",
+   "fix": "The page margin is 16–20px on a phone; the header and the corner labels sit on it too."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\after\\desktop-fold.jpg",
+   "pages": [
+    "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\after\\desktop-page-01.jpg",
+    "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\after\\desktop-page-02.jpg",
+    "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\after\\desktop-page-03.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\after\\tablet-fold.jpg",
+   "pages": [
+    "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\after\\tablet-page-01.jpg",
+    "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\after\\tablet-page-02.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\after\\mobile-fold.jpg",
+   "pages": [
+    "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\after\\mobile-page-01.jpg",
+    "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\after\\mobile-page-02.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

@@ -1,0 +1,2680 @@
+{
+ "url": "http://127.0.0.1:3101/es/",
+ "at": "2026-10-19T22:03:48.104Z",
+ "allow": [],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 8,
+   "filled": [
+    0.51,
+    0.96,
+    0.49,
+    0.42,
+    0.65,
+    0.45,
+    0.83,
+    0.48
+   ],
+   "motion": {
+    "elements": 1,
+    "css": 1,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 6653,
+     "screens": 7.4,
+     "words": 945,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 23,
+     "sections": 8,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Tu IA, trabajando en Moodle.",
+     "words": 5,
+     "chars": 28,
+     "lines": 3,
+     "size": 86.4,
+     "vw": 6,
+     "font": "Space Grotesk",
+     "weight": 600,
+     "tracking": -0.035,
+     "leading": 1.02,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "left",
+     "widthRatio": 0.41,
+     "top": 169,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Tu IA, trabajando en Moodle.",
+     "words": 5,
+     "lines": 3,
+     "size": 86.4,
+     "font": "Space Grotesk"
+    },
+    "headings": [
+     {
+      "text": "Tu IA, trabajando en Moodle.",
+      "words": 5,
+      "chars": 28,
+      "lines": 3,
+      "size": 86.4,
+      "vw": 6,
+      "font": "Space Grotesk",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.41,
+      "top": 169,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "m",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 54.4,
+      "vw": 3.8,
+      "font": "Space Grotesk",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.03,
+      "top": 393,
+      "tag": "span",
+      "kind": "heading"
+     },
+     {
+      "text": "De una idea a un curso con el que trabajar.",
+      "words": 10,
+      "chars": 43,
+      "lines": 2,
+      "size": 48,
+      "vw": 3.3,
+      "font": "Space Grotesk",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.41,
+      "top": 993,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Prepara una unidad sobre uso responsable de la energía: tres secciones, una página de lectura y un cuestionario de cinco preguntas. Empieza en un curso de prueba.",
+      "words": 27,
+      "chars": 162,
+      "lines": 6,
+      "size": 32,
+      "vw": 2.2,
+      "font": "Space Grotesk",
+      "weight": 400,
+      "tracking": -0.02,
+      "leading": 1.4,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.35,
+      "top": 1244,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Empieza por una tarea que te quite trabajo.",
+      "words": 8,
+      "chars": 43,
+      "lines": 2,
+      "size": 48,
+      "vw": 3.3,
+      "font": "Space Grotesk",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.41,
+      "top": 1961,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Tu rúbrica está en una hoja de cálculo. Llévala a Moodle.",
+      "words": 11,
+      "chars": 57,
+      "lines": 2,
+      "size": 41.6,
+      "vw": 2.9,
+      "font": "Space Grotesk",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.41,
+      "top": 2187,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "La IA propone comentarios. La nota la decides tú.",
+      "words": 9,
+      "chars": 49,
+      "lines": 2,
+      "size": 41.6,
+      "vw": 2.9,
+      "font": "Space Grotesk",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.38,
+      "top": 2594,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Conserva el trabajo que ya has puesto en un curso.",
+      "words": 10,
+      "chars": 50,
+      "lines": 2,
+      "size": 48,
+      "vw": 3.3,
+      "font": "Space Grotesk",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.41,
+      "top": 3085,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Adapta las herramientas a tu centro.",
+      "words": 6,
+      "chars": 36,
+      "lines": 2,
+      "size": 48,
+      "vw": 3.3,
+      "font": "Space Grotesk",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.39,
+      "top": 3975,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Encuentra tu punto de partida.",
+      "words": 5,
+      "chars": 30,
+      "lines": 1,
+      "size": 48,
+      "vw": 3.3,
+      "font": "Space Grotesk",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.89,
+      "top": 4539,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Antes de empezar.",
+      "words": 3,
+      "chars": 17,
+      "lines": 1,
+      "size": 48,
+      "vw": 3.3,
+      "font": "Space Grotesk",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.54,
+      "top": 5269,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Busquemos un primer flujo que te resulte útil.",
+      "words": 8,
+      "chars": 46,
+      "lines": 1,
+      "size": 48,
+      "vw": 3.3,
+      "font": "Space Grotesk",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.68,
+      "top": 6056,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 12,
+     "maxLines": 6,
+     "over2Lines": 1,
+     "statements": 1,
+     "centered": 0,
+     "medianWords": 8,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Geist",
+       "share": 0.86,
+       "mono": false
+      },
+      {
+       "family": "Space Grotesk",
+       "share": 0.14,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      10,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      24,
+      32,
+      42,
+      48,
+      54,
+      86
+     ],
+     "sizeCount": 17,
+     "notLoaded": [],
+     "body": {
+      "font": "Geist",
+      "size": 17,
+      "leading": 1.6,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 5.1
+     },
+     "measureChars": 92,
+     "max": {
+      "size": 86.4,
+      "vw": 6,
+      "font": "Space Grotesk",
+      "text": "Tu IA, trabajando en Moodle."
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.01,
+     "smallText": 11
+    },
+    "eyebrows": [
+     {
+      "text": "Un ejemplo de encargo docente",
+      "above": "Prepara una unidad sobre uso responsable",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 13.6,
+      "top": 1194
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#f0efeb",
+     "bodyBgHsl": {
+      "h": 48,
+      "s": 0.14,
+      "l": 0.93
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#e5e4df",
+       "top": 862,
+       "hsl": {
+        "h": 50,
+        "s": 0.1,
+        "l": 0.89
+       }
+      },
+      {
+       "color": "#252824",
+       "top": 2545,
+       "hsl": {
+        "h": 105,
+        "s": 0.05,
+        "l": 0.15
+       }
+      },
+      {
+       "color": "#282b28",
+       "top": 5992,
+       "hsl": {
+        "h": 120,
+        "s": 0.04,
+        "l": 0.16
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#5b5f59",
+       "share": 0.65
+      },
+      {
+       "color": "#242624",
+       "share": 0.17
+      },
+      {
+       "color": "#c6c9bf",
+       "share": 0.08
+      },
+      {
+       "color": "#f4f3ed",
+       "share": 0.03
+      },
+      {
+       "color": "#9f301f",
+       "share": 0.03
+      }
+     ],
+     "button": {
+      "bg": "#faf9f5",
+      "hsl": {
+       "h": 48,
+       "s": 0.33,
+       "l": 0.97
+      },
+      "fg": "#242624"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 13,
+     "inHero": 8,
+     "radius": 4,
+     "height": 50,
+     "withShadow": 6,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Saltar al contenido",
+      "Descubre qué puedes hacer",
+      "Preparar la conexión",
+      "Rubrics Importar rúbricas",
+      "MoodlIA Conectar tu IA"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 6,
+     "shadowOverlay": 0,
+     "shadowSamples": [
+      "a.skip-link → rgba(36, 38, 36, 0.08) 0px 10px 28px 0px",
+      "a.network-node.node-rubrics → rgba(36, 38, 36, 0.08) 0px 10px 28px 0px",
+      "a.network-node.node-analyze → rgba(36, 38, 36, 0.08) 0px 10px 28px 0px",
+      "a.network-node.node-convert → rgba(36, 38, 36, 0.08) 0px 10px 28px 0px"
+     ],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 27,
+     "hairlineSamples": [
+      "header.site-header 1440px",
+      "div.container.hero-principles 1360px",
+      "li 600px",
+      "li 600px",
+      "li 600px"
+     ],
+     "outlinedBoxes": 1,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 1,
+     "boxRadius": 50,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": [
+      {
+       "count": 3,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 1146
+      },
+      {
+       "count": 3,
+       "iconTopped": true,
+       "rounded": false,
+       "top": 3238
+      },
+      {
+       "count": 3,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 4129
+      },
+      {
+       "count": 3,
+       "iconTopped": true,
+       "rounded": false,
+       "top": 4640
+      }
+     ]
+    },
+    "heroMedia": [
+     {
+      "type": "svg",
+      "ratio": 0.29
+     }
+    ],
+    "nav": {
+     "links": 7,
+     "fixed": true,
+     "height": 87,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "geist",
+     "space grotesk"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 6653,
+    "margins": {
+     "left": 80,
+     "right": 85
+    },
+    "sections": [
+     {
+      "sel": "section.hero",
+      "tag": "section",
+      "top": 87,
+      "height": 775,
+      "words": 111,
+      "media": 1,
+      "middle": 35,
+      "heading": {
+       "text": "Tu IA, trabajando en Moodle.",
+       "size": 86,
+       "tag": "h1"
+      },
+      "left": 80,
+      "right": 80,
+      "textLeft": 80,
+      "textRight": 98,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#workflow.section.workflow-section",
+      "tag": "section",
+      "top": 862,
+      "height": 971,
+      "words": 189,
+      "media": 0,
+      "middle": 187,
+      "heading": {
+       "text": "De una idea a un curso con el que trabajar.",
+       "size": 48,
+       "tag": "h2"
+      },
+      "left": 80,
+      "right": 89,
+      "textLeft": 80,
+      "textRight": 89,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.section.assessment-section",
+      "tag": "section",
+      "top": 1833,
+      "height": 1251,
+      "words": 200,
+      "media": 0,
+      "middle": 85,
+      "heading": {
+       "text": "Empieza por una tarea que te quite trabajo.",
+       "size": 48,
+       "tag": "h2"
+      },
+      "left": 80,
+      "right": 80,
+      "textLeft": 80,
+      "textRight": 80,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.section.reuse-section",
+      "tag": "section",
+      "top": 3085,
+      "height": 763,
+      "words": 158,
+      "media": 0,
+      "middle": 102,
+      "heading": {
+       "text": "Entre dos sitios Moodle",
+       "size": 21,
+       "tag": "h3"
+      },
+      "left": 80,
+      "right": 83,
+      "textLeft": 80,
+      "textRight": 83,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.section.trust-section",
+      "tag": "section",
+      "top": 3847,
+      "height": 564,
+      "words": 110,
+      "media": 0,
+      "middle": 54,
+      "heading": {
+       "text": "Adapta las herramientas a tu centro.",
+       "size": 48,
+       "tag": "h2"
+      },
+      "left": 80,
+      "right": 105,
+      "textLeft": 80,
+      "textRight": 105,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.section",
+      "tag": "section",
+      "top": 4411,
+      "height": 730,
+      "words": 112,
+      "media": 0,
+      "middle": 93,
+      "heading": {
+       "text": "Encuentra tu punto de partida.",
+       "size": 48,
+       "tag": "h2"
+      },
+      "left": 80,
+      "right": 120,
+      "textLeft": 80,
+      "textRight": 120,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.section.section-tint",
+      "tag": "section",
+      "top": 5141,
+      "height": 723,
+      "words": 234,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Antes de empezar.",
+       "size": 48,
+       "tag": "h2"
+      },
+      "left": 330,
+      "right": 334,
+      "textLeft": 330,
+      "textRight": 334,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.container",
+      "tag": "div",
+      "top": 5992,
+      "height": 319,
+      "words": 27,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Busquemos un primer flujo que te resulte útil.",
+       "size": 48,
+       "tag": "h2"
+      },
+      "left": 144,
+      "right": 316,
+      "textLeft": 144,
+      "textRight": 316,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.site-footer",
+      "tag": "footer",
+      "top": 6439,
+      "height": 213,
+      "words": 26,
+      "media": 0,
+      "middle": 396,
+      "heading": {
+       "text": "MoodlIA",
+       "size": 24,
+       "tag": "span"
+      },
+      "left": 80,
+      "right": 138,
+      "textLeft": 80,
+      "textRight": 138,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Tu IA, trabajando en Moodle.",
+      "size": 86,
+      "top": 169,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 80,
+      "n": 18
+     },
+     {
+      "x": 330,
+      "n": 6
+     },
+     {
+      "x": 520,
+      "n": 4
+     },
+     {
+      "x": 960,
+      "n": 4
+     },
+     {
+      "x": 128,
+      "n": 3
+     },
+     {
+      "x": 505,
+      "n": 3
+     },
+     {
+      "x": 886,
+      "n": 3
+     },
+     {
+      "x": 144,
+      "n": 2
+     }
+    ],
+    "leftBlocks": 43,
+    "bodySize": 17,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0.07,
+    "voidBox": {
+     "x": 0,
+     "y": 840,
+     "w": 1440,
+     "h": 60
+    }
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 7,
+   "filled": [
+    0.41,
+    0.88,
+    0.67,
+    0.31,
+    0.57,
+    0.81,
+    0.64
+   ],
+   "motion": {
+    "elements": 1,
+    "css": 1,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 6600,
+     "screens": 6.4,
+     "words": 945,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 23,
+     "sections": 8,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Tu IA, trabajando en Moodle.",
+     "words": 5,
+     "chars": 28,
+     "lines": 3,
+     "size": 49.9,
+     "vw": 6.5,
+     "font": "Space Grotesk",
+     "weight": 600,
+     "tracking": -0.035,
+     "leading": 1.02,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "left",
+     "widthRatio": 0.45,
+     "top": 142,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Tu IA, trabajando en Moodle.",
+     "words": 5,
+     "lines": 3,
+     "size": 49.9,
+     "font": "Space Grotesk"
+    },
+    "headings": [
+     {
+      "text": "Tu IA, trabajando en Moodle.",
+      "words": 5,
+      "chars": 28,
+      "lines": 3,
+      "size": 49.9,
+      "vw": 6.5,
+      "font": "Space Grotesk",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 142,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "m",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 32,
+      "vw": 4.2,
+      "font": "Space Grotesk",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.04,
+      "top": 374,
+      "tag": "span",
+      "kind": "heading"
+     },
+     {
+      "text": "De una idea a un curso con el que trabajar.",
+      "words": 10,
+      "chars": 43,
+      "lines": 2,
+      "size": 28.8,
+      "vw": 3.8,
+      "font": "Space Grotesk",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.46,
+      "top": 1055,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Empieza por una tarea que te quite trabajo.",
+      "words": 8,
+      "chars": 43,
+      "lines": 2,
+      "size": 28.8,
+      "vw": 3.8,
+      "font": "Space Grotesk",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.46,
+      "top": 2028,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Tu rúbrica está en una hoja de cálculo. Llévala a Moodle.",
+      "words": 11,
+      "chars": 57,
+      "lines": 3,
+      "size": 27.2,
+      "vw": 3.5,
+      "font": "Space Grotesk",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.43,
+      "top": 2246,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "La IA propone comentarios. La nota la decides tú.",
+      "words": 9,
+      "chars": 49,
+      "lines": 3,
+      "size": 27.2,
+      "vw": 3.5,
+      "font": "Space Grotesk",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.39,
+      "top": 2687,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Conserva el trabajo que ya has puesto en un curso.",
+      "words": 10,
+      "chars": 50,
+      "lines": 2,
+      "size": 28.8,
+      "vw": 3.8,
+      "font": "Space Grotesk",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.46,
+      "top": 3222,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Adapta las herramientas a tu centro.",
+      "words": 6,
+      "chars": 36,
+      "lines": 2,
+      "size": 28.8,
+      "vw": 3.8,
+      "font": "Space Grotesk",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.44,
+      "top": 4172,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Encuentra tu punto de partida.",
+      "words": 5,
+      "chars": 30,
+      "lines": 1,
+      "size": 28.8,
+      "vw": 3.8,
+      "font": "Space Grotesk",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 4670,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Antes de empezar.",
+      "words": 3,
+      "chars": 17,
+      "lines": 1,
+      "size": 28.8,
+      "vw": 3.8,
+      "font": "Space Grotesk",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 5407,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Busquemos un primer flujo que te resulte útil.",
+      "words": 8,
+      "chars": 46,
+      "lines": 1,
+      "size": 28.8,
+      "vw": 3.8,
+      "font": "Space Grotesk",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.82,
+      "top": 6029,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 11,
+     "maxLines": 3,
+     "over2Lines": 3,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 8,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Geist",
+       "share": 0.86,
+       "mono": false
+      },
+      {
+       "family": "Space Grotesk",
+       "share": 0.14,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      10,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      24,
+      27,
+      29,
+      32,
+      50
+     ],
+     "sizeCount": 17,
+     "notLoaded": [],
+     "body": {
+      "font": "Geist",
+      "size": 17,
+      "leading": 1.6,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 5.1
+     },
+     "measureChars": 83,
+     "max": {
+      "size": 49.9,
+      "vw": 6.5,
+      "font": "Space Grotesk",
+      "text": "Tu IA, trabajando en Moodle."
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.01,
+     "smallText": 16
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#f0efeb",
+     "bodyBgHsl": {
+      "h": 48,
+      "s": 0.14,
+      "l": 0.93
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#e5e4df",
+       "top": 859,
+       "hsl": {
+        "h": 50,
+        "s": 0.1,
+        "l": 0.89
+       }
+      },
+      {
+       "color": "#252824",
+       "top": 2656,
+       "hsl": {
+        "h": 105,
+        "s": 0.05,
+        "l": 0.15
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#5b5f59",
+       "share": 0.65
+      },
+      {
+       "color": "#242624",
+       "share": 0.17
+      },
+      {
+       "color": "#c6c9bf",
+       "share": 0.08
+      },
+      {
+       "color": "#f4f3ed",
+       "share": 0.03
+      },
+      {
+       "color": "#9f301f",
+       "share": 0.03
+      }
+     ],
+     "button": {
+      "bg": "#faf9f5",
+      "hsl": {
+       "h": 48,
+       "s": 0.33,
+       "l": 0.97
+      },
+      "fg": "#242624"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 13,
+     "inHero": 8,
+     "radius": 4,
+     "height": 50,
+     "withShadow": 6,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Saltar al contenido",
+      "Descubre qué puedes hacer",
+      "Preparar la conexión",
+      "Rubrics Importar rúbricas",
+      "MoodlIA Conectar tu IA"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 6,
+     "shadowOverlay": 0,
+     "shadowSamples": [
+      "a.skip-link → rgba(36, 38, 36, 0.08) 0px 10px 28px 0px",
+      "a.network-node.node-rubrics → rgba(36, 38, 36, 0.08) 0px 10px 28px 0px",
+      "a.network-node.node-analyze → rgba(36, 38, 36, 0.08) 0px 10px 28px 0px",
+      "a.network-node.node-convert → rgba(36, 38, 36, 0.08) 0px 10px 28px 0px"
+     ],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 21,
+     "hairlineSamples": [
+      "header.site-header 768px",
+      "div.container.hero-principles 768px",
+      "li 330px",
+      "li 330px",
+      "li 330px"
+     ],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": [
+      {
+       "count": 3,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 1166
+      },
+      {
+       "count": 3,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 4283
+      },
+      {
+       "count": 3,
+       "iconTopped": true,
+       "rounded": false,
+       "top": 4750
+      }
+     ]
+    },
+    "heroMedia": [
+     {
+      "type": "svg",
+      "ratio": 0.13
+     }
+    ],
+    "nav": {
+     "links": 7,
+     "fixed": true,
+     "height": 87,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "geist",
+     "space grotesk"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 6600,
+    "margins": {
+     "left": 31,
+     "right": 34
+    },
+    "sections": [
+     {
+      "sel": "section.hero",
+      "tag": "section",
+      "top": 87,
+      "height": 772,
+      "words": 111,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "Tu IA, trabajando en Moodle.",
+       "size": 50,
+       "tag": "h1"
+      },
+      "left": 31,
+      "right": 31,
+      "textLeft": 31,
+      "textRight": 61,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#workflow.section.workflow-section",
+      "tag": "section",
+      "top": 859,
+      "height": 1028,
+      "words": 189,
+      "media": 0,
+      "middle": 44,
+      "heading": {
+       "text": "De una idea a un curso con el que trabajar.",
+       "size": 29,
+       "tag": "h2"
+      },
+      "left": 31,
+      "right": 32,
+      "textLeft": 31,
+      "textRight": 32,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.section.assessment-section",
+      "tag": "section",
+      "top": 1887,
+      "height": 1262,
+      "words": 200,
+      "media": 0,
+      "middle": 48,
+      "heading": {
+       "text": "Empieza por una tarea que te quite trabajo.",
+       "size": 29,
+       "tag": "h2"
+      },
+      "left": 31,
+      "right": 36,
+      "textLeft": 31,
+      "textRight": 36,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.section.reuse-section",
+      "tag": "section",
+      "top": 3149,
+      "height": 953,
+      "words": 168,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Conserva el trabajo que ya has puesto en un curso.",
+       "size": 29,
+       "tag": "h2"
+      },
+      "left": 31,
+      "right": 38,
+      "textLeft": 31,
+      "textRight": 38,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.section.trust-section",
+      "tag": "section",
+      "top": 4103,
+      "height": 499,
+      "words": 110,
+      "media": 0,
+      "middle": 29,
+      "heading": {
+       "text": "Adapta las herramientas a tu centro.",
+       "size": 29,
+       "tag": "h2"
+      },
+      "left": 31,
+      "right": 43,
+      "textLeft": 31,
+      "textRight": 43,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.section",
+      "tag": "section",
+      "top": 4601,
+      "height": 737,
+      "words": 112,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Encuentra tu punto de partida.",
+       "size": 29,
+       "tag": "h2"
+      },
+      "left": 31,
+      "right": 32,
+      "textLeft": 31,
+      "textRight": 32,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.section.section-tint",
+      "tag": "section",
+      "top": 5338,
+      "height": 584,
+      "words": 234,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Antes de empezar.",
+       "size": 29,
+       "tag": "h2"
+      },
+      "left": 31,
+      "right": 34,
+      "textLeft": 31,
+      "textRight": 34,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.container",
+      "tag": "div",
+      "top": 5991,
+      "height": 247,
+      "words": 27,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Busquemos un primer flujo que te resulte útil.",
+       "size": 29,
+       "tag": "h2"
+      },
+      "left": 69,
+      "right": 79,
+      "textLeft": 69,
+      "textRight": 79,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.site-footer",
+      "tag": "footer",
+      "top": 6307,
+      "height": 293,
+      "words": 26,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "MoodlIA",
+       "size": 24,
+       "tag": "span"
+      },
+      "left": 31,
+      "right": 276,
+      "textLeft": 31,
+      "textRight": 276,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Tu IA, trabajando en Moodle.",
+      "size": 50,
+      "top": 142,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 31,
+      "n": 24
+     },
+     {
+      "x": 61,
+      "n": 5
+     },
+     {
+      "x": 274,
+      "n": 4
+     },
+     {
+      "x": 518,
+      "n": 4
+     },
+     {
+      "x": 333,
+      "n": 3
+     },
+     {
+      "x": 475,
+      "n": 3
+     }
+    ],
+    "leftBlocks": 43,
+    "bodySize": 17,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 11,
+   "filled": [
+    0.44,
+    0.75,
+    0.99,
+    0.55,
+    0.83,
+    0.36,
+    0.46,
+    0.82,
+    0.4,
+    0.93,
+    0.61
+   ],
+   "motion": {
+    "elements": 1,
+    "css": 1,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 8944,
+     "screens": 10.6,
+     "words": 945,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 23,
+     "sections": 8,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Tu IA, trabajando en Moodle.",
+     "words": 5,
+     "chars": 28,
+     "lines": 3,
+     "size": 48,
+     "vw": 12.3,
+     "font": "Space Grotesk",
+     "weight": 600,
+     "tracking": -0.035,
+     "leading": 1.02,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.92,
+     "top": 163,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Tu IA, trabajando en Moodle.",
+     "words": 5,
+     "lines": 3,
+     "size": 48,
+     "font": "Space Grotesk"
+    },
+    "headings": [
+     {
+      "text": "MoodlIA",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "Space Grotesk",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.6,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.34,
+      "top": 15,
+      "tag": "a",
+      "kind": "heading"
+     },
+     {
+      "text": "Tu IA, trabajando en Moodle.",
+      "words": 5,
+      "chars": 28,
+      "lines": 3,
+      "size": 48,
+      "vw": 12.3,
+      "font": "Space Grotesk",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 163,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "m",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 35.2,
+      "vw": 9,
+      "font": "Space Grotesk",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.08,
+      "top": 858,
+      "tag": "span",
+      "kind": "heading"
+     },
+     {
+      "text": "De una idea a un curso con el que trabajar.",
+      "words": 10,
+      "chars": 43,
+      "lines": 2,
+      "size": 28.8,
+      "vw": 7.4,
+      "font": "Space Grotesk",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 1294,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Empieza por una tarea que te quite trabajo.",
+      "words": 8,
+      "chars": 43,
+      "lines": 2,
+      "size": 28.8,
+      "vw": 7.4,
+      "font": "Space Grotesk",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 2729,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Tu rúbrica está en una hoja de cálculo. Llévala a Moodle.",
+      "words": 11,
+      "chars": 57,
+      "lines": 2,
+      "size": 27.2,
+      "vw": 7,
+      "font": "Space Grotesk",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 2978,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "La IA propone comentarios. La nota la decides tú.",
+      "words": 9,
+      "chars": 49,
+      "lines": 3,
+      "size": 27.2,
+      "vw": 7,
+      "font": "Space Grotesk",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.81,
+      "top": 3626,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Conserva el trabajo que ya has puesto en un curso.",
+      "words": 10,
+      "chars": 50,
+      "lines": 2,
+      "size": 28.8,
+      "vw": 7.4,
+      "font": "Space Grotesk",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 4459,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Adapta las herramientas a tu centro.",
+      "words": 6,
+      "chars": 36,
+      "lines": 2,
+      "size": 28.8,
+      "vw": 7.4,
+      "font": "Space Grotesk",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.86,
+      "top": 5813,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Encuentra tu punto de partida.",
+      "words": 5,
+      "chars": 30,
+      "lines": 2,
+      "size": 28.8,
+      "vw": 7.4,
+      "font": "Space Grotesk",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 6555,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Antes de empezar.",
+      "words": 3,
+      "chars": 17,
+      "lines": 1,
+      "size": 28.8,
+      "vw": 7.4,
+      "font": "Space Grotesk",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 7660,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Busquemos un primer flujo que te resulte útil.",
+      "words": 8,
+      "chars": 46,
+      "lines": 2,
+      "size": 28.8,
+      "vw": 7.4,
+      "font": "Space Grotesk",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.77,
+      "top": 8279,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "MoodlIA",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "Space Grotesk",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.6,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.34,
+      "top": 8678,
+      "tag": "a",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 13,
+     "maxLines": 3,
+     "over2Lines": 2,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 8,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Geist",
+       "share": 0.86,
+       "mono": false
+      },
+      {
+       "family": "Space Grotesk",
+       "share": 0.14,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      9,
+      10,
+      12,
+      13,
+      14,
+      15,
+      16,
+      18,
+      19,
+      20,
+      21,
+      22,
+      24,
+      27,
+      29,
+      35,
+      48
+     ],
+     "sizeCount": 17,
+     "notLoaded": [],
+     "body": {
+      "font": "Geist",
+      "size": 16,
+      "leading": 1.7,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 5.7
+     },
+     "measureChars": 45,
+     "max": {
+      "size": 48,
+      "vw": 12.3,
+      "font": "Space Grotesk",
+      "text": "Tu IA, trabajando en Moodle."
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.01,
+     "smallText": 30
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#f0efeb",
+     "bodyBgHsl": {
+      "h": 48,
+      "s": 0.14,
+      "l": 0.93
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#e5e4df",
+       "top": 1230,
+       "hsl": {
+        "h": 50,
+        "s": 0.1,
+        "l": 0.89
+       }
+      },
+      {
+       "color": "#282b28",
+       "top": 1535,
+       "hsl": {
+        "h": 120,
+        "s": 0.04,
+        "l": 0.16
+       }
+      },
+      {
+       "color": "#252824",
+       "top": 3598,
+       "hsl": {
+        "h": 105,
+        "s": 0.05,
+        "l": 0.15
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#5b5f59",
+       "share": 0.65
+      },
+      {
+       "color": "#242624",
+       "share": 0.17
+      },
+      {
+       "color": "#c6c9bf",
+       "share": 0.08
+      },
+      {
+       "color": "#f4f3ed",
+       "share": 0.03
+      },
+      {
+       "color": "#9f301f",
+       "share": 0.03
+      }
+     ],
+     "button": {
+      "bg": "#faf9f5",
+      "hsl": {
+       "h": 48,
+       "s": 0.33,
+       "l": 0.97
+      },
+      "fg": "#242624"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 13,
+     "inHero": 5,
+     "radius": 4,
+     "height": 50,
+     "withShadow": 6,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Saltar al contenido",
+      "Descubre qué puedes hacer",
+      "Preparar la conexión",
+      "Rubrics Importar rúbricas",
+      "MoodlIA Conectar tu IA"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 6,
+     "shadowOverlay": 0,
+     "shadowSamples": [
+      "a.skip-link → rgba(36, 38, 36, 0.08) 0px 10px 28px 0px",
+      "a.network-node.node-rubrics → rgba(36, 38, 36, 0.08) 0px 10px 28px 0px",
+      "a.network-node.node-analyze → rgba(36, 38, 36, 0.08) 0px 10px 28px 0px",
+      "a.network-node.node-convert → rgba(36, 38, 36, 0.08) 0px 10px 28px 0px"
+     ],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 27,
+     "hairlineSamples": [
+      "header.site-header 390px",
+      "div.container.hero-principles 390px",
+      "li 358px",
+      "li 358px",
+      "li 358px"
+     ],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "svg",
+      "ratio": 0.12
+     }
+    ],
+    "nav": {
+     "links": 7,
+     "fixed": true,
+     "height": 117,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "geist",
+     "space grotesk"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 8944,
+    "margins": {
+     "left": 16,
+     "right": 16
+    },
+    "sections": [
+     {
+      "sel": "section.hero",
+      "tag": "section",
+      "top": 117,
+      "height": 1112,
+      "words": 111,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "Tu IA, trabajando en Moodle.",
+       "size": 48,
+       "tag": "h1"
+      },
+      "left": 16,
+      "right": 16,
+      "textLeft": 16,
+      "textRight": 28,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#workflow.section.workflow-section",
+      "tag": "section",
+      "top": 1230,
+      "height": 1435,
+      "words": 189,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "De una idea a un curso con el que trabajar.",
+       "size": 29,
+       "tag": "h2"
+      },
+      "left": 16,
+      "right": 23,
+      "textLeft": 16,
+      "textRight": 23,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.section.assessment-section",
+      "tag": "section",
+      "top": 2665,
+      "height": 1794,
+      "words": 200,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Empieza por una tarea que te quite trabajo.",
+       "size": 29,
+       "tag": "h2"
+      },
+      "left": 16,
+      "right": 16,
+      "textLeft": 16,
+      "textRight": 16,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.section.reuse-section",
+      "tag": "section",
+      "top": 4459,
+      "height": 1290,
+      "words": 158,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Entre dos sitios Moodle",
+       "size": 21,
+       "tag": "h3"
+      },
+      "left": 16,
+      "right": 17,
+      "textLeft": 16,
+      "textRight": 17,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.section.trust-section",
+      "tag": "section",
+      "top": 5749,
+      "height": 742,
+      "words": 110,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Adapta las herramientas a tu centro.",
+       "size": 29,
+       "tag": "h2"
+      },
+      "left": 16,
+      "right": 16,
+      "textLeft": 16,
+      "textRight": 16,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.section",
+      "tag": "section",
+      "top": 6491,
+      "height": 1105,
+      "words": 112,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Encuentra tu punto de partida.",
+       "size": 29,
+       "tag": "h2"
+      },
+      "left": 16,
+      "right": 23,
+      "textLeft": 16,
+      "textRight": 23,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.section.section-tint",
+      "tag": "section",
+      "top": 7596,
+      "height": 591,
+      "words": 137,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Antes de empezar.",
+       "size": 29,
+       "tag": "h2"
+      },
+      "left": 16,
+      "right": 22,
+      "textLeft": 16,
+      "textRight": 22,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "div.container",
+      "tag": "div",
+      "top": 8251,
+      "height": 306,
+      "words": 27,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Busquemos un primer flujo que te resulte útil.",
+       "size": 29,
+       "tag": "h2"
+      },
+      "left": 44,
+      "right": 47,
+      "textLeft": 44,
+      "textRight": 47,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.site-footer",
+      "tag": "footer",
+      "top": 8621,
+      "height": 324,
+      "words": 26,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "MoodlIA",
+       "size": 24,
+       "tag": "span"
+      },
+      "left": 16,
+      "right": 22,
+      "textLeft": 16,
+      "textRight": 22,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Tu IA, trabajando en Moodle.",
+      "size": 48,
+      "top": 163,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [
+     {
+      "text": "Herramientas",
+      "side": "left",
+      "px": 10
+     }
+    ],
+    "edges": [
+     {
+      "x": 16,
+      "n": 38
+     },
+     {
+      "x": 38,
+      "n": 5
+     }
+    ],
+    "leftBlocks": 43,
+    "bodySize": 16,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "FAIL",
+   "id": "headline-lines",
+   "width": 1440,
+   "message": "1 headline(s) wrap past two lines at 1440px: \"Tu IA, trabajando en Moodle.\" → 3 lines (5 words, 86.4px)",
+   "fix": "Cut words first (a headline is a title, not a sentence). Then give it a wider measure. Lower the size only as a last resort and never below the scale you chose. A real statement paragraph belongs in a <p> or <blockquote> at 36px or less."
+  },
+  {
+   "level": "WARN",
+   "id": "statement-length",
+   "width": 1440,
+   "message": "1 large-set statement(s) run past 3 lines at 1440px: \"Prepara una unidad sobre uso responsable…\" → 6 lines at 32px",
+   "fix": "A statement set large is about 30 words. Cut it, or set the rest as ordinary body text."
+  },
+  {
+   "level": "FAIL",
+   "id": "eyebrow",
+   "width": 1440,
+   "message": "1 eyebrow/kicker label(s) above headings: \"Un ejemplo de encargo docente\" above \"Prepara una unidad sobre uso responsable\"",
+   "fix": "Delete them. If the label carried real information, fold it into the headline or the supporting sentence."
+  },
+  {
+   "level": "FAIL",
+   "id": "shadow",
+   "width": 1440,
+   "message": "6 box-shadow(s) on elements at rest: a.skip-link → rgba(36, 38, 36, 0.08) 0px 10px 28px 0px | a.network-node.node-rubrics → rgba(36, 38, 36, 0.08) 0px 10px 28px 0px | a.network-node.node-analyze → rgba(36, 38, 36, 0.08) 0px 10px 28px 0px",
+   "fix": "Remove. Separate surfaces with a tone step or space. Shadows are for things that really float (menus, dialogs, sticky bars).",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "button-fx",
+   "width": 1440,
+   "message": "Buttons with shadow/glow.",
+   "fix": "Flat fill, one colour.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "hairline",
+   "width": 1440,
+   "message": "27 thin rule(s)/divider line(s): header.site-header 1440px | div.container.hero-principles 1360px | li 600px | li 600px",
+   "fix": "Delete. Separate with space, a tone change, or scale. Lines are only for real tables and form fields.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "outlined-box",
+   "width": 1440,
+   "message": "1 box(es) drawn with a 1px outline.",
+   "fix": "Prefer a filled surface or no box."
+  },
+  {
+   "level": "FAIL",
+   "id": "icon-cards",
+   "width": 1440,
+   "message": "2 row(s) of identical cards each topped with a small icon (3, 3 cards).",
+   "fix": "Replace with one composed section from the direction: a narrative split, a list set in large type, or real imagery per item.",
+   "alsoAt": [
+    768
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "palette-cream",
+   "width": 1440,
+   "message": "Yellow-cream background (button #faf9f5, text #f4f3ed).",
+   "fix": "Use the drawn palette. If you want warmth, take a low-chroma stone or bone, not a yellow cream.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "size-count",
+   "width": 1440,
+   "message": "17 different font sizes (10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 24, 32, 42, 48, 54, 86).",
+   "fix": "A page needs about five: display, heading, lead, body, small.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "grey-body",
+   "width": 1440,
+   "message": "The running text is a soft grey on its ground (5.1:1).",
+   "fix": "Set body copy in the full ink (7:1 or more). Keep the muted ink for secondary notes; pages read thin and unfinished when everything is grey.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "few-pictures",
+   "width": 1440,
+   "message": "Only 0 picture(s) on the page (0 photographs, footage or raster images, 0 interface fragments). Drawings in SVG do not count.",
+   "fix": "Find real pictures of the subject's world with scripts/assets.mjs (photographs, archival images, maps, engravings, footage), download them to assets/ and give them room: a hero picture, one per section that has a subject, a full-width band. At least four, usually six to twelve."
+  },
+  {
+   "level": "WARN",
+   "id": "no-footage",
+   "width": 1440,
+   "message": "No video anywhere on the page.",
+   "fix": "Look for one honest clip with scripts/assets.mjs --video (the place, the material, the process) and use it as a muted loop with a poster frame. Defend its absence only if no clip fits the subject."
+  },
+  {
+   "level": "WARN",
+   "id": "measure",
+   "width": 1440,
+   "message": "Longest paragraph runs about 92 characters per line.",
+   "fix": "Cap paragraphs at 45–75 characters (max-width: 60ch)."
+  },
+  {
+   "level": "FAIL",
+   "id": "small-text",
+   "width": 1440,
+   "message": "11 text blocks under 13px.",
+   "fix": "Nothing meant to be read goes below 13px.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "still-page",
+   "width": 1440,
+   "message": "Only 1 element(s) moved while the page loaded and scrolled.",
+   "fix": "Build the motion layer (SKILL.md step 9, references/motion.md): the signature move, an entrance for the parts of every section, feedback on every control, and one moving picture. Transform and opacity only, with a reduced-motion fallback."
+  },
+  {
+   "level": "FAIL",
+   "id": "headline-lines",
+   "width": 768,
+   "message": "3 headline(s) wrap past two lines at 768px: \"Tu IA, trabajando en Moodle.\" → 3 lines (5 words, 49.9px); \"Tu rúbrica está en una hoja de cálculo. Llévala \" → 3 lines (11 words, 27.2px); \"La IA propone comentarios. La nota la decides tú\" → 3 lines (9 words, 27.2px)",
+   "fix": "Cut words first (a headline is a title, not a sentence). Then give it a wider measure. Lower the size only as a last resort and never below the scale you chose. A real statement paragraph belongs in a <p> or <blockquote> at 32px or less."
+  },
+  {
+   "level": "FAIL",
+   "id": "headline-lines",
+   "width": 390,
+   "message": "2 headline(s) wrap past two lines at 390px: \"Tu IA, trabajando en Moodle.\" → 3 lines (5 words, 48px); \"La IA propone comentarios. La nota la decides tú\" → 3 lines (9 words, 27.2px)",
+   "fix": "Cut words first (a headline is a title, not a sentence). Then give it a wider measure. Lower the size only as a last resort and never below the scale you chose. A real statement paragraph belongs in a <p> or <blockquote> at 24px or less."
+  },
+  {
+   "level": "FAIL",
+   "id": "edge-text",
+   "width": 390,
+   "message": "1 text block(s) sit within 12px of the screen edge: \"Herramientas\" (10px from the left)",
+   "fix": "Keep text inside the page margin (16–20px). Only display type deliberately bled past the edge may touch it."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\before\\desktop-fold.jpg",
+   "pages": [
+    "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\before\\desktop-page-01.jpg",
+    "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\before\\desktop-page-02.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\before\\tablet-fold.jpg",
+   "pages": [
+    "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\before\\tablet-page-01.jpg",
+    "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\before\\tablet-page-02.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\before\\mobile-fold.jpg",
+   "pages": [
+    "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\before\\mobile-page-01.jpg",
+    "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\before\\mobile-page-02.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

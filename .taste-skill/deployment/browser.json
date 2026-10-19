@@ -1,0 +1,25 @@
+{
+  "verifiedAt": "2026-10-19T23:18:41.285Z",
+  "observations": [
+    {
+      "width": 390,
+      "locale": "en",
+      "policiesClicked": 2
+    },
+    {
+      "width": 390,
+      "locale": "/es",
+      "policiesClicked": 2
+    },
+    {
+      "width": 1440,
+      "locale": "en",
+      "policiesClicked": 2
+    },
+    {
+      "width": 1440,
+      "locale": "/es",
+      "policiesClicked": 2
+    }
+  ]
+}

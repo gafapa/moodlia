@@ -1,0 +1,65 @@
+{
+  "title": "Una nueva MoodlIA",
+  "question": "Tres caminos para reemplazar por completo la web actual. Las composiciones son esquemas, no diseños finales.",
+  "buildPath": { "value": "code", "toggle": true },
+  "options": [
+    {
+      "id": "assigned",
+      "label": "Una exposición de posibilidades",
+      "kicker": "PROPUESTA",
+      "lineage": "Identidad de exposiciones educativas y señalética de campus",
+      "thesis": "Descubrir lo que puedes hacer con Moodle antes de elegir una herramienta.",
+      "palette": ["#f5f1e8", "#164e49", "#e75c3c", "#d9ee9b"],
+      "materials": ["tipografía de gran formato", "paneles de color", "diagramas del producto"],
+      "viewport": "Un gran titular editorial junto a una composición de tareas reales: analizar, convertir y conectar.",
+      "body": "Recorrido: una promesa clara, tareas enlazadas a sus herramientas, requisitos y ayuda. Interacción: elegir una tarea revela la aplicación y su instalación. El sistema continúa en fichas e instrucciones.",
+      "risk": "Necesita ejemplos muy concretos para que la composición no se convierta en decoración.",
+      "raised": [
+        {"from":"Laboratorio fotográfico", "raise":"El recorrido explica cada etapa y el momento de revisar antes de actuar."},
+        {"from":"Panel de destinos", "raise":"La navegación utiliza nombres de tareas inequívocos y jerarquías de lectura fuertes."},
+        {"from":"Catálogo de juguetes", "raise":"Cada herramienta tiene una presencia visual propia y reconocible."},
+        {"from":"Cantera de nubes", "raise":"Cada sección tiene una composición espacial identificable."},
+        {"from":"Estructura en tensión", "raise":"Las dependencias entre Moodle, aplicaciones y proveedores se explican visualmente."}
+      ],
+      "wireframe": {"cols":12,"rows":10,"regions":[{"label":"MoodlIA · navegación · idioma","x":0,"y":0,"w":12,"h":1},{"label":"Tu Moodle. Más posibilidades.","x":0,"y":2,"w":6,"h":4},{"label":"Tareas y herramientas conectadas","x":7,"y":2,"w":5,"h":4,"accent":true},{"label":"Analizar","x":0,"y":7,"w":4,"h":3},{"label":"Transformar","x":4,"y":7,"w":4,"h":3},{"label":"Conectar","x":8,"y":7,"w":4,"h":3}]},
+      "comp": ".impeccable/mocks/decision/assigned.png"
+    },
+    {
+      "id": "model-pick",
+      "label": "La guía de campo docente",
+      "kicker": "MI RECOMENDACIÓN",
+      "lineage": "Guías prácticas ilustradas y publicaciones educativas",
+      "thesis": "Una web cercana que parte de lo que necesitas resolver en tu día a día.",
+      "palette": ["#faf7ef", "#263a32", "#c74a31", "#ead17b"],
+      "materials": ["titulares editoriales", "ilustraciones funcionales", "índices claros"],
+      "viewport": "Una promesa docente en gran formato y un ejemplo explicado; debajo, un selector de necesidades.",
+      "body": "Recorrido: necesidad, herramienta, pasos y ayuda. Interacción: selector de tareas con ejemplos. Las fichas se leen como guías breves y la documentación conserva comandos y requisitos.",
+      "risk": "Es un lenguaje más familiar; la personalidad dependerá de la tipografía y los ejemplos.",
+      "wireframe": {"cols":12,"rows":10,"regions":[{"label":"MoodlIA · Herramientas · Guías","x":0,"y":0,"w":12,"h":1},{"label":"Menos obstáculos. Más tiempo para enseñar.","x":0,"y":2,"w":7,"h":4},{"label":"Ejemplo práctico","x":8,"y":2,"w":4,"h":4,"accent":true},{"label":"¿Qué necesitas hacer?","x":0,"y":7,"w":12,"h":3}]},
+      "comp": ".impeccable/mocks/decision/model-pick.png"
+    },
+    {
+      "id": "challenger-editorial",
+      "label": "Una revista para el aula digital",
+      "verdict": "competitive",
+      "lineage": "Composición editorial de Alexey Brodovitch",
+      "thesis": "La enseñanza y las herramientas dialogan en grandes composiciones editoriales.",
+      "palette": ["#faf8f3", "#20201e", "#ba392e"],
+      "materials": ["serif de gran contraste", "fotografía editorial", "filetes finos"],
+      "viewport": "Un titular expresivo responde a una imagen de uso; cada sección plantea una necesidad y su respuesta.",
+      "case": "Más carácter editorial; la selección de herramientas exige una navegación adicional muy clara.",
+      "risk": "Puede parecer una publicación en vez de una colección de herramientas prácticas.",
+      "wireframe": {"cols":12,"rows":10,"regions":[{"label":"MoodlIA / una nueva forma de trabajar","x":0,"y":0,"w":12,"h":1},{"label":"Imagen editorial de uso","x":0,"y":2,"w":6,"h":6,"accent":true},{"label":"La tecnología al servicio de tu aula.","x":7,"y":2,"w":5,"h":6},{"label":"Necesidad → Herramienta → Guía","x":0,"y":9,"w":12,"h":1}]},
+      "comp": ".impeccable/mocks/decision/editorial.png"
+    },
+    {"id":"challenger-darkroom","label":"Laboratorio fotográfico","verdict":"declined","thesis":"Cada tarea sigue estaciones de preparación, revisión y resultado.","palette":["#392715","#efb44a","#f8f3e8"],"materials":["ámbar","secuencia de estaciones"],"viewport":"Un flujo de trabajo por etapas.","case":"La metáfora fotográfica tiene poca relación con docentes o Moodle.","kept":"Secuencias claras y revisión explícita.","risk":"Puede ocultar la utilidad inmediata.","comp":".impeccable/mocks/decision/darkroom.png"},
+    {"id":"challenger-depot","label":"Panel de destinos","verdict":"declined","thesis":"Las tareas se presentan como destinos de un panel de estación.","palette":["#173c2e","#edcc49","#f5efdc"],"materials":["bandas compactas","tipografía condensada"],"viewport":"Un índice de tareas en filas grandes.","case":"Su densidad y vocabulario visual hacen menos comprensible una primera visita.","kept":"Nombres de tareas inequívocos.","risk":"Puede parecer un panel operativo.","comp":".impeccable/mocks/decision/depot.png"},
+    {"id":"challenger-toys","label":"Catálogo de descubrimientos","verdict":"declined","thesis":"Cada aplicación ocupa una celda con identidad gráfica propia.","palette":["#e43c30","#ead648","#264cb2"],"materials":["primarios","composición compacta"],"viewport":"Un catálogo visual de herramientas.","case":"La saturación compite con los requisitos y puede infantilizar el producto.","kept":"Herramientas reconocibles a primera vista.","risk":"Demasiado ruido para elegir con confianza.","comp":".impeccable/mocks/decision/toys.png"},
+    {"id":"challenger-cloud","label":"Arquitectura de posibilidades","verdict":"declined","thesis":"Las herramientas se organizan como bloques que construyen un flujo.","palette":["#f3f6fa","#3882c7","#4a535c"],"materials":["volúmenes","vacíos azules"],"viewport":"Bloques espaciales conectados a tareas.","case":"La abstracción aleja al docente y explica peor las aplicaciones instalables.","kept":"Secciones con composición espacial propia.","risk":"La imagen puede desplazar al producto.","comp":".impeccable/mocks/decision/cloud.png"},
+    {"id":"challenger-tension","label":"Una red de herramientas","verdict":"declined","thesis":"Un diagrama de conexiones organiza todo el ecosistema.","palette":["#e9e7e2","#222222","#c83932"],"materials":["líneas estructurales","anotaciones técnicas"],"viewport":"Un mapa de Moodle y sus integraciones.","case":"La ingeniería domina sobre las necesidades de quienes enseñan.","kept":"Dependencias visibles y comprensibles.","risk":"Primera impresión demasiado técnica.","comp":".impeccable/mocks/decision/tension.png"}
+  ],
+  "reroll": {"registers":["safer","bolder"]},
+  "steer": true,
+  "canon": true,
+  "canonCard": {"label":"Web de producto clásica","thesis":"Una presentación directa al estilo de las herramientas educativas actuales.","palette":["#ffffff","#153d3b","#c8452c"],"materials":["pantallas de producto","retícula limpia"],"viewport":"Titular, demostración, herramientas y preguntas frecuentes.","risk":"Menor diferenciación frente a otras webs de IA educativa.","comp":".impeccable/mocks/decision/canon.png"}
+}

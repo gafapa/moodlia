@@ -1,0 +1,560 @@
+{
+ "version": 1,
+ "at": "2026-10-19T22:04:03.228Z",
+ "seed": 1143788785,
+ "redraws": 0,
+ "input": {
+  "brief": "MoodlIA turns a teacher's idea into a Moodle course, rubric, reviewed feedback and reusable content. A graphical scroll story through real open-source tools, for teachers, administrators and developers.",
+  "sector": "education",
+  "tone": "bold",
+  "have": [
+   "product-ui",
+   "illustration"
+  ],
+  "keep": [],
+  "avoid": [],
+  "sections": [
+   "intro",
+   "how-it-works",
+   "showcase",
+   "features",
+   "faq",
+   "cta"
+  ],
+  "direction": "loud-flat-poster"
+ },
+ "imagery": "atmosphere",
+ "allow": [],
+ "direction": {
+  "id": "loud-flat-poster",
+  "name": "Loud and flat",
+  "sectors": [
+   "agency",
+   "consumer-app",
+   "music",
+   "event",
+   "education",
+   "nonprofit",
+   "physical-product",
+   "saas",
+   "culture"
+  ],
+  "tones": [
+   "bold",
+   "playful"
+  ],
+  "needs": [],
+  "idea": "A page with the directness of a street poster: flat saturated colour, the heaviest type you can find, short blunt statements, and photographs cut out and stuck on. It is for subjects with a voice. Write the page as things a person would actually say out loud, and let the design say them at full volume. The craft is in the control beneath the noise: a strict grid, two or three colours, and exact alignment keep it from becoming a mess.",
+  "composition": "Hero: a statement of three to six words in ultra-heavy type at 11–15vw, filling the width, lines stacked tight (leading 0.85), flush left with 20–28px margins, on a flat saturated ground. One cut-out or hard-cropped photograph overlaps the type from the right or bottom, tilted 3–6 degrees. A single chunky button in the contrasting flat colour. Sections are solid panels in alternating palette colours: one is a row of short statements each on its own panel of unequal width; one is a single photograph bleeding off two edges with a caption block set over a solid colour bar; one is a large plain list. Panels meet edge to edge. Corners are square or use one large radius (28–40px) consistently.",
+  "typography": "The heaviest weight available, set tight, mostly lowercase or mostly uppercase (choose one). Body text is a plain grotesk at 18–20px.",
+  "typeClasses": [
+   "heavy-black",
+   "condensed-heavy",
+   "extended-heavy",
+   "rounded-friendly"
+  ],
+  "colour": "Three or four flat colours at full strength including black or white. Each panel is one colour; text on it is one other.",
+  "paletteTags": [
+   "flat-loud"
+  ],
+  "imagery": "Photographs with attitude, cropped hard or cut to a simple shape with `clip-path` (circle, arch, blunt polygon), slightly rotated, overlapping the type. Two or three on the page.",
+  "sectionTags": [
+   "poster",
+   "colour-field",
+   "type-led"
+  ],
+  "motion": "edge-marquee",
+  "richness": "Colour mass, type mass, and overlap.",
+  "pitfalls": "Headlines still obey the two-line rule: at 13vw that means very few words, which is correct for this voice. No outlines, no offset shadows, no sticker confetti. Rotation is for two or three images only, never for text blocks.",
+  "seenIn": [
+   "aww-warm-fuzzy",
+   "aww-aardvark-book-club",
+   "opl-uglycash",
+   "opl-depo-budget-app",
+   "aww-trevor-noah"
+  ],
+  "allow": []
+ },
+ "hero": {
+  "id": "two-line-statement-full-width",
+  "name": "Two-line statement, full width",
+  "archetype": "type-poster",
+  "directions": [
+   "type-only-statement",
+   "loud-flat-poster"
+  ],
+  "needs": [],
+  "blueprint": "Paper and ink only; no image. The wordmark at 15px sits top-left and two or three text links at the same size top-right, both on 24px margins; there is no bar. The statement fills the upper two thirds: two lines at clamp(96px, 12.5vw, 200px), medium to bold weight, tracking -0.05em, leading 0.86, starting 15% below the top edge. The first line is flush to the left margin and the second flush to the right margin, so the pair spans the full width and steps across the screen. Size the type so the longer line runs margin to margin: tune the vw value to the character count and test it at 1440 and 390. Between the statement and the bottom row about 18% of the height is left empty. The bottom row sits on one baseline 28px above the bottom edge: one supporting sentence at 22px on the left, max 44ch on two lines, and the single action bottom-right as a solid ink rectangle with square corners. There is no colour beyond ground and ink.",
+  "mobile": "Both lines turn flush left on 16px margins at 17vw, leading 0.9, starting at 14% of the height and filling the width. A gap of about 20% of the screen follows. The sentence sits at 17px above a full-width action, both anchored to the bottom with 20px to spare. Navigation reduces to the wordmark and one menu word.",
+  "headline": "A 3-5 word statement on two lines, at most 11 characters per line so 17vw type fits a phone.",
+  "motion": "masked-headline",
+  "seenIn": [
+   "aww-produx-design",
+   "opl-specia1ne",
+   "aww-made-with-gsap-1"
+  ]
+ },
+ "type": {
+  "id": "roundo-soft",
+  "name": "Roundo",
+  "class": "rounded-friendly",
+  "display": {
+   "family": "Roundo",
+   "source": "fontshare",
+   "slug": "roundo",
+   "weights": [
+    500
+   ],
+   "italic": false,
+   "settings": "weight 500 · tracking -0.025em · leading 1.05 · sentence case; colour the type to its section instead of black",
+   "css": "<link rel=\"preconnect\" href=\"https://api.fontshare.com\">\n<link rel=\"preconnect\" href=\"https://cdn.fontshare.com\" crossorigin>\n<link href=\"https://api.fontshare.com/v2/css?f[]=roundo@400,500,600&display=swap\" rel=\"stylesheet\">"
+  },
+  "text": {
+   "family": "Roundo",
+   "source": "fontshare",
+   "slug": "roundo",
+   "weights": [
+    400,
+    600
+   ],
+   "italic": false,
+   "settings": "400 for body, 600 for emphasis · leading 1.5 · tracking 0",
+   "css": "<link rel=\"preconnect\" href=\"https://api.fontshare.com\">\n<link rel=\"preconnect\" href=\"https://cdn.fontshare.com\" crossorigin>\n<link href=\"https://api.fontshare.com/v2/css?f[]=roundo@400,500,600&display=swap\" rel=\"stylesheet\">"
+  },
+  "standsInFor": [
+   "Ease",
+   "Open Runde"
+  ],
+  "note": "A rounded geometric sans at medium weight and a generous text size, gentle without looking childish. Suits wellness, home goods, family apps and everyday money tools.",
+  "seenIn": [
+   "opl-anidachi",
+   "opl-billow"
+  ],
+  "links": [
+   "https://api.fontshare.com/v2/css?f[]=roundo@400,500,600&display=swap"
+  ],
+  "scale": {
+   "step-small": "clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem)",
+   "step-body": "clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem)",
+   "step-lead": "clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem)",
+   "step-head": "clamp(2rem, 1.3rem + 3.2vw, 4rem)"
+  }
+ },
+ "palette": {
+  "id": "mint-orange-grey",
+  "name": "Grey, mint, orange",
+  "tags": [
+   "flat-loud"
+  ],
+  "bg": "#ffffff",
+  "surface": "#f5f5f5",
+  "ink": "#000000",
+  "muted": "#666666",
+  "accent": "#a7ff9c",
+  "accentInk": "#000000",
+  "fields": [
+   {
+    "bg": "#c5c5c5",
+    "ink": "#000000"
+   },
+   {
+    "bg": "#a7ff9c",
+    "ink": "#000000"
+   },
+   {
+    "bg": "#ff6831",
+    "ink": "#000000"
+   },
+   {
+    "bg": "#000000",
+    "ink": "#ffffff"
+   }
+  ],
+  "note": "Black on white to start, then whole sections flood with flat mid-grey, acid mint and orange in turn. Photographs inside a flooded section are shown in black-and-white, and mint is also the button colour on white and black.",
+  "seenIn": [
+   "aww-paul-kalkbrenner"
+  ]
+ },
+ "photos": {
+  "set": "mountain",
+  "title": "Mountain",
+  "note": "peaks, alpine valleys, snow and rock",
+  "treatment": null,
+  "others": [
+   "object-still",
+   "people",
+   "forest",
+   "architecture"
+  ],
+  "photos": [
+   {
+    "id": 809,
+    "alt": "Rocky mountain peak breaking through thick white clouds",
+    "tone": "light",
+    "colours": [
+     "white",
+     "slate grey",
+     "blue grey"
+    ],
+    "mono": false,
+    "calm": "left",
+    "quality": 4,
+    "ratio": 1.5,
+    "by": "Namphuong Van",
+    "page": "https://unsplash.com/photos/sP4UZnpSiN4"
+   },
+   {
+    "id": 591,
+    "alt": "Jagged rock pinnacle rising through swirling white cloud",
+    "tone": "light",
+    "colours": [
+     "white",
+     "grey",
+     "tan"
+    ],
+    "mono": false,
+    "calm": "left",
+    "quality": 4,
+    "ratio": 0.75,
+    "by": "Billy Onjea",
+    "page": "https://unsplash.com/photos/_qGq1Z2Bk6c"
+   },
+   {
+    "id": 735,
+    "alt": "Steep dark cliffs with fog drifting through the gap between them",
+    "tone": "mid",
+    "colours": [
+     "charcoal",
+     "mist grey",
+     "deep green"
+    ],
+    "mono": false,
+    "calm": "centre",
+    "quality": 4,
+    "ratio": 0.62,
+    "by": "wyman H",
+    "page": "https://unsplash.com/photos/ZQeRH1XD4Tc"
+   },
+   {
+    "id": 906,
+    "alt": "Sunlit snowy pyramid peak against a clear blue sky",
+    "tone": "mid",
+    "colours": [
+     "sky blue",
+     "white",
+     "dark slate"
+    ],
+    "mono": false,
+    "calm": "top",
+    "quality": 5,
+    "ratio": 1.33,
+    "by": "Andras Toth",
+    "page": "https://unsplash.com/photos/E9CrQou9K0Y"
+   },
+   {
+    "id": 235,
+    "alt": "Snow-covered peak rising above dark forested slopes and a lake",
+    "tone": "mid",
+    "colours": [
+     "slate blue",
+     "white",
+     "dark green"
+    ],
+    "mono": false,
+    "calm": "top",
+    "quality": 5,
+    "ratio": 1.5,
+    "by": "Paul E. Harrer",
+    "page": "https://unsplash.com/photos/TI-B-TNYJMU"
+   },
+   {
+    "id": 830,
+    "alt": "Layered blue mountain ridges receding into haze",
+    "tone": "mid",
+    "colours": [
+     "cobalt blue",
+     "pale blue",
+     "navy"
+    ],
+    "mono": false,
+    "calm": "top",
+    "quality": 5,
+    "ratio": 1.5,
+    "by": "Luca Zanon",
+    "page": "https://unsplash.com/photos/X0OoHrPvgXE"
+   },
+   {
+    "id": 260,
+    "alt": "Snowy mountain peak framed by dark pine trees in mist",
+    "tone": "light",
+    "colours": [
+     "white",
+     "pale grey",
+     "dark green"
+    ],
+    "mono": false,
+    "calm": "centre",
+    "quality": 5,
+    "ratio": 0.67,
+    "by": "Sylwia Bartyzel",
+    "page": "https://unsplash.com/photos/OdAqbedkfiA"
+   },
+   {
+    "id": 931,
+    "alt": "Layered mountain slopes fading into blue haze",
+    "tone": "mid",
+    "colours": [
+     "steel blue",
+     "pale blue",
+     "dark teal"
+    ],
+    "mono": false,
+    "calm": "top",
+    "quality": 5,
+    "ratio": 1.51,
+    "by": "Paul Earle",
+    "page": "https://unsplash.com/photos/xJ2tjuUHD9M"
+   }
+  ]
+ },
+ "motion": {
+  "id": "masked-headline",
+  "name": "Masked headline",
+  "description": "On load, each line of the headline rises from behind its own baseline, about 900ms with a strong ease-out, the second line 110ms after the first; the supporting sentence and the action then fade up together. Nothing else on the page performs. Because headlines are two lines at most, you author the line breaks and wrap each line yourself. Recipe: 'Masked line reveal' in references/motion.md."
+ },
+ "sections": [
+  {
+   "id": "intro-statement-tiles",
+   "role": "intro",
+   "name": "Statement tiles",
+   "shape": "mosaic",
+   "tags": [
+    "dense",
+    "colour-field",
+    "type-led"
+   ],
+   "directions": [
+    "dense-tiles",
+    "editorial-report",
+    "colour-chapters",
+    "contact-sheet",
+    "loud-flat-poster"
+   ],
+   "needs": [],
+   "blueprint": "A board of filled tiles with 8px gaps and 8px outer margins: 12 columns by two rows of 38svh each. Tile A, columns 1–8 across both rows, is the darkest tile and carries a slogan of two to four words in capitals at clamp(64px, 9vw, 132px), leading 0.86, on two lines, set hard against the tile's 20px left padding and bottom-aligned. Tile B, columns 9–12 of row one, is a pale tile with one word or figure at the same size, bottom-aligned, cropped by `overflow: hidden` if it runs long. Tile C, columns 9–12 of row two, is a photograph covering the tile. Below the board a fourth tile spans all 12 columns in the page ground colour: its left half is empty and a text of 90–130 words at 22–24px with leading 1.35 runs in columns 7–12 with 40px padding. No separate heading: the slogan in tile A is the heading.",
+   "mobile": "A two-column board with 6px gaps. The slogan tile spans both columns at 46svh with type at 17vw on two lines; the word tile and the photograph tile sit side by side as squares; the long text tile spans both columns with 20px padding at 18px.",
+   "seenIn": [
+    "aww-aspen-search"
+   ]
+  },
+  {
+   "id": "how-it-works-one-verb-at-a-time",
+   "role": "how-it-works",
+   "name": "One verb at a time",
+   "shape": "full-bleed",
+   "tags": [
+    "photo-led",
+    "poster"
+   ],
+   "directions": [
+    "pinned-poster",
+    "loud-flat-poster",
+    "dark-room",
+    "hero-object",
+    "sentence-as-layout",
+    "place-carries-it"
+   ],
+   "needs": [],
+   "blueprint": "Three to five full-bleed panels, each 100svh tall, stacked with no gap; each is one stage and holds one photograph covering it. In every panel a single word, the verb for that stage ('Cut', 'Fold', 'Stitch', 'Press'), is set at clamp(96px, 17vw, 300px), heavy and centred, inside a wrapper that is position: sticky; top: 50% and shifted up by half its own height. Because each word is sticky only within its own panel, it holds the centre of the screen while its photograph passes behind it, and is then pushed out by the next panel's verb. Use mix-blend-mode: difference in white, or one solid colour tested on every image. One sentence at 18px sits in the bottom-left corner of each panel over a neutral scrim limited to that corner. There is no separate heading: the verbs, read in order, are both the heading and the sequence.",
+   "mobile": "Panels stay 100svh, each photograph cropped to a vertical slice. The verb is 24vw, still sticky at the centre. The sentence sits along the bottom over a scrim at 16px, full width with 16px margins.",
+   "seenIn": [
+    "opl-eagles-nest",
+    "aww-seasats",
+    "aww-vero-new-york"
+   ]
+  },
+  {
+   "id": "showcase-rows-as-a-board",
+   "role": "showcase",
+   "name": "Rows as a board",
+   "shape": "table",
+   "tags": [
+    "ui-led",
+    "dense"
+   ],
+   "directions": [
+    "dense-tiles",
+    "borrowed-category",
+    "editorial-report",
+    "dark-room",
+    "product-performs",
+    "loud-flat-poster"
+   ],
+   "needs": [],
+   "blueprint": "The product's main list is set like a station departure board. Eight to ten real rows (transactions, issues, deploys, bookings) run the full viewport width inside 12px side margins. Each row is a filled band 72px tall, one tone off a dark ground, separated from the next by a 4px gap and never by a line; the whole board is one fragment marked data-ui. Text inside is 26–30px: the name from column 1, two or three facts at columns 6, 8 and 10, and at column 12 a status word on a solid block of its status colour; figures use tabular numerals. The section's top and bottom edges cut the first and last rows in half, so the list seems to continue. The fourth row is open: 216px tall, in the accent colour, with its detail in two lines at 17px. Clicking another row opens that one instead. No heading: the open row's name is the largest type.",
+   "mobile": "Rows keep the 4px gaps and are 64px tall inside 8px margins: the name at 20px on the left, the status block on the right, the other facts dropped. The open row is 200px tall and lists the dropped facts as three lines at 16px. Six rows show; the first and last are cropped.",
+   "seenIn": [
+    "opl-rows",
+    "opl-near"
+   ]
+  },
+  {
+   "id": "features-mosaic-of-unlike-tiles",
+   "role": "features",
+   "name": "Mosaic of unlike tiles",
+   "shape": "mosaic",
+   "tags": [
+    "dense",
+    "colour-field"
+   ],
+   "directions": [
+    "dense-tiles",
+    "editorial-report",
+    "colour-chapters",
+    "specimen-catalogue",
+    "loud-flat-poster"
+   ],
+   "needs": [],
+   "blueprint": "A 12-column grid with 8px gaps and rows of 96px, filled with no empty cells and no outlines. Six to eight filled tiles in four sizes only: 6×5, 6×3, 3×3 and 3×2 (columns × rows). The rule that keeps it from being a card grid: no two neighbouring tiles hold the same kind of thing. One tile is the heading alone, two to four words at 4vw, top-left. One is a photograph covering its tile. One is a single figure at 6vw with a caption. One is a short list of four lines at 20px. The others are a single sentence each at 28–32px. Text sits top-left with 24px padding; tiles holding one sentence leave their lower half empty. Tile fills: the ground one tone darker, two palette colours, and photographs. One corner radius everywhere, either 0 or 8px.",
+   "mobile": "Two columns with 6px gaps. The heading tile and the photograph tile span both columns; sentence tiles span both at their natural height; the figure and list tiles sit side by side as a pair of squares. Order: heading, photograph, pair, sentence, sentence.",
+   "seenIn": [
+    "opl-sand-studio",
+    "opl-builders-table",
+    "aww-cominvi",
+    "opl-uglycash"
+   ]
+  },
+  {
+   "id": "faq-tabbed-index-cards",
+   "role": "faq",
+   "name": "Tabbed index cards",
+   "shape": "stack",
+   "tags": [
+    "object-led",
+    "colour-field"
+   ],
+   "directions": [
+    "page-is-the-object",
+    "specimen-catalogue",
+    "borrowed-category",
+    "loud-flat-poster",
+    "one-motif"
+   ],
+   "needs": [],
+   "blueprint": "Questions are filed like cards in a drawer. A heading of two to four words at about 4vw sits in columns 3–10. Beneath it, in the same columns, five or six filled panels are stacked so that each overlaps the one above, leaving 96px of every card showing. Each card has a tab on its top edge, 200px wide and 40px tall, stepping right by 150px per card, cut with `clip-path: polygon()` so card and tab are one filled shape. The cards rotate through two or three palette colours. The tab carries the topic in one or two words at 16px; the visible strip under it shows the question at 20px medium. Choosing a card expands it to show the answer at 17px over at most 50ch and pushes the cards below it down. One card is open at a time; the first is open on load.",
+   "mobile": "Cards run full width with the same overlap, 88px of each showing. Tabs shrink to 120px wide and step right by 48px per card. The open card expands in place with its answer at 16px and 20px padding, and the heading leads at 9vw.",
+   "seenIn": []
+  },
+  {
+   "id": "cta-giant-word-is-the-button",
+   "role": "cta",
+   "name": "One word is the button",
+   "shape": "band",
+   "tags": [
+    "poster",
+    "colour-field"
+   ],
+   "directions": [
+    "loud-flat-poster",
+    "colour-chapters",
+    "borrowed-category",
+    "name-as-monument",
+    "type-only-statement",
+    "pinned-poster",
+    "one-motif"
+   ],
+   "needs": [],
+   "blueprint": "The entire band is one link. A full-bleed field in the accent colour, about 60svh tall, contains a single verb of four to eight letters set at 24–30vw in the heaviest weight, tight tracking, sized with `clamp()` so it spans the content width on one line with its baseline 24px above the bottom edge. The `<a>` wraps the whole band; on hover and focus the field and the word swap colours instantly. In the top-left corner, at 20px, one sentence says what happens next; in the top-right, an arrow drawn as a simple inline SVG, 48px, points up and right. There is no other button anywhere in the section. In a page with a motif, the band's top corners take the motif's shape (a large radius, or a chamfer cut with `clip-path`). Keep the word honest: the action itself, not a slogan.",
+   "mobile": "The band is 46svh tall. The word is set at whatever size fills the width on one line; choose a shorter verb rather than going below 22vw. Sentence top-left at 17px across two lines, arrow top-right at 32px. The whole band stays tappable.",
+   "seenIn": [
+    "aww-lacoste-ace-breaker",
+    "aww-made-with-gsap-1"
+   ]
+  }
+ ],
+ "references": [
+  {
+   "id": "opl-depo-budget-app",
+   "name": "Depo Budget App",
+   "url": "https://depobudget.com",
+   "source": "One Page Love",
+   "kind": "consumer-app",
+   "score": 6.9,
+   "idea": "Budgeting reduced to one daily number, dressed in neo-brutalist sticker graphics: flat primaries, thick black outlines and a hard offset shadow on every box.",
+   "mood": [
+    "bold",
+    "cheerful",
+    "blunt",
+    "cartoonish"
+   ],
+   "archetype": "split-text-media",
+   "hero": "Saturated blue field with a faint grid of 100px squares. A 72px header holds a white wordmark left and a black store badge right, above a 3px black rule. Left column, starting 7% in and vertically centred: a cream box with black border holding one line of uppercase mono, a two-line white headline in very heavy grotesque at 5.3vw, two lines of 20px white copy, and a coral button with black border and hard offset shadow. Right of centre: an illustrated phone tilted about 4 degrees, 24% of the width and nearly full height, thick black outline, star stickers on two corners. A lime marquee strip closes the bottom.",
+   "type": "Archivo Black at 76px with -0.025em tracking for headings (white on colour, black on cream), DM Sans at 16 to 20px for copy, and a system monospace in small capitals for labels and amounts. About a 4:1 jump; three faces.",
+   "colour": "#1769e7 #f6eedf #c8e832 #7c3aed #3cbdb1 #ff5c40 — Each section takes a different flat fill: blue, cream, purple, teal, blue again, then a black footer. Lime, coral, amber and red fill cards and buttons; black outlines hold it together.",
+   "imagery": "Flat vector phone frames with thick black outlines showing simplified app screens in the page palette, light and dark themes alternating; four-point star stickers as decoration. No photography.",
+   "layout": "Content sits in a 1230px container with 105px margins. Sections are full-width colour blocks separated by 3px black rules; each opens with a left-aligned heavy heading and one line of copy, followed by a row of outlined cards or phones. The rhythm is uniform.",
+   "sections": [
+    {
+     "role": "how-it-works",
+     "description": "Cream section. A left-aligned heading and one line of copy, then four equal cards in a row with 16px gaps, each a different flat colour (amber, red, teal, lime) with a 2px black border and a 4px hard offset shadow. Inside each: a mono index number top-left, a bold label, one line of copy, a black hairline, then an amount in mono with a tiny uppercase caption."
+    },
+    {
+     "role": "showcase",
+     "description": "Purple section. A white one-line heading spans the container with a single line of copy beneath, then four phone screens in a row at equal width, alternating light and dark app themes, each in a thick black rounded frame. The phones run about a screen tall; a one-line white caption is centred under each at the bottom of the section."
+    },
+    {
+     "role": "features",
+     "description": "Teal section. A small amber mono label in a bordered box sits above a black heavy heading and one line of copy. Below, a three-by-three grid of white cards with black borders and hard shadows; each card is one short row with a line icon at left, a bold title and a single line of small grey copy. Cards are about 100px tall with 20px gaps."
+    }
+   ],
+   "steal": [
+    "Give each section its own flat saturated fill and separate them with a 3px black rule, so colour does the sectioning.",
+    "Apply one physical rule to every box (2px black border plus 4px hard offset shadow, no blur) so buttons, cards and phones read as one kit.",
+    "Show the product's core number as an oversized figure in a lime card rather than as a screenshot."
+   ]
+  },
+  {
+   "id": "aww-warm-fuzzy",
+   "name": "Warm & Fuzzy",
+   "url": "https://www.warmnfuzzy.tv/",
+   "source": "Awwwards Site of the Day",
+   "kind": "agency",
+   "score": 7.7,
+   "idea": "A showreel-first studio site in which every section takes one flat, loud colour (blue, black, yellow) under heavy grotesk type and a chunky custom wordmark.",
+   "mood": [
+    "loud",
+    "playful",
+    "saturated",
+    "confident"
+   ],
+   "archetype": "video-reel",
+   "hero": "The showreel plays full-bleed with a visible film-grain overlay and no scrim. A chunky hand-cut wordmark sits top left, 16px from the edges; the same top line continues with a one-sentence status link, a tiny thumbnail beside the latest project's name, and three caps links at the far right, all white over the footage. A small green caps play label floats at dead centre. The tagline is anchored bottom left, 16px from both edges, in white grotesk caps at 47px (3.3vw) on one line spanning 56% of the width. A tiny square pause control sits bottom right.",
+   "type": "SuisseIntl throughout, rendering heavy, tracked -0.027em: a 47px caps tagline, a caps section title at 9.4vw, statement paragraphs around 5vw with tight leading, and 10 to 11px caps captions. The logo is custom chunky lettering with wobbly cut-paper counters.",
+   "colour": "#000000 #190bb6 #f7dd47 #ffffff #e9479f #1fc27a — Each section is a flat field: ultramarine blue, black, yellow, then blue again. White type on blue and black, black on yellow; a green play label is the only small accent.",
+   "imagery": "Commercial stills and video (candy-coloured CG worlds, product renders, live-action frames) in square-cornered thumbnails of mixed aspect ratios, with a grain layer over the whole page and floating glossy 3D sticker objects.",
+   "layout": "Tight 16px outer margins and edge-to-edge type. Sections are told apart by background colour rather than spacing: a blue statement set in the right two-thirds, a black packed work wall, a yellow full-width paragraph, a blue footer.",
+   "sections": [
+    {
+     "role": "work",
+     "description": "On black, a tiny caps motto sits top left, then a caps section title at about 9vw flush left with a small underlined link at the far right on its baseline. Beneath, thumbnails pack into an uneven wall: widths vary from one-sixth to one-half of the page, heights differ, gaps are about 8px and rows do not align. Under each image a 10px caps line gives the project name left and the year in grey right."
+    },
+    {
+     "role": "intro",
+     "description": "A yellow field filled edge to edge by one paragraph in black heavy grotesk at roughly 5vw with very tight leading, left-aligned at the 16px margin. Several lines contain deliberate word-sized gaps, as if the text flowed around something, and a small tilted image chip floats over the first lines, covering parts of words."
+    },
+    {
+     "role": "footer",
+     "description": "A full-screen blue field. A top row of tiny caps, email left and three links right, sits above a hairline. A glossy 3D sticker object hangs near the top centre. The chunky wordmark runs the full page width at the bottom in white, about a fifth of the viewport tall, above a bar of tiny caps links divided by vertical hairlines."
+    }
+   ],
+   "steal": [
+    "Give every section one flat saturated background and change it at each section break, keeping type strictly black or white.",
+    "Pack work thumbnails at mixed widths and heights with 8px gaps and a two-part micro caption (name left, year right) under each.",
+    "End with the wordmark at full page width on a colour field, with all utility links reduced to a tiny caps bar split by vertical hairlines."
+   ],
+   "media": "A 6s muted showreel covers the whole first screen with the nav and title on it and no scrim. Below: an asymmetric top-aligned mosaic of three tile widths (5, 7 and 12 of 24 columns) reshuffled each row with captions under, small inline thumbnails between words of a large paragraph, clips cut into geometric clip-path shapes, a full-bleed photo band with a marquee across its lower edge, and a glossy 3D cube drifting over text and the footer, all at 0px radius under a grain layer that steps every second.",
+   "motion": "A brief ultramarine preloader with a tilted card, then the header and title slide and scale in over 0.5s after a 0.75s delay while the reel carries the motion. Lenis with CSS scroll-driven animations reveals blocks on the scroll timeline, parallaxes figures by 5 to 25svh, translates stacked assets in over 0.75s with a per-item delay and slides a giant sentence left with the scroll, all on one house ease, cubic-bezier(.26,1,.48,1), at 0.5s, with 29 reduced-motion rules."
+  }
+ ],
+ "scenes": []
+}

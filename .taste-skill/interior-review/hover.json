@@ -1,0 +1,72 @@
+[
+  {
+    "scheme": "light",
+    "path": "/es/",
+    "checked": 41,
+    "minimum": 6.285386455255271,
+    "failures": []
+  },
+  {
+    "scheme": "light",
+    "path": "/es/apps/",
+    "checked": 32,
+    "minimum": 15.053498719673197,
+    "failures": []
+  },
+  {
+    "scheme": "light",
+    "path": "/es/apps/corrector/",
+    "checked": 27,
+    "minimum": 10.623656510183503,
+    "failures": []
+  },
+  {
+    "scheme": "light",
+    "path": "/es/instalar/",
+    "checked": 54,
+    "minimum": 10.623656510183503,
+    "failures": []
+  },
+  {
+    "scheme": "light",
+    "path": "/es/como-funciona/",
+    "checked": 30,
+    "minimum": 10.623656510183503,
+    "failures": []
+  },
+  {
+    "scheme": "dark",
+    "path": "/es/",
+    "checked": 41,
+    "minimum": 6.285386455255271,
+    "failures": []
+  },
+  {
+    "scheme": "dark",
+    "path": "/es/apps/",
+    "checked": 32,
+    "minimum": 15.053498719673197,
+    "failures": []
+  },
+  {
+    "scheme": "dark",
+    "path": "/es/apps/corrector/",
+    "checked": 27,
+    "minimum": 10.623656510183503,
+    "failures": []
+  },
+  {
+    "scheme": "dark",
+    "path": "/es/instalar/",
+    "checked": 54,
+    "minimum": 10.623656510183503,
+    "failures": []
+  },
+  {
+    "scheme": "dark",
+    "path": "/es/como-funciona/",
+    "checked": 30,
+    "minimum": 10.623656510183503,
+    "failures": []
+  }
+]

@@ -1,18 +1,18 @@
-import { apps, getApp, levels, tasks, type Locale } from "./content";
-import { alternates, appPath, contactEmail, faq, pagePath, siteUrl, ui } from "./i18n";
+import { apps, type Locale } from "./content";
+import { alternates, appPath, contactEmail, faq, pagePath, siteUrl } from "./i18n";
 import { pageMetadata } from "./seo";
-import { AppCard, HelpBox, LevelTag, PageShell, appsByLevel } from "./ui-kit";
-import { ConnectionLanes } from "./how-page";
+import { PageShell } from "./ui-kit";
+import { ArrowIcon } from "./icons";
+import { cinematicCopy } from "./cinematic-copy";
+import { CourseArt } from "./course-art";
+import { StoryMotion } from "./story-motion";
+import { StartingPoint } from "./starting-point";
+import { ExtensionPrivacyLink } from "./extension-privacy-link";
+import "./cinematic.css";
 
 const homeMeta = {
-  en: {
-    title: "MoodlIA — Open-source tools for Moodle",
-    description: "Ten free, open-source apps for Moodle: import rubrics, convert backups, analyze courses, and let AI assistants and scripts work with Moodle safely. With installation guides.",
-  },
-  es: {
-    title: "MoodlIA — Herramientas de código abierto para Moodle",
-    description: "Diez apps gratuitas y de código abierto para Moodle: importa rúbricas, convierte copias de seguridad, analiza cursos y deja que asistentes de IA y scripts trabajen con Moodle de forma segura. Con guías de instalación.",
-  },
+  en: { title: "MoodlIA — Open-source tools for Moodle", description: "From a teaching idea to a Moodle course. Discover open-source tools for course preparation, rubric import, reviewed feedback and content reuse." },
+  es: { title: "MoodlIA — Herramientas de código abierto para Moodle", description: "De una idea docente a un curso en Moodle. Descubre herramientas abiertas para preparar, evaluar, acompañar y reutilizar tu trabajo." },
 };
 
 export function homeMetadata(locale: Locale) {
@@ -20,145 +20,42 @@ export function homeMetadata(locale: Locale) {
 }
 
 export function HomePage({ locale }: { locale: Locale }) {
-  const copy = ui[locale].home;
+  const copy = cinematicCopy[locale];
   const structuredData = {
     "@context": "https://schema.org",
     "@graph": [
-      {
-        "@type": "Organization",
-        "@id": `${siteUrl}/#organization`,
-        name: "MoodlIA",
-        url: `${siteUrl}/`,
-        email: `mailto:${contactEmail}`,
-        sameAs: ["https://github.com/gafapa"],
-      },
-      {
-        "@type": "WebSite",
-        "@id": `${siteUrl}/#website`,
-        url: `${siteUrl}${pagePath("home", locale)}`,
-        name: "MoodlIA",
-        description: homeMeta[locale].description,
-        inLanguage: locale,
-        publisher: { "@id": `${siteUrl}/#organization` },
-      },
-      {
-        "@type": "ItemList",
-        name: copy.appsTitle,
-        itemListElement: apps.map((app, index) => ({
-          "@type": "ListItem",
-          position: index + 1,
-          url: `${siteUrl}${appPath(app.slug, locale)}`,
-          name: app.name,
-        })),
-      },
-      {
-        "@type": "FAQPage",
-        mainEntity: faq[locale].map((item) => ({
-          "@type": "Question",
-          name: item.q,
-          acceptedAnswer: { "@type": "Answer", text: item.a },
-        })),
-      },
+      { "@type": "Organization", "@id": `${siteUrl}/#organization`, name: "MoodlIA", url: `${siteUrl}/`, email: `mailto:${contactEmail}`, sameAs: ["https://github.com/gafapa"] },
+      { "@type": "WebSite", "@id": `${siteUrl}/#website`, url: `${siteUrl}${pagePath("home", locale)}`, name: "MoodlIA", description: homeMeta[locale].description, inLanguage: locale },
+      { "@type": "ItemList", name: copy.allTools, itemListElement: apps.map((app, index) => ({ "@type": "ListItem", position: index + 1, url: `${siteUrl}${appPath(app.slug, locale)}`, name: app.name })) },
+      { "@type": "FAQPage", mainEntity: faq[locale].map((item) => ({ "@type": "Question", name: item.q, acceptedAnswer: { "@type": "Answer", text: item.a } })) },
     ],
   };
-
-  return (
-    <PageShell locale={locale} alternate={alternates("home")} structuredData={structuredData}>
-      <section className="hero" aria-labelledby="hero-title">
-        <div className="container hero-inner">
-          <div className="hero-copy">
-            <p className="eyebrow">{copy.eyebrow}</p>
-            <h1 id="hero-title">{copy.title}</h1>
-            <p className="lead">{copy.intro}</p>
-            <div className="actions">
-              <a className="button button-accent" href={pagePath("apps", locale)}>{copy.ctaApps}</a>
-              <a className="button button-ghost" href={pagePath("install", locale)}>{copy.ctaInstall}</a>
-            </div>
-          </div>
-          <ol className="hero-levels" aria-label={copy.appsBody}>
-            {appsByLevel().map(({ level, apps: group }) => (
-              <li key={level} className={`level-${level}`}>
-                <LevelTag level={level} locale={locale} />
-                <p>{levels[level].body[locale]}</p>
-                <ul>
-                  {group.map((app) => <li key={app.slug}><a href={appPath(app.slug, locale)}>{app.name.replace(/^MoodlIA /, "")}</a></li>)}
-                </ul>
-              </li>
-            ))}
-          </ol>
+  return <PageShell locale={locale} alternate={alternates("home")} structuredData={structuredData} appearance="story">
+    <div className="cinematic-home">
+      <section className="poster-hero" aria-labelledby="hero-title">
+        <h1 className="poster-title" id="hero-title"><span>{copy.title[0]}</span><span>{copy.title[1]}</span></h1>
+        <div className="poster-intro"><p>{copy.intro}</p><a className="story-button" href="#workflow">{copy.action}<ArrowIcon /></a><p className="poster-note">{copy.heroNote}</p></div>
+        <div className="poster-art"><CourseArt kind="idea" copy={copy} /></div>
+      </section>
+      <section className="story-argument" aria-labelledby="argument-title" data-enter><h2 id="argument-title">{copy.argument}</h2><p>{copy.argumentBody}</p></section>
+      <StoryMotion locale={locale} />
+      <section className="course-story scene" data-scene="teaching-journey" id="workflow" aria-label={locale === "es" ? "El recorrido de una idea docente" : "The journey of a teaching idea"}>
+        <div className="story-stage scene-stage">
+          <div className="story-progress" aria-hidden="true">{copy.stages.map(stage => <span key={stage.id}>{stage.verb}</span>)}</div>
+          {copy.stages.map(stage => <article className={`story-panel panel-${stage.id}`} id={`chapter-${stage.id}`} key={stage.id}>
+            <div className="chapter-copy"><h2>{stage.title}</h2><p className="chapter-name">{stage.name}</p><p className="chapter-body">{stage.body}</p><a className="chapter-link" href={appPath(stage.slug, locale)}>{stage.action}<ArrowIcon /></a><ExtensionPrivacyLink slug={stage.slug} locale={locale} /><p className="chapter-note">{stage.note}</p></div>
+            <figure className="chapter-art"><CourseArt kind={stage.id} copy={copy} /><figcaption>{copy.sample}</figcaption></figure>
+          </article>)}
         </div>
       </section>
-
-      <section className="section" aria-labelledby="tasks-title">
-        <div className="container">
-          <header className="section-head">
-            <h2 id="tasks-title">{copy.tasksTitle}</h2>
-            <p>{copy.tasksBody}</p>
-          </header>
-          <ul className="task-grid">
-            {tasks.map((task) => {
-              const app = getApp(task.app)!;
-              return (
-                <li key={task.app}>
-                  <a href={appPath(app.slug, locale)}>
-                    <strong>{task.text[locale]}</strong>
-                    <span>{app.name} →</span>
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      </section>
-
-      <section className="section section-tint" aria-labelledby="apps-title">
-        <div className="container">
-          <header className="section-head">
-            <h2 id="apps-title">{copy.appsTitle}</h2>
-            <p>{copy.appsBody}</p>
-          </header>
-          {appsByLevel().map(({ level, apps: group }) => (
-            <div className="level-group" key={level}>
-              <div className="level-group-head">
-                <LevelTag level={level} locale={locale} />
-                <p>{levels[level].body[locale]}</p>
-              </div>
-              <div className="card-grid">
-                {group.map((app) => <AppCard key={app.slug} app={app} locale={locale} />)}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="section" aria-labelledby="how-title">
-        <div className="container">
-          <header className="section-head">
-            <h2 id="how-title">{copy.howTitle}</h2>
-            <p>{copy.howBody}</p>
-          </header>
-          <ConnectionLanes locale={locale} />
-          <p className="section-link"><a href={pagePath("how", locale)}>{copy.howLink} →</a></p>
-        </div>
-      </section>
-
-      <section className="section section-tint" aria-labelledby="faq-title">
-        <div className="container narrow">
-          <h2 id="faq-title">{copy.faqTitle}</h2>
-          <div className="faq">
-            {faq[locale].map((item) => (
-              <details key={item.q}>
-                <summary>{item.q}</summary>
-                <p>{item.a}</p>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <div className="container">
-        <HelpBox locale={locale} title={copy.helpTitle} body={copy.helpBody} />
-      </div>
-    </PageShell>
-  );
+      <section className="story-interlude" data-enter aria-labelledby="independent-title"><h2 id="independent-title">{copy.breakTitle}</h2><p>{copy.breakBody}</p></section>
+      <section className="story-start" aria-labelledby="start-title"><h2 id="start-title">{copy.chooseTitle}</h2><StartingPoint locale={locale} /><noscript><p><a className="story-button" href={appPath("rubrics", locale)}>{copy.choiceActions[1]}</a></p></noscript></section>
+      <section className="story-trust" aria-labelledby="trust-title" data-enter><h2 id="trust-title">{copy.trustTitle}</h2><div>{copy.trust.map(item => <article key={item.title}><h3>{item.title}</h3><p>{item.body}</p></article>)}</div><p className="story-source">{copy.source}</p></section>
+      <section className="story-directory" aria-labelledby="directory-title" data-enter><div><h2 id="directory-title">{copy.toolsTitle}</h2><p>{copy.toolsBody}</p><a className="story-button" href={pagePath("apps", locale)}>{copy.allTools}<ArrowIcon /></a></div><nav aria-label={copy.toolsTitle}><a href={appPath("backup-converter", locale)}>Backup Converter<ArrowIcon /></a><a href={appPath("edx-converter", locale)}>edX Converter<ArrowIcon /></a><a href={appPath("cli", locale)}>MoodlIA CLI<ArrowIcon /></a><a href={appPath("skills", locale)}>MoodlIA Skills<ArrowIcon /></a><a href={`${appPath("moodle-plugin", locale)}#install`}>{locale === "es" ? "Instalación para centros" : "Institution setup"}<ArrowIcon /></a></nav></section>
+      <section className="story-faq" aria-labelledby="faq-title"><h2 id="faq-title">{copy.faqTitle}</h2><div>{faq[locale].map(item => <details key={item.q}><summary>{item.q}</summary><p>{item.a}</p></details>)}</div></section>
+      <section className="story-close" aria-labelledby="close-title"><p>{copy.closeBody}</p><h2 id="close-title">{copy.close}</h2><a href={`mailto:${contactEmail}`} className="story-button">{copy.contact}<ArrowIcon /></a></section>
+      <details className="lesson-credits"><summary>{locale === "es" ? "Sobre las ilustraciones" : "About the illustrations"}</summary><p>{locale === "es" ? "Ilustraciones editoriales creadas para MoodlIA con herramientas de IA. Representan materiales docentes y flujos de trabajo; las guías explican las funciones reales de cada herramienta." : "Editorial illustrations created for MoodlIA with AI tools. They depict teaching materials and workflows; the guides explain each tool's actual functionality."}</p></details>
+      <noscript><style>{`.story-motion-control{display:none}`}</style></noscript>
+    </div>
+  </PageShell>;
 }

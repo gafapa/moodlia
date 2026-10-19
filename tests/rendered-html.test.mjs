@@ -22,6 +22,7 @@ async function html(pathname) {
 }
 
 const appSlugs = [
+  "corrector",
   "rubrics",
   "backup-converter",
   "edx-converter",
@@ -34,6 +35,7 @@ const appSlugs = [
   "skills",
 ];
 const appNames = [
+  "MoodlIA Corrector",
   "MoodlIA Rubrics",
   "MoodlIA Backup Converter",
   "MoodlIA edX Converter",
@@ -58,22 +60,61 @@ const pagePairs = [
   ...appSlugs.map((slug) => [`/apps/${slug}`, `/es/apps/${slug}`]),
 ];
 
-test("home explains MoodlIA and lists every app", async () => {
+test("home explains the flagship, assessment and reuse workflows", async () => {
   const page = await html("/");
   assert.match(page, /<title>MoodlIA — Open-source tools for Moodle<\/title>/);
-  assert.match(page, /<h1[^>]*>Tools that make Moodle easier, for teachers and for administrators\.<\/h1>/);
-  for (const name of appNames) assert.ok(page.includes(name), `home is missing ${name}`);
-  assert.match(page, /href="\/install"/);
-  assert.match(page, /What do you want to do\?/);
+  assert.match(page, /From idea<\/span><span>to Moodle\./);
+  for (const slug of ["moodle-plugin", "rubrics", "corrector", "sync", "backup-converter", "edx-converter"]) {
+    assert.ok(page.includes(`href="/apps/${slug}"`), `home has no visible guide link for ${slug}`);
+  }
+  assert.match(page, /href="\/apps\/moodle-plugin#install"/);
+  assert.match(page, /href="#workflow"/);
+  assert.match(page, /Illustrative teaching example/);
+  assert.match(page, /Your teacher review/);
   assert.match(page, /"@type":"FAQPage"/);
   assert.match(page, /contact@moodlia\.com/);
 });
 
-test("apps without a public release are not shown", async () => {
+test("concept-only and superseded apps are not advertised as products", async () => {
   for (const pathname of ["/", "/apps", "/install", "/es", "/es/apps", "/es/instalar"]) {
     const page = await html(pathname);
-    assert.doesNotMatch(page, /Corrector|Analyzer Desktop|MoodlIA Studio/, pathname);
+    assert.doesNotMatch(page, /Analyzer Desktop|MoodlIA Studio|MoodlIA Sync MCP/, pathname);
   }
+});
+
+test("the skills offer contains only portable content authoring in both languages", async () => {
+  for (const pathname of ["/apps/skills", "/es/apps/skills"]) {
+    const page = await html(pathname);
+    assert.match(page, /design-portable-moodle-content/);
+    assert.doesNotMatch(page, /operate-moodle-with-moodlia/);
+    assert.match(page, /source\.json|validador|validator/i);
+    assert.doesNotMatch(page, /Two agent skills|Dos skills para agentes/);
+  }
+});
+
+test("the outcome directory includes every tool with readiness and no audience labels", async () => {
+  for (const pathname of ["/apps", "/es/apps"]) {
+    const page = await html(pathname);
+    for (const name of appNames) assert.ok(page.includes(name), `${pathname} omits ${name}`);
+    for (const family of ["connect", "assess", "reuse", "follow-up"]) assert.ok(page.includes(`id="family-${family}"`));
+    assert.match(page, /status-manual/);
+    assert.match(page, /status-source/);
+    assert.match(page, /status-preview/);
+    assert.doesNotMatch(page, /level-technical|Anyone with a browser|Cualquiera con un navegador|For Moodle administrators|Para administradores de Moodle/);
+  }
+});
+
+test("Corrector guides match the public release and preserve teacher control", async () => {
+  for (const pathname of ["/apps/corrector", "/es/apps/corrector"]) {
+    const page = await html(pathname);
+    assert.match(page, /releases\/tag\/v0\.1\.45/);
+    assert.match(page, /moodlia-corrector-0\.1\.45\.zip/);
+    assert.match(page, /chrome:\/\/extensions/);
+    assert.doesNotMatch(page, /0\.1\.62|LM Studio/);
+  }
+  const english = await html("/apps/corrector");
+  assert.match(english, /never automatically submits the grading form/);
+  assert.match(english, /evidence reaches your selected AI provider/);
 });
 
 test("every page has its own title, canonical, hreflang pair, and one h1", async () => {
@@ -148,8 +189,9 @@ test("in-page links point at existing targets", async () => {
 
 test("Spanish pages are written in Spanish", async () => {
   const home = await html("/es");
-  assert.match(home, /¿Qué quieres hacer\?/);
-  assert.doesNotMatch(home, /What do you want to do\?/);
+  assert.match(home, /De idea<\/span><span>a Moodle\./);
+  assert.match(home, /revisa los comentarios y decide la nota/);
+  assert.doesNotMatch(home, /Your AI, working inside Moodle/);
   const rubrics = await html("/es/apps/rubrics");
   assert.match(rubrics, /Añadir desde la Chrome Web Store/);
   assert.doesNotMatch(rubrics, /Add from the Chrome Web Store/);
@@ -171,4 +213,57 @@ test("keeps focus, reduced-motion, and dark-mode styles", async () => {
   assert.match(css, /prefers-reduced-motion: reduce/);
   assert.match(css, /prefers-color-scheme: dark/);
   assert.match(css, /\.skip-link:focus/);
+});
+
+test("permanent extension privacy URLs and general index links survive redesigns", async () => {
+  const { loadPrivacyPolicies } = await import("../tools/privacy-policies.mjs");
+  const projectRoot = new URL("../", import.meta.url);
+  const { fileURLToPath } = await import("node:url");
+  const policies = await loadPrivacyPolicies(fileURLToPath(projectRoot));
+  assert.deepEqual(policies.map(({ id, path }) => ({ id, path })), [
+    { id: "corrector", path: "/privacy/corrector.html" },
+    { id: "rubrics", path: "/privacy/rubrics.html" },
+  ]);
+  for (const pathname of ["/privacy", "/es/privacy", "/", "/es", "/apps", "/es/apps"]) {
+    const page = await html(pathname);
+    for (const policy of policies) assert.ok(page.includes(`href="${policy.path}"`), `${pathname} missing ${policy.path}`);
+  }
+  for (const prefix of ["", "/es"]) {
+    for (const policy of policies) {
+      const page = await html(`${prefix}/apps/${policy.id}`);
+      assert.ok(page.includes(`href="${policy.path}"`), `${prefix}/apps/${policy.id} missing its privacy policy`);
+    }
+    const install = await html(prefix ? "/es/instalar" : "/install");
+    for (const policy of policies) assert.ok(install.includes(`href="${policy.path}"`), `installation page missing ${policy.path}`);
+  }
+  const sitemap = await (await render("/sitemap.xml")).text();
+  for (const policy of policies) assert.ok(sitemap.includes(`https://moodlia.com${policy.path}`));
+  assert.match(policies[0].bytes.toString(), /HTTP is unencrypted/);
+  assert.match(policies[0].bytes.toString(), /Limited Use/);
+  assert.match(policies[1].bytes.toString(), /Rubricando for Moodle/);
+  assert.match(policies[1].bytes.toString(), /CSV\/Excel/);
+});
+
+test("static exports retain exact policy bytes and missing source policies fail validation", async () => {
+  const { loadPrivacyPolicies, preservePrivacyPolicies } = await import("../tools/privacy-policies.mjs");
+  const { fileURLToPath } = await import("node:url");
+  const { resolve, sep } = await import("node:path");
+  const { mkdtemp, mkdir, copyFile, rm } = await import("node:fs/promises");
+  const projectRoot = fileURLToPath(new URL("../", import.meta.url));
+  const temporary = await mkdtemp(resolve(projectRoot, "node_modules/.privacy-contract-"));
+  assert.ok(temporary.startsWith(resolve(projectRoot, "node_modules") + sep));
+  try {
+    const policies = await loadPrivacyPolicies(projectRoot);
+    const output = resolve(temporary, "export");
+    await preservePrivacyPolicies(output, policies);
+    for (const policy of policies) assert.deepEqual(await readFile(resolve(output, `.${policy.path}`)), policy.bytes);
+    await mkdir(resolve(temporary, "config"));
+    await mkdir(resolve(temporary, "public/privacy"), { recursive: true });
+    await copyFile(resolve(projectRoot, "config/extension-privacy.json"), resolve(temporary, "config/extension-privacy.json"));
+    await copyFile(resolve(projectRoot, policies[0].source), resolve(temporary, policies[0].source));
+    await assert.rejects(loadPrivacyPolicies(temporary), /ENOENT/);
+  } finally {
+    assert.ok(temporary.startsWith(resolve(projectRoot, "node_modules") + sep));
+    await rm(temporary, { recursive: true, force: true });
+  }
 });

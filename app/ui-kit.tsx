@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
-import { apps, levels, places, type Level, type Locale, type MoodliaApp, type Step } from "./content";
+import { places, type Locale, type MoodliaApp, type Step } from "./content";
 import { appPath, contactEmail, pagePath, ui } from "./i18n";
+import { ArrowIcon } from "./icons";
+import { ExtensionPrivacyLink } from "./extension-privacy-link";
 
 export function Logo() {
   return (
@@ -59,7 +61,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
           <a className="wordmark" href={pagePath("home", locale)} aria-label={copy.homeLabel}><Logo /><span>MoodlIA</span></a>
           <p>{copy.footer}</p>
         </div>
-        <nav className="footer-links" aria-label="Footer">
+        <nav className="footer-links" aria-label={locale === "es" ? "Enlaces del pie de página" : "Footer links"}>
           <a href={pagePath("apps", locale)}>{copy.nav.apps}</a>
           <a href={pagePath("install", locale)}>{copy.nav.install}</a>
           <a href={pagePath("how", locale)}>{copy.nav.how}</a>
@@ -76,13 +78,14 @@ export function SiteFooter({ locale }: { locale: Locale }) {
 
 /** Skip link, header, main landmark, and footer shared by every page. */
 export function PageShell({
-  locale, current, alternate, structuredData, children,
+  locale, current, alternate, structuredData, children, appearance = "editorial",
 }: {
   locale: Locale;
   current?: NavKey;
   alternate: { en: string; es: string };
   structuredData?: object;
   children: ReactNode;
+  appearance?: "editorial" | "story";
 }) {
   return (
     <>
@@ -91,7 +94,7 @@ export function PageShell({
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
       ) : null}
       <SiteHeader locale={locale} current={current} alternate={alternate} />
-      <main id="main" lang={locale}>{children}</main>
+      <main id="main" lang={locale} tabIndex={-1} className={appearance === "editorial" ? "inner-site" : undefined}>{children}</main>
       <SiteFooter locale={locale} />
     </>
   );
@@ -125,12 +128,6 @@ export function StepList({ steps, locale, start = 1 }: { steps: Step[]; locale: 
   );
 }
 
-const levelMarks: Record<Level, string> = { browser: "1", local: "2", technical: "3" };
-
-export function LevelTag({ level, locale }: { level: Level; locale: Locale }) {
-  return <span className={`tag level-${level}`}><i aria-hidden="true">{levelMarks[level]}</i>{levels[level].title[locale]}</span>;
-}
-
 export function StatusTag({ app, locale }: { app: MoodliaApp; locale: Locale }) {
   const copy = ui[locale].app;
   return (
@@ -150,7 +147,8 @@ export function AppCard({ app, locale, headingLevel = 3 }: { app: MoodliaApp; lo
       </div>
       <Heading><a href={appPath(app.slug, locale)}>{app.name}</a></Heading>
       <p>{app.summary[locale]}</p>
-      <span className="app-card-more" aria-hidden="true">{ui[locale].apps.open} →</span>
+      <ExtensionPrivacyLink slug={app.slug} locale={locale} />
+      <span className="app-card-more" aria-hidden="true">{ui[locale].apps.open} <ArrowIcon /></span>
     </article>
   );
 }
@@ -166,8 +164,4 @@ export function HelpBox({ locale, title, body }: { locale: Locale; title?: strin
       <a className="button button-light" href={`mailto:${contactEmail}`}>{contactEmail}</a>
     </section>
   );
-}
-
-export function appsByLevel() {
-  return (["browser", "local", "technical"] as Level[]).map((level) => ({ level, apps: apps.filter((app) => app.level === level) }));
 }

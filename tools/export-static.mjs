@@ -1,14 +1,17 @@
 import assert from "node:assert/strict";
+import { loadPrivacyPolicies, preservePrivacyPolicies } from "./privacy-policies.mjs";
 import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const privacyPolicies = await loadPrivacyPolicies(projectRoot);
 const clientRoot = resolve(projectRoot, "dist", "client");
 const serverEntry = resolve(projectRoot, "dist", "server", "index.js");
 const outputRoot = resolve(projectRoot, ".static-export");
 const fontSourcePrefix = `${projectRoot.replaceAll("\\", "/")}/.vinext/fonts/`;
 const appSlugs = [
+  "corrector",
   "rubrics",
   "backup-converter",
   "edx-converter",
@@ -78,6 +81,7 @@ const [renderedPages, robotsText, sitemapXml] = await Promise.all([
   renderPath("/robots.txt", "text/plain"),
   renderPath("/sitemap.xml", "application/xml"),
 ]);
+for (const policy of privacyPolicies) assert.ok(sitemapXml.includes(`https://moodlia.com${policy.path}`), `Missing policy from sitemap: ${policy.path}`);
 const html = renderedPages[0].html;
 assert.match(html, /<title>MoodlIA — Open-source tools for Moodle<\/title>/i);
 assert.match(html, /https:\/\/moodlia\.com\/og-moodlia\.png/i);
@@ -99,6 +103,7 @@ for (const page of renderedPages) {
 await rm(outputRoot, { recursive: true, force: true });
 await mkdir(outputRoot, { recursive: true });
 await cp(clientRoot, outputRoot, { recursive: true });
+await preservePrivacyPolicies(outputRoot, privacyPolicies);
 await Promise.all([
   rm(resolve(outputRoot, ".vite"), { recursive: true, force: true }),
   rm(resolve(outputRoot, ".assetsignore"), { force: true }),
@@ -122,7 +127,7 @@ await Promise.all([
 
 // Retired routes keep working as redirects, because static hosting has no server-side rewrites.
 // Routes of the previous site, which other pages and search engines still link to.
-const retiredProducts = { corrector: null, "chrome-extensions": null, "analyzer-desktop": null, "sync-mcp": "sync" };
+const retiredProducts = { "chrome-extensions": null, "analyzer-desktop": null, "sync-mcp": "sync" };
 const legacyRedirects = {
   "/start": "/install",
   "/es/empezar": "/es/instalar",

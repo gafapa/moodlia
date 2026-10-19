@@ -1,0 +1,47 @@
+{
+  "results": [
+    {
+      "name": "desktop-es",
+      "live": true,
+      "passed": true
+    },
+    {
+      "name": "wide-es",
+      "live": true,
+      "passed": true
+    },
+    {
+      "name": "tablet-es",
+      "live": false,
+      "passed": true
+    },
+    {
+      "name": "mobile-es",
+      "live": false,
+      "passed": true
+    },
+    {
+      "name": "desktop-en",
+      "live": true,
+      "passed": true
+    },
+    {
+      "name": "short-es",
+      "live": false,
+      "passed": true
+    },
+    {
+      "name": "reduced-es",
+      "live": false,
+      "passed": true
+    },
+    {
+      "name": "no-js-es",
+      "live": false,
+      "passed": true
+    }
+  ],
+  "keyboard": true,
+  "livePreferenceChange": true,
+  "resizeCleanup": true
+}

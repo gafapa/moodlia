@@ -1,0 +1,37 @@
+{
+  "checkedAt": "2026-10-19",
+  "scope": "Read-only distribution metadata; no package execution or product runtime qualification",
+  "npm": {
+    "method": "npm view <package> version --json",
+    "moodlia": "0.4.1",
+    "moodlia-sync": "0.1.1",
+    "moodle-core-cli": "0.4.1",
+    "moodlia-sync-mcp": {"deprecated": "Replaced by the moodlia-sync CLI: npm install -g moodlia-sync"}
+  },
+  "rubricsStore": {
+    "url": "https://chromewebstore.google.com/detail/rubricando-para-moodle/ohicmoijcdaddlljgoaoocpjamfnmpgl",
+    "method": "HTTP read of the English store page after the initial consent page",
+    "status": 200,
+    "title": "MoodlIA Rubrics for Moodle - Chrome Web Store",
+    "version": "1.2.1"
+  },
+  "pluginMarketplace": {
+    "url": "https://marketplace.moodle.com/plugins/local_moodlia",
+    "publishedListing": true,
+    "label": "beta",
+    "note": "GitHub's 0.1.219 ZIP release is also explicitly marked prerelease; the two channels have independent update dates."
+  },
+  "backupConverter": {
+    "url": "https://moodlia.com/tools/backup-converter/",
+    "method": "HTTP GET",
+    "status": 200,
+    "title": "MoodlIA Backup Converter",
+    "limitation": "An accessible page is not a fresh conversion/restore test."
+  },
+  "corrector": {
+    "publicRelease": "0.1.45",
+    "publicDocumentation": "https://github.com/gafapa/moodlia-corrector/blob/v0.1.45/README.md",
+    "localWorkingVersionAtReview": "0.1.62",
+    "limitation": "The local working tree has unpublished changes and was not used as the public download's feature specification."
+  }
+}

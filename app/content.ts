@@ -5,6 +5,7 @@ export type Locale = "en" | "es";
 export type Text = Record<Locale, string>;
 
 export type AppSlug =
+  | "corrector"
   | "rubrics"
   | "backup-converter"
   | "edx-converter"
@@ -15,9 +16,6 @@ export type AppSlug =
   | "moodle-core-cli"
   | "sync"
   | "skills";
-
-/** How much a person needs to know to install and use the app. */
-export type Level = "browser" | "local" | "technical";
 
 /** Where the app runs, which is also how the site groups installation. */
 export type Place = "browser" | "computer" | "moodle" | "terminal" | "agent";
@@ -41,8 +39,7 @@ export interface MoodliaApp {
   slug: AppSlug;
   name: string;
   place: Place;
-  level: Level;
-  status: "stable" | "preview";
+  status: "stable" | "preview" | "manual" | "source";
   version?: string;
   summary: Text;
   description: Text;
@@ -62,10 +59,55 @@ const t = (en: string, es: string): Text => ({ en, es });
 
 export const apps: MoodliaApp[] = [
   {
+    slug: "corrector",
+    name: "MoodlIA Corrector",
+    place: "browser",
+    status: "manual",
+    version: "0.1.45",
+    summary: t("Review AI-assisted grading suggestions inside Moodle, then decide what goes into the grading form.", "Revisa propuestas de corrección de IA dentro de Moodle y decide qué aplicar al formulario de calificación."),
+    description: t(
+      "A Chrome extension for Moodle assignment grading pages. It reads the submission and available assessment criteria, requests a suggestion from your selected AI provider, and lets you review and apply it to Moodle's grading fields. It never automatically submits the grading form. The public download is version 0.1.45; newer local development changes are not included in that archive.",
+      "Una extensión de Chrome para las páginas de calificación de tareas de Moodle. Lee la entrega y los criterios de evaluación disponibles, solicita una propuesta a tu proveedor de IA y permite revisarla y aplicarla a los campos de calificación. Nunca envía automáticamente el formulario. La descarga pública es la versión 0.1.45; el archivo no incluye los cambios posteriores que siguen en desarrollo local."
+    ),
+    does: [
+      t("Prepare grading and feedback suggestions using the submission and available rubric or marking guide.", "Prepara propuestas de calificación y comentarios a partir de la entrega y de la rúbrica o guía de evaluación disponible."),
+      t("Extract supported PDF/DOCX text locally; use a compatible vision model for supported image inputs.", "Extrae localmente texto de PDF y DOCX compatibles; usa un modelo con visión para las imágenes admitidas."),
+      t("Let the teacher review suggestions before applying them to Moodle fields and saving in Moodle.", "Permite al docente revisar la propuesta antes de aplicarla a los campos y guardarla en Moodle."),
+    ],
+    needs: [
+      t("Chrome on a computer, manual extension installation, and permission to grade the Moodle assignment.", "Chrome en un ordenador, instalación manual de la extensión y permiso para calificar la tarea de Moodle."),
+      t("Local Ollama or an institution-approved OpenAI-compatible HTTPS API, with a suitable model.", "Ollama local o una API HTTPS compatible con OpenAI autorizada por el centro, con un modelo adecuado."),
+      t("A vision-capable provider/model for scanned pages or images.", "Un proveedor y modelo con visión para páginas escaneadas o imágenes."),
+    ],
+    get: { label: t("Download the public extension ZIP", "Descargar el ZIP público de la extensión"), href: "https://github.com/gafapa/moodlia-corrector/releases/tag/v0.1.45" },
+    install: [{
+      title: t("Install the public extension manually", "Instala manualmente la extensión pública"),
+      steps: [
+        { text: t("Download `moodlia-corrector-0.1.45.zip` from the release assets and extract it into a permanent folder. Do not use the generic source-code ZIP.", "Descarga `moodlia-corrector-0.1.45.zip` de los archivos de la versión y extráelo en una carpeta permanente. No uses el ZIP genérico del código fuente.") },
+        { text: t("Open `chrome://extensions`, enable Developer mode, and choose Load unpacked. Select the extracted folder containing `manifest.json`.", "Abre `chrome://extensions`, activa el modo de desarrollador y elige «Cargar descomprimida». Selecciona la carpeta extraída que contiene `manifest.json`.") },
+        { text: t("Open the extension's settings, select local Ollama or an approved compatible remote API, and choose the model. Remote providers require HTTPS.", "Abre los ajustes de la extensión, selecciona Ollama local o una API remota compatible autorizada y elige el modelo. Los proveedores remotos requieren HTTPS.") },
+        { text: t("Use Test connection with fictional data before reading student submissions. Try the workflow in a test assignment first.", "Usa «Test connection» con datos ficticios antes de leer entregas del alumnado. Prueba primero el flujo en una tarea de prueba.") },
+      ],
+    }],
+    firstUse: [
+      { text: t("Open an assignment grading page and inspect the extracted submission and assessment criteria.", "Abre la página de calificación de una tarea e inspecciona la entrega y los criterios extraídos.") },
+      { text: t("Request a suggestion, check the evidence and marks, and edit the result as needed.", "Solicita una propuesta, comprueba las evidencias y las puntuaciones y modifica el resultado cuando sea necesario.") },
+      { text: t("Apply only the reviewed result to the form, then use Moodle's own save action when you are satisfied.", "Aplica al formulario solo el resultado revisado y usa la acción de guardar de Moodle cuando estés conforme.") },
+    ],
+    limits: [
+      t("This is a manually installed extension, not a Chrome Web Store installation. Check the release page for updates.", "Es una extensión de instalación manual, no una instalación desde Chrome Web Store. Consulta las actualizaciones en la página de versiones."),
+      t("Assignment evidence reaches your selected AI provider. Identifier minimization does not make student work anonymous; use only an authorized provider.", "Las evidencias de la tarea llegan al proveedor de IA elegido. Reducir identificadores no convierte el trabajo del alumnado en anónimo; usa solo un proveedor autorizado."),
+      t("The public 0.1.45 release lists assignment reference files but does not read their contents automatically. Verify that all necessary evidence was actually read.", "La versión pública 0.1.45 enumera los archivos de referencia del enunciado, pero no lee automáticamente su contenido. Comprueba qué evidencias se han leído realmente."),
+      t("AI output can be wrong. The teacher remains responsible for reviewing the proposed marks and feedback.", "La IA puede equivocarse. El docente sigue siendo responsable de revisar las notas y los comentarios propuestos."),
+    ],
+    docs: [{ label: t("Documentation for the public version", "Documentación de la versión pública"), href: "https://github.com/gafapa/moodlia-corrector/blob/v0.1.45/README.md" }],
+    source: "https://github.com/gafapa/moodlia-corrector",
+    license: "GPL-3.0-or-later",
+  },
+  {
     slug: "rubrics",
     name: "MoodlIA Rubrics",
     place: "browser",
-    level: "browser",
     status: "stable",
     version: "1.2.1",
     summary: t(
@@ -119,7 +161,6 @@ export const apps: MoodliaApp[] = [
     slug: "backup-converter",
     name: "MoodlIA Backup Converter",
     place: "browser",
-    level: "browser",
     status: "stable",
     summary: t(
       "Adapt a Moodle course backup so it can be restored on an older Moodle site.",
@@ -168,8 +209,7 @@ export const apps: MoodliaApp[] = [
     slug: "edx-converter",
     name: "MoodlIA edX Converter",
     place: "computer",
-    level: "local",
-    status: "stable",
+    status: "source",
     summary: t(
       "Turn an Open edX course export into a Moodle course backup.",
       "Convierte la exportación de un curso de Open edX en una copia de seguridad de Moodle.",
@@ -218,8 +258,7 @@ export const apps: MoodliaApp[] = [
     slug: "teacher-dashboard",
     name: "MoodlIA Teacher Dashboard",
     place: "computer",
-    level: "local",
-    status: "stable",
+    status: "source",
     summary: t(
       "See your courses, upcoming deadlines, and resources on one screen.",
       "Ve tus cursos, las próximas entregas y los recursos en una sola pantalla.",
@@ -234,7 +273,7 @@ export const apps: MoodliaApp[] = [
       t("Keeps the Moodle token only for the browser session.", "Guarda el token de Moodle solo durante la sesión del navegador."),
     ],
     needs: [
-      t("A Moodle web service token. Your Moodle administrator usually provides it; the functions it needs are listed in the documentation.", "Un token de servicios web de Moodle. Normalmente te lo da el administrador de Moodle; las funciones que necesita están en la documentación."),
+      t("A Moodle web service token; the required functions are listed in the documentation.", "Un token de servicios web de Moodle; las funciones necesarias están en la documentación."),
       t("A Moodle site that allows requests from the browser (CORS). Some sites block them.", "Un Moodle que acepte peticiones desde el navegador (CORS). Algunos sitios las bloquean."),
       t("Git, or the project downloaded as a ZIP from GitHub.", "Git, o el proyecto descargado como ZIP desde GitHub."),
     ],
@@ -253,7 +292,7 @@ export const apps: MoodliaApp[] = [
       { text: t("The dashboard loads your courses. Close the browser to forget the token.", "El panel carga tus cursos. Cierra el navegador para olvidar el token.") },
     ],
     limits: [
-      t("If Moodle blocks browser requests (CORS), the dashboard cannot connect: the site administrator must allow them.", "Si Moodle bloquea las peticiones del navegador (CORS), el panel no puede conectarse: el administrador del sitio tiene que permitirlas."),
+      t("If Moodle blocks browser requests (CORS), the dashboard cannot connect: those requests must be enabled in the site configuration.", "Si Moodle bloquea las peticiones del navegador (CORS), el panel no puede conectarse: esas peticiones deben estar habilitadas en la configuración del sitio."),
     ],
     docs: [{ label: t("Required Moodle functions", "Funciones de Moodle necesarias"), href: "https://github.com/gafapa/moodlia-teacher-dashboard#moodle-requirements" }],
     source: "https://github.com/gafapa/moodlia-teacher-dashboard",
@@ -263,18 +302,17 @@ export const apps: MoodliaApp[] = [
     slug: "analyzer-web",
     name: "MoodlIA Analyzer Web",
     place: "computer",
-    level: "local",
-    status: "stable",
+    status: "source",
     summary: t(
-      "Find which students need help, with course and student analytics from Moodle data.",
-      "Descubre qué estudiantes necesitan ayuda, con analítica del curso y de cada estudiante a partir de los datos de Moodle.",
+      "Review activity and grades together to decide where a course or student needs follow-up.",
+      "Revisa juntos la actividad y las notas para decidir dónde necesita seguimiento un curso o un estudiante.",
     ),
     description: t(
       "Analyzes a Moodle course in the browser: participation, submissions, grades, and quiz results. It classifies each student's risk against a passing threshold you set, suggests interventions, and explains how to read every chart. It can optionally write reports with an AI service approved by your institution.",
       "Analiza un curso de Moodle en el navegador: participación, entregas, calificaciones y resultados de cuestionarios. Clasifica el riesgo de cada estudiante según el aprobado que fijes, propone intervenciones y explica cómo leer cada gráfico. Opcionalmente, redacta informes con un servicio de IA aprobado por tu centro.",
     ),
     does: [
-      t("Risk classification, alerts, and a prioritized intervention list.", "Clasificación de riesgo, alertas y una lista de intervenciones por prioridad."),
+      t("Heuristic risk indicators, alerts, and a suggested intervention list.", "Indicadores heurísticos de riesgo, alertas y una lista de intervenciones sugerida."),
       t("Course views: activity trends, submission punctuality, quiz results, completion bottlenecks.", "Vistas del curso: tendencias de actividad, puntualidad de las entregas, resultados de cuestionarios y cuellos de botella de finalización."),
       t("Student views: progress, quiz history, weekly activity, predictions.", "Vistas de cada estudiante: progreso, historial de cuestionarios, actividad semanal y predicciones."),
       t("CSV and JSON export of the student list.", "Exportación de la lista de estudiantes en CSV y JSON."),
@@ -300,11 +338,15 @@ export const apps: MoodliaApp[] = [
       { text: t("Start with the intervention list, then open a student's view for details.", "Empieza por la lista de intervenciones y abre la vista de un estudiante para ver el detalle.") },
     ],
     limits: [
+      t("Risk and grade estimates are heuristics, not validated predictions or a substitute for teacher judgment.", "Las estimaciones de riesgo y calificación son heurísticas, no predicciones validadas ni un sustituto del criterio docente."),
       t("If Moodle blocks browser requests (CORS), the app cannot connect without a change on the Moodle server.", "Si Moodle bloquea las peticiones del navegador (CORS), la aplicación no puede conectarse sin un cambio en el servidor de Moodle."),
       t("AI reports leave out names and email addresses but include internal identifiers and grades. Use only a service your institution approves.", "Los informes con IA omiten nombres y correos, pero incluyen identificadores internos y calificaciones. Usa solo un servicio aprobado por tu centro."),
       t("Analysis results are cached in the browser for four hours.", "Los resultados del análisis se guardan en el navegador durante cuatro horas."),
     ],
-    docs: [{ label: t("Analytics and Moodle requirements", "Analítica y requisitos de Moodle"), href: "https://github.com/gafapa/moodlia-analyzer-web#readme" }],
+    docs: [
+      { label: t("Analytics and Moodle requirements", "Analítica y requisitos de Moodle"), href: "https://github.com/gafapa/moodlia-analyzer-web#readme" },
+      { label: t("Related Python desktop alternative, available from source", "Alternativa de escritorio en Python, disponible desde su código"), href: "https://github.com/gafapa/moodlia-analyzer-desktop#readme" },
+    ],
     source: "https://github.com/gafapa/moodlia-analyzer-web",
     license: "MIT",
   },
@@ -312,9 +354,8 @@ export const apps: MoodliaApp[] = [
     slug: "moodle-plugin",
     name: "MoodlIA Moodle Plugin",
     place: "moodle",
-    level: "technical",
-    status: "stable",
-    version: "0.1.219",
+    status: "preview",
+    version: "0.1.220",
     summary: t(
       "Let AI assistants and scripts work with Moodle safely, within Moodle's own permissions.",
       "Permite que asistentes de IA y scripts trabajen con Moodle de forma segura, dentro de los permisos del propio Moodle.",
@@ -331,7 +372,7 @@ export const apps: MoodliaApp[] = [
     ],
     needs: [
       t("Moodle 4.5, 5.0, 5.1, 5.2, or 5.3 (5.3 is validated against its beta).", "Moodle 4.5, 5.0, 5.1, 5.2 o 5.3 (la 5.3 está validada con su beta)."),
-      t("A site administrator to install it and create the access token.", "Un administrador del sitio que lo instale y cree el token de acceso."),
+      t("The plugin installed on the Moodle site and an access token.", "El plugin instalado en el sitio Moodle y un token de acceso."),
       t("A current backup of the Moodle code, database, and moodledata.", "Una copia de seguridad reciente del código, la base de datos y moodledata de Moodle."),
     ],
     get: { label: t("Download from the Moodle Marketplace", "Descargar del Moodle Marketplace"), href: "https://marketplace.moodle.com/plugins/local_moodlia" },
@@ -339,7 +380,7 @@ export const apps: MoodliaApp[] = [
       {
         title: t("1. Install the plugin", "1. Instala el plugin"),
         steps: [
-          { text: t("Download `local_moodlia-<version>.zip` from the Moodle Marketplace or from the GitHub releases. Do not use GitHub's “Source code” ZIP.", "Descarga `local_moodlia-<versión>.zip` del Moodle Marketplace o de las releases de GitHub. No uses el ZIP «Source code» de GitHub.") },
+          { text: t("Download `local_moodlia-0.1.220.zip` from GitHub releases. This version is also published in the Moodle Marketplace. Do not use GitHub's “Source code” ZIP.", "Descarga `local_moodlia-0.1.220.zip` de las releases de GitHub. Esta versión también está publicada en el Moodle Marketplace. No uses el ZIP «Source code» de GitHub.") },
           { text: t("Go to Site administration → Plugins → Install plugins, upload the ZIP, and select “Install plugin from the ZIP file”.", "Ve a Administración del sitio → Extensiones → Instalar complementos, sube el ZIP y pulsa «Instalar complemento desde archivo ZIP».") },
           { text: t("Continue through the checks and select “Upgrade Moodle database now”.", "Continúa con las comprobaciones y pulsa «Actualizar base de datos Moodle ahora».") },
           { text: t("Check that Site administration → Plugins → Plugins overview lists MoodlIA (`local_moodlia`) under Local plugins.", "Comprueba que Administración del sitio → Extensiones → Vista general de extensiones muestra MoodlIA (`local_moodlia`) en Extensiones locales.") },
@@ -349,9 +390,9 @@ export const apps: MoodliaApp[] = [
         title: t("2. Give one account access", "2. Da acceso a una cuenta"),
         steps: [
           { text: t("Enable Web services (Site administration → General → Advanced features) and the REST protocol (Server → Web services → Manage protocols).", "Activa «Habilitar servicios web» (Administración del sitio → General → Opciones avanzadas) y el protocolo REST (Servidor → Servicios Web → Administrar protocolos).") },
-          { text: t("Create a dedicated user, for example `moodlia-service`. Do not use an administrator or a teacher's personal account.", "Crea un usuario dedicado, por ejemplo `moodlia-service`. No uses un administrador ni la cuenta personal de un docente.") },
+          { text: t("Create a dedicated service account, for example `moodlia-service`, separate from personal accounts and with only the required capabilities.", "Crea una cuenta de servicio dedicada, por ejemplo `moodlia-service`, separada de las cuentas personales y con solo las capacidades necesarias.") },
           { text: t("Define a system role “MoodlIA service user” (no archetype) that allows `webservice/rest:use` and `local/moodlia:useapi`, and assign it to that user.", "Define un rol de sistema «MoodlIA service user» (sin arquetipo) que permita `webservice/rest:use` y `local/moodlia:useapi`, y asígnaselo a ese usuario.") },
-          { text: t("Give the account only the course permissions it needs, for example by enrolling it as a teacher in the courses it will manage.", "Da a la cuenta solo los permisos que necesite en los cursos, por ejemplo matriculándola como docente en los cursos que vaya a gestionar.") },
+          { text: t("Give the account only the permissions needed for its operations in the selected courses.", "Da a la cuenta solo los permisos necesarios para sus operaciones en los cursos seleccionados.") },
           { text: t("In Server → Web services → External services → MoodlIA service → Authorised users, add the account.", "En Servidor → Servicios Web → Servicios externos → MoodlIA service → usuarios autorizados, añade la cuenta.") },
           { text: t("In Manage tokens, create a token for that user and the MoodlIA service, with an expiry date. Store it as a secret.", "En Administrar fichas (tokens), crea un token para ese usuario y el servicio MoodlIA, con fecha de caducidad. Guárdalo como un secreto.") },
         ],
@@ -365,7 +406,7 @@ export const apps: MoodliaApp[] = [
       },
     ],
     firstUse: [
-      { text: t("Confirm the token belongs to the service account, not to the administrator who created it:", "Confirma que el token es de la cuenta de servicio y no del administrador que lo creó:"), code: "moodlia get-current-user --format json" },
+      { text: t("Confirm the token belongs to the dedicated service account:", "Confirma que el token pertenece a la cuenta de servicio dedicada:"), code: "moodlia get-current-user --format json" },
       { text: t("Try the first changes in a copied or test course.", "Prueba los primeros cambios en un curso copiado o de prueba.") },
     ],
     limits: [
@@ -385,9 +426,8 @@ export const apps: MoodliaApp[] = [
     slug: "cli",
     name: "MoodlIA CLI",
     place: "terminal",
-    level: "technical",
     status: "stable",
-    version: "0.4.1",
+    version: "0.5.1",
     summary: t(
       "Run every MoodlIA plugin operation from a terminal, a script, or an AI agent's shell.",
       "Ejecuta cualquier operación del plugin MoodlIA desde una terminal, un script o la shell de un agente de IA.",
@@ -425,7 +465,10 @@ export const apps: MoodliaApp[] = [
       t("Remote Moodle addresses must use HTTPS.", "Las direcciones de Moodle remotas deben usar HTTPS."),
       t("Synchronization between sites moved to MoodlIA Sync in version 0.4.0.", "La sincronización entre sitios pasó a MoodlIA Sync en la versión 0.4.0."),
     ],
-    docs: [{ label: t("Commands, profiles, and options", "Comandos, perfiles y opciones"), href: "https://github.com/gafapa/moodlia-cli#readme" }],
+    docs: [
+      { label: t("Commands, profiles, and options", "Comandos, perfiles y opciones"), href: "https://github.com/gafapa/moodlia-cli#readme" },
+      { label: t("GitHub 0.5.1 release with optional browser component; npm is 0.4.1", "Versión 0.5.1 de GitHub con componente de navegador opcional; npm está en 0.4.1"), href: "https://github.com/gafapa/moodlia-cli/releases/tag/v0.5.1" },
+    ],
     source: "https://github.com/gafapa/moodlia-cli",
     license: "GPL-3.0-or-later",
   },
@@ -433,7 +476,6 @@ export const apps: MoodliaApp[] = [
     slug: "moodle-core-cli",
     name: "Moodle Core CLI",
     place: "terminal",
-    level: "technical",
     status: "stable",
     version: "0.4.1",
     summary: t(
@@ -457,7 +499,7 @@ export const apps: MoodliaApp[] = [
     get: { label: t("View on npm", "Ver en npm"), href: "https://www.npmjs.com/package/moodle-core-cli" },
     install: [
       {
-        title: t("Prepare Moodle (administrator)", "Prepara Moodle (administrador)"),
+        title: t("Prepare Moodle", "Prepara Moodle"),
         steps: [
           { text: t("Enable web services and the REST protocol.", "Activa los servicios web y el protocolo REST.") },
           { text: t("Create an external service and add the core functions you need, plus `core_webservice_get_site_info` for version detection.", "Crea un servicio externo y añade las funciones que necesites, además de `core_webservice_get_site_info` para detectar la versión.") },
@@ -480,7 +522,7 @@ export const apps: MoodliaApp[] = [
       t("It can only do what the Moodle service exposes and what the token's user is allowed to do.", "Solo puede hacer lo que exponga el servicio de Moodle y lo que el usuario del token tenga permitido."),
     ],
     docs: [
-      { label: t("Moodle setup for administrators", "Configuración de Moodle para administradores"), href: "https://github.com/gafapa/moodle-core-cli/blob/main/docs/moodle-setup.md" },
+      { label: t("Moodle setup", "Configuración de Moodle"), href: "https://github.com/gafapa/moodle-core-cli/blob/main/docs/moodle-setup.md" },
       { label: t("Supported operations by version", "Operaciones admitidas por versión"), href: "https://github.com/gafapa/moodle-core-cli/blob/main/docs/API-COVERAGE.md" },
     ],
     source: "https://github.com/gafapa/moodle-core-cli",
@@ -490,9 +532,8 @@ export const apps: MoodliaApp[] = [
     slug: "sync",
     name: "MoodlIA Sync",
     place: "terminal",
-    level: "technical",
     status: "preview",
-    version: "0.1.1",
+    version: "0.1.2",
     summary: t(
       "Copy course content from one Moodle site to another without backups, after you approve a plan.",
       "Copia el contenido de un curso de un Moodle a otro sin copias de seguridad, después de aprobar un plan.",
@@ -527,11 +568,13 @@ export const apps: MoodliaApp[] = [
     ],
     limits: [
       t("Preview: only the content types verified for each site pairing are synchronized; the rest is reported in the plan.", "En preview: solo se sincronizan los tipos de contenido verificados para cada pareja de sitios; el resto se indica en el plan."),
+      t("Learner submissions, awarded grades, attempts, logs, and completion history are not synchronized.", "No se sincronizan las entregas del alumnado, las notas otorgadas, los intentos, los registros ni el historial de finalización."),
       t("Try it with test courses before using it with real ones.", "Pruébalo con cursos de prueba antes de usarlo con cursos reales."),
     ],
     docs: [
       { label: t("What each site pairing can synchronize", "Qué puede sincronizar cada pareja de sitios"), href: "https://github.com/gafapa/moodlia-sync/blob/main/docs/SYNC-CAPABILITY-MATRIX.md" },
       { label: t("Commands and safety model", "Comandos y modelo de seguridad"), href: "https://github.com/gafapa/moodlia-sync#readme" },
+      { label: t("GitHub 0.1.2 package; npm is 0.1.1", "Paquete 0.1.2 de GitHub; npm está en 0.1.1"), href: "https://github.com/gafapa/moodlia-sync/releases/tag/v0.1.2" },
     ],
     source: "https://github.com/gafapa/moodlia-sync",
     license: "GPL-3.0-or-later",
@@ -540,43 +583,42 @@ export const apps: MoodliaApp[] = [
     slug: "skills",
     name: "MoodlIA Skills",
     place: "agent",
-    level: "technical",
     status: "stable",
     summary: t(
-      "Teach an AI agent to operate Moodle through MoodlIA and to write content that survives backup and restore.",
-      "Enseña a un agente de IA a manejar Moodle con MoodlIA y a crear contenido que sobreviva a copias y restauraciones.",
+      "Create accessible Moodle learning content with local assets and useful static alternatives.",
+      "Crea contenido educativo accesible para Moodle con archivos locales y alternativas estáticas útiles.",
     ),
     description: t(
-      "Two agent skills. `operate-moodle-with-moodlia` guides an agent to inspect, create, publish, back up, and verify Moodle content through the MoodlIA MCP server or CLI, using only real operations. `design-portable-moodle-content` guides it to create accessible HTML and self-contained interactive content that keeps working after a Moodle backup and restore.",
-      "Dos skills para agentes. `operate-moodle-with-moodlia` guía a un agente para consultar, crear, publicar, copiar y verificar contenido de Moodle con el servidor MCP o la CLI de MoodlIA, usando solo operaciones reales. `design-portable-moodle-content` le guía para crear HTML accesible y contenido interactivo autónomo que siga funcionando tras una copia y restauración de Moodle.",
+      "One focused skill: `design-portable-moodle-content`. Create accessible HTML and local interactive demonstrations with static alternatives. Includes an editable example and package validator. Interactive behavior and backup/restore portability require checks on the target Moodle.",
+      "Una skill especializada: `design-portable-moodle-content`. Crea HTML accesible y demostraciones interactivas locales con alternativas estáticas. Incluye un ejemplo editable y un validador de paquetes. La interactividad y la portabilidad tras restaurar requieren comprobaciones en el Moodle de destino.",
     ),
     does: [
-      t("Choose MCP or CLI and never invent operations or parameters.", "Elegir entre MCP y CLI sin inventar operaciones ni parámetros."),
-      t("Verify every change by reading Moodle back.", "Verificar cada cambio volviendo a leer Moodle."),
+      t("Choose HTML, an interactive demonstration or a static alternative for the target field.", "Elegir HTML, una demostración interactiva o una alternativa estática según el campo de destino."),
+      t("Validate the package and distinguish local checks from verified Moodle behavior.", "Validar el paquete y distinguir las comprobaciones locales del funcionamiento verificado en Moodle."),
       t("Produce portable, accessible content packages.", "Producir paquetes de contenido portables y accesibles."),
     ],
     needs: [
       t("An AI agent that supports skills, such as Claude Code or Codex.", "Un agente de IA compatible con skills, como Claude Code o Codex."),
-      t("For operating Moodle: the MoodlIA plugin, reached through MCP or MoodlIA CLI.", "Para manejar Moodle: el plugin MoodlIA, a través de MCP o de MoodlIA CLI."),
+      t("No Moodle connection for local authoring. Publication uses the available Moodle tools.", "Sin conexión a Moodle para crear contenido local. La publicación utiliza las herramientas Moodle disponibles."),
     ],
-    get: { label: t("Get the skills", "Obtener las skills"), href: "https://github.com/gafapa/moodlia-skills" },
+    get: { label: t("Get the skill", "Obtener la skill"), href: "https://github.com/gafapa/moodlia-skills" },
     install: [
       {
-        title: t("Install the skills", "Instala las skills"),
+        title: t("Install the skill", "Instala la skill"),
         steps: [
           { text: t("Download the repository:", "Descarga el repositorio:"), code: "git clone https://github.com/gafapa/moodlia-skills.git" },
-          { text: t("Copy each complete skill folder, with its references, into your agent's skills folder, for example `~/.claude/skills/` for Claude Code or `~/.codex/skills/` for Codex:", "Copia cada carpeta de skill completa, con sus referencias, en la carpeta de skills de tu agente, por ejemplo `~/.claude/skills/` en Claude Code o `~/.codex/skills/` en Codex:"), code: "cp -r moodlia-skills/operate-moodle-with-moodlia ~/.claude/skills/\ncp -r moodlia-skills/design-portable-moodle-content ~/.claude/skills/" },
+          { text: t("Copy the complete `design-portable-moodle-content` folder, including references, scripts and assets, into your agent's skills folder, for example `~/.claude/skills/` for Claude Code or `~/.codex/skills/` for Codex:", "Copia la carpeta completa `design-portable-moodle-content`, con sus referencias, scripts y recursos, en la carpeta de skills de tu agente, por ejemplo `~/.claude/skills/` en Claude Code o `~/.codex/skills/` en Codex:"), code: "cp -r moodlia-skills/design-portable-moodle-content ~/.claude/skills/" },
         ],
       },
     ],
     firstUse: [
-      { text: t("Connect the agent to Moodle through the MoodlIA MCP endpoint or MoodlIA CLI.", "Conecta el agente a Moodle con el endpoint MCP de MoodlIA o con MoodlIA CLI.") },
-      { text: t("Ask for a small task in a test course, for example “create a Page with this text in course 42 and verify it”.", "Pide una tarea pequeña en un curso de prueba, por ejemplo «crea una Página con este texto en el curso 42 y verifícala».") },
+      { text: t("Ask the agent to use design-portable-moodle-content to prepare an HTML learning resource.", "Pide al agente que use design-portable-moodle-content para preparar un recurso educativo HTML.") },
+      { text: t("For example: “Explain subnet masks with a worked example, a practice question and a printable alternative”.", "Por ejemplo: «Explica las máscaras de subred con un ejemplo resuelto, una pregunta de práctica y una alternativa imprimible».") },
     ],
     limits: [
-      t("The skills guide the agent; the plugin's permissions and the token still decide what it can do.", "Las skills guían al agente; los permisos del plugin y del token siguen decidiendo qué puede hacer."),
+      t("Static validation does not prove accessibility, iframe support or backup/restore portability; verify those on the target site.", "La validación estática no demuestra accesibilidad, soporte de iframe ni portabilidad tras restaurar; compruébalos en el sitio de destino."),
     ],
-    docs: [{ label: t("Skill descriptions", "Descripción de las skills"), href: "https://github.com/gafapa/moodlia-skills#readme" }],
+    docs: [{ label: t("Skill documentation", "Documentación de la skill"), href: "https://github.com/gafapa/moodlia-skills#readme" }],
     source: "https://github.com/gafapa/moodlia-skills",
     license: "GPL-3.0-or-later",
   },
@@ -597,23 +639,16 @@ export const tasks: Array<{ text: Text; app: AppSlug }> = [
   { text: t("Automate Moodle from scripts", "Automatizar Moodle desde scripts"), app: "cli" },
   { text: t("Automate Moodle without installing a plugin", "Automatizar Moodle sin instalar un plugin"), app: "moodle-core-cli" },
   { text: t("Copy a course between two Moodle sites", "Copiar un curso entre dos Moodle"), app: "sync" },
-  { text: t("Teach an AI agent to use Moodle well", "Enseñar a un agente de IA a usar bien Moodle"), app: "skills" },
+  { text: t("Create portable Moodle learning content", "Crear contenido educativo portable para Moodle"), app: "skills" },
 ];
 
-export const levels: Record<Level, { title: Text; body: Text }> = {
-  browser: {
-    title: t("Anyone with a browser", "Cualquiera con un navegador"),
-    body: t("Install from a store or open a page. No technical knowledge needed.", "Se instala desde una tienda o se abre una página. No hace falta saber nada técnico."),
-  },
-  local: {
-    title: t("With a little technical help", "Con un poco de ayuda técnica"),
-    body: t("Runs on your computer from its source code, and usually needs a Moodle token from your administrator.", "Se ejecuta en tu ordenador desde su código y suele necesitar un token de Moodle que te da el administrador."),
-  },
-  technical: {
-    title: t("For Moodle administrators and developers", "Para administradores de Moodle y desarrolladores"),
-    body: t("Installed on the Moodle server or used from a terminal, with web services, roles, and tokens.", "Se instala en el servidor de Moodle o se usa desde una terminal, con servicios web, roles y tokens."),
-  },
-};
+/** Product families describe visitor outcomes, rather than repository boundaries. */
+export const productFamilies: Array<{ id: string; title: Text; body: Text; apps: AppSlug[] }> = [
+  { id: "connect", title: t("Connect AI and workflows to Moodle", "Conecta la IA y tus flujos de trabajo con Moodle"), body: t("The plugin exposes operations over REST and MCP. CLI and standard Core access provide automation interfaces.", "El plugin expone operaciones por REST y MCP. La CLI y el acceso Core estándar ofrecen interfaces de automatización."), apps: ["moodle-plugin", "cli", "moodle-core-cli"] },
+  { id: "assess", title: t("Prepare assessment and review submissions", "Prepara la evaluación y revisa las entregas"), body: t("Start with spreadsheet rubrics, or set up teacher-reviewed AI suggestions. These extensions do not require the MoodlIA plugin.", "Empieza por las rúbricas de una hoja de cálculo o configura propuestas de IA revisadas por el docente. Estas extensiones no necesitan el plugin MoodlIA."), apps: ["rubrics", "corrector"] },
+  { id: "reuse", title: t("Create and reuse course content", "Crea y reutiliza el contenido de tus cursos"), body: t("Choose the route that matches your source, destination and supported content. These are distinct workflows with their own limits.", "Elige la vía adecuada para el origen, el destino y el contenido admitido. Son flujos diferentes, cada uno con sus límites."), apps: ["skills", "sync", "backup-converter", "edx-converter"] },
+  { id: "follow-up", title: t("Keep track of your courses", "Haz seguimiento de tus cursos"), body: t("Bring deadlines, grades and activity signals together. Setup requires permitted Moodle REST access; analytics indicators support teacher judgment.", "Reúne plazos, notas e indicadores de actividad. La configuración requiere acceso REST autorizado a Moodle; los indicadores apoyan el criterio docente."), apps: ["teacher-dashboard", "analyzer-web"] },
+];
 
 export const places: Record<Place, { title: Text; body: Text }> = {
   browser: {
@@ -626,7 +661,7 @@ export const places: Record<Place, { title: Text; body: Text }> = {
   },
   moodle: {
     title: t("On your Moodle site", "En tu sitio Moodle"),
-    body: t("A plugin installed once by a site administrator.", "Un plugin que instala una vez el administrador del sitio."),
+    body: t("A plugin installed once on the Moodle site.", "Un plugin que se instala una vez en el sitio Moodle."),
   },
   terminal: {
     title: t("In a terminal", "En una terminal"),

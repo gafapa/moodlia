@@ -4,24 +4,31 @@ Public website and documentation entry point for the MoodlIA ecosystem at `moodl
 
 ## Current Scope
 
-- Explain what MoodlIA is and what each app does, for teachers, Moodle
-  administrators, and developers.
+- Lead with AI working inside Moodle, then show rubric import,
+  teacher-reviewed grading and course reuse. Provide clear entry points by
+  task without audience or installation-skill classifications.
 - Give every app real installation steps: store and registry links, Moodle
   menu paths, and exact commands.
-- List only apps with a public release; Corrector, Analyzer Desktop, and Studio
-  are not shown.
+- Distinguish store installations, manually installed releases, previews and
+  source-only tools. Corrector has a public 0.1.45 guide; unpublished local
+  features are not advertised. Studio is a concept, not an available product.
 - Host MoodlIA Backup Converter at `/tools/backup-converter/`.
 
 The site is static and does not store user data, Moodle credentials, or
 analytics data. See `PRODUCT.md` for structure and content rules and
 `DESIGN.md` for the visual system.
 
+The portfolio assessment, evidence, value priorities and narrative are recorded
+in `docs/portfolio-strategy.md`. Repository count is not the homepage value
+proposition. Product families group tools by outcome rather than by dependency.
+
 ## Content
 
 Every product fact is in `app/content.ts`, in English and Spanish: summary,
 description, requirements, installation and first-use steps, limitations,
 documentation links, version, and license. Update it when an app changes or a
-release is published. Interface text and page routes are in `app/i18n.ts`.
+release is published. Interface text and page routes are in `app/i18n.ts`; the
+bilingual homepage narrative is in `app/cinematic-copy.ts`. The cinematic direction, motion contract and imagery sources are in `docs/cinematic-direction.md`.
 
 | Page | English | Spanish |
 | --- | --- | --- |
@@ -67,3 +74,31 @@ service. Run `npm run build` first.
 Copyright (C) 2026 Pablo Gallego.
 
 This project is free software released under the GNU General Public License version 3 or later. See `LICENSE`.
+
+## Content skill offer
+
+The skills entry offers only `design-portable-moodle-content`. Local authoring
+does not require a Moodle connection. Publication uses available Moodle tools;
+interactive behavior and restored portability require site-specific verification.
+
+For the cinematic homepage's local preview, run `node tools/preview-static.mjs`
+after exporting, then open http://127.0.0.1:3102/es/. Current visual and runtime
+evidence is described in `docs/cinematic-review.md`.
+
+The later image-led iteration extends this system to interior pages and replaces
+small homepage artefacts with original editorial illustrations. See
+`docs/editorial-imagery.md` for image provenance, prompts, routes and design choices.
+
+## Permanent extension privacy policies
+
+All site generations preserve the self-contained English policies at `/privacy/corrector.html` and `/privacy/rubrics.html`, linked from the existing `/privacy` and `/es/privacy` pages. The route contract is `config/extension-privacy.json`; documents live in `public/privacy/`. The exporter fails before replacing its output if a required source document is missing or invalid, and copies policy bytes unchanged into the final site. Sitemap and rendered tests protect these routes. DESIGN.md and AGENTS.md make preservation mandatory for future redesigns.
+
+The Corrector document was imported from its 0.1.65 submission materials. The Rubrics document preserves the English policy text in the Rubrics project's existing multilingual website, including its conditional wording about AI features; this does not advertise AI functionality in the current Rubrics release. Policy content is now versioned within this repository and does not depend on sibling repositories during builds. Changes to extension behavior require corresponding policy updates without changing these public URLs. The policies were published with the website on 20 October 2026; see `docs/publication-2026-10-20.md`. A later repository push is separate from deploying a changed export.
+
+## Repository preparation review — 20 October 2026
+
+The current source includes the cinematic homepage and task-oriented guide redesign, English/Spanish product content, local imagery and credits, publication verification tooling, and permanent Corrector/Rubrics policies. Design and deployment evidence remains in `.impeccable/`, `.taste-skill/`, and `docs/`; it is not a promise of unmeasured cross-platform behavior. The extension guide still targets the last tagged Corrector ZIP (0.1.45); newer source preparation and store submission materials do not imply a tagged release or store approval.
+
+The publication-time dependency findings in the dated deployment record are historical. Repository preparation subsequently updated the Cloudflare Vite plugin/Wrangler and compatible transitive fixes. Production dependency audit now reports zero findings. Eight high development-tool findings remain through the upstream `braces` chain; no compatible patched release was available, and the suggested framework downgrade was not applied. The existing CI gates remain unchanged: fail on high production findings or critical findings anywhere. Static production output contains no Node build dependencies.
+
+See `docs/workspace-documentation-review-2026-10-20.md` for the cross-project documentation review and its limits.

@@ -1,0 +1,100 @@
+[
+  {
+    "scheme": "light",
+    "hoveredControls": 41,
+    "minimumContrast": 6.285386455255271,
+    "selectedOptions": [
+      {
+        "text": "Preparar un curso",
+        "ratio": 11.93667984783533,
+        "fg": "rgb(255, 255, 255)",
+        "bg": [
+          46,
+          58,
+          45
+        ]
+      },
+      {
+        "text": "Importar una rúbrica",
+        "ratio": 11.93667984783533,
+        "fg": "rgb(255, 255, 255)",
+        "bg": [
+          46,
+          58,
+          45
+        ]
+      },
+      {
+        "text": "Revisar entregas",
+        "ratio": 11.93667984783533,
+        "fg": "rgb(255, 255, 255)",
+        "bg": [
+          46,
+          58,
+          45
+        ]
+      },
+      {
+        "text": "Reutilizar contenido",
+        "ratio": 11.93667984783533,
+        "fg": "rgb(255, 255, 255)",
+        "bg": [
+          46,
+          58,
+          45
+        ]
+      }
+    ],
+    "failures": [],
+    "errors": []
+  },
+  {
+    "scheme": "dark",
+    "hoveredControls": 41,
+    "minimumContrast": 6.285386455255271,
+    "selectedOptions": [
+      {
+        "text": "Preparar un curso",
+        "ratio": 11.93667984783533,
+        "fg": "rgb(255, 255, 255)",
+        "bg": [
+          46,
+          58,
+          45
+        ]
+      },
+      {
+        "text": "Importar una rúbrica",
+        "ratio": 11.93667984783533,
+        "fg": "rgb(255, 255, 255)",
+        "bg": [
+          46,
+          58,
+          45
+        ]
+      },
+      {
+        "text": "Revisar entregas",
+        "ratio": 11.93667984783533,
+        "fg": "rgb(255, 255, 255)",
+        "bg": [
+          46,
+          58,
+          45
+        ]
+      },
+      {
+        "text": "Reutilizar contenido",
+        "ratio": 11.93667984783533,
+        "fg": "rgb(255, 255, 255)",
+        "bg": [
+          46,
+          58,
+          45
+        ]
+      }
+    ],
+    "failures": [],
+    "errors": []
+  }
+]

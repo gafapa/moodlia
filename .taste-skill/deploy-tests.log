@@ -1,0 +1,23 @@
+✔ home explains the flagship, assessment and reuse workflows (159.6585ms)
+✔ concept-only and superseded apps are not advertised as products (342.5407ms)
+✔ the skills offer contains only portable content authoring in both languages (103.2805ms)
+✔ the outcome directory includes every tool with readiness and no audience labels (107.6298ms)
+✔ Corrector guides match the public release and preserve teacher control (145.8839ms)
+✔ every page has its own title, canonical, hreflang pair, and one h1 (1672.8313ms)
+✔ every app page has real installation steps and a way to get the app (1113.9538ms)
+✔ installation instructions name the real distribution channels and commands (139.0358ms)
+✔ code blocks carry a copy button and the layout wires it (91.186ms)
+✔ in-page links point at existing targets (190.3882ms)
+✔ Spanish pages are written in Spanish (90.4253ms)
+✔ publishes social metadata without development URLs (134.7752ms)
+✔ keeps focus, reduced-motion, and dark-mode styles (2.1895ms)
+✔ permanent extension privacy URLs and general index links survive redesigns (577.328ms)
+✔ static exports retain exact policy bytes and missing source policies fail validation (23.1516ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5078.2071

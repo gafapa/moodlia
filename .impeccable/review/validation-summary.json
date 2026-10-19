@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-19",
+  "scope": "Portfolio-driven website reconstruction; not product-runtime or market validation",
+  "checks": {
+    "eslint": "passed",
+    "productionBuild": "passed",
+    "renderedHtmlTests": {"passed": 13, "failed": 0},
+    "staticExport": "passed",
+    "sourceStableDuringValidation": true,
+    "browserScenarios": 7,
+    "testedWidths": [390, 1440, 2560],
+    "languages": ["en", "es"],
+    "darkMode": "checked",
+    "pageErrors": 0,
+    "assetErrors": 0,
+    "documentOverflow": false,
+    "navigationClipping": false,
+    "faqDisclosure": "passed",
+    "languageSwitch": "passed",
+    "correctorGuidesAndLegacyRedirects": "passed",
+    "gitDiffWhitespace": "passed"
+  },
+  "boundaries": {
+    "publication": "not performed",
+    "allProjectRuntimeRequalification": "not performed",
+    "marketDemandOrTimeSavingsValidation": "not performed",
+    "globalTypeScriptCheck": "not rerun; existing worker/configuration typing errors were reported in the preceding design pass",
+    "skillsConcurrentChanges": "Content-authoring-only changes observed during this review were preserved and included in the final build and passing regression suite."
+  }
+}

@@ -1,0 +1,2192 @@
+{
+ "url": "http://127.0.0.1:3102/es/",
+ "at": "2026-10-19T22:51:11.206Z",
+ "allow": [],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 12,
+   "filled": [
+    0.94,
+    0.59,
+    1,
+    1,
+    1,
+    1,
+    1,
+    0.63,
+    1,
+    0.83,
+    0.65,
+    0.93
+   ],
+   "motion": {
+    "elements": 58,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 58,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 10510,
+     "screens": 11.7,
+     "words": 385,
+     "img": 6,
+     "video": 0,
+     "canvas": 0,
+     "svg": 20,
+     "sections": 9,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 6,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "teaching-workshop.jpg",
+      "teaching-workshop.jpg",
+      "assessment-workshop.jpg",
+      "assessment-workshop.jpg",
+      "teaching-workshop.jpg",
+      "course-reuse.jpg"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "De idea a Moodle.",
+     "words": 4,
+     "chars": 17,
+     "lines": 2,
+     "size": 172.8,
+     "vw": 12,
+     "font": "Roundo",
+     "weight": 600,
+     "tracking": -0.07,
+     "leading": 0.85,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.96,
+     "top": 116,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "De idea a Moodle.",
+     "words": 4,
+     "lines": 2,
+     "size": 172.8,
+     "font": "Roundo"
+    },
+    "headings": [
+     {
+      "text": "De idea a Moodle.",
+      "words": 4,
+      "chars": 17,
+      "lines": 2,
+      "size": 172.8,
+      "vw": 12,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.07,
+      "leading": 0.85,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.96,
+      "top": 116,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Tu idea merece llegar al aula.",
+      "words": 6,
+      "chars": 30,
+      "lines": 2,
+      "size": 60.5,
+      "vw": 4.2,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.48,
+      "top": 1158,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Dale forma.",
+      "words": 2,
+      "chars": 11,
+      "lines": 1,
+      "size": 89.3,
+      "vw": 6.2,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.41,
+      "top": 1784,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Cada herramienta tiene su puerta.",
+      "words": 5,
+      "chars": 33,
+      "lines": 2,
+      "size": 72,
+      "vw": 5,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.43,
+      "top": 6845,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Empieza por lo que necesitas.",
+      "words": 5,
+      "chars": 29,
+      "lines": 1,
+      "size": 72,
+      "vw": 5,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.64,
+      "top": 7222,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Instala la extensión e importa tu CSV o Excel. Es el inicio más directo, sin configurar IA.",
+      "words": 17,
+      "chars": 91,
+      "lines": 3,
+      "size": 33.1,
+      "vw": 2.3,
+      "font": "Roundo",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.5,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.44,
+      "top": 7413,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "La decisión sigue siendo tuya.",
+      "words": 5,
+      "chars": 30,
+      "lines": 1,
+      "size": 72,
+      "vw": 5,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.64,
+      "top": 7909,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Tu proveedor",
+      "words": 2,
+      "chars": 12,
+      "lines": 1,
+      "size": 33.1,
+      "vw": 2.3,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.03,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.27,
+      "top": 8053,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Tus permisos",
+      "words": 2,
+      "chars": 12,
+      "lines": 1,
+      "size": 33.1,
+      "vw": 2.3,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.03,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.27,
+      "top": 8053,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Tu revisión",
+      "words": 2,
+      "chars": 11,
+      "lines": 1,
+      "size": 33.1,
+      "vw": 2.3,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.03,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.27,
+      "top": 8053,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Más caminos para tu curso.",
+      "words": 5,
+      "chars": 26,
+      "lines": 2,
+      "size": 72,
+      "vw": 5,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.43,
+      "top": 8563,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Antes de empezar.",
+      "words": 3,
+      "chars": 17,
+      "lines": 2,
+      "size": 72,
+      "vw": 5,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.38,
+      "top": 9205,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Tu próxima idea.",
+      "words": 3,
+      "chars": 16,
+      "lines": 1,
+      "size": 151.2,
+      "vw": 10.5,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.96,
+      "top": 9885,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 13,
+     "maxLines": 3,
+     "over2Lines": 0,
+     "statements": 1,
+     "centered": 0,
+     "medianWords": 5,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Roundo",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      13,
+      15,
+      20,
+      24,
+      33,
+      61,
+      72,
+      89,
+      151,
+      173
+     ],
+     "sizeCount": 10,
+     "notLoaded": [],
+     "body": {
+      "font": "Roundo",
+      "size": 20,
+      "leading": 1.5,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 15.1
+     },
+     "measureChars": 67,
+     "max": {
+      "size": 172.8,
+      "vw": 12,
+      "font": "Roundo",
+      "text": "De idea"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#ffffff",
+     "bodyBgHsl": {
+      "h": 0,
+      "s": 0,
+      "l": 1
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#ffffff",
+       "top": 86,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 1
+       }
+      },
+      {
+       "color": "#a7ff9c",
+       "top": 86,
+       "hsl": {
+        "h": 113,
+        "s": 1,
+        "l": 0.81
+       }
+      },
+      {
+       "color": "#e5e8e1",
+       "top": 1485,
+       "hsl": {
+        "h": 86,
+        "s": 0.13,
+        "l": 0.9
+       }
+      },
+      {
+       "color": "#121713",
+       "top": 7799,
+       "hsl": {
+        "h": 132,
+        "s": 0.12,
+        "l": 0.08
+       }
+      },
+      {
+       "color": "#ff6831",
+       "top": 9745,
+       "hsl": {
+        "h": 16,
+        "s": 1,
+        "l": 0.6
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#121713",
+       "share": 0.8
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.18
+      },
+      {
+       "color": "#a7ff9c",
+       "share": 0.01
+      }
+     ],
+     "button": {
+      "bg": "#ffffff",
+      "hsl": {
+       "h": 0,
+       "s": 0,
+       "l": 1
+      },
+      "fg": "#121713"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 9,
+     "inHero": 1,
+     "radius": 0,
+     "height": 76,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Recorre la historia"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 2,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.26
+     }
+    ],
+    "nav": {
+     "links": 7,
+     "fixed": false,
+     "height": 86,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "roundo"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 10510,
+    "margins": {
+     "left": 32,
+     "right": 32
+    },
+    "sections": [
+     {
+      "sel": "main#main",
+      "tag": "main",
+      "top": 86,
+      "height": 10224,
+      "words": 566,
+      "media": 2,
+      "middle": 0,
+      "heading": {
+       "text": "De idea",
+       "size": 173,
+       "tag": "h1"
+      },
+      "left": 32,
+      "right": 32,
+      "textLeft": 32,
+      "textRight": 32,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": true
+     },
+     {
+      "sel": "footer.site-footer",
+      "tag": "footer",
+      "top": 10310,
+      "height": 200,
+      "words": 26,
+      "media": 0,
+      "middle": 474,
+      "heading": null,
+      "left": 32,
+      "right": 73,
+      "textLeft": 32,
+      "textRight": 73,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "De idea a Moodle.",
+      "size": 173,
+      "top": 116,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 32,
+      "n": 16
+     },
+     {
+      "x": 716,
+      "n": 5
+     },
+     {
+      "x": 523,
+      "n": 2
+     },
+     {
+      "x": 1014,
+      "n": 2
+     },
+     {
+      "x": 775,
+      "n": 1
+     },
+     {
+      "x": 789,
+      "n": 1
+     },
+     {
+      "x": 858,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 28,
+    "bodySize": 20,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0.11,
+    "voidBox": {
+     "x": 0,
+     "y": 360,
+     "w": 600,
+     "h": 240
+    }
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 9,
+   "filled": [
+    0.77,
+    1,
+    1,
+    1,
+    0.81,
+    1,
+    0.76,
+    0.74,
+    0.85
+   ],
+   "motion": {
+    "elements": 12,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 12,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 8378,
+     "screens": 8.2,
+     "words": 606,
+     "img": 6,
+     "video": 0,
+     "canvas": 0,
+     "svg": 20,
+     "sections": 9,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 6,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "teaching-workshop.jpg",
+      "teaching-workshop.jpg",
+      "assessment-workshop.jpg",
+      "assessment-workshop.jpg",
+      "teaching-workshop.jpg",
+      "course-reuse.jpg"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "De idea a Moodle.",
+     "words": 4,
+     "chars": 17,
+     "lines": 2,
+     "size": 115.2,
+     "vw": 15,
+     "font": "Roundo",
+     "weight": 600,
+     "tracking": -0.07,
+     "leading": 0.85,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.95,
+     "top": 116,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "De idea a Moodle.",
+     "words": 4,
+     "lines": 2,
+     "size": 115.2,
+     "font": "Roundo"
+    },
+    "headings": [
+     {
+      "text": "De idea a Moodle.",
+      "words": 4,
+      "chars": 17,
+      "lines": 2,
+      "size": 115.2,
+      "vw": 15,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.07,
+      "leading": 0.85,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.95,
+      "top": 116,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Tu idea merece llegar al aula.",
+      "words": 6,
+      "chars": 30,
+      "lines": 2,
+      "size": 38,
+      "vw": 4.9,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.5,
+      "top": 866,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Dale forma.",
+      "words": 2,
+      "chars": 11,
+      "lines": 1,
+      "size": 50,
+      "vw": 6.5,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 1291,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Pon el criterio.",
+      "words": 3,
+      "chars": 16,
+      "lines": 1,
+      "size": 50,
+      "vw": 6.5,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 2053,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Haz que avance.",
+      "words": 3,
+      "chars": 15,
+      "lines": 1,
+      "size": 50,
+      "vw": 6.5,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 2779,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Mira el conjunto.",
+      "words": 3,
+      "chars": 17,
+      "lines": 2,
+      "size": 50,
+      "vw": 6.5,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 3490,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Vuelve a partir de aquí.",
+      "words": 5,
+      "chars": 24,
+      "lines": 2,
+      "size": 50,
+      "vw": 6.5,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 4254,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Cada herramienta tiene su puerta.",
+      "words": 5,
+      "chars": 33,
+      "lines": 2,
+      "size": 38.4,
+      "vw": 5,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 4961,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Empieza por lo que necesitas.",
+      "words": 5,
+      "chars": 29,
+      "lines": 1,
+      "size": 38.4,
+      "vw": 5,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.64,
+      "top": 5219,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "La decisión sigue siendo tuya.",
+      "words": 5,
+      "chars": 30,
+      "lines": 1,
+      "size": 38.4,
+      "vw": 5,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.64,
+      "top": 5848,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Más caminos para tu curso.",
+      "words": 5,
+      "chars": 26,
+      "lines": 2,
+      "size": 38.4,
+      "vw": 5,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 6455,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Antes de empezar.",
+      "words": 3,
+      "chars": 17,
+      "lines": 2,
+      "size": 38.4,
+      "vw": 5,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.38,
+      "top": 7073,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Tu próxima idea.",
+      "words": 3,
+      "chars": 16,
+      "lines": 1,
+      "size": 80.6,
+      "vw": 10.5,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.95,
+      "top": 7751,
+      "tag": "h2",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 13,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 5,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Roundo",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      13,
+      15,
+      17,
+      22,
+      24,
+      38,
+      50,
+      81,
+      115
+     ],
+     "sizeCount": 9,
+     "notLoaded": [],
+     "body": {
+      "font": "Roundo",
+      "size": 17,
+      "leading": 1.5,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 15.1
+     },
+     "measureChars": 39,
+     "max": {
+      "size": 115.2,
+      "vw": 15,
+      "font": "Roundo",
+      "text": "De idea"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#ffffff",
+     "bodyBgHsl": {
+      "h": 0,
+      "s": 0,
+      "l": 1
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#ffffff",
+       "top": 86,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 1
+       }
+      },
+      {
+       "color": "#a7ff9c",
+       "top": 86,
+       "hsl": {
+        "h": 113,
+        "s": 1,
+        "l": 0.81
+       }
+      },
+      {
+       "color": "#e5e8e1",
+       "top": 1097,
+       "hsl": {
+        "h": 86,
+        "s": 0.13,
+        "l": 0.9
+       }
+      },
+      {
+       "color": "#121713",
+       "top": 2597,
+       "hsl": {
+        "h": 132,
+        "s": 0.12,
+        "l": 0.08
+       }
+      },
+      {
+       "color": "#ff6831",
+       "top": 3347,
+       "hsl": {
+        "h": 16,
+        "s": 1,
+        "l": 0.6
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#121713",
+       "share": 0.8
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.19
+      },
+      {
+       "color": "#a7ff9c",
+       "share": 0.01
+      }
+     ],
+     "button": {
+      "bg": "#ffffff",
+      "hsl": {
+       "h": 0,
+       "s": 0,
+       "l": 1
+      },
+      "fg": "#121713"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 9,
+     "inHero": 1,
+     "radius": 0,
+     "height": 71,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Recorre la historia"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 6,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.14
+     }
+    ],
+    "nav": {
+     "links": 7,
+     "fixed": false,
+     "height": 86,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "roundo"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 8378,
+    "margins": {
+     "left": 20,
+     "right": 20
+    },
+    "sections": [
+     {
+      "sel": "main#main",
+      "tag": "main",
+      "top": 86,
+      "height": 8013,
+      "words": 798,
+      "media": 6,
+      "middle": 0,
+      "heading": {
+       "text": "De idea",
+       "size": 115,
+       "tag": "h1"
+      },
+      "left": 20,
+      "right": 20,
+      "textLeft": 20,
+      "textRight": 20,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "footer.site-footer",
+      "tag": "footer",
+      "top": 8099,
+      "height": 280,
+      "words": 26,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "MoodlIA",
+       "size": 24,
+       "tag": "span"
+      },
+      "left": 20,
+      "right": 269,
+      "textLeft": 20,
+      "textRight": 269,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [
+     {
+      "top": 1664,
+      "height": 384
+     },
+     {
+      "top": 2412,
+      "height": 364
+     },
+     {
+      "top": 3164,
+      "height": 320
+     }
+    ],
+    "h1s": [
+     {
+      "text": "De idea a Moodle.",
+      "size": 115,
+      "top": 116,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 20,
+      "n": 28
+     },
+     {
+      "x": 393,
+      "n": 6
+     },
+     {
+      "x": 272,
+      "n": 2
+     },
+     {
+      "x": 525,
+      "n": 2
+     },
+     {
+      "x": 413,
+      "n": 1
+     },
+     {
+      "x": 441,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 40,
+    "bodySize": 17,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 12,
+   "filled": [
+    0.96,
+    0.78,
+    1,
+    1,
+    1,
+    1,
+    0.78,
+    1,
+    1,
+    0.51,
+    0.94,
+    1
+   ],
+   "motion": {
+    "elements": 12,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 12,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 9659,
+     "screens": 11.4,
+     "words": 606,
+     "img": 6,
+     "video": 0,
+     "canvas": 0,
+     "svg": 20,
+     "sections": 9,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 6,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "teaching-workshop.jpg",
+      "teaching-workshop.jpg",
+      "assessment-workshop.jpg",
+      "assessment-workshop.jpg",
+      "teaching-workshop.jpg",
+      "course-reuse.jpg"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "De idea a Moodle.",
+     "words": 4,
+     "chars": 17,
+     "lines": 2,
+     "size": 70.2,
+     "vw": 18,
+     "font": "Roundo",
+     "weight": 600,
+     "tracking": -0.07,
+     "leading": 0.92,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.9,
+     "top": 165,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "De idea a Moodle.",
+     "words": 4,
+     "lines": 2,
+     "size": 70.2,
+     "font": "Roundo"
+    },
+    "headings": [
+     {
+      "text": "MoodlIA",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.6,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.35,
+      "top": 19,
+      "tag": "a",
+      "kind": "heading"
+     },
+     {
+      "text": "De idea a Moodle.",
+      "words": 4,
+      "chars": 17,
+      "lines": 2,
+      "size": 70.2,
+      "vw": 18,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.07,
+      "leading": 0.92,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 165,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Tu idea merece llegar al aula.",
+      "words": 6,
+      "chars": 30,
+      "lines": 2,
+      "size": 36,
+      "vw": 9.2,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 923,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Dale forma.",
+      "words": 2,
+      "chars": 11,
+      "lines": 1,
+      "size": 50,
+      "vw": 12.8,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 1311,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Pon el criterio.",
+      "words": 3,
+      "chars": 16,
+      "lines": 1,
+      "size": 50,
+      "vw": 12.8,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 2125,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Haz que avance.",
+      "words": 3,
+      "chars": 15,
+      "lines": 1,
+      "size": 50,
+      "vw": 12.8,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 2914,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Mira el conjunto.",
+      "words": 3,
+      "chars": 17,
+      "lines": 2,
+      "size": 50,
+      "vw": 12.8,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 3749,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Vuelve a partir de aquí.",
+      "words": 5,
+      "chars": 24,
+      "lines": 2,
+      "size": 50,
+      "vw": 12.8,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 4642,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Cada herramienta tiene su puerta.",
+      "words": 5,
+      "chars": 33,
+      "lines": 2,
+      "size": 36,
+      "vw": 9.2,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 5535,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Empieza por lo que necesitas.",
+      "words": 5,
+      "chars": 29,
+      "lines": 2,
+      "size": 40,
+      "vw": 10.3,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 5866,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Instala la extensión e importa tu CSV o Excel. Es el inicio más directo, sin configurar IA.",
+      "words": 17,
+      "chars": 91,
+      "lines": 3,
+      "size": 24,
+      "vw": 6.2,
+      "font": "Roundo",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.5,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 6342,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "La decisión sigue siendo tuya.",
+      "words": 5,
+      "chars": 30,
+      "lines": 2,
+      "size": 40,
+      "vw": 10.3,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 6682,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Tu proveedor",
+      "words": 2,
+      "chars": 12,
+      "lines": 1,
+      "size": 27,
+      "vw": 6.9,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.03,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 6804,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Tus permisos",
+      "words": 2,
+      "chars": 12,
+      "lines": 1,
+      "size": 27,
+      "vw": 6.9,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.03,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 6958,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Tu revisión",
+      "words": 2,
+      "chars": 11,
+      "lines": 1,
+      "size": 27,
+      "vw": 6.9,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.03,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 7113,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Más caminos para tu curso.",
+      "words": 5,
+      "chars": 26,
+      "lines": 2,
+      "size": 40,
+      "vw": 10.3,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 7425,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Antes de empezar.",
+      "words": 3,
+      "chars": 17,
+      "lines": 1,
+      "size": 40,
+      "vw": 10.3,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 8288,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Tu próxima idea.",
+      "words": 3,
+      "chars": 16,
+      "lines": 2,
+      "size": 62.4,
+      "vw": 16,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.055,
+      "leading": 1.02,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 8973,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "MoodlIA",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 24,
+      "vw": 6.2,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.035,
+      "leading": 1.6,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.35,
+      "top": 9375,
+      "tag": "a",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 19,
+     "maxLines": 3,
+     "over2Lines": 0,
+     "statements": 1,
+     "centered": 0,
+     "medianWords": 3,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Roundo",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      24,
+      27,
+      36,
+      40,
+      50,
+      62,
+      70
+     ],
+     "sizeCount": 13,
+     "notLoaded": [],
+     "body": {
+      "font": "Roundo",
+      "size": 17,
+      "leading": 1.5,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 18.1
+     },
+     "measureChars": 36,
+     "max": {
+      "size": 70.2,
+      "vw": 18,
+      "font": "Roundo",
+      "text": "De idea"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#ffffff",
+     "bodyBgHsl": {
+      "h": 0,
+      "s": 0,
+      "l": 1
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#ffffff",
+       "top": 130,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 1
+       }
+      },
+      {
+       "color": "#a7ff9c",
+       "top": 130,
+       "hsl": {
+        "h": 113,
+        "s": 1,
+        "l": 0.81
+       }
+      },
+      {
+       "color": "#e5e8e1",
+       "top": 1253,
+       "hsl": {
+        "h": 86,
+        "s": 0.13,
+        "l": 0.9
+       }
+      },
+      {
+       "color": "#121713",
+       "top": 2856,
+       "hsl": {
+        "h": 132,
+        "s": 0.12,
+        "l": 0.08
+       }
+      },
+      {
+       "color": "#ff6831",
+       "top": 3691,
+       "hsl": {
+        "h": 16,
+        "s": 1,
+        "l": 0.6
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#121713",
+       "share": 0.8
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.19
+      },
+      {
+       "color": "#a7ff9c",
+       "share": 0.01
+      }
+     ],
+     "button": {
+      "bg": "#ffffff",
+      "hsl": {
+       "h": 0,
+       "s": 0,
+       "l": 1
+      },
+      "fg": "#121713"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 9,
+     "inHero": 1,
+     "radius": 0,
+     "height": 71,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Recorre la historia"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 6,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.23
+     }
+    ],
+    "nav": {
+     "links": 7,
+     "fixed": false,
+     "height": 130,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "roundo"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 9659,
+    "margins": {
+     "left": 20,
+     "right": 20
+    },
+    "sections": [
+     {
+      "sel": "header.site-header",
+      "tag": "header",
+      "top": 0,
+      "height": 130,
+      "words": 8,
+      "media": 0,
+      "middle": 22,
+      "heading": {
+       "text": "MoodlIA",
+       "size": 24,
+       "tag": "span"
+      },
+      "left": 26,
+      "right": 26,
+      "textLeft": 26,
+      "textRight": 26,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "main#main",
+      "tag": "main",
+      "top": 130,
+      "height": 9195,
+      "words": 798,
+      "media": 6,
+      "middle": 0,
+      "heading": {
+       "text": "De idea",
+       "size": 70,
+       "tag": "h1"
+      },
+      "left": 20,
+      "right": 20,
+      "textLeft": 20,
+      "textRight": 20,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "footer.site-footer",
+      "tag": "footer",
+      "top": 9325,
+      "height": 334,
+      "words": 26,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "MoodlIA",
+       "size": 24,
+       "tag": "span"
+      },
+      "left": 20,
+      "right": 54,
+      "textLeft": 20,
+      "textRight": 54,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "De idea a Moodle.",
+      "size": 70,
+      "top": 165,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 20,
+      "n": 36
+     },
+     {
+      "x": 40,
+      "n": 5
+     }
+    ],
+    "leftBlocks": 41,
+    "bodySize": 17,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "size-count",
+   "width": 1440,
+   "message": "10 different font sizes (13, 15, 20, 24, 33, 61, 72, 89, 151, 173).",
+   "fix": "A page needs about five: display, heading, lead, body, small.",
+   "alsoAt": [
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "no-footage",
+   "width": 1440,
+   "message": "No video anywhere on the page.",
+   "fix": "Look for one honest clip with scripts/assets.mjs --video (the place, the material, the process) and use it as a muted loop with a poster frame. Defend its absence only if no clip fits the subject."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\image-home-verified\\desktop-fold.jpg",
+   "pages": [
+    "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\image-home-verified\\desktop-page-01.jpg",
+    "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\image-home-verified\\desktop-page-02.jpg",
+    "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\image-home-verified\\desktop-page-03.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\image-home-verified\\tablet-fold.jpg",
+   "pages": [
+    "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\image-home-verified\\tablet-page-01.jpg",
+    "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\image-home-verified\\tablet-page-02.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\image-home-verified\\mobile-fold.jpg",
+   "pages": [
+    "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\image-home-verified\\mobile-page-01.jpg",
+    "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\image-home-verified\\mobile-page-02.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

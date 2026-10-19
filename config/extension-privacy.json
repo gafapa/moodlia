@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "indexPath": "/privacy",
+  "policies": [
+    { "id": "corrector", "name": "MoodlIA Corrector", "path": "/privacy/corrector.html", "source": "public/privacy/corrector.html" },
+    { "id": "rubrics", "name": "MoodlIA Rubrics (Rubricando for Moodle)", "path": "/privacy/rubrics.html", "source": "public/privacy/rubrics.html" }
+  ]
+}
