@@ -44,3 +44,11 @@ The portals use the existing white, ink, mint and Roundo brand, with explicit st
 ## Validation boundaries
 
 Local validation passed 48 project/viewport combinations (16 pages at three widths), including search states and no-JavaScript fallback. Website checks and static export also passed. Local validation checks all 16 pages at desktop, tablet and phone sizes, heading wrapping, overflow, font loading, browser errors, search states and central links. A no-JavaScript check retains navigation and the concept-only Studio status. Public HTTP and deployed-content verification is recorded after publication. No synthetic page check proves Moodle runtime compatibility.
+
+## Publication verification — 20 October 2026
+
+All 16 Pages deployments completed successfully. Every public HTTPS page returned 200 and linked to moodlia.com; HTML and search scripts matched local source after normalizing Windows/Linux line endings. Public Chromium checks loaded all 16 pages and exercised their project-directory search without browser errors. All affected repository heads matched origin/main at verification.
+
+A live-browser regression caught a collision between a top-level JavaScript binding and the browser's existing document property. The shared script now uses pageDocument from globalThis.document. Linting and the 48 local project/viewport checks passed after the correction, followed by the public browser checks above. Static linting alone was not treated as browser qualification.
+
+Machine-readable deployment IDs, source commits and live checks are retained in [.taste-skill/project-pages/publication-verification.json](../.taste-skill/project-pages/publication-verification.json). The [visual review](../.taste-skill/project-pages/review.md) records the text-first portal design and the limits of the marketing-style inspector.

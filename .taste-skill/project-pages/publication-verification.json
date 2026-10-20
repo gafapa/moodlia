@@ -1,0 +1,396 @@
+{
+  "verified_at_utc": "2026-10-20T00:28:30.013524+00:00",
+  "published_projects": [
+    {
+      "project": "moodle-core-cli",
+      "repository": "gafapa/moodle-core-cli",
+      "url": "https://gafapa.github.io/moodle-core-cli/",
+      "http_status": 200,
+      "html_matches_after_newline_normalization": true,
+      "script_matches_after_newline_normalization": true,
+      "central_website_link": true,
+      "commit": "49c0c039629ad4055de2e905ca3fac45dc6b9dc8",
+      "remote_matches": true,
+      "deployment": {
+        "conclusion": "success",
+        "databaseId": 39347417044,
+        "headSha": "49c0c039629ad4055de2e905ca3fac45dc6b9dc8",
+        "status": "completed",
+        "url": "https://github.com/gafapa/moodle-core-cli/actions/runs/39347417044"
+      }
+    },
+    {
+      "project": "moodlia-analyzer-desktop",
+      "repository": "gafapa/moodlia-analyzer-desktop",
+      "url": "https://gafapa.github.io/moodlia-analyzer-desktop/",
+      "http_status": 200,
+      "html_matches_after_newline_normalization": true,
+      "script_matches_after_newline_normalization": true,
+      "central_website_link": true,
+      "commit": "76b48580f0d5d995c13fb23b55dda3c342159fba",
+      "remote_matches": true,
+      "deployment": {
+        "conclusion": "success",
+        "databaseId": 39347421135,
+        "headSha": "76b48580f0d5d995c13fb23b55dda3c342159fba",
+        "status": "completed",
+        "url": "https://github.com/gafapa/moodlia-analyzer-desktop/actions/runs/39347421135"
+      }
+    },
+    {
+      "project": "moodlia-analyzer-web",
+      "repository": "gafapa/moodlia-analyzer-web",
+      "url": "https://gafapa.github.io/moodlia-analyzer-web/",
+      "http_status": 200,
+      "html_matches_after_newline_normalization": true,
+      "script_matches_after_newline_normalization": true,
+      "central_website_link": true,
+      "commit": "90bce4e09c6c2782f5f3594c243f148bcd31dce7",
+      "remote_matches": true,
+      "deployment": {
+        "conclusion": "success",
+        "databaseId": 39347425644,
+        "headSha": "90bce4e09c6c2782f5f3594c243f148bcd31dce7",
+        "status": "completed",
+        "url": "https://github.com/gafapa/moodlia-analyzer-web/actions/runs/39347425644"
+      }
+    },
+    {
+      "project": "moodlia-backup-converter",
+      "repository": "gafapa/moodlia-backup-converter",
+      "url": "https://gafapa.github.io/moodlia-backup-converter/",
+      "http_status": 200,
+      "html_matches_after_newline_normalization": true,
+      "script_matches_after_newline_normalization": true,
+      "central_website_link": true,
+      "commit": "1954039abbb493218aa60bbafe7ad4cab1c826ee",
+      "remote_matches": true,
+      "deployment": {
+        "conclusion": "success",
+        "databaseId": 39347430827,
+        "headSha": "1954039abbb493218aa60bbafe7ad4cab1c826ee",
+        "status": "completed",
+        "url": "https://github.com/gafapa/moodlia-backup-converter/actions/runs/39347430827"
+      }
+    },
+    {
+      "project": "moodlia-cli",
+      "repository": "gafapa/moodlia-cli",
+      "url": "https://gafapa.github.io/moodlia-cli/",
+      "http_status": 200,
+      "html_matches_after_newline_normalization": true,
+      "script_matches_after_newline_normalization": true,
+      "central_website_link": true,
+      "commit": "7962e49733b7e6c7dd5b23a48a399d1ec3db2ea6",
+      "remote_matches": true,
+      "deployment": {
+        "conclusion": "success",
+        "databaseId": 39347436011,
+        "headSha": "7962e49733b7e6c7dd5b23a48a399d1ec3db2ea6",
+        "status": "completed",
+        "url": "https://github.com/gafapa/moodlia-cli/actions/runs/39347436011"
+      }
+    },
+    {
+      "project": "moodlia-corrector",
+      "repository": "gafapa/moodlia-corrector",
+      "url": "https://gafapa.github.io/moodlia-corrector/",
+      "http_status": 200,
+      "html_matches_after_newline_normalization": true,
+      "script_matches_after_newline_normalization": true,
+      "central_website_link": true,
+      "commit": "83e570929d64f699fc70f3b9214175a33d796130",
+      "remote_matches": true,
+      "deployment": {
+        "conclusion": "success",
+        "databaseId": 39347440485,
+        "headSha": "83e570929d64f699fc70f3b9214175a33d796130",
+        "status": "completed",
+        "url": "https://github.com/gafapa/moodlia-corrector/actions/runs/39347440485"
+      }
+    },
+    {
+      "project": "moodlia-edx",
+      "repository": "gafapa/moodlia-edx",
+      "url": "https://gafapa.github.io/moodlia-edx/",
+      "http_status": 200,
+      "html_matches_after_newline_normalization": true,
+      "script_matches_after_newline_normalization": true,
+      "central_website_link": true,
+      "commit": "3bd9c7fb842aedad1a3acc8759ebcf2d11228dc8",
+      "remote_matches": true,
+      "deployment": {
+        "conclusion": "success",
+        "databaseId": 39347445174,
+        "headSha": "3bd9c7fb842aedad1a3acc8759ebcf2d11228dc8",
+        "status": "completed",
+        "url": "https://github.com/gafapa/moodlia-edx/actions/runs/39347445174"
+      }
+    },
+    {
+      "project": "moodlia-moodle-plugin",
+      "repository": "gafapa/moodle-local_moodlia",
+      "url": "https://gafapa.github.io/moodle-local_moodlia/",
+      "http_status": 200,
+      "html_matches_after_newline_normalization": true,
+      "script_matches_after_newline_normalization": true,
+      "central_website_link": true,
+      "commit": "b19d567adb89395314d099fc6c3db28591307e70",
+      "remote_matches": true,
+      "deployment": {
+        "conclusion": "success",
+        "databaseId": 39347449468,
+        "headSha": "b19d567adb89395314d099fc6c3db28591307e70",
+        "status": "completed",
+        "url": "https://github.com/gafapa/moodle-local_moodlia/actions/runs/39347449468"
+      }
+    },
+    {
+      "project": "moodlia-portable",
+      "repository": "gafapa/moodlia-portable",
+      "url": "https://gafapa.github.io/moodlia-portable/",
+      "http_status": 200,
+      "html_matches_after_newline_normalization": true,
+      "script_matches_after_newline_normalization": true,
+      "central_website_link": true,
+      "commit": "8ef88c6ce6ec224e84dba84c12e5848729f364f1",
+      "remote_matches": true,
+      "deployment": {
+        "conclusion": "success",
+        "databaseId": 39347454019,
+        "headSha": "57332d81171b695c86aedbc0b45c50e088c1fed4",
+        "status": "completed",
+        "url": "https://github.com/gafapa/moodlia-portable/actions/runs/39347454019"
+      }
+    },
+    {
+      "project": "moodlia-rubrics",
+      "repository": "gafapa/moodlia-rubrics",
+      "url": "https://gafapa.github.io/moodlia-rubrics/",
+      "http_status": 200,
+      "html_matches_after_newline_normalization": true,
+      "script_matches_after_newline_normalization": true,
+      "central_website_link": true,
+      "commit": "4f1d69743e382a2f7909db989d617442bac2ae34",
+      "remote_matches": true,
+      "deployment": {
+        "conclusion": "success",
+        "databaseId": 39347458753,
+        "headSha": "4f1d69743e382a2f7909db989d617442bac2ae34",
+        "status": "completed",
+        "url": "https://github.com/gafapa/moodlia-rubrics/actions/runs/39347458753"
+      }
+    },
+    {
+      "project": "moodlia-skills",
+      "repository": "gafapa/moodlia-skills",
+      "url": "https://gafapa.github.io/moodlia-skills/",
+      "http_status": 200,
+      "html_matches_after_newline_normalization": true,
+      "script_matches_after_newline_normalization": true,
+      "central_website_link": true,
+      "commit": "3f08df2fb257e75e641a94fdae63707f489b50e5",
+      "remote_matches": true,
+      "deployment": {
+        "conclusion": "success",
+        "databaseId": 39347464264,
+        "headSha": "3f08df2fb257e75e641a94fdae63707f489b50e5",
+        "status": "completed",
+        "url": "https://github.com/gafapa/moodlia-skills/actions/runs/39347464264"
+      }
+    },
+    {
+      "project": "moodlia-studio",
+      "repository": "gafapa/moodlia-studio",
+      "url": "https://gafapa.github.io/moodlia-studio/",
+      "http_status": 200,
+      "html_matches_after_newline_normalization": true,
+      "script_matches_after_newline_normalization": true,
+      "central_website_link": true,
+      "commit": "8283a7c0184b939adeba4e3be14723c3bd1fae0c",
+      "remote_matches": true,
+      "deployment": {
+        "conclusion": "success",
+        "databaseId": 39347470315,
+        "headSha": "8283a7c0184b939adeba4e3be14723c3bd1fae0c",
+        "status": "completed",
+        "url": "https://github.com/gafapa/moodlia-studio/actions/runs/39347470315"
+      }
+    },
+    {
+      "project": "moodlia-sync",
+      "repository": "gafapa/moodlia-sync",
+      "url": "https://gafapa.github.io/moodlia-sync/",
+      "http_status": 200,
+      "html_matches_after_newline_normalization": true,
+      "script_matches_after_newline_normalization": true,
+      "central_website_link": true,
+      "commit": "771b25e1a84c89a8bc42ad9404e39e07f92ea166",
+      "remote_matches": true,
+      "deployment": {
+        "conclusion": "success",
+        "databaseId": 39347482898,
+        "headSha": "771b25e1a84c89a8bc42ad9404e39e07f92ea166",
+        "status": "completed",
+        "url": "https://github.com/gafapa/moodlia-sync/actions/runs/39347482898"
+      }
+    },
+    {
+      "project": "moodlia-teacher-dashboard",
+      "repository": "gafapa/moodlia-teacher-dashboard",
+      "url": "https://gafapa.github.io/moodlia-teacher-dashboard/",
+      "http_status": 200,
+      "html_matches_after_newline_normalization": true,
+      "script_matches_after_newline_normalization": true,
+      "central_website_link": true,
+      "commit": "07603d58d6025d795c4abbcc34a45b3d0524f58e",
+      "remote_matches": true,
+      "deployment": {
+        "conclusion": "success",
+        "databaseId": 39347486756,
+        "headSha": "07603d58d6025d795c4abbcc34a45b3d0524f58e",
+        "status": "completed",
+        "url": "https://github.com/gafapa/moodlia-teacher-dashboard/actions/runs/39347486756"
+      }
+    },
+    {
+      "project": "moodlia-test-lab",
+      "repository": "gafapa/moodlia-test-lab",
+      "url": "https://gafapa.github.io/moodlia-test-lab/",
+      "http_status": 200,
+      "html_matches_after_newline_normalization": true,
+      "script_matches_after_newline_normalization": true,
+      "central_website_link": true,
+      "commit": "1184c6d8714416af7806296ead08291d90abefdc",
+      "remote_matches": true,
+      "deployment": {
+        "conclusion": "success",
+        "databaseId": 39347492645,
+        "headSha": "1184c6d8714416af7806296ead08291d90abefdc",
+        "status": "completed",
+        "url": "https://github.com/gafapa/moodlia-test-lab/actions/runs/39347492645"
+      }
+    },
+    {
+      "project": "moodlia-website",
+      "repository": "gafapa/moodlia",
+      "url": "https://gafapa.github.io/moodlia/",
+      "http_status": 200,
+      "html_matches_after_newline_normalization": true,
+      "script_matches_after_newline_normalization": true,
+      "central_website_link": true,
+      "commit": "0bb8b6db4404a227fae86f819267f2617a00ce94",
+      "remote_matches": true,
+      "deployment": {
+        "conclusion": "success",
+        "databaseId": 39347497676,
+        "headSha": "0bb8b6db4404a227fae86f819267f2617a00ce94",
+        "status": "completed",
+        "url": "https://github.com/gafapa/moodlia/actions/runs/39347497676"
+      }
+    }
+  ],
+  "live_browser_checks": [
+    {
+      "url": "https://gafapa.github.io/moodle-core-cli/",
+      "http": 200,
+      "liveSearch": "passed",
+      "browserErrors": []
+    },
+    {
+      "url": "https://gafapa.github.io/moodlia-analyzer-desktop/",
+      "http": 200,
+      "liveSearch": "passed",
+      "browserErrors": []
+    },
+    {
+      "url": "https://gafapa.github.io/moodlia-analyzer-web/",
+      "http": 200,
+      "liveSearch": "passed",
+      "browserErrors": []
+    },
+    {
+      "url": "https://gafapa.github.io/moodlia-backup-converter/",
+      "http": 200,
+      "liveSearch": "passed",
+      "browserErrors": []
+    },
+    {
+      "url": "https://gafapa.github.io/moodlia-cli/",
+      "http": 200,
+      "liveSearch": "passed",
+      "browserErrors": []
+    },
+    {
+      "url": "https://gafapa.github.io/moodlia-corrector/",
+      "http": 200,
+      "liveSearch": "passed",
+      "browserErrors": []
+    },
+    {
+      "url": "https://gafapa.github.io/moodlia-edx/",
+      "http": 200,
+      "liveSearch": "passed",
+      "browserErrors": []
+    },
+    {
+      "url": "https://gafapa.github.io/moodle-local_moodlia/",
+      "http": 200,
+      "liveSearch": "passed",
+      "browserErrors": []
+    },
+    {
+      "url": "https://gafapa.github.io/moodlia-portable/",
+      "http": 200,
+      "liveSearch": "passed",
+      "browserErrors": []
+    },
+    {
+      "url": "https://gafapa.github.io/moodlia-rubrics/",
+      "http": 200,
+      "liveSearch": "passed",
+      "browserErrors": []
+    },
+    {
+      "url": "https://gafapa.github.io/moodlia-skills/",
+      "http": 200,
+      "liveSearch": "passed",
+      "browserErrors": []
+    },
+    {
+      "url": "https://gafapa.github.io/moodlia-studio/",
+      "http": 200,
+      "liveSearch": "passed",
+      "browserErrors": []
+    },
+    {
+      "url": "https://gafapa.github.io/moodlia-sync/",
+      "http": 200,
+      "liveSearch": "passed",
+      "browserErrors": []
+    },
+    {
+      "url": "https://gafapa.github.io/moodlia-teacher-dashboard/",
+      "http": 200,
+      "liveSearch": "passed",
+      "browserErrors": []
+    },
+    {
+      "url": "https://gafapa.github.io/moodlia-test-lab/",
+      "http": 200,
+      "liveSearch": "passed",
+      "browserErrors": []
+    },
+    {
+      "url": "https://gafapa.github.io/moodlia/",
+      "http": 200,
+      "liveSearch": "passed",
+      "browserErrors": []
+    }
+  ],
+  "local_browser_checks": 48,
+  "readme_entry_points": 16,
+  "component_readmes": 5,
+  "workspace_overview": "Updated locally outside the independent Git repositories.",
+  "archived_repositories": "Unchanged: moodlia-legacy and moodlia-sync-mcp."
+}
