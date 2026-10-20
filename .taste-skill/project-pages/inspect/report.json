@@ -1,0 +1,1816 @@
+{
+ "url": ".project-pages/index.html",
+ "at": "2026-10-20T00:08:30.129Z",
+ "allow": [],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 3,
+   "filled": [
+    0.39,
+    0.33,
+    0.58
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 2294,
+     "screens": 2.5,
+     "words": 159,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 5,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "MoodlIA Website",
+     "words": 2,
+     "chars": 15,
+     "lines": 1,
+     "size": 104,
+     "vw": 7.2,
+     "font": "Roundo",
+     "weight": 600,
+     "tracking": -0.045,
+     "leading": 1.04,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.76,
+     "top": 171,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "MoodlIA Website",
+     "words": 2,
+     "lines": 1,
+     "size": 104,
+     "font": "Roundo"
+    },
+    "headings": [
+     {
+      "text": "MoodlIA",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 28,
+      "vw": 1.9,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.6,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.08,
+      "top": 28,
+      "tag": "a",
+      "kind": "heading"
+     },
+     {
+      "text": "MoodlIA Website",
+      "words": 2,
+      "chars": 15,
+      "lines": 1,
+      "size": 104,
+      "vw": 7.2,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.045,
+      "leading": 1.04,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.76,
+      "top": 171,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Find MoodlIA tools, installation guides and privacy information in the central English and Spanish website.",
+      "words": 15,
+      "chars": 107,
+      "lines": 2,
+      "size": 28,
+      "vw": 1.9,
+      "font": "Roundo",
+      "weight": 400,
+      "tracking": 0,
+      "leading": 1.45,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.74,
+      "top": 315,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Project status",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 52,
+      "vw": 3.6,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.025,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.34,
+      "top": 625,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Getting started",
+      "words": 2,
+      "chars": 15,
+      "lines": 1,
+      "size": 52,
+      "vw": 3.6,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.025,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.34,
+      "top": 869,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Keep going",
+      "words": 2,
+      "chars": 10,
+      "lines": 1,
+      "size": 52,
+      "vw": 3.6,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.025,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.34,
+      "top": 1369,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Part of MoodlIA",
+      "words": 3,
+      "chars": 15,
+      "lines": 1,
+      "size": 52,
+      "vw": 3.6,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.025,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.84,
+      "top": 1711,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "MoodlIA",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 28,
+      "vw": 1.9,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.6,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.35,
+      "top": 2130,
+      "tag": "a",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 8,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 1,
+     "centered": 0,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Roundo",
+       "share": 0.99,
+       "mono": false
+      },
+      {
+       "family": "ui-monospace",
+       "share": 0.01,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      15,
+      16,
+      18,
+      20,
+      22,
+      28,
+      52,
+      104
+     ],
+     "sizeCount": 8,
+     "notLoaded": [],
+     "body": {
+      "font": "Roundo",
+      "size": 18,
+      "leading": 1.6,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 18.1
+     },
+     "measureChars": 66,
+     "max": {
+      "size": 104,
+      "vw": 7.2,
+      "font": "Roundo",
+      "text": "MoodlIA Website"
+     },
+     "monoShare": 0.01,
+     "monoProseShare": 0,
+     "monoFamilies": [
+      "ui-monospace"
+     ],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#ffffff",
+     "bodyBgHsl": {
+      "h": 0,
+      "s": 0,
+      "l": 1
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#121713",
+       "top": 1647,
+       "hsl": {
+        "h": 132,
+        "s": 0.12,
+        "l": 0.08
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#121713",
+       "share": 0.68
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.32
+      }
+     ],
+     "button": {
+      "bg": "#121713",
+      "hsl": {
+       "h": 132,
+       "s": 0.12,
+       "l": 0.08
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 3,
+     "inHero": 2,
+     "radius": 0,
+     "height": 57,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Skip to content",
+      "Read the documentation ↗"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 4,
+     "fixed": false,
+     "height": 101,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "roundo"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 2294,
+    "margins": {
+     "left": 118,
+     "right": 148
+    },
+    "sections": [
+     {
+      "sel": "section.hero.frame",
+      "tag": "section",
+      "top": 101,
+      "height": 472,
+      "words": 22,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "MoodlIA Website",
+       "size": 104,
+       "tag": "h1"
+      },
+      "left": 118,
+      "right": 326,
+      "textLeft": 118,
+      "textRight": 326,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.status",
+      "tag": "section",
+      "top": 573,
+      "height": 200,
+      "words": 30,
+      "media": 0,
+      "middle": 219,
+      "heading": {
+       "text": "Project status",
+       "size": 52,
+       "tag": "h2"
+      },
+      "left": 118,
+      "right": 148,
+      "textLeft": 118,
+      "textRight": 148,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#start.frame.start",
+      "tag": "section",
+      "top": 773,
+      "height": 564,
+      "words": 48,
+      "media": 0,
+      "middle": 190,
+      "heading": {
+       "text": "Getting started",
+       "size": 52,
+       "tag": "h2"
+      },
+      "left": 118,
+      "right": 167,
+      "textLeft": 118,
+      "textRight": 167,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.frame.continue",
+      "tag": "section",
+      "top": 1337,
+      "height": 310,
+      "words": 14,
+      "media": 0,
+      "middle": 286,
+      "heading": {
+       "text": "Keep going",
+       "size": 52,
+       "tag": "h2"
+      },
+      "left": 118,
+      "right": 535,
+      "textLeft": 118,
+      "textRight": 535,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.directory",
+      "tag": "section",
+      "top": 1647,
+      "height": 435,
+      "words": 23,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Part of MoodlIA",
+       "size": 52,
+       "tag": "h2"
+      },
+      "left": 118,
+      "right": 789,
+      "textLeft": 118,
+      "textRight": 789,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.frame",
+      "tag": "footer",
+      "top": 2082,
+      "height": 212,
+      "words": 27,
+      "media": 0,
+      "middle": 366,
+      "heading": {
+       "text": "MoodlIA",
+       "size": 28,
+       "tag": "a"
+      },
+      "left": 118,
+      "right": 149,
+      "textLeft": 118,
+      "textRight": 149,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "MoodlIA Website",
+      "size": 104,
+      "top": 171,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 118,
+      "n": 7
+     },
+     {
+      "x": 667,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 8,
+    "bodySize": 18,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0.15,
+    "voidBox": {
+     "x": 360,
+     "y": 420,
+     "w": 1080,
+     "h": 180
+    }
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 3,
+   "filled": [
+    0.56,
+    0.38,
+    0.61
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 2412,
+     "screens": 2.4,
+     "words": 159,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 5,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "MoodlIA Website",
+     "words": 2,
+     "chars": 15,
+     "lines": 1,
+     "size": 61.4,
+     "vw": 8,
+     "font": "Roundo",
+     "weight": 600,
+     "tracking": -0.045,
+     "leading": 1.04,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.92,
+     "top": 171,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "MoodlIA Website",
+     "words": 2,
+     "lines": 1,
+     "size": 61.4,
+     "font": "Roundo"
+    },
+    "headings": [
+     {
+      "text": "MoodlIA",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 28,
+      "vw": 3.6,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.6,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.15,
+      "top": 28,
+      "tag": "a",
+      "kind": "heading"
+     },
+     {
+      "text": "MoodlIA Website",
+      "words": 2,
+      "chars": 15,
+      "lines": 1,
+      "size": 61.4,
+      "vw": 8,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.045,
+      "leading": 1.04,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 171,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Project status",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 32,
+      "vw": 4.2,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.025,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.36,
+      "top": 557,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Getting started",
+      "words": 2,
+      "chars": 15,
+      "lines": 1,
+      "size": 32,
+      "vw": 4.2,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.025,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.36,
+      "top": 897,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Keep going",
+      "words": 2,
+      "chars": 10,
+      "lines": 1,
+      "size": 32,
+      "vw": 4.2,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.025,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.36,
+      "top": 1484,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Part of MoodlIA",
+      "words": 3,
+      "chars": 15,
+      "lines": 1,
+      "size": 32,
+      "vw": 4.2,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.025,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 1826,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "MoodlIA",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 28,
+      "vw": 3.6,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.6,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.37,
+      "top": 2222,
+      "tag": "a",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 7,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Roundo",
+       "share": 0.99,
+       "mono": false
+      },
+      {
+       "family": "ui-monospace",
+       "share": 0.01,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      15,
+      16,
+      18,
+      20,
+      22,
+      28,
+      32,
+      61
+     ],
+     "sizeCount": 8,
+     "notLoaded": [],
+     "body": {
+      "font": "Roundo",
+      "size": 20,
+      "leading": 1.45,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 18.1
+     },
+     "measureChars": 37,
+     "max": {
+      "size": 61.4,
+      "vw": 8,
+      "font": "Roundo",
+      "text": "MoodlIA Website"
+     },
+     "monoShare": 0.01,
+     "monoProseShare": 0,
+     "monoFamilies": [
+      "ui-monospace"
+     ],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#ffffff",
+     "bodyBgHsl": {
+      "h": 0,
+      "s": 0,
+      "l": 1
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#121713",
+       "top": 1762,
+       "hsl": {
+        "h": 132,
+        "s": 0.12,
+        "l": 0.08
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#121713",
+       "share": 0.68
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.32
+      }
+     ],
+     "button": {
+      "bg": "#121713",
+      "hsl": {
+       "h": 132,
+       "s": 0.12,
+       "l": 0.08
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 3,
+     "inHero": 2,
+     "radius": 0,
+     "height": 57,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Skip to content",
+      "Read the documentation ↗"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 4,
+     "fixed": false,
+     "height": 101,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "roundo"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 2412,
+    "margins": {
+     "left": 31,
+     "right": 41
+    },
+    "sections": [
+     {
+      "sel": "section.hero.frame",
+      "tag": "section",
+      "top": 101,
+      "height": 405,
+      "words": 22,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "MoodlIA Website",
+       "size": 61,
+       "tag": "h1"
+      },
+      "left": 31,
+      "right": 96,
+      "textLeft": 31,
+      "textRight": 96,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.status",
+      "tag": "section",
+      "top": 505,
+      "height": 296,
+      "words": 30,
+      "media": 0,
+      "middle": 134,
+      "heading": {
+       "text": "Project status",
+       "size": 32,
+       "tag": "h2"
+      },
+      "left": 31,
+      "right": 51,
+      "textLeft": 31,
+      "textRight": 51,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#start.frame.start",
+      "tag": "section",
+      "top": 801,
+      "height": 650,
+      "words": 48,
+      "media": 0,
+      "middle": 116,
+      "heading": {
+       "text": "Getting started",
+       "size": 32,
+       "tag": "h2"
+      },
+      "left": 31,
+      "right": 41,
+      "textLeft": 31,
+      "textRight": 41,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.frame.continue",
+      "tag": "section",
+      "top": 1452,
+      "height": 310,
+      "words": 14,
+      "media": 0,
+      "middle": 175,
+      "heading": {
+       "text": "Keep going",
+       "size": 32,
+       "tag": "h2"
+      },
+      "left": 31,
+      "right": 162,
+      "textLeft": 31,
+      "textRight": 162,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.directory",
+      "tag": "section",
+      "top": 1762,
+      "height": 413,
+      "words": 23,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Part of MoodlIA",
+       "size": 32,
+       "tag": "h2"
+      },
+      "left": 31,
+      "right": 204,
+      "textLeft": 31,
+      "textRight": 204,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.frame",
+      "tag": "footer",
+      "top": 2174,
+      "height": 238,
+      "words": 27,
+      "media": 0,
+      "middle": 149,
+      "heading": {
+       "text": "MoodlIA",
+       "size": 28,
+       "tag": "a"
+      },
+      "left": 31,
+      "right": 45,
+      "textLeft": 31,
+      "textRight": 45,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "MoodlIA Website",
+      "size": 61,
+      "top": 171,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 31,
+      "n": 7
+     },
+     {
+      "x": 368,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 8,
+    "bodySize": 20,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 3,
+   "filled": [
+    0.71,
+    0.43,
+    0.66
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 2482,
+     "screens": 2.9,
+     "words": 159,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 0,
+     "sections": 5,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "MoodlIA Website",
+     "words": 2,
+     "chars": 15,
+     "lines": 1,
+     "size": 39,
+     "vw": 10,
+     "font": "Roundo",
+     "weight": 600,
+     "tracking": -0.045,
+     "leading": 1.04,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.9,
+     "top": 159,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "MoodlIA Website",
+     "words": 2,
+     "lines": 1,
+     "size": 39,
+     "font": "Roundo"
+    },
+    "headings": [
+     {
+      "text": "MoodlIA",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 26,
+      "vw": 6.7,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.6,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.27,
+      "top": 22,
+      "tag": "a",
+      "kind": "heading"
+     },
+     {
+      "text": "MoodlIA Website",
+      "words": 2,
+      "chars": 15,
+      "lines": 1,
+      "size": 39,
+      "vw": 10,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.045,
+      "leading": 1.04,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 159,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "Project status",
+      "words": 2,
+      "chars": 14,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.025,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 488,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Getting started",
+      "words": 2,
+      "chars": 15,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.025,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 817,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Keep going",
+      "words": 2,
+      "chars": 10,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.025,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 1427,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Part of MoodlIA",
+      "words": 3,
+      "chars": 15,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": -0.025,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 1773,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Browse project documentation",
+      "words": 3,
+      "chars": 28,
+      "lines": 2,
+      "size": 22,
+      "vw": 5.6,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.6,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 2024,
+      "tag": "summary",
+      "kind": "heading"
+     },
+     {
+      "text": "MoodlIA",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 26,
+      "vw": 6.7,
+      "font": "Roundo",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.6,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.9,
+      "top": 2210,
+      "tag": "a",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 8,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Roundo",
+       "share": 0.99,
+       "mono": false
+      },
+      {
+       "family": "ui-monospace",
+       "share": 0.01,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      15,
+      16,
+      18,
+      20,
+      22,
+      26,
+      32,
+      39
+     ],
+     "sizeCount": 8,
+     "notLoaded": [],
+     "body": {
+      "font": "Roundo",
+      "size": 18,
+      "leading": 1.6,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 15.1
+     },
+     "measureChars": 39,
+     "max": {
+      "size": 39,
+      "vw": 10,
+      "font": "Roundo",
+      "text": "MoodlIA Website"
+     },
+     "monoShare": 0.01,
+     "monoProseShare": 0,
+     "monoFamilies": [
+      "ui-monospace"
+     ],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#ffffff",
+     "bodyBgHsl": {
+      "h": 0,
+      "s": 0,
+      "l": 1
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#a7ff9c",
+       "top": 452,
+       "hsl": {
+        "h": 113,
+        "s": 1,
+        "l": 0.81
+       }
+      },
+      {
+       "color": "#121713",
+       "top": 1729,
+       "hsl": {
+        "h": 132,
+        "s": 0.12,
+        "l": 0.08
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#121713",
+       "share": 0.68
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.32
+      }
+     ],
+     "button": {
+      "bg": "#121713",
+      "hsl": {
+       "h": 132,
+       "s": 0.12,
+       "l": 0.08
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 3,
+     "inHero": 2,
+     "radius": 0,
+     "height": 54,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Skip to content",
+      "Read the documentation ↗"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 4,
+     "fixed": false,
+     "height": 127,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "roundo"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 2482,
+    "margins": {
+     "left": 20,
+     "right": 22
+    },
+    "sections": [
+     {
+      "sel": "header.frame",
+      "tag": "header",
+      "top": 0,
+      "height": 127,
+      "words": 5,
+      "media": 0,
+      "middle": 20,
+      "heading": {
+       "text": "MoodlIA",
+       "size": 26,
+       "tag": "a"
+      },
+      "left": 20,
+      "right": 65,
+      "textLeft": 20,
+      "textRight": 65,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section.hero.frame",
+      "tag": "section",
+      "top": 127,
+      "height": 325,
+      "words": 22,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "MoodlIA Website",
+       "size": 39,
+       "tag": "h1"
+      },
+      "left": 20,
+      "right": 22,
+      "textLeft": 20,
+      "textRight": 22,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.status",
+      "tag": "section",
+      "top": 452,
+      "height": 309,
+      "words": 30,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Project status",
+       "size": 32,
+       "tag": "h2"
+      },
+      "left": 20,
+      "right": 56,
+      "textLeft": 20,
+      "textRight": 56,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#start.frame.start",
+      "tag": "section",
+      "top": 761,
+      "height": 646,
+      "words": 48,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Getting started",
+       "size": 32,
+       "tag": "h2"
+      },
+      "left": 20,
+      "right": 40,
+      "textLeft": 20,
+      "textRight": 40,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.frame.continue",
+      "tag": "section",
+      "top": 1407,
+      "height": 322,
+      "words": 14,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Keep going",
+       "size": 32,
+       "tag": "h2"
+      },
+      "left": 20,
+      "right": 132,
+      "textLeft": 20,
+      "textRight": 132,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.directory",
+      "tag": "section",
+      "top": 1729,
+      "height": 433,
+      "words": 23,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Part of MoodlIA",
+       "size": 32,
+       "tag": "h2"
+      },
+      "left": 20,
+      "right": 94,
+      "textLeft": 20,
+      "textRight": 94,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.frame",
+      "tag": "footer",
+      "top": 2162,
+      "height": 320,
+      "words": 27,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "MoodlIA",
+       "size": 26,
+       "tag": "a"
+      },
+      "left": 20,
+      "right": 39,
+      "textLeft": 20,
+      "textRight": 39,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "MoodlIA Website",
+      "size": 39,
+      "top": 159,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 20,
+      "n": 8
+     }
+    ],
+    "leftBlocks": 8,
+    "bodySize": 18,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "FAIL",
+   "id": "few-pictures",
+   "width": 1440,
+   "message": "Only 0 picture(s) on the page (0 photographs, footage or raster images, 0 interface fragments). Drawings in SVG do not count.",
+   "fix": "Find real pictures of the subject's world with scripts/assets.mjs (photographs, archival images, maps, engravings, footage), download them to assets/ and give them room: a hero picture, one per section that has a subject, a full-width band. At least four, usually six to twelve."
+  },
+  {
+   "level": "WARN",
+   "id": "no-footage",
+   "width": 1440,
+   "message": "No video anywhere on the page.",
+   "fix": "Look for one honest clip with scripts/assets.mjs --video (the place, the material, the process) and use it as a muted loop with a poster frame. Defend its absence only if no clip fits the subject."
+  },
+  {
+   "level": "WARN",
+   "id": "off-centre",
+   "width": 1440,
+   "message": "The margins differ: 118px on the left, 148px on the right, at 1440px.",
+   "fix": "Put the navigation and the content on one pair of margins; check for padding on one side only, a scrollbar gutter, or a header on another inset than the page."
+  },
+  {
+   "level": "WARN",
+   "id": "lopsided",
+   "width": 1440,
+   "message": "A section keeps its content on one side and leaves 789px of the width empty: \"Part of MoodlIA\".",
+   "fix": "Fill the other side with what the section has (its picture, a second column, the figure), or defend the void in one sentence."
+  },
+  {
+   "level": "FAIL",
+   "id": "still-page",
+   "width": 1440,
+   "message": "Only 0 element(s) moved while the page loaded and scrolled.",
+   "fix": "Build the motion layer (SKILL.md step 9, references/motion.md): the signature move, an entrance for the parts of every section, feedback on every control, and one moving picture. Transform and opacity only, with a reduced-motion fallback."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\inspect\\desktop-fold.jpg",
+   "pages": [
+    "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\inspect\\desktop-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\inspect\\tablet-fold.jpg",
+   "pages": [
+    "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\inspect\\tablet-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\inspect\\mobile-fold.jpg",
+   "pages": [
+    "D:\\Proyectos\\moodlia\\moodlia-website\\.taste-skill\\inspect\\mobile-page-01.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

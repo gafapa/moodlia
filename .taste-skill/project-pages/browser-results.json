@@ -1,0 +1,438 @@
+{
+  "results": [
+    {
+      "project": "moodle-core-cli",
+      "width": 1440,
+      "overflow": false,
+      "lines": 0.9999653291420119,
+      "title": "Moodle Core CLI",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodle-core-cli",
+      "width": 768,
+      "overflow": false,
+      "lines": 0.9998908409705529,
+      "title": "Moodle Core CLI",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodle-core-cli",
+      "width": 390,
+      "overflow": false,
+      "lines": 0.9996764053254438,
+      "title": "Moodle Core CLI",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-analyzer-desktop",
+      "width": 1440,
+      "overflow": false,
+      "lines": 1.9999306582840237,
+      "title": "MoodlIA Analyzer Desktop",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-analyzer-desktop",
+      "width": 768,
+      "overflow": false,
+      "lines": 1.9997816819411058,
+      "title": "MoodlIA Analyzer Desktop",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-analyzer-desktop",
+      "width": 390,
+      "overflow": false,
+      "lines": 1.9993528106508875,
+      "title": "MoodlIA Analyzer Desktop",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-analyzer-web",
+      "width": 1440,
+      "overflow": false,
+      "lines": 0.9999653291420119,
+      "title": "MoodlIA Analyzer Web",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-analyzer-web",
+      "width": 768,
+      "overflow": false,
+      "lines": 0.9998908409705529,
+      "title": "MoodlIA Analyzer Web",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-analyzer-web",
+      "width": 390,
+      "overflow": false,
+      "lines": 1.9993528106508875,
+      "title": "MoodlIA Analyzer Web",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-backup-converter",
+      "width": 1440,
+      "overflow": false,
+      "lines": 1.9999306582840237,
+      "title": "MoodlIA Backup Converter",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-backup-converter",
+      "width": 768,
+      "overflow": false,
+      "lines": 1.9997816819411058,
+      "title": "MoodlIA Backup Converter",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-backup-converter",
+      "width": 390,
+      "overflow": false,
+      "lines": 1.9993528106508875,
+      "title": "MoodlIA Backup Converter",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-cli",
+      "width": 1440,
+      "overflow": false,
+      "lines": 0.9999653291420119,
+      "title": "MoodlIA CLI",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-cli",
+      "width": 768,
+      "overflow": false,
+      "lines": 0.9998908409705529,
+      "title": "MoodlIA CLI",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-cli",
+      "width": 390,
+      "overflow": false,
+      "lines": 0.9996764053254438,
+      "title": "MoodlIA CLI",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-corrector",
+      "width": 1440,
+      "overflow": false,
+      "lines": 0.9999653291420119,
+      "title": "MoodlIA Corrector",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-corrector",
+      "width": 768,
+      "overflow": false,
+      "lines": 0.9998908409705529,
+      "title": "MoodlIA Corrector",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-corrector",
+      "width": 390,
+      "overflow": false,
+      "lines": 0.9996764053254438,
+      "title": "MoodlIA Corrector",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-edx",
+      "width": 1440,
+      "overflow": false,
+      "lines": 0.9999653291420119,
+      "title": "MoodlIA edX Converter",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-edx",
+      "width": 768,
+      "overflow": false,
+      "lines": 0.9998908409705529,
+      "title": "MoodlIA edX Converter",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-edx",
+      "width": 390,
+      "overflow": false,
+      "lines": 1.9993528106508875,
+      "title": "MoodlIA edX Converter",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-moodle-plugin",
+      "width": 1440,
+      "overflow": false,
+      "lines": 0.9999653291420119,
+      "title": "MoodlIA Moodle Plugin",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-moodle-plugin",
+      "width": 768,
+      "overflow": false,
+      "lines": 0.9998908409705529,
+      "title": "MoodlIA Moodle Plugin",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-moodle-plugin",
+      "width": 390,
+      "overflow": false,
+      "lines": 1.9993528106508875,
+      "title": "MoodlIA Moodle Plugin",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-portable",
+      "width": 1440,
+      "overflow": false,
+      "lines": 0.9999653291420119,
+      "title": "MoodlIA Portable",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-portable",
+      "width": 768,
+      "overflow": false,
+      "lines": 0.9998908409705529,
+      "title": "MoodlIA Portable",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-portable",
+      "width": 390,
+      "overflow": false,
+      "lines": 0.9996764053254438,
+      "title": "MoodlIA Portable",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-rubrics",
+      "width": 1440,
+      "overflow": false,
+      "lines": 0.9999653291420119,
+      "title": "MoodlIA Rubrics",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-rubrics",
+      "width": 768,
+      "overflow": false,
+      "lines": 0.9998908409705529,
+      "title": "MoodlIA Rubrics",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-rubrics",
+      "width": 390,
+      "overflow": false,
+      "lines": 0.9996764053254438,
+      "title": "MoodlIA Rubrics",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-skills",
+      "width": 1440,
+      "overflow": false,
+      "lines": 0.9999653291420119,
+      "title": "MoodlIA Skills",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-skills",
+      "width": 768,
+      "overflow": false,
+      "lines": 0.9998908409705529,
+      "title": "MoodlIA Skills",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-skills",
+      "width": 390,
+      "overflow": false,
+      "lines": 0.9996764053254438,
+      "title": "MoodlIA Skills",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-studio",
+      "width": 1440,
+      "overflow": false,
+      "lines": 0.9999653291420119,
+      "title": "MoodlIA Studio",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-studio",
+      "width": 768,
+      "overflow": false,
+      "lines": 0.9998908409705529,
+      "title": "MoodlIA Studio",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-studio",
+      "width": 390,
+      "overflow": false,
+      "lines": 0.9996764053254438,
+      "title": "MoodlIA Studio",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-sync",
+      "width": 1440,
+      "overflow": false,
+      "lines": 0.9999653291420119,
+      "title": "MoodlIA Sync",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-sync",
+      "width": 768,
+      "overflow": false,
+      "lines": 0.9998908409705529,
+      "title": "MoodlIA Sync",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-sync",
+      "width": 390,
+      "overflow": false,
+      "lines": 0.9996764053254438,
+      "title": "MoodlIA Sync",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-teacher-dashboard",
+      "width": 1440,
+      "overflow": false,
+      "lines": 1.9999306582840237,
+      "title": "MoodlIA Teacher Dashboard",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-teacher-dashboard",
+      "width": 768,
+      "overflow": false,
+      "lines": 1.9997816819411058,
+      "title": "MoodlIA Teacher Dashboard",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-teacher-dashboard",
+      "width": 390,
+      "overflow": false,
+      "lines": 1.9993528106508875,
+      "title": "MoodlIA Teacher Dashboard",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-test-lab",
+      "width": 1440,
+      "overflow": false,
+      "lines": 0.9999653291420119,
+      "title": "MoodlIA Test Lab",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-test-lab",
+      "width": 768,
+      "overflow": false,
+      "lines": 0.9998908409705529,
+      "title": "MoodlIA Test Lab",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-test-lab",
+      "width": 390,
+      "overflow": false,
+      "lines": 0.9996764053254438,
+      "title": "MoodlIA Test Lab",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-website",
+      "width": 1440,
+      "overflow": false,
+      "lines": 0.9999653291420119,
+      "title": "MoodlIA Website",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-website",
+      "width": 768,
+      "overflow": false,
+      "lines": 0.9998908409705529,
+      "title": "MoodlIA Website",
+      "fontLoaded": true,
+      "search": "passed"
+    },
+    {
+      "project": "moodlia-website",
+      "width": 390,
+      "overflow": false,
+      "lines": 0.9996764053254438,
+      "title": "MoodlIA Website",
+      "fontLoaded": true,
+      "search": "passed"
+    }
+  ],
+  "noScript": "passed",
+  "reducedMotion": "readable"
+}
