@@ -36,6 +36,8 @@ or proof of measured time savings.
 
 ## Operating Context
 
+- MoodlIA Portable is an unsigned desktop preview bundling Moodle, PHP and PostgreSQL. Downloadable artifacts currently require GitHub sign-in; there is no public GitHub Release. Its guide explains local authoring, optional MoodlIA/MCP access and standard .mbz export. Keep this separate from installing the plugin on a school server.
+
 - The Moodle plugin requires installation on the site and configured access.
 - Rubrics is a browser-store extension independent of the Moodle plugin.
 - Corrector is a manually installed Chrome extension. Its public release is

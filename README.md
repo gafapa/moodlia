@@ -16,6 +16,8 @@ Use Node.js 22.13 or later and npm 10 or later. Run `npm ci` and `npm run dev` f
 
 ### Current scope
 
+- Include MoodlIA Portable as the local Moodle installer, with English/Spanish first-launch, preview artifact download and course-export guidance. Current downloads are GitHub Actions artifacts requiring sign-in; no public GitHub Release is advertised.
+
 - Lead with AI working inside Moodle, then show rubric import,
   teacher-reviewed grading and course reuse. Provide clear entry points by
   task without audience or installation-skill classifications.

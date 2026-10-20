@@ -276,3 +276,6 @@ body:has(.cinematic-home) .skip-link:not(:focus) { clip-path: inset(50%); width:
 @media (prefers-reduced-motion: reduce) {
   .cinematic-home *, .cinematic-home *::before, .cinematic-home *::after { animation: none !important; transition: none !important; }
 }
+
+.poster-note a { display: inline-flex; align-items: center; gap: 10px; text-underline-offset: 4px; }
+.poster-note a svg { width: 20px; height: 20px; flex-shrink: 0; }

@@ -1,0 +1,36 @@
+{
+  "checked_at_utc": "2026-10-20T08:11:37.595034+00:00",
+  "public_releases": 0,
+  "artifacts": [
+    {
+      "name": "MoodlIA-Windows-x64",
+      "id": 12232305572,
+      "workflow_run": 39345158151,
+      "expired": false
+    },
+    {
+      "name": "MoodlIA-macOS-arm64",
+      "id": 12232140173,
+      "workflow_run": 39345158151,
+      "expired": false
+    },
+    {
+      "name": "MoodlIA-macOS-x64",
+      "id": 12232036476,
+      "workflow_run": 39343387793,
+      "expired": false
+    },
+    {
+      "name": "MoodlIA-Linux-arm64",
+      "id": 12231891754,
+      "workflow_run": 39345158151,
+      "expired": false
+    },
+    {
+      "name": "MoodlIA-Linux-x64",
+      "id": 12231273537,
+      "workflow_run": 39345158151,
+      "expired": false
+    }
+  ]
+}

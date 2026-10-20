@@ -47,7 +47,7 @@ Current generated illustrations and retained historical imagery are documented i
 
 ## Directory and guide pages (current editorial system)
 
-The directory, eleven tool guides, installation, explanation and legal routes now share the Roundo typography and fixed light poster palette. `app/editorial.css` provides neutral reading surfaces, large image-led headers, semantic status labels, native installation disclosures, a concise per-tool workflow and a useful setup sidebar. Header/footer and hover states use explicit high-contrast colours in either system colour scheme.
+The directory, twelve tool guides, installation, explanation and legal routes now share the Roundo typography and fixed light poster palette. `app/editorial.css` provides neutral reading surfaces, large image-led headers, semantic status labels, native installation disclosures, a concise per-tool workflow and a useful setup sidebar. Header/footer and hover states use explicit high-contrast colours in either system colour scheme.
 
 Three original generated editorial illustrations replace the small teaching artefacts in the homepage and appear in relevant interior contexts. They show teaching materials, never a fake application screen. Asset provenance, prompts, public paths and ownership are in `docs/editorial-imagery.md`. The earlier Wikimedia lesson photographs are retained as source history but no longer used in the current page.
 
@@ -72,3 +72,7 @@ The extension pages are self-contained English documents owned by `public/privac
 Never silently relocate or replace a policy with an app landing page, login, download, or generic privacy summary. If a future migration introduces another address, keep the established address serving the relevant policy or a permanent redirect to its exact successor. Preserve the policy content and disclosures when changing presentation.
 
 The static exporter validates the route contract before replacing an export, copies both documents unchanged, verifies their bytes, and requires their sitemap entries. Rendered tests protect the fixed paths and index links. Run `npm test` and `npm run export:static` before delivering any redesign or regenerated site; a missing policy is a build failure, not a deferred publishing task.
+
+## Local Moodle installer guide
+
+MoodlIA Portable uses the existing teaching artwork, guide composition and three-stage workflow. It is linked from the homepage, the create/reuse family, the local-computer installation group and the local-work explanation. English and Spanish guides distinguish unsigned preview artifacts requiring GitHub sign-in from a public release. Preserve the optional-plugin and local-authoring-to-.mbz workflow, and never label workflow artifacts as signed installers.

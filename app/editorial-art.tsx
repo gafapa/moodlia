@@ -15,6 +15,7 @@ export function EditorialArt({ kind, className = "", eager = false, caption }: {
 }
 
 const journeys: Record<AppSlug, { en: string[]; es: string[] }> = {
+  portable: { en: ["Install on your computer", "Create your course", "Export to Moodle"], es: ["Instalar en tu ordenador", "Crear tu curso", "Exportar a Moodle"] },
   "moodle-plugin": { en: ["Authorized access", "Compatible assistant", "Work in Moodle"], es: ["Acceso autorizado", "Asistente compatible", "Trabajo en Moodle"] },
   cli: { en: ["Account and token", "Explicit command", "Review the result"], es: ["Cuenta y token", "Comando explícito", "Revisar el resultado"] },
   "moodle-core-cli": { en: ["Enabled services", "Core command", "Verify in Moodle"], es: ["Servicios habilitados", "Comando Core", "Verificar en Moodle"] },

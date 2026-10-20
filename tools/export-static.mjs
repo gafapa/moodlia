@@ -11,6 +11,7 @@ const serverEntry = resolve(projectRoot, "dist", "server", "index.js");
 const outputRoot = resolve(projectRoot, ".static-export");
 const fontSourcePrefix = `${projectRoot.replaceAll("\\", "/")}/.vinext/fonts/`;
 const appSlugs = [
+  "portable",
   "corrector",
   "rubrics",
   "backup-converter",

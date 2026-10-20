@@ -1,0 +1,663 @@
+{
+  "verifiedAt": "2026-10-20T08:10:14.713Z",
+  "base": "https://moodlia.com/",
+  "files": [
+    {
+      "path": ".rsc",
+      "sha256": "cdd27ce5fd1762014649d4e0e78e88150410913e64cb91c801c200044b47150f"
+    },
+    {
+      "path": "apps.rsc",
+      "sha256": "ace7f221c0062737a77aeab37943f6665aac17cd0c53f7e757741f89bf8911bb"
+    },
+    {
+      "path": "apps/analyzer-web.rsc",
+      "sha256": "1d48137c085a1b703ec3af5a9a6a27bc9fd588699f5e750ead6306a359d94dd7"
+    },
+    {
+      "path": "apps/analyzer-web/index.html",
+      "sha256": "ffa6ad02b92da62ec503e7d3bc6cbee55af5a7a21cf97720795ffd9f4b6c2ddd"
+    },
+    {
+      "path": "apps/backup-converter.rsc",
+      "sha256": "34c948e3671ad761ca328fe34cc4dbabc8aaecce31db1e65f674a6e5b7909cfc"
+    },
+    {
+      "path": "apps/backup-converter/index.html",
+      "sha256": "ac2b9e51eb319301b362e5ae9da1a9973f4008e611f0c9f21642265b1fa7917e"
+    },
+    {
+      "path": "apps/cli.rsc",
+      "sha256": "8980e423cb9460d165be8d471f957996a7f08317f7b65e37bb5b20ff3bc34236"
+    },
+    {
+      "path": "apps/cli/index.html",
+      "sha256": "43b3a2236117a62efa4cb06eb1b87632fe01ee0817b54831b56fafa6961e46a6"
+    },
+    {
+      "path": "apps/corrector.rsc",
+      "sha256": "41be5991a971e816d505ccfefb6b1d4fecbbc23d224420ba101a32cfad2419e5"
+    },
+    {
+      "path": "apps/corrector/index.html",
+      "sha256": "3477a0e04a24198503aa4e5ef11759fa90a10ddac6818d3bbee22c0a0d500339"
+    },
+    {
+      "path": "apps/edx-converter.rsc",
+      "sha256": "ca1e781af24447d56fa7252346baada922c5a18deb1063b93a12b2e0dd07e456"
+    },
+    {
+      "path": "apps/edx-converter/index.html",
+      "sha256": "cafca87d823b003edc541fdcd097bbcf2432ce044bf12ca844ae6bf881408d9a"
+    },
+    {
+      "path": "apps/index.html",
+      "sha256": "71614e7fe32f27cd79f99088dceaf527e6a65311efdbd22528937ef0f0667db5"
+    },
+    {
+      "path": "apps/moodle-core-cli.rsc",
+      "sha256": "10f680caa205b1f28e2b9b3c9237d35abce2e3801edaf0ff3edc951f841654c3"
+    },
+    {
+      "path": "apps/moodle-core-cli/index.html",
+      "sha256": "1d34d69da546572daab33b18914516ebbab217479974eca15035b46d864b72e5"
+    },
+    {
+      "path": "apps/moodle-plugin.rsc",
+      "sha256": "338b6e618bca6f0c2af8678891f8a441cfaad5f212fa1840b24fa8ec64f93b35"
+    },
+    {
+      "path": "apps/moodle-plugin/index.html",
+      "sha256": "d3e4729a276091709e688b01552d5885be7c9970facfbac1323cb6bd195697c5"
+    },
+    {
+      "path": "apps/portable.rsc",
+      "sha256": "a3cf470ac38552b1dc14c8cfb03654feae059eb855db4b526d857f3803f87d41"
+    },
+    {
+      "path": "apps/portable/index.html",
+      "sha256": "081f4401b52539dffa4111b21f30815f7c39d7e20b7832e066ac4b3117628799"
+    },
+    {
+      "path": "apps/rubrics.rsc",
+      "sha256": "1be63fd111fe6b27247139f45a49136264103657a9c1bf9a394022af85fb6e8a"
+    },
+    {
+      "path": "apps/rubrics/index.html",
+      "sha256": "3cb17fc00afec76bf45ed68abd1338c469ddc632e66df3808ea0282d7a3c3962"
+    },
+    {
+      "path": "apps/skills.rsc",
+      "sha256": "8036c5830133e0e047db8e051ad20fdaf52083207571fa90dfc92aac0a6f3540"
+    },
+    {
+      "path": "apps/skills/index.html",
+      "sha256": "0fd5eef3a0af89b34af6d4153f6a706acd03b5a6ae5e6a99c117dc12d353ce72"
+    },
+    {
+      "path": "apps/sync.rsc",
+      "sha256": "07ee32097c636fc45ab8030342e3cf6d36443864c13eb7fb08cbebf70d9c7b72"
+    },
+    {
+      "path": "apps/sync/index.html",
+      "sha256": "c63e3a7f5820362186b84ac5dba2440d9d81f1c457f16aa5a6de9b2ab1cdbe28"
+    },
+    {
+      "path": "apps/teacher-dashboard.rsc",
+      "sha256": "dde00cf64db2454bf3f5ed2cf4afa5638e048055328f220120ffc911e094a63c"
+    },
+    {
+      "path": "apps/teacher-dashboard/index.html",
+      "sha256": "21da85fdbad58c74258e264d69a37b1ba77db68b6f08a01aaee966d54cfe9c1a"
+    },
+    {
+      "path": "assets/_vinext_fonts/bricolage-grotesque-b05cd6d95bab/bricolage-grotesque-2064f7d0.woff2",
+      "sha256": "4fd48b2c1ab27220e71f15f990550261b35245c3bdfd8d8025b4bdac0459ee2d"
+    },
+    {
+      "path": "assets/_vinext_fonts/bricolage-grotesque-b05cd6d95bab/bricolage-grotesque-6116525b.woff2",
+      "sha256": "ea16948d4a91b77221f119ad27d4ac7a7581c98cf990712047f89a531a49ef28"
+    },
+    {
+      "path": "assets/_vinext_fonts/bricolage-grotesque-b05cd6d95bab/bricolage-grotesque-9101bee3.woff2",
+      "sha256": "a22c997a894377f36d81c904163e0c05fbbcd32f0ca2e7beedb86b39be1296a1"
+    },
+    {
+      "path": "assets/_vinext_fonts/dm-sans-90624ee039aa/dm-sans-151a53ae.woff2",
+      "sha256": "468d56b6b25b05b70190b6c233d773f6f1770e8579827ce022a57f03fa8002fb"
+    },
+    {
+      "path": "assets/_vinext_fonts/dm-sans-90624ee039aa/dm-sans-f6298972.woff2",
+      "sha256": "219b02c7d8884817d3d6ad4c8771f2c000ce4c5669a67ef4e2e5617ffa25c4cc"
+    },
+    {
+      "path": "assets/_vinext_fonts/geist-8ac0455e797f/geist-001175b1.woff2",
+      "sha256": "58a6b173d5ca1dec92166ea3c6cb1a84a4144556d10928ac14e8e6b40e4787bd"
+    },
+    {
+      "path": "assets/_vinext_fonts/geist-8ac0455e797f/geist-52306abf.woff2",
+      "sha256": "f689f638f29fff460a2d5749edb5d5c38d7bef0389f32032d871f23fc6ebb008"
+    },
+    {
+      "path": "assets/_vinext_fonts/geist-8ac0455e797f/geist-875ccdd4.woff2",
+      "sha256": "6129fc8571c3e0cb0a4c41f5160c974a843b055009dc4ad8858bd808e18a2d86"
+    },
+    {
+      "path": "assets/_vinext_fonts/geist-8ac0455e797f/geist-98bbbccb.woff2",
+      "sha256": "9b6f5ff45b278c744b5f379a2c4ecbaf858a842b8eaf82ac8d21b699ca16c608"
+    },
+    {
+      "path": "assets/_vinext_fonts/geist-8ac0455e797f/geist-ff2310f5.woff2",
+      "sha256": "b7a545bbb08256bd809f11cfe66d88da3e22d169ea4407737b1ef0ec1ed3d791"
+    },
+    {
+      "path": "assets/_vinext_fonts/geist-mono-00e989178794/geist-mono-013b2f2f.woff2",
+      "sha256": "5f3d6ad60f29d6cb708414ec6887163d63bf197377ef5417d2483ff31ace6c3b"
+    },
+    {
+      "path": "assets/_vinext_fonts/geist-mono-00e989178794/geist-mono-0638449e.woff2",
+      "sha256": "d67e4a94ba498635f764ddca7d1ec4271f5642f032eb24b426764480f66f8497"
+    },
+    {
+      "path": "assets/_vinext_fonts/geist-mono-00e989178794/geist-mono-44745446.woff2",
+      "sha256": "745994b5cd950ec201b66526375f057d540847cccfc70f4f24f5f571d26d3923"
+    },
+    {
+      "path": "assets/_vinext_fonts/geist-mono-00e989178794/geist-mono-44e03052.woff2",
+      "sha256": "75b3bedbebc35f347c0ae3b416aa871941555357e7b0f83767eb5987875589ed"
+    },
+    {
+      "path": "assets/_vinext_fonts/geist-mono-00e989178794/geist-mono-971fb274.woff2",
+      "sha256": "16e1d48b6dd29eb240aec5db36184eb182933c082cd43de7f35af686d58087d2"
+    },
+    {
+      "path": "assets/_vinext_fonts/geist-mono-00e989178794/geist-mono-f6b33328.woff2",
+      "sha256": "e27f657e38d52887baa3b6b2f812bef93dfdd356f0810e40edd4ee284cc7e9f6"
+    },
+    {
+      "path": "assets/_vinext_fonts/space-grotesk-feef4dc31705/space-grotesk-53435720.woff2",
+      "sha256": "d699664b145bfeeccc66a4cce7fa55e14eb63efd7ec6b0b2ec52e25dd98f3917"
+    },
+    {
+      "path": "assets/_vinext_fonts/space-grotesk-feef4dc31705/space-grotesk-a57c9413.woff2",
+      "sha256": "a0d054c4af557de20afd6ca59f47ab353bcaec49c63ff04b6c9d39d0f8910557"
+    },
+    {
+      "path": "assets/_vinext_fonts/space-grotesk-feef4dc31705/space-grotesk-e911c2d9.woff2",
+      "sha256": "054c266fbb441ee059365dba0885d206f67ca05b375de869b88e02ebfccc9b9d"
+    },
+    {
+      "path": "assets/framework-DGW2U9er.js",
+      "sha256": "1050c445c356564fb91d038271e0f2ebb36c85ea3f4d6505680087db1ac5f2ec"
+    },
+    {
+      "path": "assets/index-9bCAEhLB.js",
+      "sha256": "087e7460dde5399de6d9a718b81b68922b331aade912ee203ada02a9fbe80ce1"
+    },
+    {
+      "path": "assets/index-CSDd6Wa1.css",
+      "sha256": "ffbf9f7600d0b62a873b3089cda6f29b3cef07ea354f371b80d7f23215f94354"
+    },
+    {
+      "path": "assets/rolldown-runtime-hePW80VL.js",
+      "sha256": "580ad8c58061a4dde99bde0a56905e382f0568516ee2f5b84dbfb52085709021"
+    },
+    {
+      "path": "assets/worker-entry-BjMPPXq6.js",
+      "sha256": "aa5479da7dcf6aa7da99350060c25e3268c2cbee2943c9a62cd905433f220a2e"
+    },
+    {
+      "path": "cookies.rsc",
+      "sha256": "f60cca356d6d854701b813f764faaed0c91b0304860371ccb39c16bd2a8b4e30"
+    },
+    {
+      "path": "cookies/index.html",
+      "sha256": "476e2c1a8b8956629d21ac1995b830260a52411807740c113275e0a7547408dc"
+    },
+    {
+      "path": "es.rsc",
+      "sha256": "b1cbfe37232e3607d796110b6fa6bc9bcb9c94df6651ad7adf847eed251f8308"
+    },
+    {
+      "path": "es/apps.rsc",
+      "sha256": "ba5ec28b1ae93b582fc1ef7a447c90ad89395743d70b3f82661a44fa21025212"
+    },
+    {
+      "path": "es/apps/analyzer-web.rsc",
+      "sha256": "dba2bf8033ef8c7d0037652a0511fc2cfc19e65b9b8e7666a33495c78788ddde"
+    },
+    {
+      "path": "es/apps/analyzer-web/index.html",
+      "sha256": "e1f21085ac3f282b2c22322ce81f97faf50b64959135fd3a42f6a41dd3c6c442"
+    },
+    {
+      "path": "es/apps/backup-converter.rsc",
+      "sha256": "e44a8d70d5a478675fa59c19e73b0c992d70d0c6c337503c4243af1eb24a1f5f"
+    },
+    {
+      "path": "es/apps/backup-converter/index.html",
+      "sha256": "f77bf34fe832163b1cf1cf902167e8141baca81a1baa092eada1f947eea965f9"
+    },
+    {
+      "path": "es/apps/cli.rsc",
+      "sha256": "e96b32e53b132278849e0a5055cc1a3d4bc12242c417ab25e74836a0898a8428"
+    },
+    {
+      "path": "es/apps/cli/index.html",
+      "sha256": "1cddc1f18c71e91d231f75a5fd21528aeaf415729f2793e868df6685dd7c5cce"
+    },
+    {
+      "path": "es/apps/corrector.rsc",
+      "sha256": "d7bad19c5504117b60fcc9713030e7e2bc2302daccc29fbcfefd33aa576ba62e"
+    },
+    {
+      "path": "es/apps/corrector/index.html",
+      "sha256": "2b36a0aed9ace37ceea33e2fadbbe341197fb9003d8631863a1cc84461cd0c49"
+    },
+    {
+      "path": "es/apps/edx-converter.rsc",
+      "sha256": "0023cceaa21c7d99309c80c511cbd469d38868b4c0075758dca8837c8acfdda4"
+    },
+    {
+      "path": "es/apps/edx-converter/index.html",
+      "sha256": "c4dbfcaad0445b8de3a1fd4760e597228c56e718164c3a39c2941cdd5b8ac700"
+    },
+    {
+      "path": "es/apps/index.html",
+      "sha256": "ecf254250d8d81be73e6ea4ae982695c4fe86d94d3b36f57ec8b9e09a3f62f06"
+    },
+    {
+      "path": "es/apps/moodle-core-cli.rsc",
+      "sha256": "ea06fc23f050e634fc8eb2fcaacbebb5a77bd8c3d47e2beb0f90d393d191a6f2"
+    },
+    {
+      "path": "es/apps/moodle-core-cli/index.html",
+      "sha256": "7d99b6ff6aa444177b566efd4acceed387ca15c7195b3a7f1fe357f6d2c475b3"
+    },
+    {
+      "path": "es/apps/moodle-plugin.rsc",
+      "sha256": "9c1d1401f946696e7441b220833c4b229cde7635ebaefd6d72c4c5c7efa09319"
+    },
+    {
+      "path": "es/apps/moodle-plugin/index.html",
+      "sha256": "bca082150b8295d400588cbe554601a0ff1dff249c24711be9457f9373dd8123"
+    },
+    {
+      "path": "es/apps/portable.rsc",
+      "sha256": "2c0d07f624ec51f2ea48ce1a7d83516ad7f25e5c09468b0d1100ebf0da44ed26"
+    },
+    {
+      "path": "es/apps/portable/index.html",
+      "sha256": "7fb67b472f8e2a46765dfd387f645d3b37acf6569da128e5222abab3acdde8db"
+    },
+    {
+      "path": "es/apps/rubrics.rsc",
+      "sha256": "a0112d659067c2c99febbffbbd3f7b60606d3031c7c35d6c8ff1bc248daddd4b"
+    },
+    {
+      "path": "es/apps/rubrics/index.html",
+      "sha256": "f094a10d4ce843c0c81bb9d1d5ed3b715fb79fc81993a8e02d6889779da35540"
+    },
+    {
+      "path": "es/apps/skills.rsc",
+      "sha256": "5fc60e372f74a07aeef55944c1f6657cec9adb35fa30f554a084b60dd7c9b00d"
+    },
+    {
+      "path": "es/apps/skills/index.html",
+      "sha256": "8639d45e33152637b0b54d75018a23ba3ead8d07d2642962ca9507551c12762e"
+    },
+    {
+      "path": "es/apps/sync.rsc",
+      "sha256": "c0e652cab5a05467046e3969306e82f0902dd1f63d9dba955d234aed7ce185f0"
+    },
+    {
+      "path": "es/apps/sync/index.html",
+      "sha256": "7acfef8bee49bf4589aa249f166aa8268ef94640d1bf94edf2f53ca217a92787"
+    },
+    {
+      "path": "es/apps/teacher-dashboard.rsc",
+      "sha256": "1341747538e6c7edd044e1bc4ed9cd7ba6bfa1b93abca538c334728b6d1a78ef"
+    },
+    {
+      "path": "es/apps/teacher-dashboard/index.html",
+      "sha256": "3a16ec4d715a7e4419825af0ba6938541a00530079576c2fc12e3c8c41c48b72"
+    },
+    {
+      "path": "es/aviso-legal.rsc",
+      "sha256": "f0cb1387b5b54292a0aabf5edb6a543c01d4dcb9a0e6d91cb96915b011ab379e"
+    },
+    {
+      "path": "es/aviso-legal/index.html",
+      "sha256": "a25522a505dcee9903619e6434bf1c31ac5c40465421f8e67e7e72b130ee5eab"
+    },
+    {
+      "path": "es/como-funciona.rsc",
+      "sha256": "d231c6b060edc97d0c7cc3d8fe554818fc380339c518ccd4a0b9010ce97f654e"
+    },
+    {
+      "path": "es/como-funciona/index.html",
+      "sha256": "09c22f421e215e773d482285e3604e8f19e312f308a72c9315acdf18bbc2b0aa"
+    },
+    {
+      "path": "es/cookies.rsc",
+      "sha256": "73dd26842a29e92a097f378dc6b1b48bd28b786160162d1aec1cd12f54750ca5"
+    },
+    {
+      "path": "es/cookies/index.html",
+      "sha256": "15af7d8049f275e16eedd494c6d518fea4eb4ea3073f10b759fdd8514687d632"
+    },
+    {
+      "path": "es/empezar/index.html",
+      "sha256": "f8476d7b8f8f0357f6d61f4143d068d2a6e6cbaa0d289d76fa2bc0e369f24859"
+    },
+    {
+      "path": "es/index.html",
+      "sha256": "76862a9407bde276baf3918eb5d5744683f1a6a721cf3bf55953d3d3be668b5a"
+    },
+    {
+      "path": "es/instalar.rsc",
+      "sha256": "93f0c0ca48eda44fe0cac9af8dd9079be594e02e09cd95b131ec56b4dc29c2a9"
+    },
+    {
+      "path": "es/instalar/index.html",
+      "sha256": "57db6ba12da6fe339522701b78ab75da78c6ec7e0b2161cb2b8cca2fcfdb1451"
+    },
+    {
+      "path": "es/privacy.rsc",
+      "sha256": "b4e2d42beb310c22bcc80093d81201e7ff0257612991f731bcae15e0a38558c0"
+    },
+    {
+      "path": "es/privacy/index.html",
+      "sha256": "169f0987d39dbc3fee7e3ee2fd1669765c616442fb0104967b0d945398ae2f53"
+    },
+    {
+      "path": "es/products/analyzer-desktop/index.html",
+      "sha256": "67109ccd0f075909e78358fc2e0c9955c5a1be9726ba79f3fe9f02e5e16d1a99"
+    },
+    {
+      "path": "es/products/analyzer-web/index.html",
+      "sha256": "d955b2c3cd2b56c8509df7b8613fa419fa2f1afb44cda2a67387f95ec7a9511c"
+    },
+    {
+      "path": "es/products/backup-converter/index.html",
+      "sha256": "804240fceb3fd47669cf792e99b96a5875c025da6ef71724221031394a51129e"
+    },
+    {
+      "path": "es/products/chrome-extensions/index.html",
+      "sha256": "67109ccd0f075909e78358fc2e0c9955c5a1be9726ba79f3fe9f02e5e16d1a99"
+    },
+    {
+      "path": "es/products/cli/index.html",
+      "sha256": "5706625d8edd73f9ec373c31f31b46c89c77f969cf8b219a70764c259ef5e55b"
+    },
+    {
+      "path": "es/products/corrector/index.html",
+      "sha256": "166b9a4698e0c16fe661cafdf701708a2bb86e810f1da5d6dc575c0fc5443f3c"
+    },
+    {
+      "path": "es/products/moodle-core-cli/index.html",
+      "sha256": "9f0f6943a8cabfebbf873d030df39db42b380adc0a350f0b9013681952d131e9"
+    },
+    {
+      "path": "es/products/moodle-plugin/index.html",
+      "sha256": "fc57bd4bfb2077d7841530cea79f7b7757a12368246282ea496a53cb40c9f4e7"
+    },
+    {
+      "path": "es/products/portable/index.html",
+      "sha256": "3211361431008fc09ee4e8dbbae71ec1f8e53174b730df9b57271ec3f220e895"
+    },
+    {
+      "path": "es/products/rubrics/index.html",
+      "sha256": "14a439b057fd53b7a430b32d9ad4ff75e6451fcfff370b9f4a22c9b2ff1cebdc"
+    },
+    {
+      "path": "es/products/skills/index.html",
+      "sha256": "97949d67e9332bb159c13a012078f19982c3bd28aa123fed647b171a5c58fce4"
+    },
+    {
+      "path": "es/products/sync-mcp/index.html",
+      "sha256": "a6815e27259c293dc4083b7623cf86abf528b794d7672a34227c9c016f6a6e04"
+    },
+    {
+      "path": "es/products/sync/index.html",
+      "sha256": "a6815e27259c293dc4083b7623cf86abf528b794d7672a34227c9c016f6a6e04"
+    },
+    {
+      "path": "es/products/teacher-dashboard/index.html",
+      "sha256": "303cc2a6768d9fd96c92a190d08af118083dfbfa60d02f72f6517fed9507ba0f"
+    },
+    {
+      "path": "es/ways/ai-integration/index.html",
+      "sha256": "67109ccd0f075909e78358fc2e0c9955c5a1be9726ba79f3fe9f02e5e16d1a99"
+    },
+    {
+      "path": "es/ways/learning-insights/index.html",
+      "sha256": "67109ccd0f075909e78358fc2e0c9955c5a1be9726ba79f3fe9f02e5e16d1a99"
+    },
+    {
+      "path": "es/ways/teaching-tools/index.html",
+      "sha256": "67109ccd0f075909e78358fc2e0c9955c5a1be9726ba79f3fe9f02e5e16d1a99"
+    },
+    {
+      "path": "favicon.svg",
+      "sha256": "3089d1211b71ca4a74e3ce3a27902c497872538769be982a06b1b8a1fbfd7d57"
+    },
+    {
+      "path": "fonts/README.md",
+      "sha256": "148ed1efc970c324e64b6f41de54c9be67d44c901ca77f253a3ef64665843b51"
+    },
+    {
+      "path": "fonts/roundo-400.woff2",
+      "sha256": "7de85b0def6470cd2526f5d67dc192bc5560f0e3a7cdc00664ae22058ce43146"
+    },
+    {
+      "path": "fonts/roundo-500.woff2",
+      "sha256": "287f1c34bd3c8262f3655a1919552afe01af92a3c325e7d54a0468e45d711f46"
+    },
+    {
+      "path": "fonts/roundo-600.woff2",
+      "sha256": "3b15786ce72de754a61d79f346df6211b8e7bc5f313f97474aa7e6ea8ab772c0"
+    },
+    {
+      "path": "how-it-works.rsc",
+      "sha256": "b4ba8efbdaea1ea65ee5a6b67de2240919f08c57c4990383aca814498ea8a657"
+    },
+    {
+      "path": "how-it-works/index.html",
+      "sha256": "77d2f617493b14a4c7a74a56d1a00ad953b9bb9d37aef651d382d0a7cba9e6ea"
+    },
+    {
+      "path": "images/editorial/assessment-workshop.jpg",
+      "sha256": "de66ae257d300beb4f3d3dbd07f9db00b70ac0a895d68df21f87d62d47e6d83c"
+    },
+    {
+      "path": "images/editorial/course-reuse.jpg",
+      "sha256": "80f8285facd4222ca044efdd8aa695814dafd47125d944e3a817f15eafe5e164"
+    },
+    {
+      "path": "images/editorial/teaching-workshop.jpg",
+      "sha256": "89c1286231cb494d57663a96caabba1efce435445205d922e7ef6dbcc0226c15"
+    },
+    {
+      "path": "images/lesson/ground-mounted-solar-panels-gk.jpg",
+      "sha256": "c53447193a0c49669c8d93f93cf6ff475789bc81ed859e9f3510723237f8b551"
+    },
+    {
+      "path": "images/lesson/solar-panel-energy-control-unit.jpg",
+      "sha256": "13bfe76ccc2e66212e21848b2f9a48fb9aabc355221150cc067f995cab4bb1d1"
+    },
+    {
+      "path": "images/lesson/solar-panels-in-paysandu-department.jpg",
+      "sha256": "b7fd639eec4529428e2975877b442f8bf586cc016861478c5eab3df27c7c5877"
+    },
+    {
+      "path": "images/lesson/windmills-d1-d4-thornton-bank.jpg",
+      "sha256": "89353d06a5a3907522153008ed5ebcaf861cbcf25e66d408d6535bee77f892ad"
+    },
+    {
+      "path": "index.html",
+      "sha256": "750a9a3639b83972c43f3ac738cf203992fd49e0c552511b058f557121358a19"
+    },
+    {
+      "path": "install.rsc",
+      "sha256": "9aa0b1e2869038cf7374b677bb10b49145dcfa3d90fc47d77d303608b92306ee"
+    },
+    {
+      "path": "install/index.html",
+      "sha256": "7f5c62877cc6d80943deabee303c8f1b099fdc82be25ae44ebd792d696a0cedc"
+    },
+    {
+      "path": "legal-notice.rsc",
+      "sha256": "354a2679328466927c5218bdb849075b83f1588c7766ad9b73e6f6607ab040fa"
+    },
+    {
+      "path": "legal-notice/index.html",
+      "sha256": "2a09b1caad644c5282d675f6362358ac1563ec4a422dee96b88b010f4e9c02f5"
+    },
+    {
+      "path": "og-moodlia.png",
+      "sha256": "4d41d1488b2ce6258309458b22069563e9c1bebee46a9eef4456335990354823"
+    },
+    {
+      "path": "privacy.rsc",
+      "sha256": "9a37ebc5f439a96a914daf872852ac147adf42d32e5d5832746613017be1af85"
+    },
+    {
+      "path": "privacy/corrector.html",
+      "sha256": "3670ecda67f1eb8080d7b0ab98132c9174799f8417a4b8b2dd14c39554280ed8"
+    },
+    {
+      "path": "privacy/index.html",
+      "sha256": "a7f79b34553d3ac6e553e9eef7f80771b0f55979885a462219c2bcb038c97b10"
+    },
+    {
+      "path": "privacy/rubrics.html",
+      "sha256": "f047e355805de676f2dff5ba77e850da12a81ee8efad99e791b5937ee712e4e5"
+    },
+    {
+      "path": "products/analyzer-desktop/index.html",
+      "sha256": "64e5b590bf61ae0b31e84075f734b4c68ae7f34b1ad205cf8b6591fae701520b"
+    },
+    {
+      "path": "products/analyzer-web/index.html",
+      "sha256": "600415ae1c97c1752572a11e138e19f738a6144db91475d4a1bfa12479efef30"
+    },
+    {
+      "path": "products/backup-converter/index.html",
+      "sha256": "1e90b5d490b07636ff94d49845266db5ffa0cc7f68a9a252b8667997f39dbe6e"
+    },
+    {
+      "path": "products/chrome-extensions/index.html",
+      "sha256": "64e5b590bf61ae0b31e84075f734b4c68ae7f34b1ad205cf8b6591fae701520b"
+    },
+    {
+      "path": "products/cli/index.html",
+      "sha256": "6850bc0f9898e05b6371c2efd735187a6198b103bfaf7b0114d0a194d1b1b45b"
+    },
+    {
+      "path": "products/corrector/index.html",
+      "sha256": "cc9f45ff8d0985076a27a7907ad10b8750f32d9abc85b1f5c741d7af024ddd62"
+    },
+    {
+      "path": "products/moodle-core-cli/index.html",
+      "sha256": "8d267a202de0ecf93a669b35cedfc5ddb4ed98a02a47c1bb7188e434adf39d0d"
+    },
+    {
+      "path": "products/moodle-plugin/index.html",
+      "sha256": "4d247a67173204764c437747e6cb24ae60261835540b3233a7844e92f6a39f89"
+    },
+    {
+      "path": "products/portable/index.html",
+      "sha256": "2c298ee49b1ceb8241d79b37c235acdfd95b5a55abc381e7e1ee328fc86f327b"
+    },
+    {
+      "path": "products/rubrics/index.html",
+      "sha256": "efb6c407b48231e640203b92641a96a2a261a7e81fc772790889146093c67b50"
+    },
+    {
+      "path": "products/skills/index.html",
+      "sha256": "4e73b42ad0ec9a87feb364eb1fdfa02de866ff47a218820eece0286945f3f0f7"
+    },
+    {
+      "path": "products/sync-mcp/index.html",
+      "sha256": "2dc29440118663c81bf179d75cb454911c0e71d469f05d9d92d9b9a3c93c7390"
+    },
+    {
+      "path": "products/sync/index.html",
+      "sha256": "2dc29440118663c81bf179d75cb454911c0e71d469f05d9d92d9b9a3c93c7390"
+    },
+    {
+      "path": "products/teacher-dashboard/index.html",
+      "sha256": "4c7dbb0000ef89e60f71d5e63649c03a821991a66fc01d0952aa20631edb751c"
+    },
+    {
+      "path": "robots.txt",
+      "sha256": "5b5a7b9adbd36ce240ebe0bd6bf9190b97f7b0ed5dbd38bee09509cf1f8c5048"
+    },
+    {
+      "path": "sitemap.xml",
+      "sha256": "59e532c6798f00913ab7eef6bd7994664a63787b72bb1180e09af37e924573f2"
+    },
+    {
+      "path": "start/index.html",
+      "sha256": "6af2039a23acc0e181eae54ed7d9fb341602a2d18889a25e94c6da169f39eb18"
+    },
+    {
+      "path": "tools/backup-converter/assets/converter.worker-C7VdrOXO.js",
+      "sha256": "da9482b1c3569de38167828e6d49b29e68b301bb2d04c0db6e0b2579ff2d9ea4"
+    },
+    {
+      "path": "tools/backup-converter/assets/converter.worker-C7VdrOXO.js.map",
+      "sha256": "31dac62a7aae4faf59622d9b5b981a9ccc0e183971f726217a220aedae970b66"
+    },
+    {
+      "path": "tools/backup-converter/assets/index-DRcGtnp1.js",
+      "sha256": "ef35041fc7d33dea8f43c03dab93518bc2d08a68d9dca268eb1d1c0bc513d1d4"
+    },
+    {
+      "path": "tools/backup-converter/assets/index-DRcGtnp1.js.map",
+      "sha256": "b87d575aeeb07b7fe622b4f565d5f5418547fb1ae9695aee5a45d22914f8a2d1"
+    },
+    {
+      "path": "tools/backup-converter/assets/index-DYax2llw.css",
+      "sha256": "3f107ac521a6df8b90da5de7a0249a17ec5344c54c7b1c577d316af9ade302c2"
+    },
+    {
+      "path": "tools/backup-converter/assets/newsreader-latin-400-normal-BFBkh4jY.woff2",
+      "sha256": "e66067814f1c672d33a457e4f4d102c818b481420e2234cf685ebdbf2f443904"
+    },
+    {
+      "path": "tools/backup-converter/assets/newsreader-latin-400-normal-gRTjlS2D.woff",
+      "sha256": "76e600318cebb11dd31d917fe621d2b79cfa4be0830d035fcb125f9db44e69c9"
+    },
+    {
+      "path": "tools/backup-converter/assets/newsreader-latin-500-normal-B66TYsaK.woff2",
+      "sha256": "5613e2fc8377392c02e8ac9d55014689fb5320a5f2a7be55e8088a314728ac2c"
+    },
+    {
+      "path": "tools/backup-converter/assets/newsreader-latin-500-normal-DFwuUcdu.woff",
+      "sha256": "37855d65f9af181a63471d3f56e734bcf9e620b43671762f3518c4e9d2ae125e"
+    },
+    {
+      "path": "tools/backup-converter/index.html",
+      "sha256": "70b28c0f478bd81072db3df2351722fe9ba4a9a22672d27ddcdb364d4ed87b7d"
+    },
+    {
+      "path": "ways/ai-integration/index.html",
+      "sha256": "64e5b590bf61ae0b31e84075f734b4c68ae7f34b1ad205cf8b6591fae701520b"
+    },
+    {
+      "path": "ways/learning-insights/index.html",
+      "sha256": "64e5b590bf61ae0b31e84075f734b4c68ae7f34b1ad205cf8b6591fae701520b"
+    },
+    {
+      "path": "ways/teaching-tools/index.html",
+      "sha256": "64e5b590bf61ae0b31e84075f734b4c68ae7f34b1ad205cf8b6591fae701520b"
+    }
+  ],
+  "cleanRoutes": 14,
+  "http": {
+    "verified": false,
+    "reason": "UND_ERR_CONNECT_TIMEOUT"
+  }
+}

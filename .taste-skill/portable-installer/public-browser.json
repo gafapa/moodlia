@@ -1,0 +1,174 @@
+{
+  "observations": [
+    {
+      "locale": "en",
+      "width": 1440,
+      "route": "/",
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "locale": "en",
+      "width": 1440,
+      "route": "/apps",
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "locale": "en",
+      "width": 1440,
+      "route": "/install",
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "locale": "en",
+      "width": 1440,
+      "route": "/apps/portable",
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "locale": "en",
+      "width": 768,
+      "route": "/",
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "locale": "en",
+      "width": 768,
+      "route": "/apps",
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "locale": "en",
+      "width": 768,
+      "route": "/install",
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "locale": "en",
+      "width": 768,
+      "route": "/apps/portable",
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "route": "/",
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "route": "/apps",
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "route": "/install",
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "route": "/apps/portable",
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "locale": "es",
+      "width": 1440,
+      "route": "/es",
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "locale": "es",
+      "width": 1440,
+      "route": "/es/apps",
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "locale": "es",
+      "width": 1440,
+      "route": "/es/instalar",
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "locale": "es",
+      "width": 1440,
+      "route": "/es/apps/portable",
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "locale": "es",
+      "width": 768,
+      "route": "/es",
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "locale": "es",
+      "width": 768,
+      "route": "/es/apps",
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "locale": "es",
+      "width": 768,
+      "route": "/es/instalar",
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "locale": "es",
+      "width": 768,
+      "route": "/es/apps/portable",
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "locale": "es",
+      "width": 390,
+      "route": "/es",
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "locale": "es",
+      "width": 390,
+      "route": "/es/apps",
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "locale": "es",
+      "width": 390,
+      "route": "/es/instalar",
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "locale": "es",
+      "width": 390,
+      "route": "/es/apps/portable",
+      "status": 200,
+      "overflow": false
+    }
+  ],
+  "browserErrors": [],
+  "reducedMotion": true
+}

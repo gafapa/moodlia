@@ -22,6 +22,7 @@ async function html(pathname) {
 }
 
 const appSlugs = [
+  "portable",
   "corrector",
   "rubrics",
   "backup-converter",
@@ -35,6 +36,7 @@ const appSlugs = [
   "skills",
 ];
 const appNames = [
+  "MoodlIA Portable",
   "MoodlIA Corrector",
   "MoodlIA Rubrics",
   "MoodlIA Backup Converter",
@@ -73,6 +75,31 @@ test("home explains the flagship, assessment and reuse workflows", async () => {
   assert.match(page, /Your teacher review/);
   assert.match(page, /"@type":"FAQPage"/);
   assert.match(page, /contact@moodlia\.com/);
+});
+
+test("Portable is discoverable and explains the real preview installer distribution", async () => {
+  for (const prefix of ["", "/es"]) {
+    const home = await html(prefix || "/");
+    assert.ok(home.includes(`href="${prefix}/apps/portable"`));
+    const directory = await html(`${prefix}/apps`);
+    assert.match(directory, /MoodlIA Portable/);
+    const installation = await html(prefix ? "/es/instalar" : "/install");
+    assert.match(installation, /id="portable"/);
+    const guide = await html(`${prefix}/apps/portable`);
+    assert.match(guide, /status-preview/);
+    assert.match(guide, /moodlia-portable\/actions\/workflows\/native\.yml/);
+    assert.match(guide, /MoodlIA-Windows-x64/);
+    assert.match(guide, /MoodlIA-macOS-arm64/);
+    assert.match(guide, /MoodlIA-Linux-arm64/);
+    assert.match(guide, /credentials\.txt/);
+    assert.match(guide, /\.mbz/);
+    assert.doesNotMatch(guide, /moodlia-portable\/releases\/download/);
+  }
+  const english = await html("/apps/portable");
+  assert.match(english, /GitHub account/);
+  assert.match(english, /unsigned previews/);
+  assert.match(english, /No public GitHub Release/);
+  assert.match(english, /You do not install Docker/);
 });
 
 test("concept-only and superseded apps are not advertised as products", async () => {

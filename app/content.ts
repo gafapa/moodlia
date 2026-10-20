@@ -5,6 +5,7 @@ export type Locale = "en" | "es";
 export type Text = Record<Locale, string>;
 
 export type AppSlug =
+  | "portable"
   | "corrector"
   | "rubrics"
   | "backup-converter"
@@ -58,6 +59,59 @@ export interface MoodliaApp {
 const t = (en: string, es: string): Text => ({ en, es });
 
 export const apps: MoodliaApp[] = [
+  {
+    slug: "portable",
+    name: "MoodlIA Portable",
+    place: "computer",
+    status: "preview",
+    version: "0.1.0",
+    summary: t("Install Moodle on your computer. Build your course and take it to your school.", "Instala Moodle en tu ordenador. Prepara tu curso y llévalo a tu centro."),
+    description: t(
+      "A desktop installer that includes Moodle, PHP and PostgreSQL. Choose a Moodle version from 4.5 onwards on first launch, work in your own local Moodle and export courses as `.mbz` backups. You do not install Docker, PHP, Python, Node.js or a database separately. The optional MoodlIA plugin is selected by default and connects your chosen assistant through MCP; Core REST access is also available. AI assistants and model subscriptions are separate.",
+      "Un instalador de escritorio que incluye Moodle, PHP y PostgreSQL. Elige una versión de Moodle desde la 4.5 en el primer inicio, trabaja en tu propio Moodle local y exporta los cursos como copias `.mbz`. No tienes que instalar Docker, PHP, Python, Node.js ni una base de datos por separado. El plugin MoodlIA es opcional, viene marcado por defecto y conecta el asistente que elijas mediante MCP; también dispone de acceso REST Core. Los asistentes de IA y sus suscripciones son independientes.",
+    ),
+    does: [
+      t("Run a complete Moodle locally with a generated teacher administrator account.", "Ejecutar un Moodle completo en local con una cuenta administradora teacher generada al inicio."),
+      t("Select the Moodle version and optional MoodlIA plugin for a new workspace.", "Elegir la versión de Moodle y el plugin MoodlIA opcional para un espacio nuevo."),
+      t("Create courses manually or connect your assistant using the generated connection files.", "Crear cursos manualmente o conectar tu asistente con los archivos de conexión generados."),
+      t("Export courses to another Moodle through standard .mbz backup and restore.", "Exportar cursos a otro Moodle mediante las copias y restauraciones estándar .mbz."),
+    ],
+    needs: [
+      t("Windows x64, macOS Intel or Apple Silicon, or Linux x64/ARM64, with space for Moodle and your courses.", "Windows x64, macOS Intel o Apple Silicon, o Linux x64/ARM64, con espacio para Moodle y tus cursos."),
+      t("A GitHub account to download the current preview build artifacts.", "Una cuenta de GitHub para descargar los paquetes de prueba actuales."),
+      t("An external assistant and its provider settings only if you want AI-assisted authoring.", "Un asistente externo y su configuración de proveedor solo si quieres crear contenido con IA."),
+    ],
+    get: { label: t("Get preview installers on GitHub", "Obtener instaladores en GitHub"), href: "https://github.com/gafapa/moodlia-portable/actions/workflows/native.yml" },
+    install: [
+      {
+        title: t("Download a preview installer", "Descargar un instalador de prueba"),
+        steps: [
+          { text: t("Open Native packages on GitHub, sign in and choose a completed successful run. Under Artifacts, download the package for your system: MoodlIA-Windows-x64, MoodlIA-macOS-x64, MoodlIA-macOS-arm64, MoodlIA-Linux-x64 or MoodlIA-Linux-arm64.", "Abre Native packages en GitHub, inicia sesión y elige una ejecución completada correctamente. En Artifacts, descarga el paquete de tu sistema: MoodlIA-Windows-x64, MoodlIA-macOS-x64, MoodlIA-macOS-arm64, MoodlIA-Linux-x64 o MoodlIA-Linux-arm64.") },
+          { text: t("Extract the artifact ZIP. On Windows, run the setup .exe; on macOS, open the .dmg and copy the app to Applications; on Linux, install the .deb or .rpm, or choose the AppImage alternative.", "Descomprime el ZIP del artefacto. En Windows, ejecuta el instalador .exe; en macOS, abre el .dmg y copia la app a Aplicaciones; en Linux, instala el .deb o .rpm, o elige la alternativa AppImage.") },
+          { text: t("These builds are unsigned previews, not a signed public release. Read the validation record and your operating system's security warning before deciding to install. Artifacts expire; use a current successful build.", "Son versiones de prueba sin firma, no una release pública firmada. Consulta la validación y el aviso de seguridad de tu sistema antes de decidir si instalas. Los artefactos caducan; utiliza una compilación correcta y vigente.") },
+        ],
+      },
+    ],
+    firstUse: [
+      { text: t("Open MoodlIA and choose a Moodle version for a new empty workspace. Keep Install MoodlIA plugin selected if you want MCP access.", "Abre MoodlIA y elige una versión de Moodle para un espacio nuevo y vacío. Mantén marcado Install MoodlIA plugin si quieres acceso MCP.") },
+      { text: t("Wait for Moodle's home page. Open MoodlIA → Connection files, read credentials.txt and sign in as teacher. Keep these files private.", "Espera a que aparezca la portada de Moodle. Abre MoodlIA → Connection files, consulta credentials.txt e inicia sesión como teacher. Mantén privados estos archivos.") },
+      { text: t("Create your course and export a .mbz backup. Test its restore on a compatible destination Moodle; standard activities do not require MoodlIA there.", "Crea tu curso y exporta una copia .mbz. Prueba su restauración en un Moodle de destino compatible; las actividades estándar no necesitan MoodlIA allí.") },
+    ],
+    limits: [
+      t("Preview packages are currently distributed as GitHub Actions artifacts, which require GitHub sign-in and have finite retention. No public GitHub Release is available yet.", "Los paquetes de prueba se distribuyen por ahora como artefactos de GitHub Actions: requieren iniciar sesión y tienen una conservación limitada. Todavía no hay una release pública en GitHub."),
+      t("Unsigned builds and native test results do not establish signing, notarization or clean-machine compatibility on every desktop.", "Las compilaciones sin firma y las pruebas nativas no acreditan firma, notarización ni compatibilidad con cualquier equipo limpio."),
+      t("The server is local to your computer. Each workspace keeps its chosen Moodle version; automatic in-place Moodle upgrades and LAN hosting are outside this preview.", "El servidor es local a tu ordenador. Cada espacio conserva la versión de Moodle elegida; esta prueba no ofrece actualizaciones de Moodle en el mismo espacio ni alojamiento en red local."),
+      t("Keep independent backups and close the app before copying a workspace. Transfer courses with .mbz rather than raw database folders; restore compatibility depends on destination versions and plugins.", "Conserva copias independientes y cierra la app antes de copiar un espacio. Transfiere los cursos con .mbz, no con carpetas de base de datos; la restauración depende de las versiones y plugins del destino."),
+      t("Moodle does not call an AI provider by itself. Your chosen assistant may transmit course content according to its provider and settings.", "Moodle no llama por sí solo a un proveedor de IA. El asistente que elijas puede enviar contenido del curso según su proveedor y configuración."),
+    ],
+    docs: [
+      { label: t("First course and assistant setup", "Primer curso y conexión del asistente"), href: "https://github.com/gafapa/moodlia-portable/blob/main/docs/QUICKSTART.md" },
+      { label: t("Native validation and distribution limits", "Validación nativa y límites de distribución"), href: "https://github.com/gafapa/moodlia-portable/blob/main/docs/VALIDATION.md" },
+      { label: t("Available installer builds", "Compilaciones de instaladores disponibles"), href: "https://github.com/gafapa/moodlia-portable/actions/workflows/native.yml" },
+    ],
+    source: "https://github.com/gafapa/moodlia-portable",
+    license: "GPL-3.0-or-later",
+  },
   {
     slug: "corrector",
     name: "MoodlIA Corrector",
@@ -630,6 +684,7 @@ export function getApp(slug: string) {
 
 /** Tasks a visitor may arrive with, each answered by one app. */
 export const tasks: Array<{ text: Text; app: AppSlug }> = [
+  { text: t("Install a local Moodle to prepare my courses", "Instalar un Moodle local para preparar mis cursos"), app: "portable" },
   { text: t("Import a rubric from a spreadsheet", "Importar una rúbrica desde una hoja de cálculo"), app: "rubrics" },
   { text: t("Restore a course on an older Moodle", "Restaurar un curso en un Moodle más antiguo"), app: "backup-converter" },
   { text: t("Bring an Open edX course into Moodle", "Llevar un curso de Open edX a Moodle"), app: "edx-converter" },
@@ -646,7 +701,7 @@ export const tasks: Array<{ text: Text; app: AppSlug }> = [
 export const productFamilies: Array<{ id: string; title: Text; body: Text; apps: AppSlug[] }> = [
   { id: "connect", title: t("Connect AI and workflows to Moodle", "Conecta la IA y tus flujos de trabajo con Moodle"), body: t("The plugin exposes operations over REST and MCP. CLI and standard Core access provide automation interfaces.", "El plugin expone operaciones por REST y MCP. La CLI y el acceso Core estándar ofrecen interfaces de automatización."), apps: ["moodle-plugin", "cli", "moodle-core-cli"] },
   { id: "assess", title: t("Prepare assessment and review submissions", "Prepara la evaluación y revisa las entregas"), body: t("Start with spreadsheet rubrics, or set up teacher-reviewed AI suggestions. These extensions do not require the MoodlIA plugin.", "Empieza por las rúbricas de una hoja de cálculo o configura propuestas de IA revisadas por el docente. Estas extensiones no necesitan el plugin MoodlIA."), apps: ["rubrics", "corrector"] },
-  { id: "reuse", title: t("Create and reuse course content", "Crea y reutiliza el contenido de tus cursos"), body: t("Choose the route that matches your source, destination and supported content. These are distinct workflows with their own limits.", "Elige la vía adecuada para el origen, el destino y el contenido admitido. Son flujos diferentes, cada uno con sus límites."), apps: ["skills", "sync", "backup-converter", "edx-converter"] },
+  { id: "reuse", title: t("Create and reuse course content", "Crea y reutiliza el contenido de tus cursos"), body: t("Choose the route that matches your source, destination and supported content. These are distinct workflows with their own limits.", "Elige la vía adecuada para el origen, el destino y el contenido admitido. Son flujos diferentes, cada uno con sus límites."), apps: ["portable", "skills", "sync", "backup-converter", "edx-converter"] },
   { id: "follow-up", title: t("Keep track of your courses", "Haz seguimiento de tus cursos"), body: t("Bring deadlines, grades and activity signals together. Setup requires permitted Moodle REST access; analytics indicators support teacher judgment.", "Reúne plazos, notas e indicadores de actividad. La configuración requiere acceso REST autorizado a Moodle; los indicadores apoyan el criterio docente."), apps: ["teacher-dashboard", "analyzer-web"] },
 ];
 
@@ -657,7 +712,7 @@ export const places: Record<Place, { title: Text; body: Text }> = {
   },
   computer: {
     title: t("On your computer", "En tu ordenador"),
-    body: t("Browser apps you download and start locally. They talk to Moodle directly, without a backend.", "Aplicaciones de navegador que descargas y arrancas en local. Hablan directamente con Moodle, sin servidor intermedio."),
+    body: t("Install a local Moodle desktop app, or start a browser app on your computer. Each guide explains what it includes and where your data stays.", "Instala una app de escritorio con Moodle local o inicia una aplicación de navegador en tu ordenador. Cada guía explica qué incluye y dónde se quedan tus datos."),
   },
   moodle: {
     title: t("On your Moodle site", "En tu sitio Moodle"),

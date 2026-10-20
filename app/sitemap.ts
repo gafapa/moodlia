@@ -5,7 +5,7 @@ import { alternates, siteUrl } from "./i18n";
 import { legalPaths } from "./legal-pages";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date("2026-10-19");
+  const lastModified = new Date("2026-10-20");
   const entries = (
     pair: { en: string; es: string },
     changeFrequency: "weekly" | "monthly" | "yearly",

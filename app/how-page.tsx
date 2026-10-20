@@ -11,10 +11,10 @@ const lanes: Lane[] = [
   {
     title: { en: "No connection to Moodle", es: "Sin conexión a Moodle" },
     body: {
-      en: "Work in an open Moodle page, convert course files, or prepare portable learning content locally.",
-      es: "Trabaja en una página de Moodle abierta, convierte archivos de cursos o prepara contenido educativo portable de forma local.",
+      en: "Install your own local Moodle, work in an open Moodle page, convert course files, or prepare portable learning content locally.",
+      es: "Instala tu propio Moodle local, trabaja en una página de Moodle abierta, convierte archivos de cursos o prepara contenido educativo portable de forma local.",
     },
-    apps: ["rubrics", "backup-converter", "edx-converter", "skills"],
+    apps: ["portable", "rubrics", "backup-converter", "edx-converter", "skills"],
   },
   {
     title: { en: "Moodle's standard web services", es: "Servicios web estándar de Moodle" },
