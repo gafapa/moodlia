@@ -72,7 +72,7 @@ export const apps: MoodliaApp[] = [
     ),
     does: [
       t("Run a complete Moodle locally with a generated teacher administrator account.", "Ejecutar un Moodle completo en local con una cuenta administradora teacher generada al inicio."),
-      t("Select the Moodle version and optional MoodlIA plugin for a new workspace.", "Elegir la versión de Moodle y el plugin MoodlIA opcional para un espacio nuevo."),
+      t("Select the Moodle version and optional plugins: MoodlIA, and Onetopic tabs on Moodle 4.5, 5.0 or 5.1.", "Elegir la versión de Moodle y complementos opcionales: MoodlIA y las pestañas Onetopic en Moodle 4.5, 5.0 o 5.1."),
       t("Create courses manually or connect your assistant using the generated connection files.", "Crear cursos manualmente o conectar tu asistente con los archivos de conexión generados."),
       t("Export courses to another Moodle through standard .mbz backup and restore.", "Exportar cursos a otro Moodle mediante las copias y restauraciones estándar .mbz."),
     ],
@@ -93,7 +93,7 @@ export const apps: MoodliaApp[] = [
       },
     ],
     firstUse: [
-      { text: t("Open MoodlIA and choose a Moodle version for a new empty workspace. Keep Install MoodlIA plugin selected if you want MCP access.", "Abre MoodlIA y elige una versión de Moodle para un espacio nuevo y vacío. Mantén marcado Install MoodlIA plugin si quieres acceso MCP.") },
+      { text: t("Open MoodlIA and choose a Moodle version and optional plugins for a new workspace. MoodlIA is selected by default for MCP access; Onetopic tabs are optional on Moodle 4.5, 5.0 and 5.1.", "Abre MoodlIA y elige una versión de Moodle y los complementos para un espacio nuevo. MoodlIA viene marcado por defecto para el acceso MCP; las pestañas Onetopic son opcionales en Moodle 4.5, 5.0 y 5.1.") },
       { text: t("Wait for Moodle's home page. Open MoodlIA → Connection files, read credentials.txt and sign in as teacher. Keep these files private.", "Espera a que aparezca la portada de Moodle. Abre MoodlIA → Connection files, consulta credentials.txt e inicia sesión como teacher. Mantén privados estos archivos.") },
       { text: t("Create your course and export a .mbz backup. Test its restore on a compatible destination Moodle; standard activities do not require MoodlIA there.", "Crea tu curso y exporta una copia .mbz. Prueba su restauración en un Moodle de destino compatible; las actividades estándar no necesitan MoodlIA allí.") },
     ],
@@ -117,29 +117,29 @@ export const apps: MoodliaApp[] = [
     name: "MoodlIA Corrector",
     place: "browser",
     status: "manual",
-    version: "0.1.45",
+    version: "0.1.71",
     summary: t("Review AI-assisted grading suggestions inside Moodle, then decide what goes into the grading form.", "Revisa propuestas de corrección de IA dentro de Moodle y decide qué aplicar al formulario de calificación."),
     description: t(
-      "A Chrome extension for Moodle assignment grading pages. It reads the submission and available assessment criteria, requests a suggestion from your selected AI provider, and lets you review and apply it to Moodle's grading fields. It never automatically submits the grading form. The public download is version 0.1.45; newer local development changes are not included in that archive.",
-      "Una extensión de Chrome para las páginas de calificación de tareas de Moodle. Lee la entrega y los criterios de evaluación disponibles, solicita una propuesta a tu proveedor de IA y permite revisarla y aplicarla a los campos de calificación. Nunca envía automáticamente el formulario. La descarga pública es la versión 0.1.45; el archivo no incluye los cambios posteriores que siguen en desarrollo local."
+      "A Chrome extension for Moodle assignment grading pages. Version 0.1.71 reads supported submissions and task references, combines course, task and case-specific teacher criteria, and requests a suggestion from your chosen AI provider. Review the suggestion before applying it to Moodle's grading fields. It never automatically submits the grading form.",
+      "Una extensión de Chrome para las páginas de calificación de tareas de Moodle. La versión 0.1.71 lee entregas y referencias compatibles, combina los criterios docentes del curso, la tarea y el caso concreto y solicita una propuesta al proveedor de IA elegido. Revisa la propuesta antes de aplicarla a los campos de calificación de Moodle. Nunca envía automáticamente el formulario."
     ),
     does: [
-      t("Prepare grading and feedback suggestions using the submission and available rubric or marking guide.", "Prepara propuestas de calificación y comentarios a partir de la entrega y de la rúbrica o guía de evaluación disponible."),
-      t("Extract supported PDF/DOCX text locally; use a compatible vision model for supported image inputs.", "Extrae localmente texto de PDF y DOCX compatibles; usa un modelo con visión para las imágenes admitidas."),
+      t("Prepare suggestions for rubrics, marking guides or simple direct grading, with the detected mode shown in the panel.", "Prepara propuestas para rúbricas, guías de evaluación o calificación directa simple, con el modo detectado visible en el panel."),
+      t("Read supported PDF, DOCX, ODT and source-code evidence; code is treated as text and never executed. Images require a compatible vision model.", "Lee evidencias compatibles en PDF, DOCX, ODT y archivos de código; el código se trata como texto y nunca se ejecuta. Las imágenes requieren un modelo con visión compatible."),
       t("Let the teacher review suggestions before applying them to Moodle fields and saving in Moodle.", "Permite al docente revisar la propuesta antes de aplicarla a los campos y guardarla en Moodle."),
     ],
     needs: [
       t("Chrome on a computer, manual extension installation, and permission to grade the Moodle assignment.", "Chrome en un ordenador, instalación manual de la extensión y permiso para calificar la tarea de Moodle."),
-      t("Local Ollama or an institution-approved OpenAI-compatible HTTPS API, with a suitable model.", "Ollama local o una API HTTPS compatible con OpenAI autorizada por el centro, con un modelo adecuado."),
+      t("A suitable model in Ollama, LM Studio, Jan, GPT4All, llama.cpp, LocalAI, vLLM or an approved OpenAI-compatible API.", "Un modelo adecuado en Ollama, LM Studio, Jan, GPT4All, llama.cpp, LocalAI, vLLM o una API compatible con OpenAI autorizada."),
       t("A vision-capable provider/model for scanned pages or images.", "Un proveedor y modelo con visión para páginas escaneadas o imágenes."),
     ],
-    get: { label: t("Download the public extension ZIP", "Descargar el ZIP público de la extensión"), href: "https://github.com/gafapa/moodlia-corrector/releases/tag/v0.1.45" },
+    get: { label: t("Download the public extension ZIP", "Descargar el ZIP público de la extensión"), href: "https://github.com/gafapa/moodlia-corrector/releases/tag/v0.1.71" },
     install: [{
       title: t("Install the public extension manually", "Instala manualmente la extensión pública"),
       steps: [
-        { text: t("Download `moodlia-corrector-0.1.45.zip` from the release assets and extract it into a permanent folder. Do not use the generic source-code ZIP.", "Descarga `moodlia-corrector-0.1.45.zip` de los archivos de la versión y extráelo en una carpeta permanente. No uses el ZIP genérico del código fuente.") },
+        { text: t("Download `moodlia-corrector-0.1.71.zip` from the release assets and extract it into a permanent folder. Do not use the generic source-code ZIP.", "Descarga `moodlia-corrector-0.1.71.zip` de los archivos de la versión y extráelo en una carpeta permanente. No uses el ZIP genérico del código fuente.") },
         { text: t("Open `chrome://extensions`, enable Developer mode, and choose Load unpacked. Select the extracted folder containing `manifest.json`.", "Abre `chrome://extensions`, activa el modo de desarrollador y elige «Cargar descomprimida». Selecciona la carpeta extraída que contiene `manifest.json`.") },
-        { text: t("Open the extension's settings, select local Ollama or an approved compatible remote API, and choose the model. Remote providers require HTTPS.", "Abre los ajustes de la extensión, selecciona Ollama local o una API remota compatible autorizada y elige el modelo. Los proveedores remotos requieren HTTPS.") },
+        { text: t("Open a Moodle assignment grader and click the extension icon. In the correction sidebar, open AI configuration and select the provider and model. Advanced settings include the address, port and other connection options.", "Abre la página de calificación de una tarea de Moodle y pulsa el icono de la extensión. En el panel lateral, abre Configuración de IA y elige el proveedor y el modelo. El modo avanzado incluye dirección, puerto y otras opciones de conexión.") },
         { text: t("Use Test connection with fictional data before reading student submissions. Try the workflow in a test assignment first.", "Usa «Test connection» con datos ficticios antes de leer entregas del alumnado. Prueba primero el flujo en una tarea de prueba.") },
       ],
     }],
@@ -151,10 +151,10 @@ export const apps: MoodliaApp[] = [
     limits: [
       t("This is a manually installed extension, not a Chrome Web Store installation. Check the release page for updates.", "Es una extensión de instalación manual, no una instalación desde Chrome Web Store. Consulta las actualizaciones en la página de versiones."),
       t("Assignment evidence reaches your selected AI provider. Identifier minimization does not make student work anonymous; use only an authorized provider.", "Las evidencias de la tarea llegan al proveedor de IA elegido. Reducir identificadores no convierte el trabajo del alumnado en anónimo; usa solo un proveedor autorizado."),
-      t("The public 0.1.45 release lists assignment reference files but does not read their contents automatically. Verify that all necessary evidence was actually read.", "La versión pública 0.1.45 enumera los archivos de referencia del enunciado, pero no lee automáticamente su contenido. Comprueba qué evidencias se han leído realmente."),
+      t("Task references and student submissions are listed separately. Supported files are read when requesting correction; unsupported files are ignored and marked red. Verify which evidence was actually read.", "Las referencias de la tarea y las entregas del alumnado aparecen por separado. Los archivos compatibles se leen al solicitar la corrección; los no admitidos se ignoran y se marcan en rojo. Comprueba qué evidencias se han leído realmente."),
       t("AI output can be wrong. The teacher remains responsible for reviewing the proposed marks and feedback.", "La IA puede equivocarse. El docente sigue siendo responsable de revisar las notas y los comentarios propuestos."),
     ],
-    docs: [{ label: t("Documentation for the public version", "Documentación de la versión pública"), href: "https://github.com/gafapa/moodlia-corrector/blob/v0.1.45/README.md" }],
+    docs: [{ label: t("Documentation for the public version", "Documentación de la versión pública"), href: "https://github.com/gafapa/moodlia-corrector/blob/v0.1.71/README.md" }],
     source: "https://github.com/gafapa/moodlia-corrector",
     license: "GPL-3.0-or-later",
   },
@@ -409,7 +409,7 @@ export const apps: MoodliaApp[] = [
     name: "MoodlIA Moodle Plugin",
     place: "moodle",
     status: "preview",
-    version: "0.1.220",
+    version: "0.1.221",
     summary: t(
       "Let AI assistants and scripts work with Moodle safely, within Moodle's own permissions.",
       "Permite que asistentes de IA y scripts trabajen con Moodle de forma segura, dentro de los permisos del propio Moodle.",
@@ -429,12 +429,13 @@ export const apps: MoodliaApp[] = [
       t("The plugin installed on the Moodle site and an access token.", "El plugin instalado en el sitio Moodle y un token de acceso."),
       t("A current backup of the Moodle code, database, and moodledata.", "Una copia de seguridad reciente del código, la base de datos y moodledata de Moodle."),
     ],
-    get: { label: t("Download from the Moodle Marketplace", "Descargar del Moodle Marketplace"), href: "https://marketplace.moodle.com/plugins/local_moodlia" },
+    get: { label: t("View Moodle Marketplace versions", "Ver versiones en Moodle Marketplace"), href: "https://marketplace.moodle.com/plugins/local_moodlia" },
     install: [
       {
         title: t("1. Install the plugin", "1. Instala el plugin"),
         steps: [
-          { text: t("Download `local_moodlia-0.1.220.zip` from GitHub releases. This version is also published in the Moodle Marketplace. Do not use GitHub's “Source code” ZIP.", "Descarga `local_moodlia-0.1.220.zip` de las releases de GitHub. Esta versión también está publicada en el Moodle Marketplace. No uses el ZIP «Source code» de GitHub.") },
+          { text: t("Download `local_moodlia-0.1.221.zip` from GitHub releases. This release fixes MCP interoperability with strict clients; reconnect your MCP client after upgrading. Do not use GitHub's “Source code” ZIP.", "Descarga `local_moodlia-0.1.221.zip` de las releases de GitHub. Esta versión corrige la compatibilidad MCP con clientes estrictos; vuelve a conectar el cliente MCP tras actualizar. No uses el ZIP «Source code» de GitHub.") },
+          { text: t("The Moodle Marketplace listing is another distribution channel; check its version before downloading.", "La ficha de Moodle Marketplace es otro canal de distribución; comprueba su versión antes de descargar.") },
           { text: t("Go to Site administration → Plugins → Install plugins, upload the ZIP, and select “Install plugin from the ZIP file”.", "Ve a Administración del sitio → Extensiones → Instalar complementos, sube el ZIP y pulsa «Instalar complemento desde archivo ZIP».") },
           { text: t("Continue through the checks and select “Upgrade Moodle database now”.", "Continúa con las comprobaciones y pulsa «Actualizar base de datos Moodle ahora».") },
           { text: t("Check that Site administration → Plugins → Plugins overview lists MoodlIA (`local_moodlia`) under Local plugins.", "Comprueba que Administración del sitio → Extensiones → Vista general de extensiones muestra MoodlIA (`local_moodlia`) en Extensiones locales.") },
@@ -471,6 +472,7 @@ export const apps: MoodliaApp[] = [
     docs: [
       { label: t("Step-by-step installation with screenshots", "Instalación paso a paso con capturas"), href: "https://github.com/gafapa/moodle-local_moodlia/blob/main/docs/web-installation.md" },
       { label: t("Connect ChatGPT, Claude, or Codex through MCP", "Conectar ChatGPT, Claude o Codex por MCP"), href: "https://github.com/gafapa/moodle-local_moodlia/blob/main/docs/mcp-client-setup.md" },
+      { label: t("Individual teacher access and personal tokens", "Acceso por docente y tokens personales"), href: "https://github.com/gafapa/moodle-local_moodlia/blob/main/docs/teacher-access.md" },
       { label: t("Releases and ZIP downloads", "Versiones y descargas ZIP"), href: "https://github.com/gafapa/moodle-local_moodlia/releases" },
     ],
     source: "https://github.com/gafapa/moodle-local_moodlia",

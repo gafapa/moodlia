@@ -16,6 +16,10 @@ Use Node.js 22.13 or later and npm 10 or later. Run `npm ci` and `npm run dev` f
 
 ### Current scope
 
+- Prepare the plugin 0.1.221 reference and strict MCP client upgrade guidance.
+  GitHub release availability, Marketplace publication and production deployment
+  are separate states; check the selected channel's version before downloading.
+
 - Include MoodlIA Portable as the local Moodle installer, with English/Spanish first-launch, preview artifact download and course-export guidance. Current downloads are GitHub Actions artifacts requiring sign-in; no public GitHub Release is advertised.
 
 - Lead with AI working inside Moodle, then show rubric import,
@@ -24,8 +28,8 @@ Use Node.js 22.13 or later and npm 10 or later. Run `npm ci` and `npm run dev` f
 - Give every app real installation steps: store and registry links, Moodle
   menu paths, and exact commands.
 - Distinguish store installations, manually installed releases, previews and
-  source-only tools. Corrector has a public 0.1.45 guide; unpublished local
-  features are not advertised. Studio is a concept, not an available product.
+  source-only tools. Corrector links to its published 0.1.71 GitHub archive;
+  store submission materials do not imply store approval. Studio is a concept.
 - Host MoodlIA Backup Converter at `/tools/backup-converter/`.
 
 The site is static and does not store user data, Moodle credentials, or
@@ -99,9 +103,14 @@ service. Run `npm run build` first.
 
 ### Repository preparation review — 20 october 2026
 
-The current source includes the cinematic homepage and task-oriented guide redesign, English/Spanish product content, local imagery and credits, publication verification tooling, and permanent Corrector/Rubrics policies. Design and deployment evidence remains in `.impeccable/`, `.taste-skill/`, and `docs/`; it is not a promise of unmeasured cross-platform behavior. The extension guide still targets the last tagged Corrector ZIP (0.1.45); newer source preparation and store submission materials do not imply a tagged release or store approval.
+The current source includes the cinematic homepage and task-oriented guide redesign, English/Spanish product content, local imagery and credits, publication verification tooling, and permanent Corrector/Rubrics policies. Design and deployment evidence remains in `.impeccable/`, `.taste-skill/`, and `docs/`; it is not a promise of unmeasured cross-platform behavior. The 24 October product update targets the published Corrector 0.1.71 ZIP; store submission materials remain separate from store approval.
 
-The publication-time dependency findings in the dated deployment record are historical. Repository preparation subsequently updated the Cloudflare Vite plugin/Wrangler and compatible transitive fixes. Production dependency audit now reports zero findings. Eight high development-tool findings remain through the upstream `braces` chain; no compatible patched release was available, and the suggested framework downgrade was not applied. The existing CI gates remain unchanged: fail on high production findings or critical findings anywhere. Static production output contains no Node build dependencies.
+The dependency findings in dated deployment records are historical. The 24 October
+2026 review updated Next.js and its ESLint configuration to 16.4.3, Vite to 8.3.5,
+and compatible transitive resolutions. The complete dependency audit now reports
+zero vulnerabilities. Existing CI gates remain unchanged: fail on high production
+findings or critical findings anywhere. Static production output contains no
+Node build dependencies.
 
 See `docs/workspace-documentation-review-2026-10-20.md` for the cross-project documentation review and its limits.
 
