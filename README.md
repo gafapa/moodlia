@@ -114,6 +114,10 @@ Node build dependencies.
 
 See `docs/workspace-documentation-review-2026-10-20.md` for the cross-project documentation review and its limits.
 
+The 24 October export is deployed to `moodlia.com`; all 163 public files and ten
+clean HTTPS routes passed live verification. See
+[publication evidence](docs/publication-2026-10-24.md).
+
 ## Security and privacy
 
 The static site does not store Moodle credentials or course data. Preserve existing general and extension privacy-policy URLs in every redesign and export.
