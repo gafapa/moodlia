@@ -409,19 +409,19 @@ export const apps: MoodliaApp[] = [
     name: "MoodlIA Moodle Plugin",
     place: "moodle",
     status: "preview",
-    version: "0.1.221",
+    version: "0.1.222",
     summary: t(
       "Let AI assistants and scripts work with Moodle safely, within Moodle's own permissions.",
       "Permite que asistentes de IA y scripts trabajen con Moodle de forma segura, dentro de los permisos del propio Moodle.",
     ),
     description: t(
-      "A Moodle local plugin (`local_moodlia`) that adds about 250 operations for courses, activities, question banks, enrolments, groups, files, audits, and backups. They are available through REST and through an MCP endpoint, so an AI assistant such as ChatGPT or Claude can use them directly. Every request runs as a Moodle user and is limited by that user's permissions.",
-      "Un plugin local de Moodle (`local_moodlia`) que añade unas 250 operaciones sobre cursos, actividades, bancos de preguntas, matriculaciones, grupos, archivos, auditorías y copias de seguridad. Están disponibles por REST y por un endpoint MCP, para que un asistente de IA como ChatGPT o Claude pueda usarlas directamente. Cada petición se ejecuta como un usuario de Moodle y está limitada por sus permisos.",
+      "A Moodle local plugin (`local_moodlia`) that adds 252 operations for courses, activities, question banks, enrolments, groups, files, audits, and backups. They are available through REST and through an MCP endpoint, so an AI assistant such as ChatGPT or Claude can use them directly. Every request runs as a Moodle user and is limited by that user's permissions.",
+      "Un plugin local de Moodle (`local_moodlia`) que añade 252 operaciones sobre cursos, actividades, bancos de preguntas, matriculaciones, grupos, archivos, auditorías y copias de seguridad. Están disponibles por REST y por un endpoint MCP, para que un asistente de IA como ChatGPT o Claude pueda usarlas directamente. Cada petición se ejecuta como un usuario de Moodle y está limitada por sus permisos.",
     ),
     does: [
       t("Create and update courses, sections, activities, quizzes, and question banks.", "Crea y modifica cursos, secciones, actividades, cuestionarios y bancos de preguntas."),
       t("Audit a course before publishing it: completion rules, gradebook, structure.", "Audita un curso antes de publicarlo: reglas de finalización, calificador y estructura."),
-      t("Manage enrolments, groups, files, backups, and restores.", "Gestiona matriculaciones, grupos, archivos, copias de seguridad y restauraciones."),
+      t("Manage user accounts, enrolments, groups, files, backups, and restores.", "Gestiona cuentas de usuario, matriculaciones, grupos, archivos, copias de seguridad y restauraciones."),
       t("Serve an MCP endpoint at `/local/moodlia/mcp.php` for AI assistants.", "Ofrece un endpoint MCP en `/local/moodlia/mcp.php` para asistentes de IA."),
     ],
     needs: [
@@ -434,7 +434,7 @@ export const apps: MoodliaApp[] = [
       {
         title: t("1. Install the plugin", "1. Instala el plugin"),
         steps: [
-          { text: t("Download `local_moodlia-0.1.221.zip` from GitHub releases. This release fixes MCP interoperability with strict clients; reconnect your MCP client after upgrading. Do not use GitHub's “Source code” ZIP.", "Descarga `local_moodlia-0.1.221.zip` de las releases de GitHub. Esta versión corrige la compatibilidad MCP con clientes estrictos; vuelve a conectar el cliente MCP tras actualizar. No uses el ZIP «Source code» de GitHub.") },
+          { text: t("Download `local_moodlia-0.1.222.zip` from GitHub releases. This release adds user search and suspension/reactivation; reconnect your MCP client after upgrading. Do not use GitHub's “Source code” ZIP.", "Descarga `local_moodlia-0.1.222.zip` de las releases de GitHub. Esta versión añade búsqueda de usuarios y suspensión/reactivación; vuelve a conectar el cliente MCP tras actualizar. No uses el ZIP «Source code» de GitHub.") },
           { text: t("The Moodle Marketplace listing is another distribution channel; check its version before downloading.", "La ficha de Moodle Marketplace es otro canal de distribución; comprueba su versión antes de descargar.") },
           { text: t("Go to Site administration → Plugins → Install plugins, upload the ZIP, and select “Install plugin from the ZIP file”.", "Ve a Administración del sitio → Extensiones → Instalar complementos, sube el ZIP y pulsa «Instalar complemento desde archivo ZIP».") },
           { text: t("Continue through the checks and select “Upgrade Moodle database now”.", "Continúa con las comprobaciones y pulsa «Actualizar base de datos Moodle ahora».") },
@@ -483,7 +483,7 @@ export const apps: MoodliaApp[] = [
     name: "MoodlIA CLI",
     place: "terminal",
     status: "stable",
-    version: "0.5.1",
+    version: "0.5.2",
     summary: t(
       "Run every MoodlIA plugin operation from a terminal, a script, or an AI agent's shell.",
       "Ejecuta cualquier operación del plugin MoodlIA desde una terminal, un script o la shell de un agente de IA.",
@@ -523,7 +523,7 @@ export const apps: MoodliaApp[] = [
     ],
     docs: [
       { label: t("Commands, profiles, and options", "Comandos, perfiles y opciones"), href: "https://github.com/gafapa/moodlia-cli#readme" },
-      { label: t("GitHub 0.5.1 release with optional browser component; npm is 0.4.1", "Versión 0.5.1 de GitHub con componente de navegador opcional; npm está en 0.4.1"), href: "https://github.com/gafapa/moodlia-cli/releases/tag/v0.5.1" },
+      { label: t("CLI 0.5.2 release with user management commands", "Versión 0.5.2 de la CLI con comandos de gestión de usuarios"), href: "https://github.com/gafapa/moodlia-cli/releases/tag/v0.5.2" },
     ],
     source: "https://github.com/gafapa/moodlia-cli",
     license: "GPL-3.0-or-later",
