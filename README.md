@@ -116,7 +116,9 @@ See `docs/workspace-documentation-review-2026-10-20.md` for the cross-project do
 
 The 24 October export is deployed to `moodlia.com`; all 163 public files and ten
 clean HTTPS routes passed live verification. See
-[publication evidence](docs/publication-2026-10-24.md).
+[publication evidence](docs/publication-2026-10-24.md). On 28 October 2026 only
+the Corrector privacy policy was republished, for extension 0.2.1; see
+[its publication record](docs/publication-2026-10-28.md).
 
 ## Security and privacy
 
