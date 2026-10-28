@@ -120,6 +120,8 @@ clean HTTPS routes passed live verification. See
 the Corrector privacy policy was republished, for extension 0.2.1; see
 [its publication record](docs/publication-2026-10-28.md).
 
+The user-management release references were republished on 28 October with plugin 0.1.222 and CLI 0.5.2. All 163 public files and ten HTTPS routes matched the validated export. See [publication evidence](docs/user-management-publication-2026-10-28.md).
+
 ## Security and privacy
 
 The static site does not store Moodle credentials or course data. Preserve existing general and extension privacy-policy URLs in every redesign and export.
