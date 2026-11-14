@@ -122,6 +122,8 @@ the Corrector privacy policy was republished, for extension 0.2.1; see
 
 The user-management release references were republished on 28 October with plugin 0.1.222 and CLI 0.5.2. All 163 public files and ten HTTPS routes matched the validated export. See [publication evidence](docs/user-management-publication-2026-10-28.md).
 
+The course item backup release references were published on 14 November with plugin 0.1.224 and CLI 0.5.3. All 158 public files and ten HTTPS routes matched the validated export. See [publication evidence](docs/course-item-backups-publication-2026-11-14.md).
+
 ## Security and privacy
 
 The static site does not store Moodle credentials or course data. Preserve existing general and extension privacy-policy URLs in every redesign and export.
