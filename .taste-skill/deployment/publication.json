@@ -1,5 +1,5 @@
 {
-  "verifiedAt": "2026-11-14T23:30:59.552Z",
+  "verifiedAt": "2026-11-14T23:40:51.565Z",
   "base": "https://moodlia.com/",
   "files": [
     {
@@ -16,7 +16,7 @@
     },
     {
       "path": "apps/analyzer-web/index.html",
-      "sha256": "ffa4ca86749cf5f4def03cee57b75bcbff09ab7d1be3905a057ebfea89f2d06e"
+      "sha256": "4ccf39cd413571bcb0af2e31dc754695145436c987c17deb9d631724f82318ee"
     },
     {
       "path": "apps/backup-converter.rsc",
@@ -24,7 +24,7 @@
     },
     {
       "path": "apps/backup-converter/index.html",
-      "sha256": "4cab52818144307626353cd5d6e61c8ccb7d6bf94c624e5b67283c671372537a"
+      "sha256": "f7c6e6b169d65f88d8ba0442421d49f05ec95be4f7b2aa8c3a95333bdc7d22b0"
     },
     {
       "path": "apps/cli.rsc",
@@ -32,7 +32,7 @@
     },
     {
       "path": "apps/cli/index.html",
-      "sha256": "10a81f6ec7520fe431653bd8d9517f85a0644085e51fef654c06e0e154d6989a"
+      "sha256": "ea13bd111a6526954555771ab0d1cd20dcd9d0e39fa3d01cfdd6da7f80429ae6"
     },
     {
       "path": "apps/corrector.rsc",
@@ -40,7 +40,7 @@
     },
     {
       "path": "apps/corrector/index.html",
-      "sha256": "f3d52db088ca3e344e3f94766c93632ee4d542b2810500fb5f112357fe1e914a"
+      "sha256": "06745e444d8eca4fa043531d31a93babd3a7ce0f6d1c69c47ac4cce8243ef388"
     },
     {
       "path": "apps/edx-converter.rsc",
@@ -48,11 +48,11 @@
     },
     {
       "path": "apps/edx-converter/index.html",
-      "sha256": "1cfc0f54832e9e26afadba5c900bcad39b65d186fa3a75e649a08330604ca9cf"
+      "sha256": "c18a681ffc6e7b4464a6b59397ef11e590c7b101b55c05fe1c4e61dc66960c25"
     },
     {
       "path": "apps/index.html",
-      "sha256": "f5c45c62b8e2210d81ad435f85ef3b3aee9c246a31a66f72e69624ce38db400a"
+      "sha256": "c06aeebba5cc7e559e13a57276bd083b990f413bba9f2adf8720d5f6b440591d"
     },
     {
       "path": "apps/moodle-core-cli.rsc",
@@ -60,7 +60,7 @@
     },
     {
       "path": "apps/moodle-core-cli/index.html",
-      "sha256": "2c45aaa4a7c80523c385ad375dedeab267cb6187af0688b8da0825c2c750528b"
+      "sha256": "326d67e4799719a9ad7adba925edc1743e6e25f1071145b99c15766156f9a7e3"
     },
     {
       "path": "apps/moodle-plugin.rsc",
@@ -68,7 +68,7 @@
     },
     {
       "path": "apps/moodle-plugin/index.html",
-      "sha256": "63bc7a626ad690eee9c28f8f82fd334fd270c849f89dd606f80ace72e1169be9"
+      "sha256": "4a0c5324a65aafa295b1737c1e156d7e2e80888b2922dbc4933a340b551b2762"
     },
     {
       "path": "apps/portable.rsc",
@@ -76,7 +76,7 @@
     },
     {
       "path": "apps/portable/index.html",
-      "sha256": "ebd333887f6570cc6337d299cd544f3cb19e9ea47b8b3980f2b2226645e7aeb1"
+      "sha256": "2e983dfef8aa96a67a43c19518c3b0e90135b1bceb3376e95a9203a1e06dd39b"
     },
     {
       "path": "apps/rubrics.rsc",
@@ -84,7 +84,7 @@
     },
     {
       "path": "apps/rubrics/index.html",
-      "sha256": "5fe03ed1f055dc673dcdc5757a6a27434c99299d09f3145d012255d64fc6dc8c"
+      "sha256": "231d7bbc0eda4fe00fa4e358e56942541bb1a51f88f92d64373291ed0eb830a8"
     },
     {
       "path": "apps/skills.rsc",
@@ -92,7 +92,7 @@
     },
     {
       "path": "apps/skills/index.html",
-      "sha256": "aabd2f4ec6634afd5733b124ab1316335a70e511fb82efa6d932d0e6dd410225"
+      "sha256": "91db4e5162d2ef817f8bbc074e3843298543957246f25757141fdd10110b8ccf"
     },
     {
       "path": "apps/sync.rsc",
@@ -100,7 +100,7 @@
     },
     {
       "path": "apps/sync/index.html",
-      "sha256": "304ff3daeca6655d8f17bc178fe49893727c97aba5fa3fd175570d8ef54ab9d9"
+      "sha256": "b0b74e3e3e8605325cbec40d017c925e4f96c211d599f1255526a9af796448c6"
     },
     {
       "path": "apps/teacher-dashboard.rsc",
@@ -108,7 +108,7 @@
     },
     {
       "path": "apps/teacher-dashboard/index.html",
-      "sha256": "2b4c53462716587b56866d08bdc3f69d8ee989616a547337f8bf87c1df97242d"
+      "sha256": "57d4fdd01d465971c1e9126deb3567a8aebf0c2a5ca4fd6c116a642c10aa7ce8"
     },
     {
       "path": "assets/_vinext_fonts/geist-8ac0455e797f/geist-001175b1.woff2",
@@ -167,12 +167,12 @@
       "sha256": "054c266fbb441ee059365dba0885d206f67ca05b375de869b88e02ebfccc9b9d"
     },
     {
-      "path": "assets/framework-Dk0lESzc.js",
-      "sha256": "0a345fd6b970c368ea2afb0a1606b7e60c787389723c10d651dd8a88d143d4c3"
+      "path": "assets/framework-2Hth0a--.js",
+      "sha256": "1ba2241c01c11506b34a6b9d0cf4f54a5a4b61b18908fa15063986cab2a8364d"
     },
     {
-      "path": "assets/index-BbUD8Ibv.js",
-      "sha256": "7da6993166663983820035bc61700481c9f80c24ad0d135e228d6d6774d9c7b5"
+      "path": "assets/index-Cd7C9OhY.js",
+      "sha256": "82ac36f6600aae1553a14834a467a96c5021de6e5ee42548ca9ebda51a8018c1"
     },
     {
       "path": "assets/index-CSDd6Wa1.css",
@@ -183,8 +183,8 @@
       "sha256": "548d1dbf321e7d2ae804fcc158b588706a7c52f8ca175de1490c6ccb4dbe55b7"
     },
     {
-      "path": "assets/worker-entry-DL5LDxzD.js",
-      "sha256": "01eaf48d3fdb2b8f76a7978a86cda37cd2b2712a0d66fb7b4db48c73e6e009e6"
+      "path": "assets/worker-entry-CvlKq0aY.js",
+      "sha256": "71d509cb6c30459b2f075a8f74ef9684f1763e250a592cc34099b59e436db71b"
     },
     {
       "path": "cookies.rsc",
@@ -192,7 +192,7 @@
     },
     {
       "path": "cookies/index.html",
-      "sha256": "1b29fb6200e6c51b61bd652640b50d0ea74c55298db2e2c3d8a700ca16f83791"
+      "sha256": "58cc483718c54cccdeeea0dccc45e80af075268abbde7ca154004f6c0d37354c"
     },
     {
       "path": "es.rsc",
@@ -208,7 +208,7 @@
     },
     {
       "path": "es/apps/analyzer-web/index.html",
-      "sha256": "71b38687c325687fac8de9a1b428ba9965049c29706ca9762869f67e125fb8c9"
+      "sha256": "6bc84940c622bbff53be3dced88d15b49dcf953d6ebfcaf2518c64b72943c6a3"
     },
     {
       "path": "es/apps/backup-converter.rsc",
@@ -216,7 +216,7 @@
     },
     {
       "path": "es/apps/backup-converter/index.html",
-      "sha256": "b1489c74867bbb93664bf52cd2976542641c566dcf10812c92f8d3ff1bb2c04b"
+      "sha256": "dceebe73cf1edf85685451dfb8e09dd0e9203e152e84e3cb0a4c93922894e212"
     },
     {
       "path": "es/apps/cli.rsc",
@@ -224,7 +224,7 @@
     },
     {
       "path": "es/apps/cli/index.html",
-      "sha256": "93e64fa08d2e3bed5a46582129f40ef447396401b64a4f04c132233bef29393d"
+      "sha256": "b3ed826d8de210434c3bce2a5d091bd46b1801a0f943178f96755d5402d114aa"
     },
     {
       "path": "es/apps/corrector.rsc",
@@ -232,7 +232,7 @@
     },
     {
       "path": "es/apps/corrector/index.html",
-      "sha256": "5e965e80e128bd2f34b208e38f0985ae2572a9eea568cb933307ea88ca6315c6"
+      "sha256": "1279e04c0608674c3d3ac1d7ee7129b2981b37b7fbb3c382d913d48d37e39204"
     },
     {
       "path": "es/apps/edx-converter.rsc",
@@ -240,11 +240,11 @@
     },
     {
       "path": "es/apps/edx-converter/index.html",
-      "sha256": "0de40a26faf38d3cc8d1914723ff8c29183a9d3a15eda0961f95ba82b921bbe6"
+      "sha256": "62844f177cb4b878b890c530530b14a80264aac340c4f867602c4c70e952521f"
     },
     {
       "path": "es/apps/index.html",
-      "sha256": "444709f547a9edccf44f3f42b1bb2cd0a200f7f488b709e1d70d3ea8682dfea6"
+      "sha256": "e7e12a6a6aa7e1240a5d67c6a462750d768501c27f626681c0a11fe95fe40bb9"
     },
     {
       "path": "es/apps/moodle-core-cli.rsc",
@@ -252,7 +252,7 @@
     },
     {
       "path": "es/apps/moodle-core-cli/index.html",
-      "sha256": "bf62a8acca4b6435ba5e2096a647557ebe6477e907abe5090c6c0d6f11f57c1e"
+      "sha256": "28932b1193259676463815a895126c92271d4a8080af403e66627760690bd047"
     },
     {
       "path": "es/apps/moodle-plugin.rsc",
@@ -260,7 +260,7 @@
     },
     {
       "path": "es/apps/moodle-plugin/index.html",
-      "sha256": "818c9802ca5ae5181ad00d3f0248bfd52abf7295cc6c74bdbffad82bca984eb8"
+      "sha256": "48ffdb7ea8c7828051fd6bd7fc6194825496d65358927c39f1fe28c53c3a2631"
     },
     {
       "path": "es/apps/portable.rsc",
@@ -268,7 +268,7 @@
     },
     {
       "path": "es/apps/portable/index.html",
-      "sha256": "6c8c7d4e85caaadebfa9a6c81df98f7156e6c0b67a3d9d006c5a3657c70b614d"
+      "sha256": "94bad28d4267b78abc30f1448a5d1f20edd92b35c346fd49d9acac7d1fd3f19e"
     },
     {
       "path": "es/apps/rubrics.rsc",
@@ -276,7 +276,7 @@
     },
     {
       "path": "es/apps/rubrics/index.html",
-      "sha256": "4c990794fc83b0768749606a45148345d6cc2cd47470cb37d0c43732a5e57ce4"
+      "sha256": "396437fad63c1fef8f0fba7b0ed1992240b5e0eb9c6610bf1b81fd01a4658f8f"
     },
     {
       "path": "es/apps/skills.rsc",
@@ -284,7 +284,7 @@
     },
     {
       "path": "es/apps/skills/index.html",
-      "sha256": "44160247d2846a44d303056965e94a6aa586f6dba8bc028fe70adf2b6d0ba0f8"
+      "sha256": "3091cf51f1deb7cb04f8fe6a8cc092665224d320f7b309bc3be4c42831a8ce87"
     },
     {
       "path": "es/apps/sync.rsc",
@@ -292,7 +292,7 @@
     },
     {
       "path": "es/apps/sync/index.html",
-      "sha256": "537716c15c0cde6429eecdb229f004a25f48a6d7dc497ad24b23aa480350a897"
+      "sha256": "0e5df7b41b8255b31bb1595ec4ce2d9dd00cc7bd1c32f2fa80809ac59faa0c6a"
     },
     {
       "path": "es/apps/teacher-dashboard.rsc",
@@ -300,7 +300,7 @@
     },
     {
       "path": "es/apps/teacher-dashboard/index.html",
-      "sha256": "36beef0af5ebe05e391ddb86c87ce201e9b8b7b06b0ce5c8a1b6853b18fb4726"
+      "sha256": "92928d558e9d6406365b9f8ee050d4d70ed151422c7123fab9c1c6f44868b0e8"
     },
     {
       "path": "es/aviso-legal.rsc",
@@ -308,7 +308,7 @@
     },
     {
       "path": "es/aviso-legal/index.html",
-      "sha256": "6de428dcbea417301e66e61177eabad12d19b9a9bd223b17690d8a405c813008"
+      "sha256": "5f9e9f06b46d5db23b13c80272771beb25c310075b4e37c54c8c71fa54b94e66"
     },
     {
       "path": "es/como-funciona.rsc",
@@ -316,7 +316,7 @@
     },
     {
       "path": "es/como-funciona/index.html",
-      "sha256": "994d2df319b9633825fb8625d34ed7f27ecb6131ac01017ab76ccf9900e61295"
+      "sha256": "12e88aa773aeeffa980560a027f030f990f42c9ef7c6fb8869943e3b184dff97"
     },
     {
       "path": "es/cookies.rsc",
@@ -324,7 +324,7 @@
     },
     {
       "path": "es/cookies/index.html",
-      "sha256": "35eb59272f478c47fc505d785acc9d59db603e0de8b44abe51dacbbaf27fe362"
+      "sha256": "64614e45f4d2b021daf8d9042005ba973909c6e2da9992d8d2314d0f5ed5c9f8"
     },
     {
       "path": "es/empezar/index.html",
@@ -332,7 +332,7 @@
     },
     {
       "path": "es/index.html",
-      "sha256": "19589820174076706a4f2e7ee736e7f0bada710bc09e0380370103cb70121158"
+      "sha256": "d42659edd4752bfdbecb6106d732b45f7e01f1fc092d6a9c183ace61a182d5da"
     },
     {
       "path": "es/instalar.rsc",
@@ -340,7 +340,7 @@
     },
     {
       "path": "es/instalar/index.html",
-      "sha256": "866bd2b80b1ecce706d9c3085adb840c797649987ca39b8c681aa3ada0dca587"
+      "sha256": "5b55e7635c173dc7b049230876c520b6e80ac46a67341d243de19c02daa2a01f"
     },
     {
       "path": "es/privacy.rsc",
@@ -348,7 +348,7 @@
     },
     {
       "path": "es/privacy/index.html",
-      "sha256": "3f591ee8c3c1d18b854e74ba69f9a072ea0aad2a88937b4f747c1ab1f836ec4b"
+      "sha256": "7fb18ef4348b216e3faabb38a0532716c7951a831caa8af0557ab84fc9fbcca5"
     },
     {
       "path": "es/products/analyzer-desktop/index.html",
@@ -444,7 +444,7 @@
     },
     {
       "path": "how-it-works/index.html",
-      "sha256": "6d15cc23c06a667809aae79801eaeda7ad30f887c659cc4e985cfdbab44d3fae"
+      "sha256": "8c71fd574c36daedbf199d562fb31e6cb5a0abc5b4698cd36eddaf4648211ec2"
     },
     {
       "path": "images/editorial/assessment-workshop.jpg",
@@ -476,7 +476,7 @@
     },
     {
       "path": "index.html",
-      "sha256": "61d5f4c744cdd9372eaccbf13d7b61e2d277cb26c525817f644144da820b51e7"
+      "sha256": "943e6b95b439f48952b8d14ec40219eea150876fb210af83e7eb071aa56c439c"
     },
     {
       "path": "install.rsc",
@@ -484,7 +484,7 @@
     },
     {
       "path": "install/index.html",
-      "sha256": "e119e83ae5994ba4071ef27f9d71f85d9e8f84b3bb3a7d50a7750e299f8ca033"
+      "sha256": "bd001ca0dffd338700680fa73da0714c1c4e41292b704ce0646222de69e82d05"
     },
     {
       "path": "legal-notice.rsc",
@@ -492,7 +492,7 @@
     },
     {
       "path": "legal-notice/index.html",
-      "sha256": "85f30189858f5a3b694fddf0fad1a54dacdf07408d88f10990fad9c92c041f7c"
+      "sha256": "845efbc7995c7bb0d42ef5d8b29d8ceed1a3248e2ded475c35b178efeedf9573"
     },
     {
       "path": "og-moodlia.png",
@@ -508,7 +508,7 @@
     },
     {
       "path": "privacy/index.html",
-      "sha256": "ee437d0e0770c4f4266b26cf168e88bc94ae83b060d42a5fca06ee0d8372670a"
+      "sha256": "aebd54c3b48be4f2ef83753049ebf545433b7e25ffb91e9665ca607a4ea401bf"
     },
     {
       "path": "privacy/rubrics.html",
