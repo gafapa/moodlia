@@ -97,6 +97,10 @@ tools such as ESLint and Vite never reach the published static site.
 
 The site uses a Vinext and Cloudflare-compatible build. Hosting configuration lives in `.openai/hosting.json`.
 
+TypeScript incremental compiler caches (`*.tsbuildinfo`) are generated locally
+and excluded from version control. They can be removed when cleaning the checkout;
+TypeScript recreates them on its next incremental run.
+
 `npm run export:static` converts the validated production build into a static
 site under `.static-export/` for deployment to the shared Oracle-hosted Nginx
 service. Run `npm run build` first.
