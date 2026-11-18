@@ -128,6 +128,8 @@ The user-management release references were republished on 28 October with plugi
 
 The course item backup release references were published on 14 November with plugin 0.1.224 and CLI 0.5.3. All 158 public files and ten HTTPS routes matched the validated export. See [publication evidence](docs/course-item-backups-publication-2026-11-14.md).
 
+The skills page was republished on 18 November with both maintained skills. All 158 public files and ten HTTPS routes matched the validated export. See [publication evidence](docs/skills-publication-2026-11-18.md).
+
 ## Security and privacy
 
 The static site does not store Moodle credentials or course data. Preserve existing general and extension privacy-policy URLs in every redesign and export.

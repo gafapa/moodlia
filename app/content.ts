@@ -641,40 +641,44 @@ export const apps: MoodliaApp[] = [
     place: "agent",
     status: "stable",
     summary: t(
-      "Create accessible Moodle learning content with local assets and useful static alternatives.",
-      "Crea contenido educativo accesible para Moodle con archivos locales y alternativas estáticas útiles.",
+      "Create accessible Moodle learning content, and let an agent operate Moodle safely through MoodlIA.",
+      "Crea contenido educativo accesible para Moodle y deja que un agente trabaje con Moodle de forma segura a través de MoodlIA.",
     ),
     description: t(
-      "One focused skill: `design-portable-moodle-content`. Create accessible HTML and local interactive demonstrations with static alternatives. Includes an editable example and package validator. Interactive behavior and backup/restore portability require checks on the target Moodle.",
-      "Una skill especializada: `design-portable-moodle-content`. Crea HTML accesible y demostraciones interactivas locales con alternativas estáticas. Incluye un ejemplo editable y un validador de paquetes. La interactividad y la portabilidad tras restaurar requieren comprobaciones en el Moodle de destino.",
+      "Two skills. `design-portable-moodle-content` creates accessible HTML and local interactive demonstrations with static alternatives, with an editable example and a package validator. `operate-moodle-with-moodlia` guides an agent using the MoodlIA MCP tools or CLI: it identifies the site and plugin version, takes parameters from the live schema, reads before writing, asks before destructive changes, and checks every change.",
+      "Dos skills. `design-portable-moodle-content` crea HTML accesible y demostraciones interactivas locales con alternativas estáticas, con un ejemplo editable y un validador de paquetes. `operate-moodle-with-moodlia` guía a un agente que usa las herramientas MCP o la CLI de MoodlIA: identifica el sitio y la versión del plugin, toma los parámetros del esquema en vivo, lee antes de escribir, pide confirmación antes de cambios destructivos y comprueba cada cambio.",
     ),
     does: [
       t("Choose HTML, an interactive demonstration or a static alternative for the target field.", "Elegir HTML, una demostración interactiva o una alternativa estática según el campo de destino."),
       t("Validate the package and distinguish local checks from verified Moodle behavior.", "Validar el paquete y distinguir las comprobaciones locales del funcionamiento verificado en Moodle."),
       t("Produce portable, accessible content packages.", "Producir paquetes de contenido portables y accesibles."),
+      t("Audit courses, copy single activities or sections between courses, manage users and restore backups with confirmation and verification.", "Auditar cursos, copiar actividades o secciones sueltas entre cursos, gestionar usuarios y restaurar copias de seguridad con confirmación y verificación."),
     ],
     needs: [
       t("An AI agent that supports skills, such as Claude Code or Codex.", "Un agente de IA compatible con skills, como Claude Code o Codex."),
       t("No Moodle connection for local authoring. Publication uses the available Moodle tools.", "Sin conexión a Moodle para crear contenido local. La publicación utiliza las herramientas Moodle disponibles."),
+      t("For operations: the MoodlIA plugin 0.1.224 or later and an MCP connection or the moodlia CLI 0.5.3.", "Para operar: el plugin MoodlIA 0.1.224 o posterior y una conexión MCP o la CLI moodlia 0.5.3."),
     ],
-    get: { label: t("Get the skill", "Obtener la skill"), href: "https://github.com/gafapa/moodlia-skills" },
+    get: { label: t("Get the skills", "Obtener las skills"), href: "https://github.com/gafapa/moodlia-skills" },
     install: [
       {
-        title: t("Install the skill", "Instala la skill"),
+        title: t("Install the skills", "Instala las skills"),
         steps: [
           { text: t("Download the repository:", "Descarga el repositorio:"), code: "git clone https://github.com/gafapa/moodlia-skills.git" },
-          { text: t("Copy the complete `design-portable-moodle-content` folder, including references, scripts and assets, into your agent's skills folder, for example `~/.claude/skills/` for Claude Code or `~/.codex/skills/` for Codex:", "Copia la carpeta completa `design-portable-moodle-content`, con sus referencias, scripts y recursos, en la carpeta de skills de tu agente, por ejemplo `~/.claude/skills/` en Claude Code o `~/.codex/skills/` en Codex:"), code: "cp -r moodlia-skills/design-portable-moodle-content ~/.claude/skills/" },
+          { text: t("Copy each complete skill folder you need, including references, scripts and assets, into your agent's skills folder, for example `~/.claude/skills/` for Claude Code or `~/.codex/skills/` for Codex:", "Copia la carpeta completa de cada skill que necesites, con sus referencias, scripts y recursos, en la carpeta de skills de tu agente, por ejemplo `~/.claude/skills/` en Claude Code o `~/.codex/skills/` en Codex:"), code: "cp -r moodlia-skills/design-portable-moodle-content moodlia-skills/operate-moodle-with-moodlia ~/.claude/skills/" },
         ],
       },
     ],
     firstUse: [
       { text: t("Ask the agent to use design-portable-moodle-content to prepare an HTML learning resource.", "Pide al agente que use design-portable-moodle-content para preparar un recurso educativo HTML.") },
       { text: t("For example: “Explain subnet masks with a worked example, a practice question and a printable alternative”.", "Por ejemplo: «Explica las máscaras de subred con un ejemplo resuelto, una pregunta de práctica y una alternativa imprimible».") },
+      { text: t("To work on a site, ask the agent to use operate-moodle-with-moodlia, for example: “Audit course 42 and tell me what blocks publishing it”.", "Para trabajar en un sitio, pide al agente que use operate-moodle-with-moodlia, por ejemplo: «Audita el curso 42 y dime qué impide publicarlo».") },
     ],
     limits: [
       t("Static validation does not prove accessibility, iframe support or backup/restore portability; verify those on the target site.", "La validación estática no demuestra accesibilidad, soporte de iframe ni portabilidad tras restaurar; compruébalos en el sitio de destino."),
+      t("The operations skill cannot grant permissions: every action is limited by the Moodle user's capabilities.", "La skill de operaciones no concede permisos: cada acción está limitada por los permisos del usuario de Moodle."),
     ],
-    docs: [{ label: t("Skill documentation", "Documentación de la skill"), href: "https://github.com/gafapa/moodlia-skills#readme" }],
+    docs: [{ label: t("Skills documentation", "Documentación de las skills"), href: "https://github.com/gafapa/moodlia-skills#readme" }],
     source: "https://github.com/gafapa/moodlia-skills",
     license: "GPL-3.0-or-later",
   },

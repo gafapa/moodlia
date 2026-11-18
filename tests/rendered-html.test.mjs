@@ -109,13 +109,13 @@ test("concept-only and superseded apps are not advertised as products", async ()
   }
 });
 
-test("the skills offer contains only portable content authoring in both languages", async () => {
+test("the skills offer lists content authoring and safe operations in both languages", async () => {
   for (const pathname of ["/apps/skills", "/es/apps/skills"]) {
     const page = await html(pathname);
     assert.match(page, /design-portable-moodle-content/);
-    assert.doesNotMatch(page, /operate-moodle-with-moodlia/);
+    assert.match(page, /operate-moodle-with-moodlia/);
     assert.match(page, /source\.json|validador|validator/i);
-    assert.doesNotMatch(page, /Two agent skills|Dos skills para agentes/);
+    assert.match(page, /live schema|esquema en vivo/);
   }
 });
 
