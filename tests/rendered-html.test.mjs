@@ -134,8 +134,8 @@ test("the outcome directory includes every tool with readiness and no audience l
 test("Corrector guides match the public release and preserve teacher control", async () => {
   for (const pathname of ["/apps/corrector", "/es/apps/corrector"]) {
     const page = await html(pathname);
-    assert.match(page, /releases\/tag\/v0\.1\.71/);
-    assert.match(page, /moodlia-corrector-0\.1\.71\.zip/);
+    assert.match(page, /releases\/tag\/v0\.2\.8/);
+    assert.match(page, /moodlia-corrector-0\.2\.8\.zip/);
     assert.match(page, /chrome:\/\/extensions/);
     assert.doesNotMatch(page, /0\.1\.45|0\.1\.62/);
     assert.match(page, /LM Studio/);

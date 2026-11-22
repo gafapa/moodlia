@@ -28,7 +28,7 @@ Use Node.js 22.13 or later and npm 10 or later. Run `npm ci` and `npm run dev` f
 - Give every app real installation steps: store and registry links, Moodle
   menu paths, and exact commands.
 - Distinguish store installations, manually installed releases, previews and
-  source-only tools. Corrector links to its published 0.1.71 GitHub archive;
+  source-only tools. Corrector links to its published 0.2.8 GitHub archive;
   store submission materials do not imply store approval. Studio is a concept.
 - Host MoodlIA Backup Converter at `/tools/backup-converter/`.
 
@@ -107,7 +107,7 @@ service. Run `npm run build` first.
 
 ### Repository preparation review — 20 october 2026
 
-The current source includes the cinematic homepage and task-oriented guide redesign, English/Spanish product content, local imagery and credits, publication verification tooling, and permanent Corrector/Rubrics policies. Design and deployment evidence remains in `.impeccable/`, `.taste-skill/`, and `docs/`; it is not a promise of unmeasured cross-platform behavior. The 24 October product update targets the published Corrector 0.1.71 ZIP; store submission materials remain separate from store approval.
+The current source includes the cinematic homepage and task-oriented guide redesign, English/Spanish product content, local imagery and credits, publication verification tooling, and permanent Corrector/Rubrics policies. Design and deployment evidence remains in `.impeccable/`, `.taste-skill/`, and `docs/`; it is not a promise of unmeasured cross-platform behavior. The 22 November product update targets the published Corrector 0.2.8 ZIP; store submission materials remain separate from store approval.
 
 The dependency findings in dated deployment records are historical. The 24 October
 2026 review updated Next.js and its ESLint configuration to 16.4.3, Vite to 8.3.5,
@@ -138,7 +138,7 @@ The static site does not store Moodle credentials or course data. Preserve exist
 
 All site generations preserve the self-contained English policies at `/privacy/corrector.html` and `/privacy/rubrics.html`, linked from the existing `/privacy` and `/es/privacy` pages. The route contract is `config/extension-privacy.json`; documents live in `public/privacy/`. The exporter fails before replacing its output if a required source document is missing or invalid, and copies policy bytes unchanged into the final site. Sitemap and rendered tests protect these routes. DESIGN.md and AGENTS.md make preservation mandatory for future redesigns.
 
-The Corrector document was imported from its 0.1.65 submission materials. The Rubrics document preserves the English policy text in the Rubrics project's existing multilingual website, including its conditional wording about AI features; this does not advertise AI functionality in the current Rubrics release. Policy content is now versioned within this repository and does not depend on sibling repositories during builds. Changes to extension behavior require corresponding policy updates without changing these public URLs. The policies were published with the website on 20 October 2026; see `docs/publication-2026-10-20.md`. A later repository push is separate from deploying a changed export.
+The Corrector document was imported from its 0.1.65 submission materials and last updated from the 0.2.8 materials (see `docs/corrector-0.2.8-publication-2026-11-22.md`). The Rubrics document preserves the English policy text in the Rubrics project's existing multilingual website, including its conditional wording about AI features; this does not advertise AI functionality in the current Rubrics release. Policy content is now versioned within this repository and does not depend on sibling repositories during builds. Changes to extension behavior require corresponding policy updates without changing these public URLs. The policies were published with the website on 20 October 2026; see `docs/publication-2026-10-20.md`. A later repository push is separate from deploying a changed export.
 
 ## Documentation
 

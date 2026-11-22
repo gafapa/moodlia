@@ -117,15 +117,15 @@ export const apps: MoodliaApp[] = [
     name: "MoodlIA Corrector",
     place: "browser",
     status: "manual",
-    version: "0.1.71",
+    version: "0.2.8",
     summary: t("Review AI-assisted grading suggestions inside Moodle, then decide what goes into the grading form.", "Revisa propuestas de corrección de IA dentro de Moodle y decide qué aplicar al formulario de calificación."),
     description: t(
-      "A Chrome extension for Moodle assignment grading pages. Version 0.1.71 reads supported submissions and task references, combines course, task and case-specific teacher criteria, and requests a suggestion from your chosen AI provider. Review the suggestion before applying it to Moodle's grading fields. It never automatically submits the grading form.",
-      "Una extensión de Chrome para las páginas de calificación de tareas de Moodle. La versión 0.1.71 lee entregas y referencias compatibles, combina los criterios docentes del curso, la tarea y el caso concreto y solicita una propuesta al proveedor de IA elegido. Revisa la propuesta antes de aplicarla a los campos de calificación de Moodle. Nunca envía automáticamente el formulario."
+      "A Chrome extension for Moodle assignment grading pages. Version 0.2.8 reads supported submissions and task references, lets the teacher choose which files are sent, combines course, task and case-specific teacher criteria, and requests a suggestion from your chosen AI provider. Review the suggestion before applying it to Moodle's grading fields. It never automatically submits the grading form.",
+      "Una extensión de Chrome para las páginas de calificación de tareas de Moodle. La versión 0.2.8 lee entregas y referencias compatibles, permite al docente elegir qué archivos se envían, combina los criterios docentes del curso, la tarea y el caso concreto y solicita una propuesta al proveedor de IA elegido. Revisa la propuesta antes de aplicarla a los campos de calificación de Moodle. Nunca envía automáticamente el formulario."
     ),
     does: [
       t("Prepare suggestions for rubrics, marking guides or simple direct grading, with the detected mode shown in the panel.", "Prepara propuestas para rúbricas, guías de evaluación o calificación directa simple, con el modo detectado visible en el panel."),
-      t("Read supported PDF, DOCX, ODT and source-code evidence; code is treated as text and never executed. Images require a compatible vision model.", "Lee evidencias compatibles en PDF, DOCX, ODT y archivos de código; el código se trata como texto y nunca se ejecuta. Las imágenes requieren un modelo con visión compatible."),
+      t("Read supported PDF, DOCX, ODT, XLSX, ODS, PPTX, ODP and source-code evidence, including files inside ZIP archives; code is treated as text and never executed. Images require a compatible vision model.", "Lee evidencias compatibles en PDF, DOCX, ODT, XLSX, ODS, PPTX, ODP y archivos de código, también dentro de archivos ZIP; el código se trata como texto y nunca se ejecuta. Las imágenes requieren un modelo con visión compatible."),
       t("Let the teacher review suggestions before applying them to Moodle fields and saving in Moodle.", "Permite al docente revisar la propuesta antes de aplicarla a los campos y guardarla en Moodle."),
     ],
     needs: [
@@ -133,11 +133,11 @@ export const apps: MoodliaApp[] = [
       t("A suitable model in Ollama, LM Studio, Jan, GPT4All, llama.cpp, LocalAI, vLLM or an approved OpenAI-compatible API.", "Un modelo adecuado en Ollama, LM Studio, Jan, GPT4All, llama.cpp, LocalAI, vLLM o una API compatible con OpenAI autorizada."),
       t("A vision-capable provider/model for scanned pages or images.", "Un proveedor y modelo con visión para páginas escaneadas o imágenes."),
     ],
-    get: { label: t("Download the public extension ZIP", "Descargar el ZIP público de la extensión"), href: "https://github.com/gafapa/moodlia-corrector/releases/tag/v0.1.71" },
+    get: { label: t("Download the public extension ZIP", "Descargar el ZIP público de la extensión"), href: "https://github.com/gafapa/moodlia-corrector/releases/tag/v0.2.8" },
     install: [{
       title: t("Install the public extension manually", "Instala manualmente la extensión pública"),
       steps: [
-        { text: t("Download `moodlia-corrector-0.1.71.zip` from the release assets and extract it into a permanent folder. Do not use the generic source-code ZIP.", "Descarga `moodlia-corrector-0.1.71.zip` de los archivos de la versión y extráelo en una carpeta permanente. No uses el ZIP genérico del código fuente.") },
+        { text: t("Download `moodlia-corrector-0.2.8.zip` from the release assets and extract it into a permanent folder. Do not use the generic source-code ZIP.", "Descarga `moodlia-corrector-0.2.8.zip` de los archivos de la versión y extráelo en una carpeta permanente. No uses el ZIP genérico del código fuente.") },
         { text: t("Open `chrome://extensions`, enable Developer mode, and choose Load unpacked. Select the extracted folder containing `manifest.json`.", "Abre `chrome://extensions`, activa el modo de desarrollador y elige «Cargar descomprimida». Selecciona la carpeta extraída que contiene `manifest.json`.") },
         { text: t("Open a Moodle assignment grader and click the extension icon. In the correction sidebar, open AI configuration and select the provider and model. Advanced settings include the address, port and other connection options.", "Abre la página de calificación de una tarea de Moodle y pulsa el icono de la extensión. En el panel lateral, abre Configuración de IA y elige el proveedor y el modelo. El modo avanzado incluye dirección, puerto y otras opciones de conexión.") },
         { text: t("Use Test connection with fictional data before reading student submissions. Try the workflow in a test assignment first.", "Usa «Test connection» con datos ficticios antes de leer entregas del alumnado. Prueba primero el flujo en una tarea de prueba.") },
@@ -150,11 +150,11 @@ export const apps: MoodliaApp[] = [
     ],
     limits: [
       t("This is a manually installed extension, not a Chrome Web Store installation. Check the release page for updates.", "Es una extensión de instalación manual, no una instalación desde Chrome Web Store. Consulta las actualizaciones en la página de versiones."),
-      t("Assignment evidence reaches your selected AI provider. Identifier minimization does not make student work anonymous; use only an authorized provider.", "Las evidencias de la tarea llegan al proveedor de IA elegido. Reducir identificadores no convierte el trabajo del alumnado en anónimo; usa solo un proveedor autorizado."),
-      t("Task references and student submissions are listed separately. Supported files are read when requesting correction; unsupported files are ignored and marked red. Verify which evidence was actually read.", "Las referencias de la tarea y las entregas del alumnado aparecen por separado. Los archivos compatibles se leen al solicitar la corrección; los no admitidos se ignoran y se marcan en rojo. Comprueba qué evidencias se han leído realmente."),
+      t("Assignment evidence reaches your selected AI provider. Identifier minimization does not make student work anonymous; use only an authorized provider. With “Correct when moving to the next student” turned on, each uncorrected student's work is sent when you move to that student.", "Las evidencias de la tarea llegan al proveedor de IA elegido. Reducir identificadores no convierte el trabajo del alumnado en anónimo; usa solo un proveedor autorizado. Con «Corregir al pasar al siguiente alumno» activado, el trabajo de cada alumno sin corregir se envía al pasar a ese alumno."),
+      t("Task references and student submissions are listed separately. Each file has a check box; checked supported files are read when requesting correction, and unsupported or omitted files show the reason. Verify which evidence was actually read.", "Las referencias de la tarea y las entregas del alumnado aparecen por separado. Cada archivo tiene una casilla; los compatibles marcados se leen al solicitar la corrección y los no admitidos u omitidos muestran el motivo. Comprueba qué evidencias se han leído realmente."),
       t("AI output can be wrong. The teacher remains responsible for reviewing the proposed marks and feedback.", "La IA puede equivocarse. El docente sigue siendo responsable de revisar las notas y los comentarios propuestos."),
     ],
-    docs: [{ label: t("Documentation for the public version", "Documentación de la versión pública"), href: "https://github.com/gafapa/moodlia-corrector/blob/v0.1.71/README.md" }],
+    docs: [{ label: t("Documentation for the public version", "Documentación de la versión pública"), href: "https://github.com/gafapa/moodlia-corrector/blob/v0.2.8/README.md" }],
     source: "https://github.com/gafapa/moodlia-corrector",
     license: "GPL-3.0-or-later",
   },
