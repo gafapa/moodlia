@@ -1,5 +1,5 @@
 {
-  "verifiedAt": "2026-11-18T23:33:25.294Z",
+  "verifiedAt": "2026-11-22T19:05:38.257Z",
   "base": "https://moodlia.com/",
   "files": [
     {
@@ -8,7 +8,7 @@
     },
     {
       "path": "apps.rsc",
-      "sha256": "1f8d7168c66a23eefb5a8f327f667afc79a1f11f0e9245f8ebe4391bfa2aa5db"
+      "sha256": "650182d126921330a53ed66d5e522fb0fe5ddcb4d2e0377953a7af78f1c71e6b"
     },
     {
       "path": "apps/analyzer-web.rsc",
@@ -36,11 +36,11 @@
     },
     {
       "path": "apps/corrector.rsc",
-      "sha256": "dc4ae8c5b9fc468f3e415297704d884e2bfd78589b804e10ef04bb0f5943e301"
+      "sha256": "b588dd9ee47fb7755889f5a0229249ab2733bf2b0f95510b808b899bf860cb5d"
     },
     {
       "path": "apps/corrector/index.html",
-      "sha256": "06745e444d8eca4fa043531d31a93babd3a7ce0f6d1c69c47ac4cce8243ef388"
+      "sha256": "14c98ac0a51b24bb0b6b27f3ab7ab08a62b1ed4094a5577a2d75fa4928e3f0e4"
     },
     {
       "path": "apps/edx-converter.rsc",
@@ -52,7 +52,7 @@
     },
     {
       "path": "apps/index.html",
-      "sha256": "bd65d55cbfe735596b11fe95dde5b799e55bfe48cf67895bed60f378997ae4fc"
+      "sha256": "7836b653757124dcded262ce706f5a6d24fc8c70ce75cba386c4639099619d38"
     },
     {
       "path": "apps/moodle-core-cli.rsc",
@@ -80,11 +80,11 @@
     },
     {
       "path": "apps/rubrics.rsc",
-      "sha256": "fc1deb4c398fe059d0b3bd56723219dfaa08fb6c4fbf086db4f46baa8416c8c5"
+      "sha256": "c018d36679ce12fe7fba40b980e9771041cba2b09b98edc2e3a3958fa1b2ebac"
     },
     {
       "path": "apps/rubrics/index.html",
-      "sha256": "231d7bbc0eda4fe00fa4e358e56942541bb1a51f88f92d64373291ed0eb830a8"
+      "sha256": "cb16a40fa98d52d653c28c6329bedaf078f694486e9933c5334daa1c6ee1a570"
     },
     {
       "path": "apps/skills.rsc",
@@ -200,7 +200,7 @@
     },
     {
       "path": "es/apps.rsc",
-      "sha256": "7733bee36bda9ea1b6ae88149a3f662567a1c9f8a930b05b6e98d6894f677a67"
+      "sha256": "1ae40bd6adef606965162c32ea91f3575d6a47a621138b23189890e8eea8cbef"
     },
     {
       "path": "es/apps/analyzer-web.rsc",
@@ -228,11 +228,11 @@
     },
     {
       "path": "es/apps/corrector.rsc",
-      "sha256": "854f4fd7f80a4a7c1150ab078d2b4640e49c19bf60fe98b9755221116d779c61"
+      "sha256": "6211a49b05036daf68627db5e545e96479739a0fd6b0f6a8a85c6839266f7cbf"
     },
     {
       "path": "es/apps/corrector/index.html",
-      "sha256": "1279e04c0608674c3d3ac1d7ee7129b2981b37b7fbb3c382d913d48d37e39204"
+      "sha256": "78edc2427752254fa70455e28bc4a166b359087126bc5a8b3f46ef84a4f6f023"
     },
     {
       "path": "es/apps/edx-converter.rsc",
@@ -244,7 +244,7 @@
     },
     {
       "path": "es/apps/index.html",
-      "sha256": "4c8796d17ca198af8b62e583289b578a4ede3a9514f235259b21047811ff52c0"
+      "sha256": "f0c289d1c5c571701a747bf333a11839cf043433c2c013187cf0b17096333f0f"
     },
     {
       "path": "es/apps/moodle-core-cli.rsc",
@@ -272,11 +272,11 @@
     },
     {
       "path": "es/apps/rubrics.rsc",
-      "sha256": "4326eb7f72e6f4647b4e9a6231b7af5d78d132d13b18bcca31d208ef8c4571dc"
+      "sha256": "8dc4225be1f043a4ad4ee917478a00cdc99c2569ebb84116a0a2f756bf528117"
     },
     {
       "path": "es/apps/rubrics/index.html",
-      "sha256": "396437fad63c1fef8f0fba7b0ed1992240b5e0eb9c6610bf1b81fd01a4658f8f"
+      "sha256": "993a09cedf444a8e4b16eb6294a60bf55505ceeef3d9775d83dafcf452d024ff"
     },
     {
       "path": "es/apps/skills.rsc",
@@ -336,11 +336,11 @@
     },
     {
       "path": "es/instalar.rsc",
-      "sha256": "9ff72cf65bc04c76f1d74e3296e65166148015081888d1872e9e094ac8384a92"
+      "sha256": "1882257d50bf87a158d2c8821677fdb1bbf1bdc13ca7c337648d2fb2c3487a97"
     },
     {
       "path": "es/instalar/index.html",
-      "sha256": "a06f08c69a4e051d435b2c40ca646bf0c1b9e8b9733cff06517acbf3246072f4"
+      "sha256": "f71245f5f75db929c68ea3c5122d756def2ec849a1d01ec9a491e04ca7cd11c4"
     },
     {
       "path": "es/privacy.rsc",
@@ -480,11 +480,11 @@
     },
     {
       "path": "install.rsc",
-      "sha256": "361e8559ea90f1eb3b92b33c10062e84d0526be5bab57a0a909ba76df561ba76"
+      "sha256": "2f4cf419ca1f52c23c14942e8727dd195b180af552553445300f5f1ec76b2c92"
     },
     {
       "path": "install/index.html",
-      "sha256": "63a3f50cce1f82a3ddf4cc0e41f00601c3726ff65a933d1707effbe4def0c4e2"
+      "sha256": "4d02e88ec4f79e786706d3f5fdbcc35bb5a9293a09a89a6dd61d69f5b2ea02a7"
     },
     {
       "path": "legal-notice.rsc",
@@ -504,7 +504,7 @@
     },
     {
       "path": "privacy/corrector.html",
-      "sha256": "39079a4d54ea264f8bebc0d9beabd602118d0ab30ef46d0d81516e6e80b81f1d"
+      "sha256": "33ea3b7f0311fa8f1581adba6c859b9f707517424c6b1ec20a8386c37588dd58"
     },
     {
       "path": "privacy/index.html",
