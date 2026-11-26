@@ -2,15 +2,14 @@
 
 ## Scope
 
-Each of the 16 maintained repositories publishes a small English documentation portal through GitHub Pages. The two archived repositories remain unchanged. These portals link to the central MoodlIA website and the repository README; they do not run the application, replace an extension store, publish npm packages or deploy moodlia.com.
+Each of the 15 maintained repositories publishes a small English documentation portal through GitHub Pages. The archived repositories, including the discontinued MoodlIA Analyzer Web and MoodlIA Analyzer Desktop, remain unchanged. These portals link to the central MoodlIA website and the repository README; they do not run the application, replace an extension store, publish npm packages or deploy moodlia.com.
 
 ## Published locations
 
 | Project | Pages | Source |
 | --- | --- | --- |
 | Moodle Core CLI | [Open project page](https://gafapa.github.io/moodle-core-cli/) | [Repository](https://github.com/gafapa/moodle-core-cli) |
-| MoodlIA Analyzer Desktop | [Open project page](https://gafapa.github.io/moodlia-analyzer-desktop/) | [Repository](https://github.com/gafapa/moodlia-analyzer-desktop) |
-| MoodlIA Analyzer Web | [Open project page](https://gafapa.github.io/moodlia-analyzer-web/) | [Repository](https://github.com/gafapa/moodlia-analyzer-web) |
+| MoodlIA Analyzer | [Open project page](https://gafapa.github.io/moodlia-analyzer/) | [Repository](https://github.com/gafapa/moodlia-analyzer) |
 | MoodlIA Backup Converter | [Open project page](https://gafapa.github.io/moodlia-backup-converter/) | [Repository](https://github.com/gafapa/moodlia-backup-converter) |
 | MoodlIA CLI | [Open project page](https://gafapa.github.io/moodlia-cli/) | [Repository](https://github.com/gafapa/moodlia-cli) |
 | MoodlIA Corrector | [Open project page](https://gafapa.github.io/moodlia-corrector/) | [Repository](https://github.com/gafapa/moodlia-corrector) |

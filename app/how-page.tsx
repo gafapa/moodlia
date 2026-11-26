@@ -22,7 +22,7 @@ const lanes: Lane[] = [
       en: "Nothing to install on Moodle. Enable web services and create a token.",
       es: "No se instala nada en Moodle. Activa los servicios web y crea un token.",
     },
-    apps: ["teacher-dashboard", "analyzer-web", "moodle-core-cli", "sync"],
+    apps: ["teacher-dashboard", "analyzer", "moodle-core-cli", "sync"],
   },
   {
     title: { en: "The MoodlIA plugin", es: "El plugin MoodlIA" },
@@ -61,7 +61,7 @@ const content = {
     connect: [
       {
         title: "Standard web services",
-        body: "Moodle already has a web service API. Moodle Core CLI, Teacher Dashboard, and Analyzer Web use it, so nothing is installed on the site. It is limited to the functions Moodle offers and the service has enabled.",
+        body: "Moodle already has a web service API. Moodle Core CLI, Teacher Dashboard, and Analyzer use it, so nothing is installed on the site. It is limited to the functions Moodle offers and the service has enabled.",
       },
       {
         title: "The MoodlIA plugin",
@@ -93,7 +93,7 @@ const content = {
     connect: [
       {
         title: "Servicios web estándar",
-        body: "Moodle ya tiene una API de servicios web. Moodle Core CLI, Teacher Dashboard y Analyzer Web la usan, así que no se instala nada en el sitio. Está limitada a las funciones que ofrece Moodle y que están habilitadas en el servicio.",
+        body: "Moodle ya tiene una API de servicios web. Moodle Core CLI, Teacher Dashboard y Analyzer la usan, así que no se instala nada en el sitio. Está limitada a las funciones que ofrece Moodle y que están habilitadas en el servicio.",
       },
       {
         title: "El plugin MoodlIA",
