@@ -17,7 +17,7 @@ const appSlugs = [
   "backup-converter",
   "edx-converter",
   "teacher-dashboard",
-  "analyzer-web",
+  "analyzer",
   "moodle-plugin",
   "cli",
   "moodle-core-cli",
@@ -128,10 +128,13 @@ await Promise.all([
 
 // Retired routes keep working as redirects, because static hosting has no server-side rewrites.
 // Routes of the previous site, which other pages and search engines still link to.
-const retiredProducts = { "chrome-extensions": null, "analyzer-desktop": null, "sync-mcp": "sync" };
+const retiredProducts = { "chrome-extensions": null, "analyzer-desktop": "analyzer", "analyzer-web": "analyzer", "sync-mcp": "sync" };
 const legacyRedirects = {
   "/start": "/install",
   "/es/empezar": "/es/instalar",
+  // MoodlIA Analyzer replaced the discontinued Analyzer Web on 26 November 2026.
+  "/apps/analyzer-web": "/apps/analyzer",
+  "/es/apps/analyzer-web": "/es/apps/analyzer",
   ...Object.fromEntries(["ai-integration", "teaching-tools", "learning-insights"].flatMap((way) => [
     [`/ways/${way}`, "/apps"],
     [`/es/ways/${way}`, "/es/apps"],

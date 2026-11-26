@@ -25,7 +25,7 @@ const journeys: Record<AppSlug, { en: string[]; es: string[] }> = {
   "edx-converter": { en: ["Open edX archive", "Supported OLX blocks", "Moodle backup"], es: ["Archivo de Open edX", "Bloques OLX admitidos", "Copia para Moodle"] },
   sync: { en: ["Source content", "Plan and approval", "Apply and verify"], es: ["Contenido de origen", "Plan y aprobación", "Aplicar y verificar"] },
   "teacher-dashboard": { en: ["Authorized connection", "Courses and deadlines", "Open in Moodle"], es: ["Conexión autorizada", "Cursos y plazos", "Abrir en Moodle"] },
-  "analyzer-web": { en: ["Activity and grades", "Course signals", "Teacher interpretation"], es: ["Actividad y notas", "Señales del curso", "Interpretación docente"] },
+  analyzer: { en: ["Activity and grades", "Course signals", "Teacher interpretation"], es: ["Actividad y notas", "Señales del curso", "Interpretación docente"] },
   skills: { en: ["Learning objective", "Accessible HTML", "Review the resource"], es: ["Objetivo didáctico", "HTML accesible", "Revisar el recurso"] },
 };
 

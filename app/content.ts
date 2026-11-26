@@ -11,7 +11,7 @@ export type AppSlug =
   | "backup-converter"
   | "edx-converter"
   | "teacher-dashboard"
-  | "analyzer-web"
+  | "analyzer"
   | "moodle-plugin"
   | "cli"
   | "moodle-core-cli"
@@ -353,55 +353,55 @@ export const apps: MoodliaApp[] = [
     license: "GPL-3.0-or-later",
   },
   {
-    slug: "analyzer-web",
-    name: "MoodlIA Analyzer Web",
+    slug: "analyzer",
+    name: "MoodlIA Analyzer",
     place: "computer",
     status: "source",
     summary: t(
-      "Review activity and grades together to decide where a course or student needs follow-up.",
-      "Revisa juntos la actividad y las notas para decidir dónde necesita seguimiento un curso o un estudiante.",
+      "See how every student in your courses is doing, and where a course needs follow-up.",
+      "Mira cómo va cada estudiante de tus cursos y dónde necesita seguimiento un curso.",
     ),
     description: t(
-      "Analyzes a Moodle course in the browser: participation, submissions, grades, and quiz results. It classifies each student's risk against a passing threshold you set, suggests interventions, and explains how to read every chart. It can optionally write reports with an AI service approved by your institution.",
-      "Analiza un curso de Moodle en el navegador: participación, entregas, calificaciones y resultados de cuestionarios. Clasifica el riesgo de cada estudiante según el aprobado que fijes, propone intervenciones y explica cómo leer cada gráfico. Opcionalmente, redacta informes con un servicio de IA aprobado por tu centro.",
+      "A desktop app for Windows, macOS and Linux that analyzes your Moodle courses: grades, submissions, quizzes, forums, completion and access. It signs in like the Moodle app, works with or without the MoodlIA plugin, and only reads from Moodle. It replaces the earlier Analyzer Web and Analyzer Desktop, which are discontinued.",
+      "Una aplicación de escritorio para Windows, macOS y Linux que analiza tus cursos de Moodle: notas, entregas, cuestionarios, foros, finalización y accesos. Inicia sesión como la app de Moodle, funciona con o sin el plugin MoodlIA y solo lee de Moodle. Sustituye a los anteriores Analyzer Web y Analyzer Desktop, que se han descontinuado.",
     ),
     does: [
-      t("Heuristic risk indicators, alerts, and a suggested intervention list.", "Indicadores heurísticos de riesgo, alertas y una lista de intervenciones sugerida."),
-      t("Course views: activity trends, submission punctuality, quiz results, completion bottlenecks.", "Vistas del curso: tendencias de actividad, puntualidad de las entregas, resultados de cuestionarios y cuellos de botella de finalización."),
-      t("Student views: progress, quiz history, weekly activity, predictions.", "Vistas de cada estudiante: progreso, historial de cuestionarios, actividad semanal y predicciones."),
-      t("CSV and JSON export of the student list.", "Exportación de la lista de estudiantes en CSV y JSON."),
+      t("A course summary with what needs your attention today, students by risk level, and student profiles with a suggested action.", "Un resumen del curso con lo que necesita tu atención hoy, estudiantes por nivel de riesgo y perfiles de estudiantes con una acción sugerida."),
+      t("Submissions: who submitted each assignment, who submits at the last minute, what is waiting for a grade and how long grading takes.", "Entregas: quién entregó cada tarea, quién entrega a última hora, qué está pendiente de calificar y cuánto tarda la corrección."),
+      t("Quiz questions to review, as in Moodle's quiz statistics: facility, discrimination and consistency.", "Preguntas de cuestionario para revisar, como en las estadísticas de Moodle: facilidad, discriminación y consistencia."),
+      t("Who replies to whom in the forums, activity completion, days since the last access, and weeks with many deadlines across each student's courses.", "Quién responde a quién en los foros, finalización de actividades, días desde el último acceso y semanas con muchos plazos en todos los cursos de cada estudiante."),
+      t("A detail per student and changes of risk between analyses, in Galician, Spanish or English.", "Una ficha por estudiante y cambios de riesgo entre análisis, en gallego, español o inglés."),
     ],
     needs: [
-      t("A Moodle web service token, or a Moodle username and password if your site allows creating tokens from the browser.", "Un token de servicios web de Moodle, o tu usuario y contraseña si tu sitio permite crear tokens desde el navegador."),
-      t("A Moodle site that allows requests from the browser (CORS).", "Un Moodle que acepte peticiones desde el navegador (CORS)."),
-      t("A computer with Node.js 22 or newer, npm 10 or newer, and Git.", "Un ordenador con Node.js 22 o posterior, npm 10 o posterior y Git."),
+      t("A Moodle site that allows the Moodle app (mobile web services), or a web service token from your administrator.", "Un Moodle que permita la app de Moodle (servicios web para móviles), o un token de servicios web de tu administrador."),
+      t("A Moodle account that can see the course's students and grades, such as a teacher's.", "Una cuenta de Moodle que pueda ver los estudiantes y las notas del curso, como la de un docente."),
+      t("Until the first installers are released: a computer with Node.js 22 or newer, npm 10 or newer, and Git.", "Hasta que se publiquen los primeros instaladores: un ordenador con Node.js 22 o posterior, npm 10 o posterior y Git."),
     ],
-    get: { label: t("Get the source code", "Obtener el código"), href: "https://github.com/gafapa/moodlia-analyzer-web" },
+    get: { label: t("Get the source code", "Obtener el código"), href: "https://github.com/gafapa/moodlia-analyzer" },
     install: [
       {
         title: t("Run it on your computer", "Ejecútalo en tu ordenador"),
         steps: [
-          { text: t("Download the project and install its dependencies:", "Descarga el proyecto e instala sus dependencias:"), code: "git clone https://github.com/gafapa/moodlia-analyzer-web.git\ncd moodlia-analyzer-web\nnpm install" },
-          { text: t("Start it and open `http://localhost:5173`:", "Arráncalo y abre `http://localhost:5173`:"), code: "npm run dev" },
+          { text: t("Download the project and install its dependencies:", "Descarga el proyecto e instala sus dependencias:"), code: "git clone https://github.com/gafapa/moodlia-analyzer.git\ncd moodlia-analyzer\nnpm install\nnpm approve-scripts electron" },
+          { text: t("Build it and open the app:", "Compílalo y abre la aplicación:"), code: "npm start" },
         ],
       },
     ],
     firstUse: [
-      { text: t("Connect with your Moodle address and token.", "Conéctate con la dirección de tu Moodle y tu token.") },
-      { text: t("Choose a course, set the passing threshold, and run the analysis.", "Elige un curso, fija el aprobado y lanza el análisis.") },
-      { text: t("Start with the intervention list, then open a student's view for details.", "Empieza por la lista de intervenciones y abre la vista de un estudiante para ver el detalle.") },
+      { text: t("Enter your Moodle address and sign in as in the Moodle app. Your password goes only to your Moodle and is not saved.", "Escribe la dirección de tu Moodle e inicia sesión como en la app de Moodle. Tu contraseña solo va a tu Moodle y no se guarda.") },
+      { text: t("Choose a course: the app reads it and shows the summary.", "Elige un curso: la aplicación lo lee y muestra el resumen.") },
+      { text: t("Start with what needs your attention, then open the tabs and a student's detail.", "Empieza por lo que necesita tu atención y después abre las pestañas y la ficha de un estudiante.") },
     ],
     limits: [
-      t("Risk and grade estimates are heuristics, not validated predictions or a substitute for teacher judgment.", "Las estimaciones de riesgo y calificación son heurísticas, no predicciones validadas ni un sustituto del criterio docente."),
-      t("If Moodle blocks browser requests (CORS), the app cannot connect without a change on the Moodle server.", "Si Moodle bloquea las peticiones del navegador (CORS), la aplicación no puede conectarse sin un cambio en el servidor de Moodle."),
-      t("AI reports leave out names and email addresses but include internal identifiers and grades. Use only a service your institution approves.", "Los informes con IA omiten nombres y correos, pero incluyen identificadores internos y calificaciones. Usa solo un servicio aprobado por tu centro."),
-      t("Analysis results are cached in the browser for four hours.", "Los resultados del análisis se guardan en el navegador durante cuatro horas."),
+      t("Risk levels and profiles are heuristics that support teacher judgment; they are not validated predictions.", "Los niveles de riesgo y los perfiles son heurísticas que apoyan el criterio docente; no son predicciones validadas."),
+      t("Standard Moodle web services do not give the course log, so time online is not measured.", "Los servicios web estándar de Moodle no dan el registro del curso, así que no se mide el tiempo conectado."),
+      t("Installers for Windows, macOS and Linux will be published with the first release, without code signing at first.", "Los instaladores para Windows, macOS y Linux se publicarán con la primera versión, al principio sin firma de código."),
     ],
     docs: [
-      { label: t("Analytics and Moodle requirements", "Analítica y requisitos de Moodle"), href: "https://github.com/gafapa/moodlia-analyzer-web#readme" },
-      { label: t("Related Python desktop alternative, available from source", "Alternativa de escritorio en Python, disponible desde su código"), href: "https://github.com/gafapa/moodlia-analyzer-desktop#readme" },
+      { label: t("Analyses, Moodle access and privacy", "Análisis, acceso a Moodle y privacidad"), href: "https://github.com/gafapa/moodlia-analyzer#readme" },
+      { label: t("Project page and downloads", "Página del proyecto y descargas"), href: "https://gafapa.github.io/moodlia-analyzer/" },
     ],
-    source: "https://github.com/gafapa/moodlia-analyzer-web",
+    source: "https://github.com/gafapa/moodlia-analyzer",
     license: "MIT",
   },
   {
@@ -695,7 +695,7 @@ export const tasks: Array<{ text: Text; app: AppSlug }> = [
   { text: t("Restore a course on an older Moodle", "Restaurar un curso en un Moodle más antiguo"), app: "backup-converter" },
   { text: t("Bring an Open edX course into Moodle", "Llevar un curso de Open edX a Moodle"), app: "edx-converter" },
   { text: t("See deadlines across all my courses", "Ver las entregas de todos mis cursos"), app: "teacher-dashboard" },
-  { text: t("Find students who need help", "Encontrar a los estudiantes que necesitan ayuda"), app: "analyzer-web" },
+  { text: t("Find students who need help", "Encontrar a los estudiantes que necesitan ayuda"), app: "analyzer" },
   { text: t("Let an AI assistant work in Moodle", "Que un asistente de IA trabaje en Moodle"), app: "moodle-plugin" },
   { text: t("Automate Moodle from scripts", "Automatizar Moodle desde scripts"), app: "cli" },
   { text: t("Automate Moodle without installing a plugin", "Automatizar Moodle sin instalar un plugin"), app: "moodle-core-cli" },
@@ -708,7 +708,7 @@ export const productFamilies: Array<{ id: string; title: Text; body: Text; apps:
   { id: "connect", title: t("Connect AI and workflows to Moodle", "Conecta la IA y tus flujos de trabajo con Moodle"), body: t("The plugin exposes operations over REST and MCP. CLI and standard Core access provide automation interfaces.", "El plugin expone operaciones por REST y MCP. La CLI y el acceso Core estándar ofrecen interfaces de automatización."), apps: ["moodle-plugin", "cli", "moodle-core-cli"] },
   { id: "assess", title: t("Prepare assessment and review submissions", "Prepara la evaluación y revisa las entregas"), body: t("Start with spreadsheet rubrics, or set up teacher-reviewed AI suggestions. These extensions do not require the MoodlIA plugin.", "Empieza por las rúbricas de una hoja de cálculo o configura propuestas de IA revisadas por el docente. Estas extensiones no necesitan el plugin MoodlIA."), apps: ["rubrics", "corrector"] },
   { id: "reuse", title: t("Create and reuse course content", "Crea y reutiliza el contenido de tus cursos"), body: t("Choose the route that matches your source, destination and supported content. These are distinct workflows with their own limits.", "Elige la vía adecuada para el origen, el destino y el contenido admitido. Son flujos diferentes, cada uno con sus límites."), apps: ["portable", "skills", "sync", "backup-converter", "edx-converter"] },
-  { id: "follow-up", title: t("Keep track of your courses", "Haz seguimiento de tus cursos"), body: t("Bring deadlines, grades and activity signals together. Setup requires permitted Moodle REST access; analytics indicators support teacher judgment.", "Reúne plazos, notas e indicadores de actividad. La configuración requiere acceso REST autorizado a Moodle; los indicadores apoyan el criterio docente."), apps: ["teacher-dashboard", "analyzer-web"] },
+  { id: "follow-up", title: t("Keep track of your courses", "Haz seguimiento de tus cursos"), body: t("Bring deadlines, grades and activity signals together. Setup requires permitted Moodle REST access; analytics indicators support teacher judgment.", "Reúne plazos, notas e indicadores de actividad. La configuración requiere acceso REST autorizado a Moodle; los indicadores apoyan el criterio docente."), apps: ["teacher-dashboard", "analyzer"] },
 ];
 
 export const places: Record<Place, { title: Text; body: Text }> = {
