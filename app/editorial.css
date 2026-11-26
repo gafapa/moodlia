@@ -72,6 +72,11 @@ body:has(.inner-site) .skip-link:not(:focus) { clip-path: inset(50%); width: 1px
 .inner-site .app-layout { padding-top: 45px; grid-template-columns: minmax(0, 1fr) 330px; gap: clamp(40px, 7vw, 110px); }
 .inner-site .app-main { max-width: 850px; }
 .inner-site .app-description { font-size: 20px; margin-bottom: 60px; }
+.inner-site .screens-note { margin: -16px 0 24px; color: var(--muted, #5b6875); }
+.inner-site .screens { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+.inner-site .screens figure { margin: 0; }
+.inner-site .screens img { display: block; width: 100%; height: auto; border: 1px solid rgb(0 0 0 / 0.12); border-radius: 10px; box-shadow: 0 2px 10px rgb(0 0 0 / 0.08); }
+.inner-site .screens figcaption { margin-top: 10px; font-size: 15px; }
 .inner-site .app-main > section { padding-bottom: 35px; margin-bottom: 35px; }
 .inner-site .app-main > section h2 { margin-bottom: 30px; }
 .inner-site .check-list, .inner-site .need-list, .inner-site .note-list { gap: 18px; font-size: 18px; }
