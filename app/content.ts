@@ -356,7 +356,8 @@ export const apps: MoodliaApp[] = [
     slug: "analyzer",
     name: "MoodlIA Analyzer",
     place: "computer",
-    status: "source",
+    status: "manual",
+    version: "0.1.0",
     summary: t(
       "See how every student in your courses is doing, and where a course needs follow-up.",
       "Mira cómo va cada estudiante de tus cursos y dónde necesita seguimiento un curso.",
@@ -375,15 +376,18 @@ export const apps: MoodliaApp[] = [
     needs: [
       t("A Moodle site that allows the Moodle app (mobile web services), or a web service token from your administrator.", "Un Moodle que permita la app de Moodle (servicios web para móviles), o un token de servicios web de tu administrador."),
       t("A Moodle account that can see the course's students and grades, such as a teacher's.", "Una cuenta de Moodle que pueda ver los estudiantes y las notas del curso, como la de un docente."),
-      t("Until the first installers are released: a computer with Node.js 22 or newer, npm 10 or newer, and Git.", "Hasta que se publiquen los primeros instaladores: un ordenador con Node.js 22 o posterior, npm 10 o posterior y Git."),
+      t("A computer with Windows 10 or later (64-bit), macOS (Apple silicon or Intel), or 64-bit Linux.", "Un ordenador con Windows 10 o posterior (64 bits), macOS (Apple silicon o Intel) o Linux de 64 bits."),
     ],
-    get: { label: t("Get the source code", "Obtener el código"), href: "https://github.com/gafapa/moodlia-analyzer" },
+    get: { label: t("Download version 0.1.0", "Descargar la versión 0.1.0"), href: "https://github.com/gafapa/moodlia-analyzer/releases/tag/v0.1.0" },
     install: [
       {
-        title: t("Run it on your computer", "Ejecútalo en tu ordenador"),
+        title: t("Install it on your computer", "Instálala en tu ordenador"),
         steps: [
-          { text: t("Download the project and install its dependencies:", "Descarga el proyecto e instala sus dependencias:"), code: "git clone https://github.com/gafapa/moodlia-analyzer.git\ncd moodlia-analyzer\nnpm install\nnpm approve-scripts electron" },
-          { text: t("Build it and open the app:", "Compílalo y abre la aplicación:"), code: "npm start" },
+          { text: t("Open the 0.1.0 release and download the file for your system: `MoodlIA-Analyzer-0.1.0-win-x64-setup.exe` on Windows, the `mac-arm64.dmg` (Apple silicon) or `mac-x64.dmg` (Intel) on a Mac, or the `.AppImage` on Linux.", "Abre la versión 0.1.0 y descarga el archivo de tu sistema: `MoodlIA-Analyzer-0.1.0-win-x64-setup.exe` en Windows, el `mac-arm64.dmg` (Apple silicon) o `mac-x64.dmg` (Intel) en un Mac, o el `.AppImage` en Linux.") },
+          { text: t("Windows: run the installer. If SmartScreen warns about an unknown publisher, choose More info, then Run anyway.", "Windows: ejecuta el instalador. Si SmartScreen avisa de un editor desconocido, elige «Más información» y después «Ejecutar de todas formas».") },
+          { text: t("macOS: open the `.dmg` and drag MoodlIA Analyzer to Applications. The first time, open it with right click (or Control-click), Open.", "macOS: abre el `.dmg` y arrastra MoodlIA Analyzer a Aplicaciones. La primera vez, ábrela con clic derecho (o Control y clic), «Abrir».") },
+          { text: t("Linux: make the AppImage executable and run it:", "Linux: haz ejecutable el AppImage y arráncalo:"), code: "chmod +x MoodlIA-Analyzer-0.1.0-linux-x86_64.AppImage\n./MoodlIA-Analyzer-0.1.0-linux-x86_64.AppImage" },
+          { text: t("Optionally, compare the file with `SHA256SUMS-0.1.0.txt` from the same release.", "Si quieres, compara el archivo con `SHA256SUMS-0.1.0.txt` de la misma versión.") },
         ],
       },
     ],
@@ -395,10 +399,10 @@ export const apps: MoodliaApp[] = [
     limits: [
       t("Risk levels and profiles are heuristics that support teacher judgment; they are not validated predictions.", "Los niveles de riesgo y los perfiles son heurísticas que apoyan el criterio docente; no son predicciones validadas."),
       t("Standard Moodle web services do not give the course log, so time online is not measured.", "Los servicios web estándar de Moodle no dan el registro del curso, así que no se mide el tiempo conectado."),
-      t("Installers for Windows, macOS and Linux will be published with the first release, without code signing at first.", "Los instaladores para Windows, macOS y Linux se publicarán con la primera versión, al principio sin firma de código."),
+      t("The installers are not code-signed yet, so Windows and macOS warn the first time you open the app. Check the release page for updates.", "Los instaladores aún no tienen firma de código, así que Windows y macOS avisan la primera vez que abres la aplicación. Consulta las actualizaciones en la página de versiones."),
     ],
     docs: [
-      { label: t("Analyses, Moodle access and privacy", "Análisis, acceso a Moodle y privacidad"), href: "https://github.com/gafapa/moodlia-analyzer#readme" },
+      { label: t("Analyses, Moodle access and privacy", "Análisis, acceso a Moodle y privacidad"), href: "https://github.com/gafapa/moodlia-analyzer/blob/v0.1.0/README.md" },
       { label: t("Project page and downloads", "Página del proyecto y descargas"), href: "https://gafapa.github.io/moodlia-analyzer/" },
     ],
     source: "https://github.com/gafapa/moodlia-analyzer",
