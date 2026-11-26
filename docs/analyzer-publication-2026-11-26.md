@@ -41,3 +41,20 @@ client scripts changed. The static-sites content workflow created
 reported `container_recreated=false`, and `node tools/verify-publication.mjs
 https://moodlia.com/` verified all 162 public files byte for byte and ten clean
 HTTPS routes.
+
+## 0.2.0 with screenshots - same day
+
+After MoodlIA Analyzer 0.2.0 was released on GitHub (the teacher's pending-work
+panel, better adaptation to the window size, installers smoke-checked on the
+three systems), the analyzer page was republished for 0.2.0. App pages can now
+show screenshots in the page's language; the analyzer page shows six WebP
+screenshots per language under `/images/apps/analyzer/<locale>/` (727 KB in
+total), made with the analyzer's demonstration site and fictitious students
+(`npm run screenshots` in the analyzer repository). `npm test` passed all 17
+rendered-site tests, including a new check of the screenshots. The rest of the
+pages changed only because the stylesheet was renamed. The static-sites content
+workflow created
+`/opt/docker/backups/static-sites/moodlia.com-20261126T161406Z.tar.gz` and
+reported `container_recreated=false`, and `node tools/verify-publication.mjs
+https://moodlia.com/` verified all 174 public files byte for byte and ten clean
+HTTPS routes.
