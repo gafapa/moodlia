@@ -50,6 +50,8 @@ export const ui = {
     app: {
       breadcrumb: "Apps",
       whatItDoes: "What it does",
+      screens: "Screens",
+      screensNote: "Made with a demonstration site and fictitious students. Select an image to see it full size.",
       needs: "What you need",
       install: "Installation",
       firstUse: "First use",
@@ -97,6 +99,8 @@ export const ui = {
     app: {
       breadcrumb: "Apps",
       whatItDoes: "Qué hace",
+      screens: "Pantallas",
+      screensNote: "Hechas con un sitio de demostración y estudiantes ficticios. Selecciona una imagen para verla a tamaño completo.",
       needs: "Qué necesitas",
       install: "Instalación",
       firstUse: "Primer uso",

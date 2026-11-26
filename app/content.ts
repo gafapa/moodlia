@@ -36,6 +36,15 @@ export interface Link {
   href: string;
 }
 
+/** A screenshot of the app; `src` contains `{locale}`, replaced by the page's language. */
+export interface Screenshot {
+  src: string;
+  width: number;
+  height: number;
+  alt: Text;
+  caption: Text;
+}
+
 export interface MoodliaApp {
   slug: AppSlug;
   name: string;
@@ -52,6 +61,8 @@ export interface MoodliaApp {
   firstUse: Step[];
   limits: Text[];
   docs: Link[];
+  /** Screenshots made with fictitious data, shown after the description. */
+  screenshots?: Screenshot[];
   source: string;
   license: "GPL-3.0-or-later" | "MIT";
 }
@@ -357,16 +368,18 @@ export const apps: MoodliaApp[] = [
     name: "MoodlIA Analyzer",
     place: "computer",
     status: "manual",
-    version: "0.1.0",
+    version: "0.2.0",
     summary: t(
-      "See how every student in your courses is doing, and where a course needs follow-up.",
-      "Mira cómo va cada estudiante de tus cursos y dónde necesita seguimiento un curso.",
+      "See everything waiting for you across your courses, and how every student is doing.",
+      "Ve todo lo que tienes pendiente en tus cursos y cómo va cada estudiante.",
     ),
     description: t(
-      "A desktop app for Windows, macOS and Linux that analyzes your Moodle courses: grades, submissions, quizzes, forums, completion and access. It signs in like the Moodle app, works with or without the MoodlIA plugin, and only reads from Moodle. It replaces the earlier Analyzer Web and Analyzer Desktop, which are discontinued.",
-      "Una aplicación de escritorio para Windows, macOS y Linux que analiza tus cursos de Moodle: notas, entregas, cuestionarios, foros, finalización y accesos. Inicia sesión como la app de Moodle, funciona con o sin el plugin MoodlIA y solo lee de Moodle. Sustituye a los anteriores Analyzer Web y Analyzer Desktop, que se han descontinuado.",
+      "A desktop app for Windows, macOS and Linux for teachers. It opens on your pending work across the courses you teach — work to grade, students to contact, forum questions with no reply, the next deadlines — and each item opens its page in Moodle. It also analyzes each course and student: grades, submissions, quizzes, forums, completion and access. It signs in like the Moodle app, works with or without the MoodlIA plugin, and only reads from Moodle. It replaces the earlier Analyzer Web and Analyzer Desktop, which are discontinued.",
+      "Una aplicación de escritorio para Windows, macOS y Linux pensada para docentes. Se abre con tus pendientes en los cursos que impartes —trabajos por corregir, estudiantes a contactar, preguntas en foros sin respuesta, los próximos plazos— y cada asunto abre su página en Moodle. Además analiza cada curso y estudiante: notas, entregas, cuestionarios, foros, finalización y accesos. Inicia sesión como la app de Moodle, funciona con o sin el plugin MoodlIA y solo lee de Moodle. Sustituye a los anteriores Analyzer Web y Analyzer Desktop, que se han descontinuado.",
     ),
     does: [
+      t("Your pending work in one place: what to grade and since when, students to contact, unanswered forum questions, overdue work, drafts not submitted and the next two weeks of deadlines, most urgent first, each with a button that opens it in Moodle.", "Tus pendientes en un solo lugar: qué corregir y desde cuándo, estudiantes a contactar, preguntas en foros sin respuesta, trabajos atrasados, borradores sin enviar y los plazos de las dos próximas semanas, lo más urgente primero, cada uno con un botón que lo abre en Moodle."),
+      t("How your grading is going: submissions received against grades given per week, how long work waits, time to grade and feedback per course.", "Cómo va tu corrección: entregas recibidas frente a notas puestas por semana, cuánto esperan los trabajos, tiempo hasta la nota y comentarios por curso."),
       t("A course summary with what needs your attention today, students by risk level, and student profiles with a suggested action.", "Un resumen del curso con lo que necesita tu atención hoy, estudiantes por nivel de riesgo y perfiles de estudiantes con una acción sugerida."),
       t("Submissions: who submitted each assignment, who submits at the last minute, what is waiting for a grade and how long grading takes.", "Entregas: quién entregó cada tarea, quién entrega a última hora, qué está pendiente de calificar y cuánto tarda la corrección."),
       t("Quiz questions to review, as in Moodle's quiz statistics: facility, discrimination and consistency.", "Preguntas de cuestionario para revisar, como en las estadísticas de Moodle: facilidad, discriminación y consistencia."),
@@ -378,23 +391,23 @@ export const apps: MoodliaApp[] = [
       t("A Moodle account that can see the course's students and grades, such as a teacher's.", "Una cuenta de Moodle que pueda ver los estudiantes y las notas del curso, como la de un docente."),
       t("A computer with Windows 10 or later (64-bit), macOS (Apple silicon or Intel), or 64-bit Linux.", "Un ordenador con Windows 10 o posterior (64 bits), macOS (Apple silicon o Intel) o Linux de 64 bits."),
     ],
-    get: { label: t("Download version 0.1.0", "Descargar la versión 0.1.0"), href: "https://github.com/gafapa/moodlia-analyzer/releases/tag/v0.1.0" },
+    get: { label: t("Download version 0.2.0", "Descargar la versión 0.2.0"), href: "https://github.com/gafapa/moodlia-analyzer/releases/tag/v0.2.0" },
     install: [
       {
         title: t("Install it on your computer", "Instálala en tu ordenador"),
         steps: [
-          { text: t("Open the 0.1.0 release and download the file for your system: `MoodlIA-Analyzer-0.1.0-win-x64-setup.exe` on Windows, the `mac-arm64.dmg` (Apple silicon) or `mac-x64.dmg` (Intel) on a Mac, or the `.AppImage` on Linux.", "Abre la versión 0.1.0 y descarga el archivo de tu sistema: `MoodlIA-Analyzer-0.1.0-win-x64-setup.exe` en Windows, el `mac-arm64.dmg` (Apple silicon) o `mac-x64.dmg` (Intel) en un Mac, o el `.AppImage` en Linux.") },
+          { text: t("Open the 0.2.0 release and download the file for your system: `MoodlIA-Analyzer-0.2.0-win-x64-setup.exe` on Windows, the `mac-arm64.dmg` (Apple silicon) or `mac-x64.dmg` (Intel) on a Mac, or the `.AppImage` on Linux.", "Abre la versión 0.2.0 y descarga el archivo de tu sistema: `MoodlIA-Analyzer-0.2.0-win-x64-setup.exe` en Windows, el `mac-arm64.dmg` (Apple silicon) o `mac-x64.dmg` (Intel) en un Mac, o el `.AppImage` en Linux.") },
           { text: t("Windows: run the installer. If SmartScreen warns about an unknown publisher, choose More info, then Run anyway.", "Windows: ejecuta el instalador. Si SmartScreen avisa de un editor desconocido, elige «Más información» y después «Ejecutar de todas formas».") },
           { text: t("macOS: open the `.dmg` and drag MoodlIA Analyzer to Applications. The first time, open it with right click (or Control-click), Open.", "macOS: abre el `.dmg` y arrastra MoodlIA Analyzer a Aplicaciones. La primera vez, ábrela con clic derecho (o Control y clic), «Abrir».") },
-          { text: t("Linux: make the AppImage executable and run it:", "Linux: haz ejecutable el AppImage y arráncalo:"), code: "chmod +x MoodlIA-Analyzer-0.1.0-linux-x86_64.AppImage\n./MoodlIA-Analyzer-0.1.0-linux-x86_64.AppImage" },
-          { text: t("Optionally, compare the file with `SHA256SUMS-0.1.0.txt` from the same release.", "Si quieres, compara el archivo con `SHA256SUMS-0.1.0.txt` de la misma versión.") },
+          { text: t("Linux: make the AppImage executable and run it:", "Linux: haz ejecutable el AppImage y arráncalo:"), code: "chmod +x MoodlIA-Analyzer-0.2.0-linux-x86_64.AppImage\n./MoodlIA-Analyzer-0.2.0-linux-x86_64.AppImage" },
+          { text: t("Optionally, compare the file with `SHA256SUMS-0.2.0.txt` from the same release.", "Si quieres, compara el archivo con `SHA256SUMS-0.2.0.txt` de la misma versión.") },
         ],
       },
     ],
     firstUse: [
       { text: t("Enter your Moodle address and sign in as in the Moodle app. Your password goes only to your Moodle and is not saved.", "Escribe la dirección de tu Moodle e inicia sesión como en la app de Moodle. Tu contraseña solo va a tu Moodle y no se guarda.") },
-      { text: t("Choose a course: the app reads it and shows the summary.", "Elige un curso: la aplicación lo lee y muestra el resumen.") },
-      { text: t("Start with what needs your attention, then open the tabs and a student's detail.", "Empieza por lo que necesita tu atención y después abre las pestañas y la ficha de un estudiante.") },
+      { text: t("Your pending work opens first: the app reads the courses in progress you teach. Use the buttons to open each item in Moodle.", "Primero se abren tus pendientes: la aplicación lee los cursos en curso que impartes. Usa los botones para abrir cada asunto en Moodle.") },
+      { text: t("Open a course for its full analysis, and a student for the detail.", "Abre un curso para ver su análisis completo y un estudiante para ver su ficha.") },
     ],
     limits: [
       t("Risk levels and profiles are heuristics that support teacher judgment; they are not validated predictions.", "Los niveles de riesgo y los perfiles son heurísticas que apoyan el criterio docente; no son predicciones validadas."),
@@ -402,8 +415,16 @@ export const apps: MoodliaApp[] = [
       t("The installers are not code-signed yet, so Windows and macOS warn the first time you open the app. Check the release page for updates.", "Los instaladores aún no tienen firma de código, así que Windows y macOS avisan la primera vez que abres la aplicación. Consulta las actualizaciones en la página de versiones."),
     ],
     docs: [
-      { label: t("Analyses, Moodle access and privacy", "Análisis, acceso a Moodle y privacidad"), href: "https://github.com/gafapa/moodlia-analyzer/blob/v0.1.0/README.md" },
+      { label: t("Analyses, Moodle access and privacy", "Análisis, acceso a Moodle y privacidad"), href: "https://github.com/gafapa/moodlia-analyzer/blob/v0.2.0/README.md" },
       { label: t("Project page and downloads", "Página del proyecto y descargas"), href: "https://gafapa.github.io/moodlia-analyzer/" },
+    ],
+    screenshots: [
+      { src: "/images/apps/analyzer/{locale}/panel-today.webp", width: 1360, height: 860, alt: t("My pending work: work to grade, students to contact, forum questions and deadlines, with the most urgent items first", "Mis pendientes: trabajos por corregir, estudiantes a contactar, preguntas en foros y plazos, con lo más urgente primero"), caption: t("Your pending work across your courses, most urgent first.", "Tus pendientes en todos tus cursos, lo más urgente primero.") },
+      { src: "/images/apps/analyzer/{locale}/panel-grading.webp", width: 1360, height: 860, alt: t("Submissions received against grades given per week, and the work waiting for a grade by course", "Entregas recibidas frente a notas puestas por semana, y los trabajos que esperan nota por curso"), caption: t("How your grading is going.", "Cómo va tu corrección.") },
+      { src: "/images/apps/analyzer/{locale}/panel-calendar.webp", width: 1360, height: 860, alt: t("The next two weeks of deadlines, with who has not handed in", "Los plazos de las dos próximas semanas, con quién no ha entregado"), caption: t("The next two weeks in all your courses.", "Las dos próximas semanas en todos tus cursos.") },
+      { src: "/images/apps/analyzer/{locale}/course-summary.webp", width: 1360, height: 860, alt: t("A course summary: indicators, what needs attention and risk level", "Resumen de un curso: indicadores, lo que necesita atención y nivel de riesgo"), caption: t("A course at a glance.", "Un curso de un vistazo.") },
+      { src: "/images/apps/analyzer/{locale}/course-quizzes.webp", width: 1360, height: 860, alt: t("Quiz questions by facility and discrimination, with questions to review", "Preguntas de cuestionario por facilidad y discriminación, con las que conviene revisar"), caption: t("Quiz questions to review.", "Preguntas de cuestionario a revisar.") },
+      { src: "/images/apps/analyzer/{locale}/student-summary.webp", width: 1360, height: 860, alt: t("A student's detail: why the risk level and what can be done", "Ficha de un estudiante: por qué tiene ese riesgo y qué se puede hacer"), caption: t("Each student: why and what to do.", "Cada estudiante: por qué y qué hacer.") },
     ],
     source: "https://github.com/gafapa/moodlia-analyzer",
     license: "MIT",

@@ -105,6 +105,25 @@ export function AppPage({ app, locale }: { app: MoodliaApp; locale: Locale }) {
         <article className="app-main">
           <p className="app-description"><Rich text={app.description[locale]} /></p>
 
+          {app.screenshots?.length ? (
+            <section aria-labelledby="screens-title">
+              <h2 id="screens-title">{copy.screens}</h2>
+              <p className="screens-note">{copy.screensNote}</p>
+              <div className="screens">
+                {app.screenshots.map((shot, index) => {
+                  const src = shot.src.replace("{locale}", locale);
+                  return (
+                    <figure key={shot.src}>
+                      {/* eslint-disable-next-line @next/next/no-img-element -- Static WebP screenshot with explicit dimensions. */}
+                      <a href={src}><img src={src} width={shot.width} height={shot.height} alt={shot.alt[locale]} loading={index < 2 ? "eager" : "lazy"} decoding="async" /></a>
+                      <figcaption>{shot.caption[locale]}</figcaption>
+                    </figure>
+                  );
+                })}
+              </div>
+            </section>
+          ) : null}
+
           <section aria-labelledby="does-title">
             <h2 id="does-title">{copy.whatItDoes}</h2>
             <ul className="check-list">{app.does.map((item) => <li key={item.en}><Rich text={item[locale]} /></li>)}</ul>

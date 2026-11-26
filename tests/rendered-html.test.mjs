@@ -295,3 +295,16 @@ test("static exports retain exact policy bytes and missing source policies fail 
     await rm(temporary, { recursive: true, force: true });
   }
 });
+
+test("the analyzer page shows its screenshots in the page language, and the files exist", async () => {
+  for (const [path, locale] of [["/apps/analyzer", "en"], ["/es/apps/analyzer", "es"]]) {
+    const page = await html(path);
+    const sources = [...page.matchAll(/src="(\/images\/apps\/analyzer\/[^"]+)"/g)].map((match) => match[1]);
+    assert.ok(sources.length >= 6, `${path} shows ${sources.length} screenshots`);
+    for (const source of sources) {
+      assert.ok(source.includes(`/${locale}/`), `${source} is not in ${locale}`);
+      await access(new URL(`../public${source}`, import.meta.url));
+    }
+    assert.match(page, /0\.2\.0/);
+  }
+});
