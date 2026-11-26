@@ -130,6 +130,8 @@ The course item backup release references were published on 14 November with plu
 
 The skills page was republished on 18 November with both maintained skills. All 158 public files and ten HTTPS routes matched the validated export. See [publication evidence](docs/skills-publication-2026-11-18.md).
 
+MoodlIA Analyzer replaced the discontinued Analyzer Web on 26 November: the app page moved to `/apps/analyzer/` and the old addresses redirect to it. All 162 public files and ten HTTPS routes matched the validated export. See [publication evidence](docs/analyzer-publication-2026-11-26.md).
+
 ## Security and privacy
 
 The static site does not store Moodle credentials or course data. Preserve existing general and extension privacy-policy URLs in every redesign and export.
