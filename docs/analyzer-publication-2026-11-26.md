@@ -26,3 +26,18 @@ management workspace was replaced with the same export.
 `node tools/verify-publication.mjs https://moodlia.com/` verified all 162
 public files byte for byte and ten clean HTTPS routes. The HTTP redirect probe
 timed out, as in earlier publications.
+
+## 0.1.0 installers - same day
+
+After MoodlIA Analyzer 0.1.0 was released on GitHub (installers for Windows
+x64, macOS Apple silicon and Intel, and Linux x64, each smoke-checked by the
+release workflow, with `SHA256SUMS-0.1.0.txt`), the English and Spanish
+analyzer page was republished as a manual installation of version 0.1.0: it
+links to the release, gives install steps per system and states that the
+installers are not code-signed yet. `npm test` passed all 16 rendered-site
+tests; only the analyzer, apps and install pages, their RSC payloads and the
+client scripts changed. The static-sites content workflow created
+`/opt/docker/backups/static-sites/moodlia.com-20261126T132421Z.tar.gz` and
+reported `container_recreated=false`, and `node tools/verify-publication.mjs
+https://moodlia.com/` verified all 162 public files byte for byte and ten clean
+HTTPS routes.
